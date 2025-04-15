@@ -5,7 +5,7 @@ cmd.exe
 
 C:\> <venv>\Scripts\activate.bat
 
-env\Scripts\activate.bat
+env\Scripts\activate
 
 PowerShell
 
