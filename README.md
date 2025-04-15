@@ -17,3 +17,5 @@ pip install -r requirements.txt
 pip freeze > requirements.txt
 
 https://revtestaccount.github.io/Static-Documentation/#rest
+
+https://github.com/revtestaccount/Static-Documentation
