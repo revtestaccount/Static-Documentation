@@ -1,0 +1,413 @@
+<html><body><h1 class="pmod">Page 1</h1>
+<p>1 </p>
+<p>PAYE Modernisation – PIT Self Service Application Guide </p>
+<p>Version<br/>
+1.0 Release Candidate 2<br/>
+Date<br/>
+09/08/2019 </p>
+<p>PIT Self Service Application Guide 
+PAYE Modernisation </p>
+<p><img alt="Image 1" src="image_x.png"/>
+<img alt="Image 2" src="image_x.png"/>
+<img alt="Image 3" src="image_x.png"/></p>
+<h1 class="pmod">Page 2</h1>
+<p>2 </p>
+<p>PAYE Modernisation – PIT Self Service Application Guide </p>
+<p>Version History 
+Version 
+Date 
+Section 
+Change Description 
+0.1<br/>
+20/03/2018 
+All<br/>
+Initial draft </p>
+<p>Appendices 
+7.3 Known Issues section added 
+1.0 Release 
+Candidate 
+2 
+25/05/2018 </p>
+<p>Version updated to 1.0 Release 
+Candidate 2 
+29/06/2018 
+Section 7 
+Added 
+20/07/2018 
+Section 6.1 
+Added 
+31/07/2018 
+Appendix 
+Added Returns Reconciliations 
+endpoints 
+29/04/2019 
+Section 6 
+Added customer with fada 
+description 
+09/08/2019 
+Section 3 
+Added detail about new 
+employee overview screen and 
+the new request specific 
+certificate button 
+Section 4.0 
+Added section on employee 
+overview 
+Section 4.1 
+Added section on edit 
+employee 
+Section 5.2 
+Added section on Request 
+Specific Employee button 
+Audience<br/>
+This document is aimed at payroll software developers and testers who are updating their software packages to 
+be compatible with PAYE reporting obligations from 2019 onwards. </p>
+<p><img alt="Image 4" src="image_x.png"/></p>
+<h1 class="pmod">Page 3</h1>
+<p>3 </p>
+<p>PAYE Modernisation – PIT Self Service Application Guide </p>
+<h2 class="document-title">TABLE OF CONTENTS</h2>
+<p>Audience ................................................................................................................................................................ 2 
+1 
+Introduction ....................................................................................................................................................... 4 
+1.1 
+Prerequisites .............................................................................................................................................. 4 
+2 
+Logging In ........................................................................................................................................................... 5 
+3 
+Viewing and Downloading Available Test Data ................................................................................................. 7 
+4 
+Employee Overview ........................................................................................................................................... 9 
+4.1 
+Edit Employee .......................................................................................................................................... 10 
+5 
+Requesting Additional Test Data ..................................................................................................................... 11 
+5.1 
+Request a new certificate ........................................................................................................................ 11 
+5.2 
+Request a specific certificate ................................................................................................................... 12 
+6 
+Deleting Test Data ........................................................................................................................................... 14 
+7 
+Creating Unemployed Customer Test Data ..................................................................................................... 15 
+7.1 
+Create New RPN for Unemployed Customer........................................................................................... 15 
+8 
+Requesting Agent Certificates ......................................................................................................................... 16 
+9 
+Appendix .......................................................................................................................................................... 17 
+9.1 
+REST API Endpoints .................................................................................................................................. 17 
+9.1.1 
+RPN Services .................................................................................................................................... 17 
+9.1.2 
+Payroll Services ................................................................................................................................ 18 
+9.1.3 
+Returns Reconciliations ................................................................................................................... 18 
+9.2 
+SOAP API Endpoints ................................................................................................................................. 19 
+9.2.1 
+RPN Services .................................................................................................................................... 19 
+9.2.2 
+Payroll Service .................................................................................................................................. 19 
+9.2.3 
+Returns Reconciliations ................................................................................................................... 19 
+9.3 
+Known Issues ........................................................................................................................................... 20 
+9.3.1 
+Self Service Application Login .......................................................................................................... 20 </p>
+<p><img alt="Image 5" src="image_5.png"/></p>
+<h1 class="pmod">Page 4</h1>
+<p>4 </p>
+<p>PAYE Modernisation – PIT Self Service Application Guide </p>
+<h2 class="document-title">1 INTRODUCTION</h2>
+<p>The purpose of this document is to serve as a guide to use the PIT Self Service Application.  This application 
+provides developers and testers access to exclusive Revenue generated test data that is supported in the PIT 
+environment. 
+By using this application developers/testers can: 
+• 
+Download digital certificates associated with test employers required for conformance testing<br/>
+• 
+Download JSON files containing data of the test employees associated with each test employer 
+• 
+Request additional certificates for testing 
+• 
+Delete test employer data 
+• 
+Create a test unemployed customer 
+• 
+Download test agent certificates with a test employer </p>
+<p>Each employer subsequently created in each environment exists only in that environment. Employers in the PIT 
+current version environment will have a registration number of 8XXXXXXXH and the cert associated with them 
+will be of the form 9999XXXXX. In the PIT next version environment, employers will have a registration number 
+of 9XXXXXXXH and the cert associated with them will be of the form 8888XXXXX.  </p>
+<p>The PIT Self Service Application can be accessed at the following URL:<br/>
+<a href="https://softwaretest.ros.ie/paye-employers-self-service/intro">https://softwaretest.ros.ie/paye-employers-self-service/intro</a> </p>
+<p>1.1 Prerequisites<br/>
+In order to access and use the PIT Self Service Application, you need to have completed the registration process 
+for the PAYE Modernisation PIT Help Desk  and indicated that you require access to PAYE Modernisation testing. 
+On completion of the registration process, you will receive a digital certificate and password which will allow 
+access to the PIT self service application. </p>
+<p><img alt="Image 6" src="image_6.png"/></p>
+<h1 class="pmod">Page 5</h1>
+<p>5 </p>
+<p>PAYE Modernisation – PIT Self Service Application Guide </p>
+<h2 class="document-title">2 LOGGING IN</h2>
+<p>The login screen requires users to sign in with their Test Data Management (TDM) digital certificate and 
+password provided during the registration process1.<br/>
+In order to make the digital certificate that was issued as part of the PIT registration process available in the 
+‘Select Certificate’ drop down menu, it needs to be loaded into the web browser. The ‘Manage My Certificates’ 
+link provides a screen that allows users to select the certificate and load it into the web browser. </p>
+<p>Figure 1 Login Screen Layout for PIT Current Version </p>
+<p>From the Login screen, a user can use the ‘Select Certificate’ drop down menu to choose the certificate to use. 
+Once the appropriate certificate is selected and password is entered, clicking the ‘Authenticate’ button 
+completes the sign in. On successful sign in the application takes the user to the Introduction screen of the PIT 
+Self Service application.  This screen contains information about the PIT Self Service Application and the PIT 
+testing process.  </p>
+<p>1 Please note that this login screen is shared with the ROS Payroll reporting screens. User’s will be directed to the PIT 
+Self Service application from this login screen if they use the Test Data Management (TDM) digital certificate/password 
+provided as part of PIT registration. However, if they use digital certificates provided by the PIT Self Service application 
+they will be directed to the ROS Payroll Reporting screens. </p>
+<p><img alt="Image 7" src="image_7.png"/>
+<img alt="Image 8" src="image_8.png"/></p>
+<h1 class="pmod">Page 6</h1>
+<p>6 </p>
+<p>PAYE Modernisation – PIT Self Service Application Guide </p>
+<p>Figure 2  Screen Layout of the Introduction Screen </p>
+<p><img alt="Image 9" src="image_9.png"/>
+<img alt="Image 10" src="image_10.png"/></p>
+<h1 class="pmod">Page 7</h1>
+<p>7 </p>
+<p>PAYE Modernisation – PIT Self Service Application Guide </p>
+<h2 class="document-title">3 VIEWING AND DOWNLOADING AVAILABLE TEST DATA</h2>
+<p>The Dashboard page as seen in Figure 4, displays a table of digital certificates and each row contains: 
+• 
+The Employer Number associated with the digital certificate 
+• 
+The number of employees linked to the employer 
+• 
+A link to download the digital certificate<br/>
+• 
+The password for the digital certificate 
+• 
+The digital certificate type and status 
+• 
+A link to a JSON file which contains Employee details 
+o First name, Surname and PPSN of all the employees linked to the employer 
+• 
+A link to an Employee Overview which provides simple overview of employee status and a link to modify 
+employee details 
+o Name, PPSN, Tac Calculation Basis, USC Status, RPN Type and a link to modify </p>
+<p>The screen also allows users to: 
+• 
+Request New Certificates with random RPNs assigned to each employee.<br/>
+• 
+Request Specific Certificates with specified RPNs assigned to each employee.<br/>
+• 
+Delete an employer<br/>
+• 
+Create an unemployed customer - a PPSN not linked to a digital certificate and so can be used as part of 
+testing the Request New RPN process.<br/>
+• 
+Create an unemployed customer with a fada guaranteed to be in their name.<br/>
+• 
+Please note that on first login, the dashboard will contain a single digital certificate however additional 
+certificates can be added by using the ‘Request New Certificates’ or ‘Request Specific Certificates 
+buttons’. </p>
+<p><img alt="Image 11" src="image_11.png"/></p>
+<h1 class="pmod">Page 8</h1>
+<p>8 </p>
+<p>PAYE Modernisation – PIT Self Service Application Guide 
+Figure 3 Screen Layout of the Dashboard </p>
+<p><img alt="Image 12" src="image_12.png"/>
+<img alt="Image 13" src="image_13.png"/></p>
+<h1 class="pmod">Page 9</h1>
+<p>9 </p>
+<p>PAYE Modernisation – PIT Self Service Application Guide </p>
+<h2 class="document-title">4 EMPLOYEE OVERVIEW</h2>
+<p>The Employee overview page is accessed by clicking either the employer’s name link or the ‘overview’ link on 
+the dashboard. This page shows users an overview of all employees associated with this employer, as seen in 
+Figure 5. By clicking ‘Edit’ in the Modify column of this page, the user can modify the RPN of this specific 
+employee. Any field that is populated with ‘undefined’ has not had that value set yet, which is the case for any 
+employer created using the ‘Request Certificate’ button.  </p>
+<p>Figure 4 </p>
+<p><img alt="Image 14" src="image_14.png"/>
+<img alt="Image 15" src="image_15.png"/></p>
+<h1 class="pmod">Page 10</h1>
+<p>10 </p>
+<p>PAYE Modernisation – PIT Self Service Application Guide 
+4.1 Edit Employee 
+This page will display the name, PPSN, Tax Calculation Basis, USC Status and RPN Type for the selected 
+employee. From here, users can also change the RPN Profile of the selected employee by selecting tax 
+calculation basis, USC Status and the desired RPN type from the drop down to simulate transitions in the 
+employee’s circumstances. This will increment the RPN number of this employment. It will also automatically 
+make the employee to have a single relationship status and a single employment status as these RPN types only 
+count for such employees.  </p>
+<p>Figure 4 .1 Screen Layout of the Edit Employee </p>
+<p><img alt="Image 16" src="image_16.png"/>
+<img alt="Image 17" src="image_17.png"/></p>
+<h1 class="pmod">Page 11</h1>
+<p>11 </p>
+<p>PAYE Modernisation – PIT Self-Service Application Guide </p>
+<h2 class="document-title">5 REQUESTING ADDITIONAL TEST DATA</h2>
+<p>Users can request a new certificate by clicking the ‘Request New Certificates’ or ‘Request Specific Certificates’ 
+buttons available on the Dashboard.<br/>
+5.1 Request a new certificate 
+The user can create a new certificate by clicking on the ‘Request a new certificate’ button available on the 
+Dashboard.  The user is brought to a new screen where they can select certificate type and the number of 
+employees required. The new certificate will be created for a new Employer. This certificate and the employee 
+data will be available on the Dashboard. </p>
+<p>Figure 5 .1 Screen Layout of the Create Custom Certificate </p>
+<p><img alt="Image 18" src="image_18.png"/>
+<img alt="Image 19" src="image_19.png"/></p>
+<h1 class="pmod">Page 12</h1>
+<p>12 </p>
+<p>PAYE Modernisation – PIT Self-Service Application Guide 
+5.2 Request a specific certificate 
+The user can create an employer with employees that have a specific RPN type by clicking on the ‘Request 
+Specific Certificate’ button available on the Dashboard.  The user is brought to a new screen where they can 
+select the number of employees required, the tax calculation basis, USC status, RPN type and previous 
+employment tax details if they need. If previous pay and tax details are not entered, the values will default to 0. 
+Upon clicking the ‘Request Certificate’ button, the new certificate will be created for a new Employer. This 
+certificate and the employee data will be available on the Dashboard. </p>
+<p><img alt="Image 20" src="image_20.png"/></p>
+<h1 class="pmod">Page 13</h1>
+<p>13 </p>
+<p>PAYE Modernisation – PIT Self-Service Application Guide </p>
+<p>Figure 5.2 Screen Layout of Request Specific Certificate </p>
+<p><img alt="Image 21" src="image_21.png"/>
+<img alt="Image 22" src="image_22.png"/></p>
+<h1 class="pmod">Page 14</h1>
+<p>14 </p>
+<p>PAYE Modernisation – PIT Self-Service Application Guide </p>
+<h2 class="document-title">6 DELETING TEST DATA</h2>
+<p>The user can delete test data by clicking on the ‘Delete Employer’ button available on the Dashboard.  The user 
+is brought to a new screen where they can select an Employer Tax Registration Number from the drop-down list 
+and delete all data related to that Employer. The list of Employer Tax Registration Numbers corresponds to the 
+available Employer Tax Registration Numbers on the Dashboard. </p>
+<p>Figure 6 Screen Layout of the Delete Employer Screen  </p>
+<p><img alt="Image 23" src="image_23.png"/>
+<img alt="Image 24" src="image_24.png"/></p>
+<h1 class="pmod">Page 15</h1>
+<p>15 </p>
+<p>PAYE Modernisation – PIT Self-Service Application Guide </p>
+<h2 class="document-title">7 CREATING UNEMPLOYED CUSTOMER TEST DATA</h2>
+<p>Users can create test employees who have yet to be associated with any test employment by clicking on the 
+‘Create Unemployed Customer’ button available on the Dashboard. The user is brought to a new screen where 
+they can view the result2 of their request to create a new employee not linked to an employment.  Unemployed 
+customers can be used as part of testing the New RPN process.  </p>
+<p>Figure 7 Screen Layout of the Create Unemployed Customer Screen </p>
+<p>Customers who will have a fada in their name can also be created using the self-service application. The process 
+for adding an employment for this new customer is described in the next section. </p>
+<p>7.1 Create New RPN for Unemployed Customer 
+Once you have created an unemployed customer and recorded their details. Create New RPN request should be 
+sent with the details of the unemployed customer to have them added as an employee under an employer. 
+A Create New RPN request should be submitted before trying to Lookup RPN for that customer. The endpoint to 
+send the request to can be found below in the appendix section. </p>
+<p>2 It is recommended that the returned test employee details are noted by the user as clicking the ‘Create Unemployed 
+Customer’ button again will result in a new test employee being displayed here. </p>
+<p><img alt="Image 25" src="image_25.png"/>
+<img alt="Image 26" src="image_26.png"/></p>
+<h1 class="pmod">Page 16</h1>
+<p>16 </p>
+<p>PAYE Modernisation – PIT Self-Service Application Guide </p>
+<h2 class="document-title">8 REQUESTING AGENT CERTIFICATES</h2>
+<p>Users can request a new Agent certificate by clicking the ‘Request New Certificates’ button available on the 
+Dashboard. They can specify the Agent certificate type and the number of employees required. The new Agent 
+certificate will be created along with a new Employer. This certificate and the employee data will be available on 
+the Dashboard. </p>
+<p>Figure 8 Screen Layout of the Create Custom Agent Certificate </p>
+<p><img alt="Image 27" src="image_27.png"/>
+<img alt="Image 28" src="image_28.png"/></p>
+<h1 class="pmod">Page 17</h1>
+<p>17 </p>
+<p>PAYE Modernisation – PIT Self-Service Application Guide </p>
+<h2 class="document-title">9 APPENDIX</h2>
+<p>This appendix provides the set of REST and SOAP web service endpoints for the Payroll and RPN services 
+available for testing in the Public Interface Testing environment. </p>
+<p>9.1 REST API Endpoints  </p>
+<p>9.1.1 RPN Services<br/>
+9.1.1.1 
+POST – Create New RPN 
+<a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/rpn/{employerRegistrationNumber}/{taxYear}?softwareUsed={SoftwareName}&amp;softwareVer
+sion={softwareVersion} </p>
+<p>Example: <a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/rpn/00001013N/2018?softwareUsed=abc&amp;softwareVersion=1.0  </p>
+<p>9.1.1.2 
+GET – Look Up RPN 
+<a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/rpn/{employerRegistrationNumber}/{taxYear}?softwareUsed={SoftwareName}&amp;softwareVer
+sion={softwareVersion} 
+Example: <a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/rpn/03390656OH/2018?softwareUsed=1&amp;softwareVersion=1.0   </p>
+<p>9.1.1.3 
+GET – Look Up RPN by employee 
+<a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/rpn/{employerRegistrationNumber}/{taxYear}/{employeeId}?softwareUsed={SoftwareName}
+&amp;softwareVersion={softwareVersion} 
+Example: <a href="https://softwaretest.ros.ie/paye-employers/v1/rest/rpn/03390656OH/2018/01092485G-">https://softwaretest.ros.ie/paye-employers/v1/rest/rpn/03390656OH/2018/01092485G-</a>
+2?softwareUsed=1&amp;softwareVersion=1.0  </p>
+<p>9.1.1.4 
+GET – Look Up RPN by employer using optional filters date last updated and/or employee Ids 
+<a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/rpn/{employerRegistrationNumber}/{taxYear}?softwareUsed={SoftwareName}&amp;softwareVer
+sion={softwareVersion}&amp;employeeIDs={employeeId1},{employeeId2}&amp;dateLastUpdated={date}<br/>
+Example: <a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/rpn/03390656OH/2018?softwareUsed=1&amp;softwareVersion=1&amp;employeeIDs=00202020PA-
+1,7002439CA-2&amp;dateLastUpdated=2018-02-01   </p>
+<p><img alt="Image 29" src="image_29.png"/></p>
+<h1 class="pmod">Page 18</h1>
+<p>18 </p>
+<p>PAYE Modernisation – PIT Self-Service Application Guide 
+9.1.2 Payroll Services 
+9.1.2.1 
+POST - Payroll Submission 
+<a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/payroll/{employerRegistrationNumber}/{taxYear}/{payrollRunReference}/{SubmissionID}?sof
+twareUsed={softwareName}&amp;softwareVersion={softwareVersion} <br/>
+Example: <a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/payroll/00087900D/2018/PayrollRun1/Submission01?softwareUsed=abc&amp;softwareVersion=
+1.0 <br/>
+9.1.2.2 
+GET – Check Payroll Submission 
+<a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/payroll/{employerRegistrationNumber}/{taxYear}/{PayrollRunReference}/{SubmissionID}?sof
+twareUsed={softwareName}&amp;softwareVersion={softwareVersion}<br/>
+Example: <a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/payroll/00087900D/2018/PayrollRun1/Submission01?softwareUsed=abc&amp;softwareVersion=
+1.0  </p>
+<p>9.1.2.3 
+GET – Check Payroll Run 
+<a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/payroll/{employerRegistration}/{taxYear}/{PayrollRunReference}?softwareUsed={softwareNa
+me}&amp;softwareVersion={softwareVersion} <br/>
+Example: <a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/payroll/00087900D/2018/PayrollRun1?softwareUsed=abc&amp;softwareVersion=1.0  </p>
+<p>9.1.3 Returns Reconciliations 
+<a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/returns_reconciliation/{employerRegistration}?softwareUsed={softwareName}&amp;periodStart
+Date={periodStartDate}&amp;periodEndDate={periodEndDate}&amp;softwareVersion={softwareVersion} 
+Example: <a href="https://softwaretest.ros.ie/paye-">https://softwaretest.ros.ie/paye-</a>
+employers/v1/rest/returns_reconciliation/03497992DH?softwareUsed=abc&amp;periodStartDate=2019-04-
+01&amp;periodEndDate=2019-04-30&amp;softwareVersion=1 </p>
+<p><img alt="Image 30" src="image_30.png"/></p>
+<h1 class="pmod">Page 19</h1>
+<p>19 </p>
+<p>PAYE Modernisation – PIT Self-Service Application Guide 
+9.2 SOAP API Endpoints </p>
+<p>9.2.1 RPN Services<br/>
+<a href="https://softwaretest.ros.ie/paye-employers/v1/soap/rpn">https://softwaretest.ros.ie/paye-employers/v1/soap/rpn</a> </p>
+<p>9.2.2 Payroll Service 
+<a href="https://softwaretest.ros.ie/paye-employers/v1/soap/payroll">https://softwaretest.ros.ie/paye-employers/v1/soap/payroll</a> </p>
+<p>9.2.3 Returns Reconciliations 
+<a href="https://softwaretest.ros.ie/paye-employers/v1/soap/returns_reconciliation">https://softwaretest.ros.ie/paye-employers/v1/soap/returns_reconciliation</a> </p>
+<p><img alt="Image 31" src="image_31.png"/></p>
+<h1 class="pmod">Page 20</h1>
+<p>20 </p>
+<p>PAYE Modernisation – PIT Self-Service Application Guide 
+9.3 Known Issues </p>
+<p>9.3.1 Self Service Application Login<br/>
+On clicking the ‘register for ROS’ link on the Self Service Application login page in PIT3 a ‘503 service unavailable’ 
+page is displayed to the user. </p>
+<p><img alt="Image 32" src="image_32.png"/></p></body></html>

@@ -1,0 +1,92 @@
+
+    <img alt="ictl logo" src="doc_img1.png">
+    <h1 class="pmod">Signature Generation</h1>
+    <h2 class="document-title">SOAP Web Service Integration Guide</h2>
+    <h3 class="heading">Audience</h3>
+    <p>This document is for any software provider who has chosen to build or update their products to allow
+        for PAYE Modernisation.</p>
+    <h3 class="heading">Document context</h3>
+    <p>This document provides a technical overview of how to integrate with Revenue’s SOAP web services
+        including how to sign requests validly. This document is designed to be read in conjunction with the
+        four
+        SOAP/XML example files as well as the rest of the Revenue Commissioners’ PAYE Modernisation
+        documentation suite including the relevant technical documents.</p>
+
+    <h3 class="heading">1. Introduction</h3>
+    <p>This document details the XML PAYE Modernisation web services specification for the following web
+        services:</p>
+
+    <ul class="list-group">
+        <li class="list-group-item">Lookup Revenue Payroll Notification (RPN) web service</li>
+        <li class="list-group-item">New RPN web service</li>
+        <li class="list-group-item">Payroll Submission web service</li>
+        <li class="list-group-item">Check Payroll Submission web service</li>
+        <li class="list-group-item">Check Payroll Run web service</li>
+        <li class="list-group-item">Enhanced Reporting Submission web service</li>
+        <li class="list-group-item">Enhanced Reporting Check Run web service</li>
+        <li class="list-group-item">Enhanced Reporting Check Submission web service</li>
+        <li class="list-group-item">Lookup Enhanced Reporting Request (ERN) web service</li>
+        <li class="list-group-item">Monthly ERR Report web service</li>
+    </ul>
+
+    <p>The Documents Homepage specified in Document References is the home to all technical
+        documentation, specification, and examples for the above web services which has been made available
+        to enable payroll software developers’ to update their software packages to be compatible with PAYE
+        reporting obligations from January 2019. Path locations specified in this document are relative to
+        this
+        Homepage.
+    </p>
+
+    <p>This document assumes familiarity with the XML web services above. A full description of each of
+        these
+        can be found in the Web Service Overview Document under ‘PAYE Web Service Examples’ on the
+        Documents Homepage. The Web Service Description Language (WSDL) files for the above web services
+        can be found under ‘PAYE Web Service Specifications’.</p>
+
+    <p>WSDL is a W3C standard for describing web services. Further details of each web service can be found
+        in
+        the supporting WSDL file. Each file references the necessary schemas and indicates the URL where the
+        services may be accessed. The URL for each web service will use the HTTPS protocol to ensure the
+        privacy of all communication between ROS and the web service client.</p>
+
+    <h3 class="heading">2. Calling the Services</h3>
+    <p>The web services for the PAYE Modernisation messages are described through WSDL files and the
+        schema for each message.
+        Further details of the web services can be found in the published PAYE Modernisation WSDL files.
+        The WSDL, SOAP and WS Security version specifications we are following include:
+        WSDL 1.2: WSDL 1.2
+        SOAP 1.2: SOAP 1.2
+        WS Security 1.1.1: WS Security 1.1.1
+        The SOAP Header must include a Content-Type of application/soap+xml.
+        2.1. Namespaces, Schemas and Locations
+        The PAYE Modernisation web services use namespaces which are detailed below.
+        2.1.1 Lookup Revenue Payroll Notification (RPN) Web Service
+        The namespace defining all elements related to this web service is outlined in the following table:
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Description</th>
+                <th scope="col">Namespace</th>
+                <th scope="col">Relative Location
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Lookup RPN Web
+                    Service</th>
+                <td>N/A</td>
+                <td>../resources/paye_modernisation/rpn/v1/rpnschema.xsd</td>
+            </tr>
+            <tr>
+                <th scope="row">Lookup RPN Request &
+                    Response Schema</th>
+                <td>http://www.ros.ie/schemas
+                    /paye/rpn/
+                </td>
+                <td>../resources/paye_modernisation/rpn.wsdl</td>
+            </tr>
+        </tbody>
+    </table>
