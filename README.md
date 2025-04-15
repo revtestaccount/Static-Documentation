@@ -15,3 +15,5 @@ PS C:\> <venv>\Scripts\Activate.ps1
 pip install -r requirements.txt
 
 pip freeze > requirements.txt
+
+https://revtestaccount.github.io/Static-Documentation/#rest
