@@ -33,9 +33,9 @@ PIT Self Service Application Guide
 PAYE Modernisation 
 
 
-![Image 1](image_x.png)
-![Image 2](image_x.png)
-![Image 3](image_x.png)
+![Image 1](./images/image_1.png)
+![Image 2](./images/image_2.png)
+![Image 3](./images/image_3.png)
 
 # Page 2
 
@@ -100,7 +100,7 @@ This document is aimed at payroll software developers and testers who are updati
 be compatible with PAYE reporting obligations from 2019 onwards. 
 
 
-![Image 4](image_x.png)
+![Image 4](./images/image_4.png)
 
 # Page 3
 
@@ -163,7 +163,7 @@ Self Service Application Login .................................................
  
 
 
-![Image 5](image_5.png)
+![Image 5](./images/image_5.png)
 
 # Page 4
 
@@ -208,7 +208,7 @@ access to the PIT self service application.
  
 
 
-![Image 6](image_6.png)
+![Image 6](./images/image_6.png)
 
 # Page 5
 
@@ -242,8 +242,8 @@ provided as part of PIT registration. However, if they use digital certificates 
 they will be directed to the ROS Payroll Reporting screens. 
 
 
-![Image 7](image_7.png)
-![Image 8](image_8.png)
+![Image 7](./images/image_7.png)
+![Image 8](./images/image_8.png)
 
 # Page 6
 
@@ -263,8 +263,8 @@ Figure 2  Screen Layout of the Introduction Screen
  
 
 
-![Image 9](image_9.png)
-![Image 10](image_10.png)
+![Image 9](./images/image_9.png)
+![Image 10](./images/image_10.png)
 
 # Page 7
 
@@ -317,7 +317,7 @@ buttons’.
  
 
 
-![Image 11](image_11.png)
+![Image 11](./images/image_11.png)
 
 # Page 8
 
@@ -347,8 +347,8 @@ Figure 3 Screen Layout of the Dashboard
  
 
 
-![Image 12](image_12.png)
-![Image 13](image_13.png)
+![Image 12](./images/image_12.png)
+![Image 13](./images/image_13.png)
 
 # Page 9
 
@@ -369,8 +369,8 @@ employer created using the ‘Request Certificate’ button.
 Figure 4 
 
 
-![Image 14](image_14.png)
-![Image 15](image_15.png)
+![Image 14](./images/image_14.png)
+![Image 15](./images/image_15.png)
 
 # Page 10
 
@@ -397,8 +397,8 @@ Figure 4 .1 Screen Layout of the Edit Employee
  
 
 
-![Image 16](image_16.png)
-![Image 17](image_17.png)
+![Image 16](./images/image_16.png)
+![Image 17](./images/image_17.png)
 
 # Page 11
 
@@ -422,8 +422,8 @@ data will be available on the Dashboard.
 Figure 5 .1 Screen Layout of the Create Custom Certificate 
 
 
-![Image 18](image_18.png)
-![Image 19](image_19.png)
+![Image 18](./images/image_18.png)
+![Image 19](./images/image_19.png)
 
 # Page 12
 
@@ -448,7 +448,7 @@ certificate and the employee data will be available on the Dashboard.
  
 
 
-![Image 20](image_20.png)
+![Image 20](./images/image_20.png)
 
 # Page 13
 
@@ -463,8 +463,8 @@ PAYE Modernisation – PIT Self-Service Application Guide
 Figure 5.2 Screen Layout of Request Specific Certificate 
 
 
-![Image 21](image_21.png)
-![Image 22](image_22.png)
+![Image 21](./images/image_21.png)
+![Image 22](./images/image_22.png)
 
 # Page 14
 
@@ -487,8 +487,8 @@ Figure 6 Screen Layout of the Delete Employer Screen
  
 
 
-![Image 23](image_23.png)
-![Image 24](image_24.png)
+![Image 23](./images/image_23.png)
+![Image 24](./images/image_24.png)
 
 # Page 15
 
@@ -522,8 +522,8 @@ send the request to can be found below in the appendix section.
 Customer’ button again will result in a new test employee being displayed here. 
 
 
-![Image 25](image_25.png)
-![Image 26](image_26.png)
+![Image 25](./images/image_25.png)
+![Image 26](./images/image_26.png)
 
 # Page 16
 
@@ -546,8 +546,8 @@ Figure 8 Screen Layout of the Create Custom Agent Certificate
  
 
 
-![Image 27](image_27.png)
-![Image 28](image_28.png)
+![Image 27](./images/image_27.png)
+![Image 28](./images/image_28.png)
 
 # Page 17
 
@@ -601,7 +601,7 @@ employers/v1/rest/rpn/03390656OH/2018?softwareUsed=1&softwareVersion=1&employeeI
  
 
 
-![Image 29](image_29.png)
+![Image 29](./images/image_29.png)
 
 # Page 18
 
@@ -651,7 +651,7 @@ employers/v1/rest/returns_reconciliation/03497992DH?softwareUsed=abc&periodStart
  
 
 
-![Image 30](image_30.png)
+![Image 30](./images/image_30.png)
 
 # Page 19
 
@@ -678,7 +678,7 @@ PAYE Modernisation – PIT Self-Service Application Guide
  
 
 
-![Image 31](image_31.png)
+![Image 31](./images/image_31.png)
 
 # Page 20
 
@@ -699,5 +699,5 @@ page is displayed to the user.
  
 
 
-![Image 32](image_32.png)
+![Image 32](./images/image_32.png)
 

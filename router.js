@@ -8,6 +8,7 @@ const routes = {
   signature: 'signature.html',
   newpage: 'newpage.html',
   PITSelfServiceGuide: 'PITSelfServiceGuide.html',
+  PITSelfServiceGuide2: 'PITSelfServiceGuide2.html',
 };
 
 function loadRoute() {
