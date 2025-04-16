@@ -9,6 +9,7 @@ const routes = {
   newpage: 'newpage.html',
   PITSelfServiceGuide: 'PITSelfServiceGuide.html',
   PITSelfServiceGuide2: 'PITSelfServiceGuide2.html',
+  brandnewpage: 'brandnewpage.html',
 };
 
 function loadRoute() {

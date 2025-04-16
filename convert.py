@@ -1,7 +1,7 @@
 import markdown
 from bs4 import BeautifulSoup
 
-with open("PITSelfServiceGuide2.md", "r", encoding="utf-8") as input_file:
+with open("brandnewpage.md", "r", encoding="utf-8") as input_file:
     text = input_file.read()
 html = markdown.markdown(text)
 
@@ -25,5 +25,5 @@ for tag in h2:
 #new_html.find("ul")['class'] = "list-group"
 #new_html.find("li")['class'] = "list-group-item"
 
-with open("PITSelfServiceGuide2.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
+with open("brandnewpage.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
     output_file.write(str(new_html))
