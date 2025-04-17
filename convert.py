@@ -1,11 +1,13 @@
 import markdown
 from bs4 import BeautifulSoup
 
-with open("brandnewpage.md", "r", encoding="utf-8") as input_file:
+with open("editor_output.md", "r", encoding="utf-8") as input_file:
     text = input_file.read()
-html = markdown.markdown(text)
+html = markdown.markdown(text, extensions=['fenced_code', 'tables'])
 
 new_html = BeautifulSoup(html, "lxml")
+
+print(new_html)
 
 h1 = new_html.find_all('h1')
 
@@ -17,13 +19,10 @@ h2 = new_html.find_all('h2')
 for tag in h2:
     tag['class'] = "document-title"
 
-#new_html.
-#new_html.find_all("h1")['class'] = "pmod"
-#new_html.find_all("h2")['class'] = "document-title"
-#new_html.find("h3")['class'] = "heading"
-#new_html.find("table")['class'] = "table"
-#new_html.find("ul")['class'] = "list-group"
-#new_html.find("li")['class'] = "list-group-item"
+#code = new_html.find_all('code')
 
-with open("brandnewpage.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
+#for tag in code:
+#    tag['class'] = "border border-info"
+
+with open("codeblock.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
     output_file.write(str(new_html))

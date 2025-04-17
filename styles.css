@@ -47,3 +47,7 @@ body {
 .heading {
     color: rgb(2, 95, 99);
 }
+
+code{
+    font-family: Monaco, monospace;
+}

@@ -10,7 +10,6 @@ function saveData() {
   let alldata = "";
 
   x.forEach((element) => {
-    //console.log(element.value);
 
     if(element.id == 'paragraph'){
       alldata += element.value + "\n";
@@ -24,17 +23,14 @@ function saveData() {
       alldata += "## " + element.value + "\n";
     }
 
+    if(element.id == 'code'){
+      alldata += "```\n" + element.value + "\n```" + "\n";
+      //
+    }
+
 });
 
-console.log(x)
-
- 
-  
-
-  /* */
-
   // Get form data 
-  //const name = document.getElementById('0').value;
 
   // Create a Blob from the data 
   //const blob = new Blob([name], { type: 'text/plain' });
@@ -85,12 +81,25 @@ function spawnHeading() {
   let label = document.createElement('p');
   label.textContent = "Heading::"
 
-  let title = document.createElement('textarea');
-  title.className = "form-control";
-  title.id = "heading";
-  title.rows = 1;
+  let heading = document.createElement('textarea');
+  heading.className = "form-control";
+  heading.id = "heading";
+  heading.rows = 1;
   document.getElementById("form").insertBefore(label, document.getElementById("savebutton"));
-  document.getElementById("form").insertBefore(title, document.getElementById("savebutton"));
+  document.getElementById("form").insertBefore(heading, document.getElementById("savebutton"));
+  idCounter++;
+}
+
+function spawnCodeBlock() {
+  let label = document.createElement('p');
+  label.textContent = "Code:"
+
+  let code = document.createElement('textarea');
+  code.className = "form-control";
+  code.id = "code";
+  code.rows = 5;
+  document.getElementById("form").insertBefore(label, document.getElementById("savebutton"));
+  document.getElementById("form").insertBefore(code, document.getElementById("savebutton"));
   idCounter++;
 }
 
