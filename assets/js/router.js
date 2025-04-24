@@ -15,8 +15,8 @@ function getData() {
   //console.log(data)
 
   function loadRoute() {
-    const hash = window.location.hash.slice(1);
-    const route = routes[hash];
+    const hash = window.location.hash.slice(1) || 'home';
+    const route = routes[hash] || 'home.html';
 
     fetch(route)
       .then(res => res.text())

@@ -18,33 +18,42 @@
             </header>
 
 
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 sidebar">
+                <div class="position-sticky pt-3" id="sidebarLinks">
+                    <!-- <a href="#home" class="nav-link">PMOD Home</a>
+                    <a href="#page1">Page 1</a>
+                    <a href="#page2">Page 2</a>
+                    <a href="#page3">Page 3</a> -->
+                </div>
+            </nav>
+
             <script>
-                function fetchJSONData() {
-                    fetch('./sitemap.json')
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! Status: ${response.status}`);
-                            }
-                            return response.json();  
+                const sidebarLinks = document.getElementById('sidebarLinks');
+
+                function getData() {
+                    return fetch('./assets/js/sitemap.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            return data
                         })
-                        .then(data => console.log(data))  
-                        .catch(error => console.error('Failed to fetch data:', error)); 
-                }
+                };
+
+                (async () => {
+                    const routes = await getData()
+
+                    for (route in routes) {
+                        let link = document.createElement('a');
+                        link.href = "#" + route;
+                        link.text = route;
+                        sidebarLinks.appendChild(link)
+                    }
+
+                })()
 
             </script>
 
 
-
-
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 sidebar">
-                <div class="position-sticky pt-3">
-                    <a href="#home" class="nav-link">PMOD Home</a>
-                    <a href="#page1">Page 1</a>
-                    <a href="#page2">Page 2</a>
-                    <a href="#page3">Page 3</a>
-                </div>
-            </nav>
             <!-- <a href="#home">Home</a>-->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 main_content">
                 <div id="app">
