@@ -2,15 +2,8 @@
 const app = document.getElementById('app');
 
 const routes = {
-  home: 'home.html',
-  soap: 'soap.html',
-  rest: 'rest.html',
-  signature: 'signature.html',
-  newpage: 'newpage.html',
-  PITSelfServiceGuide: 'PITSelfServiceGuide.html',
-  PITSelfServiceGuide2: 'PITSelfServiceGuide2.html',
-  brandnewpage: 'brandnewpage.html',
-  codeblock: 'codeblock.html',
+  home: './pages/home.html',
+  page1: './pages/page1.html',
 };
 
 function loadRoute() {
