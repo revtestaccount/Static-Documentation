@@ -1,7 +1,7 @@
 import markdown
 from bs4 import BeautifulSoup
 
-with open("././md/page1.md", "r", encoding="utf-8") as input_file:
+with open("././md/pitselfserviceguide.md", "r", encoding="utf-8") as input_file:
     text = input_file.read()
 html = markdown.markdown(text, extensions=['fenced_code', 'tables'])
 
@@ -24,5 +24,5 @@ for tag in h2:
 #for tag in code:
 #    tag['class'] = "border border-info"
 
-with open("././md/page1.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
+with open("././md/pitselfserviceguide.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
     output_file.write(str(new_html))
