@@ -11,10 +11,10 @@ PAYE Modernisation
 
 
 ![Image 1](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_1.png)
-![Image 2](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_2.png)
-![Image 3](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_3.png)
-![Image 4](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_4.png)
-![Image 5](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_5.png)
+![Image 2](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_2.png)
+![Image 3](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_3.png)
+![Image 4](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_4.png)
+![Image 5](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_5.png)
 
 # Page 2
 
@@ -40,7 +40,7 @@ PAYE PIT Help Desk Registration ................................................
 Raising and Tracking Queries .............................................................................................. 10 
 
 
-![Image 6](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_6.png)
+![Image 6](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_6.png)
 
 # Page 3
 
@@ -92,7 +92,7 @@ their products with Revenue.
  
 
 
-![Image 7](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_7.png)
+![Image 7](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_7.png)
 
 # Page 4
 
@@ -120,7 +120,7 @@ Pay As You Earn
  
 
 
-![Image 8](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_8.png)
+![Image 8](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_8.png)
 
 # Page 5
 
@@ -161,7 +161,7 @@ Interested developers/testers can register for the PAYE PIT Help Desk by complet
 form available at: [https://revenuehelpdesk.canfigure.net/portal/revenueie/register.html](https://revenuehelpdesk.canfigure.net/portal/revenueie/register.html)  
 
 
-![Image 9](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_9.png)
+![Image 9](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_9.png)
 
 # Page 6
 
@@ -185,8 +185,8 @@ address inputted on the form for further instructions.
 business/company group until it has verified that this is allowed by the business/company.  
 
 
-![Image 10](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_10.png)
-![Image 11](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_11.png)
+![Image 10](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_10.png)
+![Image 11](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_11.png)
 
 # Page 7
 
@@ -205,8 +205,8 @@ folders if expected email has not arrived.
  
 
 
-![Image 12](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_12.png)
-![Image 13](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_13.png)
+![Image 12](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_12.png)
+![Image 13](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_13.png)
 
 # Page 8
 
@@ -228,9 +228,9 @@ The developer/tester will be notified of successful registration by email which 
 instructions on how to complete the process and log in to the Help Desk: 
 
 
-![Image 14](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_14.png)
-![Image 15](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_15.png)
-![Image 16](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_16.png)
+![Image 14](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_14.png)
+![Image 15](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_15.png)
+![Image 16](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_16.png)
 
 # Page 9
 
@@ -246,8 +246,8 @@ Figure 5 Login instruction email
  
 
 
-![Image 17](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_17.png)
-![Image 18](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_18.png)
+![Image 17](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_17.png)
+![Image 18](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_18.png)
 
 # Page 10
 
@@ -267,9 +267,9 @@ Figure 6 Login with email
 Figure 7 Enter Google Authenticator code 
 
 
-![Image 19](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_19.png)
-![Image 20](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_20.png)
-![Image 21](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_21.png)
+![Image 19](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_19.png)
+![Image 20](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_20.png)
+![Image 21](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_21.png)
 
 # Page 11
 
@@ -292,9 +292,9 @@ On saving the query the developer/tester will receive an email receipt including
 for tracking purposes: 
 
 
-![Image 22](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_22.png)
-![Image 23](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_23.png)
-![Image 24](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_24.png)
+![Image 22](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_22.png)
+![Image 23](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_23.png)
+![Image 24](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_24.png)
 
 # Page 12
 
@@ -308,9 +308,9 @@ PAYE PIT Help Desk – User Guide
 Figure 10 Email receipt 
 
 
-![Image 25](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_25.png)
-![Image 26](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_26.png)
-![Image 27](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_27.png)
+![Image 25](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_25.png)
+![Image 26](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_26.png)
+![Image 27](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_27.png)
 
 # Page 13
 
@@ -330,8 +330,8 @@ On resolution of the query or if further information is required, the developer/
 email notification with the details: 
 
 
-![Image 28](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_28.png)
-![Image 29](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_29.png)
+![Image 28](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_28.png)
+![Image 29](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_29.png)
 
 # Page 14
 
@@ -348,8 +348,8 @@ The same information will also be available from within the tool itself:
 Figure 13 Resolved queries
 
 
-![Image 30](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_30.png)
-![Image 31](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_31.png)
-![Image 32](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_32.png)
-![Image 33](O:/Static-Documentation/Static-Documentation/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_33.png)
+![Image 30](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_30.png)
+![Image 31](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_31.png)
+![Image 32](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_32.png)
+![Image 33](/migrationScripts/PAYEPITHelpDeskUserGuide/images/image_33.png)
 

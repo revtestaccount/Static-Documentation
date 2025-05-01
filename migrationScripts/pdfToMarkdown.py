@@ -1,10 +1,11 @@
+from operator import sub
 import os
 import fitz  # PyMuPDF
 import re
 import sys
 
 #*** Run Commmand ****
-#python pdfToMarkdown.py O:\paye-employers-documentation-v2\paye-employers-documentation-v2-python-scripts\PITSelfServiceGuide.pdf
+#python pdfToMarkdown.py O:\Static-Documentation\Static-Documentation\migrationScripts\Overview_of_ROS_Payroll_Reporting.pdf 
 
 print('Script Parameters', sys.argv)
 firstParameter = str(sys.argv[1])
@@ -38,10 +39,20 @@ def extract_images(page, img_counter):
     for img_index, img in enumerate(page.get_images(full=True)):
         img_filename = f"image_{img_counter}.png"
         # md_image_links.append(f"![Image {img_counter}](./{img_filename})")
-        currentDir = os.getcwd()
-        currentDirectory = currentDir.replace("\\","/") 
+        
+        # currentDir = os.getcwd()
+        # currentDirectory = currentDir.replace("\\","/") 
         # print(currentDirectory)
-        md_image_links.append(f"![Image {img_counter}]({currentDirectory}/{fileName}/images/{img_filename})")
+        
+        directory = os.path.dirname(__file__)
+        # print("Directory: "+directory)
+        # file_name = os.path.basename(__file__)
+        # print("File Name: "+file_name)
+        sub_directory = os.path.basename(directory)
+        # print("Sub Directory: "+sub_directory)
+        
+        # md_image_links.append(f"![Image {img_counter}]({currentDirectory}/{fileName}/images/{img_filename})")
+        md_image_links.append(f"![Image {img_counter}](/{sub_directory}/{fileName}/images/{img_filename})")
         img_counter += 1
     return "\n".join(md_image_links), img_counter
 
