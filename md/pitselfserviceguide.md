@@ -8,9 +8,11 @@ This document is aimed at payroll software developers and testers who are updati
 be compatible with PAYE reporting obligations from 2019 onwards. 
 
 ## TABLE OF CONTENTS 
-1. Abcd
-2. Efgh
-3. Ijkl...
+# Table of Contents
+1. [Introduction](#1 INTRODUCTION)
+2. [Example2](#example2)
+3. [Third Example](#third-example)
+4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
 
 ## 1 INTRODUCTION 
 

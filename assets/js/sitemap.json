@@ -3,8 +3,6 @@
  "page1": "./pages/page1.html",
  "page2": "./pages/page2.html",
  "page3": "./pages/page3.html",
- "newtestpage": "./pages/newtestpage.html",
- "ashok": "./pages/ashok.html",
- "new": "./pages/new.html",
- "pitselfserviceguide": "./pages/pitselfserviceguide.html"
+ "pitselfserviceguide": "./pages/pitselfserviceguide.html",
+ "toctest": "./pages/toctest.html"
 }
