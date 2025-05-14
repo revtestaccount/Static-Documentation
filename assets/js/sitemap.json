@@ -4,5 +4,6 @@
  "page2": "./pages/page2.html",
  "page3": "./pages/page3.html",
  "pitselfserviceguide": "./pages/pitselfserviceguide.html",
- "toctest": "./pages/toctest.html"
+ "toctest": "./pages/toctest.html",
+ "toctest2": "./pages/toctest2.html"
 }
