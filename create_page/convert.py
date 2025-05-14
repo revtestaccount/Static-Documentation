@@ -10,10 +10,15 @@ new_html = BeautifulSoup(html, "lxml")
 tableOfContents = []
 id = ""
 
+#tocHeading = new_html.new_tag("h1")
+#tocHeading['id'] = "toc_heading"
+#new_html.
+
 h1 = new_html.find_all('h1')
 
 for tag in h1:
     tag['class'] = "document-title"
+    tag['id'] = "xxx"
 
 h2 = new_html.find_all('h2')
 
@@ -44,7 +49,12 @@ for id in tableOfContents:
     newAnchor['href'] = "javascript:void(0)"
     newAnchor['onclick'] = "document.getElementById(\'" + id + "\').scrollIntoView()"
     newAnchor.append(id)
-    new_html.append(newAnchor)
+    #new_html.append(newAnchor)
+    new_html.find(id="xxx").append(newAnchor)
+
+
+
+
 
 #code = new_html.find_all('code')
 # <a href="javascript:void(0)" onclick="document.getElementById('here').scrollIntoView()">go here</a>
