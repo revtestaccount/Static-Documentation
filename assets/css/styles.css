@@ -48,6 +48,10 @@ body {
     color: rgb(2, 95, 99);
 }
 
-code{
+code {
     font-family: Monaco, monospace;
+}
+
+.no-dot {
+    list-style: none;
 }
