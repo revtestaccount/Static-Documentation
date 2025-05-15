@@ -1,0 +1,330 @@
+
+// Do not edit directly, this file was auto-generated.
+
+$spacing6xs: 2px;
+$spacing5xs: 4px;
+$spacing4xs: 6px;
+$spacing3xs: 8px;
+$spacing2xs: 10px;
+$spacingXs: 12px;
+$spacingS: 14px;
+$spacingM: 16px;
+$spacingL: 20px;
+$spacingXl: 24px;
+$spacing2xl: 32px;
+$spacing3xl: 40px;
+$spacing4xl: 48px;
+$spacing5xl: 64px;
+$spacing6xl: 80px;
+$radiusSquared: 0rem;
+$radiusRounded: 4px;
+$borderThin: 1px;
+$borderBold: 4px;
+$borderMedium: 2px;
+$baseWhite: #ffffff;
+$redRedDarken40: #24120c;
+$redRedDarken30: #4f150f;
+$redRedDarken20: #75160c;
+$redRedDarken10: #a1160a;
+$redRedLighten10: #fa5343;
+$redRedLighten20: #fc9086;
+$redRedLighten30: #fabbb4;
+$redRedLighten40: #fadcd9;
+$redRedLighten50: #fcf3f2;
+$redBaseRed: #d91f11;
+$yellowYellowDarken50: #38251b;
+$yellowYellowDarken40: #54341f;
+$yellowYellowDarken30: #70491c;
+$yellowYellowDarken20: #946613;
+$yellowYellowDarken10: #b3870e;
+$yellowYellowLighten40: #fff5df;
+$yellowYellowLighten20: #f7e379;
+$yellowYellowLighten30: #faf6cf;
+$yellowBaseYellow: #d9a514;
+$yellowYellowLighten10: #f5c518;
+$fontFamiliesSegoeUi: 'Segoe UI';
+$fontFamiliesFiraSans: 'Fira Sans';
+$lineHeights0: 48;
+$lineHeights1: 40;
+$lineHeights2: 32;
+$lineHeights3: 28;
+$lineHeights4: 24;
+$lineHeights5: 20;
+$lineHeights6: 16;
+$lineHeights7: 12;
+$fontWeightsBold: 700;
+$fontWeightsSemiBold: 600;
+$fontWeightsRegular: 400;
+$fontSize0: 10.5px;
+$fontSize1: 12px;
+$fontSize2: 14px;
+$fontSize3: 16px;
+$fontSize4: 18px;
+$fontSize5: 21px;
+$fontSize6: 24px;
+$fontSize7: 28px;
+$fontSize8: 32px;
+$fontSize9: 35px;
+$h1700: 700 35px/48 sans-serif;
+$h1600: 600 35px/48 sans-serif;
+$h1400: 400 35px/48 sans-serif;
+$h2700: 700 32px/48 sans-serif;
+$h2600: 700 32px/48 sans-serif;
+$h2400: 400 32px/48 sans-serif;
+$h3700: 700 28px/40 sans-serif;
+$h3600: 600 28px/40 sans-serif;
+$h3400: 400 28px/40 sans-serif;
+$h4700: 700 24px/40 sans-serif;
+$h4600: 600 24px/40 sans-serif;
+$h4400: 400 24px/40 sans-serif;
+$h5700: 700 21px/32 sans-serif;
+$h5600: 600 21px/32 sans-serif;
+$h5400: 400 21px/32 sans-serif;
+$h6700: 700 18px/28 sans-serif;
+$h6600: 600 18px/28 sans-serif;
+$h6400: 400 18px/28 sans-serif;
+$macro1700: 700 16px/24 sans-serif;
+$macro1600: 600 16px/24 sans-serif;
+$macro1400: 400 16px/24 sans-serif;
+$macro2700: 700 14px/20 sans-serif;
+$macro2600: 600 14px/20 sans-serif;
+$macro2400: 400 14px/20 sans-serif;
+$micro1700: 700 12px/16 sans-serif;
+$micro1600: 600 12px/16 sans-serif;
+$micro1400: 400 12px/16 sans-serif;
+$textDecorationNone: none;
+$textDecorationUnderline: underline;
+$blueBlueDarken40: #000d1a;
+$blueBlueDarken30: #00254d;
+$blueBlueDarken20: #003e80;
+$blueBlueDarken15: #103a75;
+$blueBlueDarken10: #0056b3;
+$blueBlueDarken5: #186ade;
+$blueBaseBlue: #006fe6;
+$blueBlueLighten5: #3d8df5;
+$blueBlueLighten10: #1a89ff;
+$blueBlueLighten20: #4da3ff;
+$blueBlueLighten30: #80bdff;
+$blueBlueLighten40: #b3d8ff;
+$blueBlueLighten50: #e6f2ff;
+$brandtealBrandtealDarken30: #000e0f;
+$brandtealBrandtealDarken20: #002728;
+$brandtealBrandtealDarken10: #004042;
+$brandtealBaseBrandtealX: #155c5e;
+$brandtealBaseBrandteal: #005a5c;
+$brandtealBrandtealLighten10: #008c8f;
+$brandtealBrandtealLighten20: #00bdc1;
+$brandtealBrandtealLighten20X: #4ebfb9;
+$brandtealBrandtealLighten30: #00f0f5;
+$brandtealBrandtealLighten40: #28faff;
+$brandtealBrandtealLighten50: #5bfbff;
+$brandmintBrandmintDarken40: #030707;
+$brandmintBrandmintDarken30: #13292a;
+$brandmintBrandmintDarken20: #234b4d;
+$brandmintBrandmintDarken10: #326d71;
+$brandmintBaseBrandmint: #428f94;
+$brandmintBrandmintLighten10: #56aeb3;
+$brandmintBrandmintLighten20: #79bfc3;
+$brandmintBrandmintLighten30: #9cd0d3;
+$brandmintBrandmintLighten40: #bfe0e3;
+$brandmintBrandmintLighten50: #e3f1f2;
+$cyanCyanDarken40: #001414;
+$cyanCyanDarken30: #002d2d;
+$cyanCyanDarken20: #006060;
+$cyanCyanDarken10: #009393;
+$cyanBaseCyan: #00c6c6;
+$cyanCyanLighten10: #00f9f9;
+$cyanCyanLighten20: #2dffff;
+$cyanCyanLighten30: #60ffff;
+$cyanCyanLighten40: #93ffff;
+$cyanCyanLighten50: #c6ffff;
+$greenGreenDarken30: #020803;
+$greenGreenDarken20: #071d0c;
+$greenGreenDarken10: #0b3214;
+$greenGreenLighten60: #b4eec1;
+$greenGreenLighten50: #8be49f;
+$greenGreenLighten40: #61db7d;
+$greenGreenLighten30: #38d15b;
+$greenGreenLighten20: #28ae47;
+$greenGreenLighten10: #1f8436;
+$greenBaseGreen: #155b25;
+$surfaceSurface900: #030507;
+$surfaceSurface800: #343a40;
+$surfaceSurface750: #3b3b3b;
+$surfaceSurface700: #485057;
+$surfaceSurface650: #525252;
+$surfaceSurface600: #6c757d;
+$surfaceSurface500: #adb5bd;
+$surfaceSurface450: #8a8a8a;
+$surfaceSurface400: #ced4da;
+$surfaceSurface350: #adadad;
+$surfaceSurface300: #dee2e6;
+$surfaceSurface200: #e9ecef;
+$surfaceSurface100: #f8f9fa;
+$surfaceSurface150: #f3f3f3;
+$surfaceSurface50: #f4f4f4;
+$micro2700: 700 10.5px/12 sans-serif;
+$micro2600: 600 10.5px/12 sans-serif;
+$micro2400: 400 10.5px/12 sans-serif;
+$buttonBackgroundAccent: #3d8df5;
+$buttonBackgroundAccentHover: #4da3ff;
+$buttonBackgroundAccentActive: #103a75;
+$buttonBackgroundDisabled: #adadad;
+$buttonBorderAccent: #103a75; // bottom border
+$buttonBorderDisabled: #ffffff;
+$buttonTextInverse: #ffffff;
+$buttonTextDisabled: #ffffff;
+$buttonIconInverse: #ffffff;
+$buttonIconDisabled: #ffffff;
+$buttonRadius: 4px;
+$buttonHorizontalPadding: 16px;
+$buttonVerticalPadding: 12px;
+$buttonGap: 8px;
+$buttonBorderWidth: 4px;
+$buttonAll: 2px;
+$buttonLabelText: 400 18px/28 'Fira Sans';
+$formBackgroundPrimary: #ffffff;
+$formBackgroundSelected: #e6f2ff;
+$formBackgroundReadOnly: #f4f4f4;
+$formBackgroundHover: #f3f3f3;
+$formBackgroundAccentSelected: #3d8df5;
+$formBorderPrimary: #6c757d;
+$formBorderHover: #4ebfb9;
+$formBorderError: #d91f11;
+$formBorderReadyOnly: #8a8a8a;
+$formBorderDisabled: #adadad;
+$formIconInverse: #ffffff;
+$formIconPrimary: #525252;
+$formIconDisabled: #adadad;
+$formTextPrimary: #030507;
+$formTextSecondary: #525252;
+$formTextError: #d91f11;
+$formTextInverse: #ffffff;
+$formTextDisabled: #adadad;
+$formTextTertiary: #3b3b3b;
+$formBorderWidth: 2px;
+$formHorizontalPadding: 12px;
+$formVerticalPadding: 12px;
+$formGap: 8px;
+$formLabelText: 700 18px/28 'Fira Sans';
+$formFieldText: 400 18px/28 'Fira Sans';
+$formHelperText: 400 16px/24 'Fira Sans';
+$formFieldGap: 8px;
+$dataTextPrimary: #485057;
+$dataTextBrand: #004042;
+$dataBorderPrimary: #adb5bd;
+$dataBorderSecondary: #f4f4f4;
+$dataBackgroundSecondary: #f8f9fa;
+$dataBackgroundPrimary: #ffffff;
+$dataBackgroundTertiary: #f4f4f4;
+$dataBorderWidth: 1px;
+$dataHeader: 700 16px/24 'Fira Sans';
+$dataBody: 400 16px/24 'Fira Sans';
+$dataHorizontalPadding: 16px;
+$dataVerticalPaddingBody: 12px;
+$dataVerticalPadding: 14px;
+$dataTitle: 600 18px/28 'Fira Sans';
+$notificationBackgroundWarning: #faf6cf;
+$notificationBackgroundSuccess: #8be49f;
+$notificationBackgroundInfo: #e6f2ff;
+$notificationBackgroundError: #fcf3f2;
+$notificationTextWarning: #485057;
+$notificationTextError: #485057;
+$notificationTextSuccess: #485057;
+$notificationTextInfo: #485057;
+$notificationBorderWarning: #946613;
+$notificationBorderSuccess: #155b25;
+$notificationBorderInfo: #006fe6;
+$notificationBorderError: #d91f11;
+$notificationIconWarning: #946613;
+$notificationIconSuccess: #155b25;
+$notificationIconInfo: #006fe6;
+$notificationIconError: #d91f11;
+$overlayBackgroundBrand: #326d71;
+$overlayTextInverse: #ffffff;
+$overlayIconInverse: #ffffff;
+$overlayHorizontalPadding: 16px;
+$overlayVerticalPadding: 8px;
+$overlayTooltipText: 400 14px/20 'Fira Sans';
+$containerBackgroundPrimary: #ffffff;
+$containerBorderSecondary: #f4f4f4;
+$containerTextPrimary: #485057;
+$containerBackgroundSecondary: #f4f4f4;
+$containerTextAccent: #006fe6;
+$containerIconAccent: #006fe6;
+$tagBackgroundInfo: #006fe6;
+$tagBackgroundError: #d91f11;
+$tagBackgroundSuccess: #155b25;
+$tagBackgroundWarning: #946613;
+$tagTextInverse: #ffffff;
+$linkTextAccent: #186ade;
+$linkTextAccentActive: #103a75;
+$linkTextVisited: #8f49de;
+$linkTextDisabled: #adadad;
+$linkTextHover: #186ade;
+$linkIconAccent: #186ade;
+$linkIconAccentActive: #103a75;
+$linkIconVisited: #8f49de;
+$linkIconHover: #186ade;
+$linkIconDisabled: #adadad;
+$linkGap: 8px;
+$linkLabelText: 400 16px/24 'Fira Sans';
+$linkLabelTextUnderline: 400 16px/24 'Fira Sans';
+$borderForm: 2px solid #6c757d;
+$buttonHoverBg: #4da3ff; // Button/ Background of a button in hover state is blue-lighten-20
+$buttonTextHoverColor: #ffffff; // Button/ Text color of a button in hover state is base-white
+$buttonBg: #3d8df5; // Button/ Background of a button is blue-lighten-5
+$buttonTextColor: #ffffff; // Button/ Text color of a button is base-white
+$buttonActiveBg: #103a75; // Button/ Background of a button in active state is blue-darken-15
+$buttonTextActiveColor: #ffffff; // Button/ Text colour of a button in active state is base-white
+$linkButtonColor: #186ade; // Button/ Text color of a link button is blue-darken-5
+$linkButtonHoverColor: #186ade; // Button/ Text color of a link button in hover state is blue-darken-5
+$linkButtonTextHoverDecoration: underline; // Text decoration of a link button in hover state is underline
+$tableHeaderBorder: #adb5bd; // Data/ Border of a table header is surface-500
+$tableHeaderCellBorder: #adb5bd; // Data/ Border of a table header cell is surface-500
+$tableHeaderBg: #f8f9fa; // Data/ Background of a table header is surface-100
+$tableHeaderCellBg: #f8f9fa; // Data/ Background of a table header cell is surface-100
+$tableHeaderTextColor: #485057; // Data/ Text color of a table header is surface-700
+$tableHeaderCellTextColor: #485057; // Data/ Text color of a table header cell is surface-700
+$tableBodyRowBg: #ffffff; // Data/ Background of a table body row is base-white
+$tableBodyRowTextColor: #485057; // Data/ Text color of a table body row is surface-700
+$tableBodyCellBorder: #adb5bd; // Data/ Border for a cell of a table toby row is surface-500
+$inputBg: #ffffff; // Form/ Background of an input field is base-white
+$inputTextColor: #030507; // Form/ Text color of an input field is surface-900
+$inputBorder: #6c757d; // Form/ Border of an input field is surface-600
+$inputHoverBorderColor: #4ebfb9; // Form/ Border of an input field in hover state is brandteal-lighten-25
+$inputErrorBorderColor: #d91f11; // Form/ Color of an input field in invalid state is base-red
+$inputPlaceholderTextColor: #525252; // Form/ Text color of a placeholder text is surface-650
+$inputFilledBg: #ffffff; // Form/ Background of a filled input is base-white
+$inputFilledHoverBg: #ffffff; // Form/ Background of a filled input in hover state is base-white
+$inputFilledFocusBg: #ffffff; // Form/ Background of a filled input in focus state is base-white
+$inputListBg: #ffffff; // Form/ Background of an input list such as dropdown, listbox, multiselect is base-white
+$inputListItemHoverBg: #f3f3f3; // Form/ Hover state background for an individual itrem of an input list is surface-150
+$inputListHeaderBg: #ffffff; // Form/ Background for a header of an input list is base-white
+$checkboxBorder: #6c757d; // Form/ Border of a checkbox is surface-600
+$checkboxActiveHoverBg: #3d8df5; // Form/ Background of a selected checkbox in hover state is blue-lighten-5
+$tooltipBg: #326d71; // Overlay/ Background of a tooltip is brandmint-darken-10
+$tooltipTextColor: #ffffff; // Overlay/ Text color of a tooltip is base-white
+$infoMessageBg: #e6f2ff; // Message/ Background of an info message is blue-lighten-40
+$infoMessageBorder: #006fe6; // Message/ Border of an info message is base-blue
+$infoMessageTextColor: #485057; // Message/ Text color of an info message is surface-700
+$infoMessageIconColor: #006fe6; // Message/ Icon color of an info message is base-blue
+$successMessageBg: #8be49f; // Message/ Background of a success message is green-lighten-50
+$successMessageBorder: #155b25; // Message/ Border of a success message is base-green
+$successMessageTextColor: #485057; // Message/ Text color of a success message is surface-700
+$successMessageIconColor: #155b25; // Message/ Icon color of a success message is surface-700
+// Message/ Background of a warning message
+// 
+//  is yellow-lighten-30
+$warningMessageBg: #faf6cf;
+$warningMessageBorder: #946613; // Message/ Border of a warning message is yellow-darken-20
+$warningMessageTextColor: #485057; // Message/ Text color of a warning message is surface-700
+$warningMessageIconColor: #946613; // Message/ Icon color of a warning message is yellow-darken-20
+$errorMessageBg: #fcf3f2; // Message/ Background of an error message is red-lighten-50
+$errorMessageBorder: #d91f11; // Message/ Border of an error message is base-red
+$errorMessageTextColor: #485057; // Message/ Text color of an error message is surface-700
+$errorMessageIconColor: #d91f11; // Message/ Icon color of an error message is base-red
+$borderRadius: 4px;
+$buttonBorder: 4px solid #103a75; // Button/ Border of a button is blue-darken-15
+$buttonHoverBorderColor: 4px solid #4da3ff; // Button/ Border color of a button in hover state is blue-lighten-20
+$buttonActiveBorderColor: 4px solid #103a75; // Button/ Border color of a button in pressed state is blue-darken-15

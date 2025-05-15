@@ -1,0 +1,37 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-paginator,
+.p-datatable .p-paginator { 
+    .p-dropdown { 
+        height: rem(40px); 
+        margin-right: 0px;
+        .p-dropdown-label { 
+            @include extrasmall( $surface-800);
+        }
+        .p-dropdown-panel .p-dropdown-items .p-dropdown-item {  
+            height: rem(40px);
+        }
+    }
+    .p-paginator-pages { 
+        .p-paginator-page.p-highlight { 
+            @include semibold();
+        }
+        .p-paginator-page {
+            @include extrasmall($surface-600); 
+            @include semibold(); 
+        }
+        height: rem(40px); 
+    }
+    .p-paginator-current { 
+        @include extrasmall($surface-900);
+    }
+    .p-paginator-first, .p-paginator-prev, .p-paginator-next, .p-paginator-last { 
+        height: rem(32px);
+        transition: box-shadow 0.2s;  
+    }
+    .p-link:focus { 
+        color: $surface-900;   
+        background-color: $base-white;  
+        box-shadow: 0 0 0 rem(2px) $blue-lighten-20;  
+    }
+}

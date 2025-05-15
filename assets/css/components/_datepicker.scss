@@ -1,0 +1,79 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-calendar {
+    .p-button {
+        position: absolute;
+        right: 0px;
+        background: transparent;
+        color: $surface-800;
+        border: none;
+        width: rem(30px);  
+        padding: rem(10px) rem(12px) rem(10px) 0px;
+        .p-button-icon {
+            font-size: rem(14px);
+        }
+        &:enabled {
+            &:hover {
+                background: transparent;
+                border: none;
+                color: $surface-800;
+            }
+            &:focus {
+                background: transparent;
+                box-shadow: none;
+                color: $surface-800;
+            }
+        }
+    }
+    .p-datepicker {
+        width: rem(315px);
+        .p-datepicker-header {
+            margin-bottom: rem(4px);  
+            .p-datepicker-title {
+                height: rem(32px); 
+            }
+            .p-link {
+                @include extrasmall(); 
+                @include semibold(); 
+            }
+            .p-datepicker-prev,
+            .p-datepicker-next {
+                color: $surface-600; 
+                &:enabled:hover {
+                    background: $surface-300;
+                }
+                &:focus {
+                    box-shadow: 0 0 0 0.2rem $blue-lighten-40;
+                }
+            }
+        }
+        table {
+            th {
+                @include small();
+                height: rem(27px); 
+                line-height: rem(19px);
+                &:hover {
+                    background-color: $surface-200;
+                }
+            }
+            tbody {
+                padding: rem(4px) rem(3px) 0px rem(3px);
+            }
+            td {
+                padding: rem(4px);
+                > span {
+                    @include small(); 
+                }
+            }
+            .p-disabled,
+            .p-disabled * {
+                color: $surface-500; 
+            }
+        }
+    }
+}
+
+//ITMOD-2434 - bug fix for the Datepicker readonly issue where the overlay is still visible
+rev-datepicker .readonly .p-calendar .p-datepicker {
+     display: none;
+}

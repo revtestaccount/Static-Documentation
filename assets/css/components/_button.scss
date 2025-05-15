@@ -1,0 +1,356 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+/* Primary Button */
+.p-button { 
+    .p-button-label {
+        @include h6($base-white);  
+    }
+    &:enabled {
+        &:focus { 
+            box-shadow: inset 0 0 0 rem(1px) $base-white; 
+        }
+        &:active {
+            box-shadow: none;
+        }
+    }
+    /* Secondary Button */
+    &.p-button-secondary {
+        &:enabled {
+            &:focus {
+                background-color: $surface-800;
+                border-color: $base-blue; 
+                box-shadow: inset 0 0 0 rem(1px) $base-white;
+                &:hover {
+                    border-color: $base-blue;
+                }
+            }
+            &:hover {
+                background-color: $surface-700;
+                border-color: $surface-700; 
+            }
+            &:active {
+                background-color: $surface-600;
+                border-color: $surface-600;
+                box-shadow: none;
+                &:focus {
+                    border-color: $surface-600;
+                }
+            }
+        }
+    }
+    /* Tertiary Button */
+    &.p-button-tertiary {
+        color: $base-blue;
+        background-color: transparent;
+        border: rem(2px) solid $base-blue;
+        &:enabled {
+            .p-button-label {
+                color: $base-blue;
+            }
+            &:focus {
+                color: $base-white;
+                background-color: $base-blue;
+                &:hover {
+                    background-color: $blue-darken-10;
+                }
+                .p-button-label {
+                    color: $base-white;
+                }
+            }
+            &:hover {
+                color: $base-white;
+                background-color: $base-blue;
+                border-color: $base-blue;
+                .p-button-label {
+                    color: $base-white;
+                }
+            }
+            &:active {
+                color: $base-white;
+                background-color: $blue-darken-20;
+                border-color: $blue-darken-20;
+                &:hover {
+                    background-color: $blue-darken-20;
+                }
+                .p-button-label {
+                    color: $base-white;
+                }
+
+            }
+        }
+        &:disabled {
+            background-color: transparent;
+        }
+    }
+    /* Ghost Button */
+    &.ghost {
+        background-color: transparent;
+        border-color: transparent;
+        &:enabled {
+            .p-button-label {
+                color: $base-blue;
+            }
+            .p-button-icon {
+                color: $base-blue;
+            }
+            &:focus {
+                border-color: $base-blue;
+                background-color: transparent;
+                &:hover {
+                    border-color: $base-blue;
+                }
+            }
+            &:hover {
+                background-color: $surface-50;
+                border-color: $surface-50;
+            }
+
+            &:active {
+                background-color: $surface-200;
+                border-color: $surface-200;
+                &:focus {
+                    border-color: transparent;
+                }
+            }
+        }
+        &:disabled {
+            background-color: transparent;
+            border: none;
+            .p-button-label {
+                color: $surface-500;
+            }
+            .p-button-icon {
+                color: $surface-500;
+            }
+        }
+    }
+    /* Fluid Buttons */
+    &.p-fluid {
+        width: 100%;
+        .p-button-label {
+            text-align: left;
+        }
+        .p-button-icon {
+            width: rem(14px);
+            height: rem(14px);
+            font-size: rem(14px);
+        }
+        .p-button-icon-left {
+            margin-right: rem(14px);
+        }
+        .p-button-icon-right {
+            margin-left: rem(38px);
+        }
+        &.lg {
+            padding-bottom: rem(31.5px);
+        }
+        &.p-button-icon-only {
+            &.lg {
+                width: rem(64px);
+                height: rem(64px);
+                padding: 0;
+            }
+        }
+    }
+    /* Text Icon Buttons */
+    &.p-button-text {
+        padding: rem(2.5px) rem(4px);
+        .p-button-label {
+            color: $base-blue;
+        }
+        .p-button-icon {
+            font-size: rem(16px);
+        }
+        &:enabled {
+            box-shadow: none;
+            &:focus {
+                background-color: transparent;
+                border-color: $base-blue;
+                .p-button-label {
+                    text-decoration: underline;
+                    color: $base-blue;
+                }
+                .p-button-icon {
+                    color: $base-blue;
+                }
+            }
+            &:hover {
+                background-color: transparent;
+                .p-button-label {
+                    text-decoration: underline;
+                    color: $blue-darken-10;
+                }
+                .p-button-icon {
+                    color: $blue-darken-10;
+                }
+            }
+            &:active {
+                .p-button-label {
+                    text-decoration: underline;
+                    color: $blue-darken-20;
+                }
+                .p-button-icon {
+                    color: $blue-darken-20;
+                }
+            }
+        }
+        &.brand {
+            color: $base-white;
+            &:enabled {
+                .p-button-label {
+                    color: $base-white;
+                }
+                &:focus {
+                    border-color: $base-white;
+                    .p-button-label {
+                        color: $base-white;
+                    }
+                    .p-button-icon {
+                        color: $base-white;
+                    }
+                }
+                &:hover {
+                    .p-button-label {
+                        color: $brandteal-lighten-30;
+                    }
+                    .p-button-icon {
+                        color: $brandteal-lighten-30;
+                    }
+                }
+                &:active {
+                    .p-button-label {
+                        color: $brandteal-lighten-20;
+                    }
+                    .p-button-icon {
+                        color: $brandteal-lighten-20;
+                    }
+                }
+            }
+        }
+        &:disabled {
+            color: $surface-500;
+            background-color: transparent;
+            border-color: transparent;
+            .p-button-label {
+                color: $surface-500;
+            }
+        }
+    }
+    /* Icon Only Buttons */
+    &.p-button-icon-only {
+        height: rem(40px);
+        &.p-button-rounded {
+            color: $base-blue;
+            background-color: transparent;
+            border: rem(1px) solid transparent;
+            width: rem(24px);
+            height: rem(24px);
+            font-size: rem(14px);
+            padding: rem(5px);
+            &:enabled {
+                &:focus {
+                    border-color: $base-blue;
+                    box-shadow: none;
+                    background-color: $blue-lighten-30;
+                }
+                &:hover {
+                    background-color: $blue-lighten-40;
+                }
+                &:active {
+                    background-color: $blue-lighten-30;
+                }
+            }
+            &.p-button-secondary {
+                &:enabled {
+                    color: $surface-900;
+                    &:focus {
+                        background-color: $surface-500;
+                    &:hover{
+                        border-color: $base-blue;
+                    }
+                    }
+                    &:hover {
+                        background-color: $surface-400;
+                        border-color: transparent;
+                    }
+                    &:active {
+                        background-color: $surface-500;
+                    }
+                    
+                }
+            }
+            &.p-button-success {
+                &:enabled {
+                    color: $green-darken-10;
+                    &:focus {
+                        background-color: $green-lighten-40;
+                    }
+                    &:hover {
+                        background-color: $green-lighten-50;
+                    }
+                    &:active {
+                        background-color: $green-lighten-40;
+                    }
+                }
+            }
+            &.p-button-warning {
+                &:enabled {
+                    color: $yellow-darken-40;
+                    &:focus {
+                        background-color: $yellow-lighten-10;
+                    }
+                    &:hover {
+                        background-color: $yellow-lighten-20;
+                    }
+                    &:active {
+                        background-color: $yellow-lighten-10;
+                    }
+                }
+            }
+            &.p-button-danger {
+                &:enabled {
+                    color: $red-darken-10;
+                    &:focus {
+                        background-color: $red-lighten-30;
+                    }
+                    &:hover {
+                        background-color: $red-lighten-40;
+                    }
+                    &:active {
+                        background-color: $red-lighten-30;
+                    }
+                }
+            }
+            &.brand {
+                &:enabled {
+                    color: $base-white;
+                    background-color: transparent;
+                    &:focus {
+                        background-color: $brandteal-lighten-10;
+                        border-color: $base-white;
+                    }
+                    &:hover {
+                        background-color: $base-brandteal;
+                    }
+                    &:active {
+                        background-color: $brandteal-lighten-10;
+                    }
+                }
+            }
+            &:disabled {
+                color: $surface-500;
+                background-color: transparent;
+                border-color: transparent;
+            }
+        }
+    }
+    &:disabled {
+        color: $surface-800;
+        background-color: $surface-500;
+        border-color: $surface-500;
+        .p-button-label {
+            color: $surface-800;
+        }
+    }
+   
+}

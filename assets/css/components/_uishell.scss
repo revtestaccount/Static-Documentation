@@ -1,0 +1,23 @@
+  /* UI Shell Scrolling */
+  .rds.sticky {
+    position: fixed;
+    top: rem(-80px);
+    z-index: 9999;
+    width: 100%;
+    box-shadow: 0px rem(4px) rem(4px) 0px rgba(0, 0, 0, 0.20); 
+    transition-duration: 1s;
+  }
+
+  .rds.sticky.rds-scroll-up {
+    position: fixed;
+    top: rem(0px);
+    z-index: 9999;
+    width: 100%;
+    box-shadow: 0px rem(4px) rem(4px) 0px rgba(0, 0, 0, 0.20); 
+    transition-duration: 1s;
+  }
+  
+  /* Entity Bar Customization */
+  .entity-bar {
+    background-color: $surface-50;
+  }

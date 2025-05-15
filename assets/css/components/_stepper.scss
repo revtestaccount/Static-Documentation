@@ -1,0 +1,114 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-steps { 
+    &.p-steps ul {  
+        justify-content: space-between;
+        flex-direction: column;
+        .p-steps-item:last-child:before { 
+            border-left: 0px;
+            height: 0px; 
+            display: block;  
+        }
+        li a .p-steps-title{ 
+           white-space: pre-line; 
+        }
+     }
+    .p-steps-item {
+        justify-content: flex-start;  
+        .p-menuitem-link {
+            flex-direction: row;
+            align-items: flex-start; 
+            padding-bottom: rem(24px);  
+            .p-steps-number {  
+                @include extrasmall($surface-500);  
+                @include semibold();   
+                line-height: rem(18px);
+            }
+            .p-steps-title {
+                margin-top: 0px;
+                @include small($surface-500);  
+                padding-left: rem(8px);  
+            }
+        }
+        &.p-highlight {
+            .p-steps-number {
+                @include extrasmall($base-white);
+                @include semibold(); 
+                background-color: $base-blue;
+                border: rem(1.5px) solid  $base-blue;
+                font-size: 12px;  
+                line-height: rem(18px);  
+            }
+            .p-menuitem-link .p-steps-title {
+                @include h6($surface-900);
+            }
+        }
+        &:before { 
+           border-top: none;  
+           width: 0%;
+           top: rem(12px);
+           border-left: rem(1.5px) solid $surface-500;
+           height: 100%; 
+           margin-left: rem(12px);
+           margin-top: rem(-12px);
+        }
+        .p-menuitem-link:not(.p-disabled):focus { 
+            box-shadow: none;
+        }
+    }
+    .p-steps-item.complete:not(.p-steps-current),
+    .p-steps-item.incomplete:not(.p-highlight) { 
+        .p-menuitem-link {  
+            .p-steps-number {  
+                color: $surface-700;
+                border-color: $surface-700; 
+            }
+            .p-steps-title { 
+                color: $surface-700; 
+            }
+        } 
+    } 
+    .p-steps-item.complete:not(.p-steps-current) .p-menuitem-link  
+    {
+        .p-steps-number{
+            visibility: hidden; 
+        }
+        .p-steps-number:after{
+            position: absolute; 
+            display: flex;
+            font-family: "primeicons";    
+            content: "\e909"; 
+            background: $base-white;
+            color: $base-blue;
+            border: rem(1.5px) solid $base-blue; 
+            border-radius: 50%;  
+            visibility: visible;
+            height: rem(24px);
+            width: rem(24px);
+            align-items:center;
+            justify-content:center;
+        }
+    }
+
+    .p-steps-item.error:not(.p-steps-current) .p-menuitem-link  
+    {
+        .p-steps-number{
+            visibility: hidden; 
+        }
+        .p-steps-number:after{
+            position: absolute; 
+            display: flex;    
+            content: url("../images/icons/exclamation.svg");       
+            background: $base-white;
+            color: $red-lighten-10;
+            border: rem(1.5px) solid $red-lighten-10; 
+            border-radius: 50%;  
+            visibility: visible;
+            height: rem(24px);
+            width: rem(24px);
+            align-items:center;
+            justify-content:center;
+        }
+    }
+
+}

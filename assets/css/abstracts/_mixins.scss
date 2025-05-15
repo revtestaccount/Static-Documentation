@@ -1,0 +1,96 @@
+@mixin h1($color: null) {
+    @extend %h1;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin h2($color: null) {
+    @extend %h2;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin h3($color: null) {
+    @extend %h3;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin h4($color: null) {
+    @extend %h4;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin h5($color: null) {
+    @extend %h5;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin h6($color: null) {
+    @extend %h6;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin label($color: null) {
+    @extend %label;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin paragraph($color: null) {
+    @extend %paragraph;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin placeholder($color: null) {
+    @extend %placeholder;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin small($color: null) {
+    @extend %small;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin extrasmall($color: null) {
+    @extend %extrasmall;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin extra-extrasmall($color: null) {
+    @extend %extra-extrasmall;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin bold($color: null) {
+    @extend %bold;
+    @if $color != null {
+        color: $color;
+    }
+}
+@mixin semibold($color: null) {
+    @extend %semibold;
+    @if $color != null {
+        color: $color;
+    }
+}
+
+/** RDS mixins **/
+
+@mixin rds-h1() {
+    @extend %rds-h1;
+}
+@mixin rds-h2() {
+    @extend %rds-h2;
+}
+@mixin rds-h3() {
+    @extend %rds-h3;
+}

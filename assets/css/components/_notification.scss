@@ -1,0 +1,173 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+@mixin p-toast-message-icon-style($path) {
+    .p-toast-message-icon {
+        display: block;
+        margin-top: rem(3px);
+        height: rem(15px);
+        width: rem(18px);
+        background-size: rem(14px) rem(14px);
+        background-image: url($path);
+        background-repeat: no-repeat;
+        checkicon{
+            display: none;
+        }
+        &:before {
+            content: '';
+        }
+    }
+}
+
+@mixin p-toast-message-content-style($color, $background, $path: null) {
+    .p-toast-message-text {
+        .p-toast-summary {
+            color: $color;
+        }
+        .p-toast-detail {
+            color: $color;
+        }
+    }
+    @if $path != null {
+        @include p-toast-message-icon-style($path);
+    }
+    .p-toast-icon-close {
+        width: rem(24px);
+        height: rem(24px);
+        &:hover {
+            background-color: $background;
+        }
+        &:focus {
+            box-shadow: 0px 0px 0px rem(2px) $color;
+        }
+    }
+}
+
+@mixin p-message-alerts-style($color, $background, $path: null) {
+    .p-message-summary,
+    .p-message-detail {
+        color: $color;
+    }
+    .p-message-icon {
+        @if $path != null {
+            content: url($path);
+        }
+        color: $color;
+    }
+    .p-message-close {
+        .p-message-close-icon {
+            color: $color;
+        }
+        &:hover {
+            background-color: $background;
+        }
+        &:focus {
+            box-shadow: 0px 0px 0px rem(2px) $color;
+        }
+    }
+}
+
+.p-toast {
+    .p-toast-message {
+        .p-toast-message-content {
+            .p-toast-message-text {
+                .p-toast-summary {
+                    @include extrasmall();
+                    @include bold();
+                }
+                .p-toast-detail {
+                    @include small();
+                }
+            }
+            .p-toast-icon-close {
+                padding: 0 rem(12px);
+            }
+        }
+        &.p-toast-message-success {
+            .p-toast-message-content {
+                @include p-toast-message-content-style(
+                    $green-darken-10,
+                    $green-lighten-50,
+                    '../images/icons/check-circle.svg'
+                );
+            }
+        }
+        &.p-toast-message-info {
+            .p-toast-message-content {
+                @include p-toast-message-content-style(
+                    $blue-darken-30,
+                    $blue-lighten-30
+                );
+            }
+        }
+        &.p-toast-message-warn {
+            .p-toast-message-content {
+                @include p-toast-message-content-style(
+                    $yellow-darken-40,
+                    $yellow-lighten-20
+                );
+            }
+        }
+        &.p-toast-message-error {
+            .p-toast-message-content {
+                @include p-toast-message-content-style(
+                    $red-darken-10,
+                    $red-lighten-40
+                );
+            }
+        }
+    }
+}
+
+.p-messages {
+    .p-message-wrapper {
+        flex-direction: column;
+        position: relative;
+        align-items: flex-start;
+        padding: rem(8.5px) rem(48px);
+    }
+    .p-message {
+        width: fit-content;
+        .p-message-summary {
+            @include extrasmall();
+            @include bold();
+        }
+        .p-message-detail {
+            @include small();
+            margin-left: 0px;
+            margin-top: rem(4px);
+        }
+        .p-message-close {
+            position: absolute;
+            right: rem(16px);
+            top: rem(8.5px);
+        }
+        .p-message-icon {
+            position: absolute;
+            width: rem(14px);
+            height: rem(14px);
+            font-size: rem(14px);
+            top: rem(11px);
+            left: rem(16px);
+        }
+        &-success {
+            @include p-message-alerts-style(
+                $green-darken-10,
+                $green-lighten-50,
+                '../images/icons/check-circle.svg'
+            );
+        }
+        &-info {
+            @include p-message-alerts-style($blue-darken-30, $blue-lighten-30);
+        }
+        &-warn {
+            @include p-message-alerts-style(
+                $yellow-darken-40,
+                $yellow-lighten-20
+            );
+        }
+        &-error {
+            @include p-message-alerts-style($red-darken-10, $red-lighten-40);
+        }
+    }
+}
+

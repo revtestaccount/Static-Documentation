@@ -1,0 +1,14 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+p-chip {
+    .p-chip { 
+        .p-chip-text {
+            @include extrasmall($blue-darken-30);   
+            @include semibold();  
+            margin: rem(4px) 0;   
+        }
+        .p-chip-icon{
+            color:$blue-darken-30;
+        }
+    } 
+}

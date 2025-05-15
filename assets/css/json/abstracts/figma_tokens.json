@@ -1,0 +1,34 @@
+{
+  "global": {
+    "baseblue": {
+      "value": "#2aa8fb",
+      "type": "color"
+    },
+    "basewhite": {
+      "value": "#fff",
+      "type": "color"
+    },
+    "basegray": {
+      "value": "#ffc7c7",
+      "type": "color"
+    },
+    "baseborder": {
+      "value": {
+        "color": "#000",
+        "width": "2px",
+        "style": "solid"
+      },
+      "type": "border",
+      "description": "this is the basic border"
+    },
+    "basicradius": {
+      "value": "20px",
+      "type": "borderRadius"
+    },
+    "basicbutton": {
+      "value": "16px",
+      "type": "fontSizes",
+      "description": "this is the average"
+    }
+  }
+}

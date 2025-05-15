@@ -1,0 +1,24 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.rev-radiobutton-group {
+    .p-radiobutton {
+        .p-radiobutton-box {
+            &:not(.p-disabled) {
+                &.p-focus {
+                    box-shadow: 0 0 0 rem(2.8px) $blue-lighten-20;
+                 
+                }
+                &.p-highlight {
+                    &:hover {
+                        .p-radiobutton-icon {
+                            background-color: $blue-darken-10;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .p-radiobutton-label {
+        margin-right: rem(8px);
+    }
+}

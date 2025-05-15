@@ -1,0 +1,14 @@
+
+.p-progress-spinner {
+    .p-progress-spinner-svg { 
+        width: rem(80px);
+        height: rem(80px);
+    }
+    .p-progress-spinner-circle {
+        stroke: $blue-darken-10;
+        stroke-linecap: butt; 
+        stroke-width: 5;
+        animation: none; 
+    }
+}
+   

@@ -1,0 +1,38 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-contextmenu {
+    box-shadow: rem(2px) rem(4px) rem(6px) 0 rgba(0, 0, 0, 0.1);
+
+    .p-menuitem-link {
+        padding: rem(8px) rem(12px) rem(8px) rem(12px);
+        transition: none;
+
+        &:focus {
+            box-shadow: none;
+        }
+
+        .p-submenu-icon {
+            color:  $surface-800;
+        }
+
+        &:not(.p-disabled):hover {
+            background: $surface-50;
+            .p-submenu-icon {
+                color:  $surface-800;
+            }
+        }
+
+        .pi-angle-right {
+            color: $surface-800;
+        }
+    }
+
+    .p-menuitem.p-highlight>.p-menuitem-content {
+        background: $blue-lighten-50;
+    }
+
+    .p-menuitem-separator {
+        border-top: rem(1px) solid $surface-300;
+        margin: 0;
+    }
+}

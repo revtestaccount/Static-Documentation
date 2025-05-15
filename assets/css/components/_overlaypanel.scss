@@ -1,0 +1,51 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.button-overlay {
+    &.p-button { 
+        background-color: transparent;
+        color: $surface-900; 
+        border: none; 
+        &:enabled {
+            &:focus {
+                box-shadow: none;
+                background-color: $surface-200;
+            }
+            &:focus-visible {
+                box-shadow: none;
+                background-color: $surface-200;
+            }
+            &:hover {
+                background-color: $surface-200;
+            }
+            &:active {
+                background-color: $surface-200;
+            }
+        }
+        .p-button-icon { 
+            color: $surface-900;
+        }
+    }
+    &.visible {
+        &.p-button {
+            background-color: $surface-200;
+        }
+    }
+}
+
+.p-overlaypanel { 
+    background-color: $surface-200;
+    box-shadow: rem(2px) rem(4px) rem(6px) 0 rgba(0, 0, 0, 0.1); 
+    margin-top: 0;
+    &.p-component {
+        margin-top: 0;
+    }
+    &:before {
+        display: none;
+    }
+    &:after {
+        display: none;
+    }
+    .p-overlaypanel-content {
+        padding: rem(16px) rem(16px) rem(40px) rem(16px);
+    }
+}

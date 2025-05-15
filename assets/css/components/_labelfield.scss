@@ -1,0 +1,21 @@
+.rev-labelfield {
+    .label {
+        padding-bottom: rem(4px);
+    }
+    .value {
+        @include small();
+    }
+    .md-title {
+        .label {
+            @include h6();
+        }
+    }
+    .lg-title {
+        .label {
+            @include h4();
+        }
+        .value {
+            @include extrasmall();
+        }
+    }
+}

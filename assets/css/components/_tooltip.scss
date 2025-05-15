@@ -1,0 +1,14 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-tooltip {
+    .p-tooltip-text {
+        @include extrasmall();
+        padding: rem(8px) rem(16px);  // to revisit after Figma - this padding should be the same as all other inputs in PD
+    }
+    &.chip-tooltip{
+        padding-top: rem(8px);
+        .p-tooltip-arrow {
+            margin-top: rem(4px);
+        }
+    }
+}

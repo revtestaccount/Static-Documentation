@@ -1,0 +1,99 @@
+/* Color changes to fix contrast accessibility issues */
+$base-brandteal: rgb(0, 90, 92);
+$base-brandmint: rgb(66, 143, 148);
+$base-cyan: rgb(0, 198, 198);
+$base-blue: rgb(0, 111, 230);
+$base-green: rgb(21, 91, 37);
+$base-red: rgb(165, 29, 43);
+$base-yellow: rgb(255, 193, 44);
+$base-white: rgb(255, 255, 255);
+
+/* Surface colours, to be used for e.g. inputs, text, panel background */
+$surface-50: rgb(244, 244, 244);
+$surface-100: rgb(248, 249, 250);
+$surface-200: rgb(233, 236, 239);
+$surface-300: rgb(222, 226, 230);
+$surface-400: rgb(206, 212, 218);
+$surface-500: rgb(173, 181, 189);
+$surface-600: rgb(108, 117, 125);
+$surface-700: rgb(72, 80, 87);
+$surface-800: rgb(52, 58, 64);
+$surface-900: rgb(3, 5, 7);
+$surface-000: rgb(0, 0, 0);
+
+/* Percentage values based on base brandteal */
+$brandteal-lighten-10: rgb(0, 140, 143);
+$brandteal-lighten-20: rgb(0, 189, 193);
+$brandteal-lighten-30: rgb(0, 240, 245);
+$brandteal-lighten-40: rgb(40, 250, 255);
+$brandteal-lighten-50: rgb(91, 251, 255);
+$brandteal-darken-10: rgb(0, 64, 66);
+$brandteal-darken-20: rgb(0, 39, 40);
+$brandteal-darken-30: rgb(0, 14, 15);
+$brandteal-darken-40: rgb(0, 0, 0);
+
+/* Percentage values based on base brandmint */
+$brandmint-lighten-10: rgb(86, 174, 179);
+$brandmint-lighten-20: rgb(121, 191, 195);
+$brandmint-lighten-30: rgb(156, 208, 211);
+$brandmint-lighten-40: rgb(191, 224, 227);
+$brandmint-lighten-50: rgb(227, 241, 242);
+$brandmint-darken-10: rgb(50, 109, 113);
+$brandmint-darken-20: rgb(35, 75, 77);
+$brandmint-darken-30: rgb(19, 41, 42);
+$brandmint-darken-40: rgb(3, 7, 7);
+
+/* Percentage values based on base base-cyan */
+$cyan-lighten-10: rgb(0, 249, 249);
+$cyan-lighten-20: rgb(45, 255, 255);
+$cyan-lighten-30: rgb(96, 255, 255);
+$cyan-lighten-40: rgb(147, 255, 255);
+$cyan-lighten-50: rgb(198, 255, 255);
+$cyan-darken-10: rgb(0, 147, 147);
+$cyan-darken-20: rgb(0, 96, 96);
+$cyan-darken-30: rgb(0, 45, 45);
+$cyan-darken-40: rgb(0, 20, 20);
+
+/* Percentage values based on base blue */
+$blue-lighten-10: rgb(26, 137, 255);
+$blue-lighten-20: rgb(77, 163, 255);
+$blue-lighten-30: rgb(128, 189, 255);
+$blue-lighten-40: rgb(179, 216, 255);
+$blue-lighten-50: rgb(230, 242, 255);
+$blue-darken-10: rgb(0, 86, 179);
+$blue-darken-20: rgb(0, 62, 128);
+$blue-darken-30: rgb(0, 37, 77);
+$blue-darken-40: rgb(0, 13, 26);
+
+/* Percentage values based on base green */
+$green-lighten-10: rgb(31, 132, 54);
+$green-lighten-20: rgb(40, 174, 71);
+$green-lighten-30: rgb(56, 209, 91);
+$green-lighten-40: rgb(97, 219, 125);
+$green-lighten-50: rgb(139, 228, 159);
+$green-lighten-60: rgb(180, 238, 193);
+$green-darken-10: rgb(11, 50, 20);
+$green-darken-20: rgb(7, 29, 12);
+$green-darken-30: rgb(2, 8, 3);
+
+/* Percentage values based on base red */
+$red-lighten-10: rgb(208, 37, 54);
+$red-lighten-20: rgb(223, 73, 88);
+$red-lighten-30: rgb(231, 116, 128);
+$red-lighten-40: rgb(238, 160, 168);
+$red-lighten-50: rgb(246, 203, 208);
+$red-darken-10: rgb(122, 21, 32);
+$red-darken-20: rgb(78, 14, 20);
+$red-darken-30: rgb(35, 6, 9);
+$red-darken-40: rgb(13, 2, 3);
+
+/* Percentage values based on base yellow */
+$yellow-lighten-10: rgb(255, 208, 95);
+$yellow-lighten-20: rgb(255, 223, 146);
+$yellow-lighten-30: rgb(255, 238, 197);
+$yellow-lighten-40: rgb(255, 245, 223);
+$yellow-darken-10: rgb(248, 175, 0);
+$yellow-darken-20: rgb(197, 139, 0);
+$yellow-darken-30: rgb(146, 103, 0);
+$yellow-darken-40: rgb(95, 67, 0);
+$yellow-darken-50: rgb(44, 31, 0);

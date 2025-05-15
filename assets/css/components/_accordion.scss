@@ -1,0 +1,88 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-accordion {
+    .p-element {
+        .p-accordion-tab {
+            .p-accordion-header {
+                .p-accordion-header-link {
+                    @include h6();
+                    border-bottom-color: $base-white;
+                    &:hover {
+                        border-bottom-color: $surface-50;
+                    }
+                    &:focus {
+                        box-shadow: none;
+                        border-color: $blue-lighten-20;
+                    }
+                    .p-accordion-toggle-icon {
+                        margin-right: rem(14px);
+                    }
+                }
+            }
+            .p-toggleable-content {
+                .p-accordion-content {
+                    @include paragraph();
+                    border-width: 0 rem(1px) 0 rem(1px);
+                    padding-left: rem(44px);
+                }
+            }
+            &.p-accordion-tab-active {
+                .p-accordion-header {
+                    .p-accordion-header-link {
+                        border-bottom-color: $surface-400;
+                        &:focus {
+                            border-bottom-color: $blue-lighten-20;
+                        }
+                    }
+                }
+            }
+        }
+        &:last-of-type {
+            .p-accordion-tab {
+                .p-accordion-header {
+                    .p-accordion-header-link {
+                        border-bottom-color: $surface-400;
+                        &:focus {
+                            border-bottom-color: $blue-lighten-20;
+                        }
+                    }
+                }
+                .p-accordion-content {
+                    border-bottom: rem(1px) solid $surface-400;
+                }
+            }
+        }
+    }
+
+    p-accordiontab:not(:first-child) {
+        .p-accordion-header {
+            .p-accordion-header-link {
+                border-top: rem(1px) solid $surface-400;
+            }
+            &:not(.p-highlight) {
+                &:not(.p-disabled) {
+                    &:hover {
+                        .p-accordion-header-link {
+                            border-top: rem(1px) solid $surface-400;
+                            &:focus {
+                                border-top-color: $blue-lighten-20;
+                            }
+                        }
+                    }
+                }
+            }
+            &:not(.p-disabled) {
+                &.p-highlight {
+                    &:hover {
+                        .p-accordion-header-link {
+                            border-top: rem(1px) solid $surface-400;
+                            &:focus {
+                                border-top-color: $blue-lighten-20;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+.p-panel {
+    .p-panel-header {
+        .p-panel-header-icon {
+            @include h5($base-brandteal);
+        }
+        .p-panel-header-icon:focus {
+            box-shadow: none;
+        }
+    }
+}

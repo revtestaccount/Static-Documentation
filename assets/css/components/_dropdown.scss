@@ -1,0 +1,52 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-dropdown {
+    width: 100%;
+    height: rem(40px);
+    border-color: $surface-600;
+    &.p-dropdown-clearable {
+        .p-dropdown-label {
+            padding-right: rem(12px);
+        }
+        .p-dropdown-clear-icon { 
+            height: rem(11px);
+            width: rem(11px);
+            margin-top: rem(-5px);
+        }
+    }
+    .p-dropdown-label {
+        height: auto;
+        &.p-inputtext:not(.p-disabled) { 
+                &:focus { 
+                    box-shadow: none;
+            }
+        }
+    }
+    .p-dropdown-panel {
+        .p-dropdown-header {
+            padding: 0;
+            border-bottom: rem(1px) solid $surface-300;
+            .p-dropdown-filter-container {
+                .p-dropdown-filter {
+                    border: 0;
+                    background-color: $base-white;
+                    &:enabled {
+                        &:focus {
+                            box-shadow: none;
+                            border: 0;
+                        }
+                    }
+                }
+            }
+        }
+        .p-dropdown-items {
+            .p-dropdown-item,
+            .p-dropdown-empty-message {
+                @include small();
+            }
+            .p-dropdown-item:not(.p-highlight):not(.p-disabled).p-focus {
+                background-color: $surface-200;
+            }
+        }
+    }
+}
