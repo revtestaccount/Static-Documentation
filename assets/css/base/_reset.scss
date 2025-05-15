@@ -1,0 +1,11 @@
+/* removing the default opacity applied to all primeng disabled components */
+.p-disabled,
+.p-component:disabled {
+    opacity: 1;
+}
+/* form v16 Primeng added a 16px height and width to the theme without providing P. Designer tokens*/
+.p-icon{
+    height: rem(14px);
+    width: rem(14px);
+    font-size: rem(14px);
+}

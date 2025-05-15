@@ -1,0 +1,145 @@
+%h1 {
+    color: $h1-color;
+    font-family: $h1-font-family;
+    font-size: $h1-font-size;
+    font-style: $h1-font-style;
+    font-weight: $h1-font-weight;
+    line-height: $h1-line-height;
+}
+
+%h2 {
+    color: $h2-color;
+    font-family: $h2-font-family;
+    font-size: $h2-font-size;
+    font-style: $h2-font-style;
+    font-weight: $h2-font-weight;
+    line-height: $h2-line-height;
+}
+
+%h3 {
+    color: $h3-color;
+    font-family: $h3-font-family;
+    font-size: $h3-font-size;
+    font-style: $h3-font-style;
+    font-weight: $h3-font-weight;
+    line-height: $h3-line-height;
+}
+
+%h4 {
+    color: $h4-color;
+    font-family: $h4-font-family;
+    font-size: $h4-font-size;
+    font-style: $h4-font-style;
+    font-weight: $h4-font-weight;
+    line-height: $h4-line-height;
+}
+
+%h5 {
+    color: $h5-color;
+    font-family: $h5-font-family;
+    font-size: $h5-font-size;
+    font-style: $h5-font-style;
+    font-weight: $h5-font-weight;
+    line-height: $h5-line-height;
+}
+
+%h6 {
+    color: $h6-color;
+    font-family: $h6-font-family;
+    font-size: $h6-font-size;
+    font-style: $h6-font-style;
+    font-weight: $h6-font-weight;
+    line-height: $h6-line-height;
+}
+
+%label {
+    color: $label-color;
+    font-family: $label-font-family;
+    font-size: $label-font-size;
+    font-style: $label-font-style;
+    font-weight: $label-font-weight;
+    line-height: $label-line-height;
+}
+
+%paragraph {
+    color: $paragraph-color;
+    font-family: $paragraph-font-family;
+    font-size: $paragraph-font-size;
+    font-style: $paragraph-font-style;
+    font-weight: $paragraph-font-weight;
+    line-height: $paragraph-line-height;
+}
+
+%placeholder {
+    color: $placeholder-color;
+    font-family: $placeholder-font-family;
+    font-size: $placeholder-font-size;
+    font-style: $placeholder-font-style;
+    font-weight: $placeholder-font-weight;
+    line-height: $placeholder-line-height;
+}
+
+%small {
+    color: $small-color;
+    font-family: $small-font-family;
+    font-size: $small-font-size;
+    font-style: $small-font-style;
+    font-weight: $small-font-weight;
+    line-height: $small-line-height;
+}
+
+%extrasmall {
+    color: $extrasmall-color;
+    font-family: $extrasmall-font-family;
+    font-size: $extrasmall-font-size;
+    font-style: $extrasmall-font-style;
+    font-weight: $extrasmall-font-weight;
+    line-height: $extrasmall-line-height;
+}
+
+%extra-extrasmall {
+    color: $extra-extrasmall-color;
+    font-family: $extra-extrasmall-font-family;
+    font-size: $extra-extrasmall-font-size;
+    font-style: $extra-extrasmall-font-style;
+    font-weight: $extra-extrasmall-font-weight;
+    line-height: $extra-extrasmall-line-height;
+}
+
+%bold {
+    font-weight: $bold-font-weight;
+}
+
+%semibold {
+    font-weight: $semibold-font-weight;
+}
+
+/* RDS Fonts only*/
+/*
+H1 tag has the styling of h4/600  
+H2 tag has the styling of macro-2/600   
+H3 tag has the styling of h5/600   
+*/
+%rds-h1 { 
+    font-family: $h4-600-font-family;
+    font-size: $h4-600-font-size; 
+    font-weight: $h4-600-font-weight;
+    //line-height: $h4-600-line-height;
+    line-height: 32px; // hardcoded and will need to be automated 
+}
+
+%rds-h2 {
+    font-family: $macro-2-600-font-family;
+    font-size: $macro-2-600-font-size; 
+    font-weight: $macro-2-600-font-weight;
+    //line-height: $macro-2-600-line-height;
+    line-height: 22px; // hardcoded and will need to be automated 
+}
+
+%rds-h3 {
+    font-family: $h5-600-font-family;
+    font-size: $h5-600-font-size; 
+    font-weight: $h5-600-font-weight;
+    //line-height: $h5-600-line-height; 
+    line-height: 26px; // hardcoded and will need to be automated 
+}

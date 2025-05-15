@@ -1,0 +1,112 @@
+/*** Abstracts imports ***/
+@import 'abstracts/functions';
+@import 'abstracts/colors';
+@import 'abstracts/lengths';
+@import 'abstracts/fonts';
+@import 'abstracts/fonts-h-tags-v1';
+@import 'abstracts/placeholders';
+@import 'abstracts/mixins';
+
+/*** import the customised main primeng designer theme ***/
+@import 'vendors/primeng-designer/themes/main/theme'; 
+
+/*** import the customised external primeng designer theme ***/
+.external-theme {    
+    @import 'vendors/primeng-designer/themes/external/theme';  
+}
+
+/*** Styles basement imports ***/
+@import 'base/reset';
+@import 'base/typography';
+
+/*** Components imports ***/
+@import 'components/common';
+@import 'components/file-upload';
+@import 'components/labelfield';
+@import 'components/progressspinner';
+@import 'components/uishell';
+
+/*** Pages Styles imports ***/
+@import 'pages/home';
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: $font-families-segoe-ui;
+    color: $surface-000;
+
+    a{
+        color: $surface-000;
+    };
+
+    code{
+        // color: $surface-000;
+        color: $blue-darken-10;
+    }
+
+    .header {
+        display: flex;
+        padding: 25px 25px 25px 25px;
+        background-color: $base-brandteal;
+        img{
+            padding: 1rem;
+        }
+        border-bottom: solid $base-cyan 1rem;
+    };
+
+    .sidebar {
+        min-height: 100vh;
+        // background-color: $base-brandmint;
+        background-color: $brandteal-lighten-10;
+    };
+
+    .pmod {
+        background-color: $base-white;
+        color: $base-brandteal;
+        text-align: center;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        font-weight: bold;
+    };
+
+    .footer {
+    padding: 25px 25px 25px 25px;
+    background-color: $base-brandteal;
+    border-top: solid $base-cyan 1rem;
+    }
+}
+
+
+
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+}
+
+.sidebar a:hover {
+    background-color: #495057;
+}
+
+.main_content {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.document-title {
+    color: rgb(2, 95, 99);
+}
+
+.heading {
+    color: rgb(2, 95, 99);
+}
+
+code {
+    font-family: Monaco, monospace;
+}
+
+.no-dot {
+    list-style: none;
+}

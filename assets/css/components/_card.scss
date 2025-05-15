@@ -1,0 +1,22 @@
+.p-card {
+    border-radius: rem(4px);
+    .p-card-header {
+        background-color: $base-red;
+        line-height: rem(72px);
+        height: rem(72px);
+        text-align: center;
+        font-size: rem(32px);
+        color: $base-white;
+        font-weight: 600;
+        border-radius: rem(4px) rem(4px) 0 0;
+    }
+    .p-card-body {
+        padding: rem(16px);
+    }
+    .p-card-content {
+        padding: 0;
+    }
+    .p-card-footer {
+        padding: rem(16px) 0 0 0;
+    }
+}

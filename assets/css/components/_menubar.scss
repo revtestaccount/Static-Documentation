@@ -1,0 +1,230 @@
+ //IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-menubar {
+    position: relative;
+    height: rem(40px);
+    z-index: 1;
+    .p-menubar-start {
+        .logo {
+            position: absolute;
+            height: rem(14px);
+            left: rem(48px);
+            bottom: rem(13px);
+        }
+        .title {
+            position: absolute;
+            left: rem(48px);
+            bottom: rem(8px);
+            @include h4($base-white);
+        }
+    }
+    .p-menubar-button {
+        display: flex;
+        width: rem(40px);
+        height: rem(40px);
+        border-radius: 0;
+        .p-icon-wrapper .p-icon{
+            width: rem(16px);
+            height: rem(16px);
+            font-size: rem(16px);
+        } 
+        &:hover {
+            background-color: $base-brandteal;
+        }
+        &:focus {
+            outline: 0 none;
+            outline-offset: 0;
+            box-shadow: none;
+        }
+        .pi {
+            font-size: rem(16px);
+        }
+    }
+    .p-menuitem-link {
+        height: rem(40px);
+        transition: none; 
+        &:focus{
+            box-shadow: inset 0 0 0 0; 
+        }
+        .p-menuitem-text {
+            @include small($base-white); 
+        }
+        .p-menuitem-icon {
+            position: absolute;
+            right: rem(12px);
+            margin: 0px; 
+        }
+        &:not(.p-disabled) {
+            &:hover {
+                background-color: $base-brandteal;
+                .p-menuitem-text {
+                    color: $base-white; 
+                }
+                .p-menuitem-icon {
+                    color: $base-white;
+                }
+            }
+        }
+        
+    }
+    .p-menubar-root-list {
+        position: absolute;
+        display: none;
+        padding: 0;
+        background-color: $base-brandteal;
+        border: 0 none;
+        box-shadow: 0 rem(2px) rem(12px) 0 rgba(0, 0, 0, 0.1);
+        width: 100%;
+        .p-menu-separator {
+            border-top: rem(1px) solid $surface-300;
+            margin: rem(4px) 0;
+        }
+        .p-submenu-icon {
+            font-size: rem(14px);
+        }
+        > .p-menuitem  { 
+            width: 100%;
+            position: static;
+            > .p-menuitem-content .p-menuitem-link {
+                border-radius: 0; 
+                user-select: none;
+                padding: rem(8px) rem(12px) rem(8px) rem(12px);
+                background-color: $brandteal-darken-10;
+                .p-menuitem-text {
+                    @include placeholder($base-white);
+                }
+                .p-menuitem-icon {
+                    color: $base-white;
+                    margin: 0px;
+                    position: absolute;
+                    right: rem(12px);
+                }
+                .p-submenu-icon {
+                    color: $base-white;
+                    margin-left: auto;
+                    transition: transform 0.2s; 
+                    height: rem(16px);
+                    width: rem(16px);
+                }
+                &:not(.p-disabled) {
+                    &:hover {
+                        background-color: $base-brandteal;
+                        .p-menuitem-text {
+                            color: $base-white;
+                        }
+                        .p-menuitem-icon {
+                            color: $base-white;
+                        }
+                        .p-submenu-icon {
+                            color: $base-white;
+                        }
+                    }
+                }
+            }
+            &.p-menuitem-active {
+                > .p-menuitem-content .p-menuitem-link,
+                > .p-menuitem-content .p-menuitem-link:not(.p-disabled):hover {
+                    .p-menuitem-text {
+                        color: $base-white;
+                    }
+                    .p-submenu-icon {
+                        color: $base-white;
+                        transform: rotate(-180deg); 
+                    }
+                }
+            }
+        }
+        .p-submenu-list {
+            width: 100%;
+            position: static;
+            border: 0 none;
+            background-color: $brandteal-darken-10;
+            .p-menuitem {
+              > .p-menuitem-content .p-menuitem-link {
+                    background-color: $brandteal-darken-10;
+                    padding: rem(8px) rem(12px) rem(8px) rem(24px);
+                    .p-submenu-icon {
+                        color: $base-white;
+                        height: rem(16px); 
+                        width: rem(16px);
+                    }
+                    &:not(.p-disabled) {
+                        &:hover {
+                            background-color: $base-brandteal;
+                        }
+                    }
+                }
+            }
+            .p-menuitem-active { 
+                .p-menuitem-content .p-menuitem-link {
+                    padding: rem(8px) rem(12px) rem(8px) rem(36px);
+                    
+                    .p-menuitem-text {
+                        color: $base-white;
+                    }
+                    .p-submenu-icon {
+                        color: $base-white;
+                        transform: rotate(-90deg);
+                    }
+                    &:focus {
+                        padding: rem(8px) rem(12px) rem(8px) rem(32px);
+                    }
+                }
+            }
+            .p-menuitem-active > .p-menuitem-content .p-menuitem-link {
+                padding: rem(8px) rem(12px) rem(8px) rem(24px);
+                &:focus {
+                    padding: rem(8px) rem(12px) rem(8px) rem(20px);
+                }  
+            }
+            .p-submenu-icon {
+                transition: transform 0.2s;
+                transform: rotate(90deg);
+            }
+        }
+        > .p-menuitem.p-menuitem-active > .p-menuitem-content .p-menuitem-link:not(.p-disabled):hover { 
+           background-color: $brandteal-lighten-10;  
+        }
+        .p-menuitem.p-menuitem-active > .p-menuitem-content > .p-menuitem-link
+        {
+            background-color: $brandteal-lighten-10;
+        }
+        .p-menuitem.p-menuitem-active  > .p-menuitem-content > .p-menuitem-link:focus,
+        .p-menuitem.p-menuitem-active.p-focus  > .p-menuitem-content > .p-menuitem-link,
+        .p-submenu-list .p-menuitem-active > .p-menuitem-content .p-menuitem-link  {
+           margin: rem(1px);
+           box-shadow: 0 0 0 rem(1px) $base-white;
+           background-color: $brandteal-lighten-10;
+           padding: rem(8px) rem(12px) rem(8px) rem(20px);
+           border-left: rem(4px) $brandteal-lighten-20 solid; 
+            &:not(.p-disabled):hover {
+               background-color: $base-brandteal;
+            } 
+            
+        }
+    }
+    &.p-menubar-mobile-active {
+        .p-menubar-button {
+        barsicon svg{
+            display: none;
+
+        }
+        .p-icon-wrapper::before{
+            content:'\e90b';
+            font-family: 'primeicons';
+            font-size: rem(16px);
+        }
+        }
+        .p-menubar-root-list {
+            display: flex;
+            align-content: flex-start;
+            top: 100%;
+            left: 0;
+            z-index: 1;
+            width: rem(240px);
+            height: calc(100vh - rem(40px));
+            background-color: $brandteal-darken-10;
+            overflow-y: auto;
+        }
+    }
+}

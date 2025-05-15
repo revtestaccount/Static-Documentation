@@ -1,0 +1,63 @@
+h1 {
+    @include h1();
+}
+
+h2 {
+    @include h2();
+}
+
+h3 {
+    @include h3();
+}
+
+h4 {
+    @include h4();
+}
+
+h5 {
+    @include h5();
+}
+
+h6 {
+    @include h6();
+}
+
+label {
+    @include label();
+}
+
+p {
+    @include paragraph();
+}
+
+::placeholder {
+    @include placeholder();
+}
+
+small,
+.small {
+    @include small();
+}
+
+.extrasmall {
+    @include extrasmall();
+}
+
+.extra-extrasmall {
+    @include extra-extrasmall();
+}
+
+.semibold {
+    @include semibold();
+}
+
+/* RDS typography only */
+.rds-h1 {
+    @include rds-h1();
+}
+.rds-h2 {
+    @include rds-h2();
+}
+.rds-h3 {
+    @include rds-h3();
+}

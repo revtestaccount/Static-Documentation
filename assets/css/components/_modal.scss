@@ -1,0 +1,38 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-dialog {
+    width: rem(429px);
+    .p-dialog-header { 
+        border-width: rem(1px) rem(1px) 0px rem(1px);
+        border-style: solid;
+        border-color: $surface-300; 
+        @include h5();
+        .p-dialog-header-icon {
+            color: $surface-900;
+        }
+    }
+    .p-dialog-content {
+        @include small();
+        border-left: rem(1px) solid $surface-300;
+        border-right: rem(1px) solid $surface-300;
+        padding: 0px rem(16px) rem(32px) rem(16px); 
+        margin: rem(0px);
+    }
+    .p-dialog-footer {
+        border-radius: rem(0px);
+    }
+}
+
+// only for the pattern version
+.pattern.p-dialog {
+    .p-dialog-header, .p-dialog-content {
+        background-color: $surface-50;
+    }
+    .p-datatable .p-datatable-wrapper .p-datatable-table .p-datatable-tbody tr td {
+        //http://revjira:8080/browse/ITMOD-2031 table spacing from 32 to 16 - to create a feature branch
+        padding: 1rem 0.5rem 1rem 0.5rem; 
+        white-space: nowrap;
+        //text-align: center;
+        vertical-align: middle;
+    }
+}

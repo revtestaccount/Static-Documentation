@@ -1,0 +1,21 @@
+.p-breadcrumb {
+    background: $base-white;
+    border: none;
+    .p-breadcrumb-chevron {
+        &:before {
+            content: '\e901';
+            font-family: 'primeicons';
+        }
+    }
+    ul li {
+        .p-menuitem-link {
+            .p-menuitem-icon {
+                color: $surface-700;
+            }
+            .p-menuitem-text {
+                font-size: $paragraph-font-size;
+                color: $surface-700;
+            }
+        }
+    }
+}

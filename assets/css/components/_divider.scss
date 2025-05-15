@@ -1,0 +1,17 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-divider-solid.p-divider-horizontal:before {
+    border-top-style: solid;
+}
+
+.p-divider-solid.p-divider-vertical:before {
+    border-left-style: solid;
+}
+
+.p-divider-dashed.p-divider-horizontal:before {
+    border-top-style: dashed;
+}
+
+.p-divider-dashed.p-divider-vertical:before {
+    border-left-style: dashed;
+}

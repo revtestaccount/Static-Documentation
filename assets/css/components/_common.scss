@@ -1,0 +1,331 @@
+/* DEPRECATED - REMOVE AFTER RWP 22.7 RELEASE */
+.rev-float-content {
+    display: flex;
+    flex-direction: column;
+    > label {
+        padding: 0 rem(8px);
+    }
+    > p-dropdown {
+        padding: rem(8px);
+    }
+    > input,
+    > textarea {
+        margin: rem(8px);
+    }
+    > span {
+        padding: 0 0 rem(16px) rem(8px);
+    }
+    > p-calendar {
+        padding: rem(8px) rem(8px) 0 rem(8px);
+    }
+}
+
+/* invalid */
+.invalid {
+    color: $red-lighten-10;
+    .validation {
+        color: $red-lighten-10;
+    }
+    .p-inputtext,
+    .p-calendar .p-inputtext,
+    .p-inputtextarea {
+        border-color: $red-lighten-10;
+        &:not(.p-disabled) {
+            &:hover {
+                border-color: $base-red;
+            }
+            &:focus {
+                border-color: $red-lighten-10;
+                box-shadow: inset 0 0 0 rem(1px) $red-lighten-10;
+            }
+        }
+    }
+    .p-dropdown {
+        border-color: $red-lighten-10;
+        &:not(.p-disabled) {
+            &:hover {
+                border-color: $base-red;
+            }
+            &.p-focus {
+                border-color: $red-lighten-10;
+                box-shadow: inset 0 0 0 rem(1px) $red-lighten-10;
+            }
+        }
+    }
+    .p-multiselect {
+        border-color: $red-lighten-10;
+        &:not(.p-disabled) {
+            &:hover {
+                border-color: $base-red;
+            }
+            &.p-focus {
+                border-color: $red-lighten-10;
+                box-shadow: inset 0 0 0 rem(1px) $red-lighten-10;
+            }
+            .p-multiselect-panel {
+                .p-multiselect-header {
+                    .p-checkbox {
+                        .p-checkbox-box {
+                            &.p-focus {
+                                &:hover {
+                                    border-color: $surface-600;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.rev-radiobutton-group {
+        .p-radiobutton {
+            .p-radiobutton-box {
+                &:not(.p-disabled) {
+                    &:not(.p-highlight) {
+                        border-color: $red-lighten-10;
+                        &:hover {
+                            border-color: $base-red;
+                        }
+                        &.p-focus {
+                            border-color: $red-lighten-10;
+                        }
+                    }
+                }
+                .p-radiobutton-icon {
+                    background-color: $red-lighten-10;
+                }
+                &.p-highlight {
+                    border-color: $red-lighten-10;
+                    &:not(.p-disabled) {
+                        &:hover {
+                            border-color: $base-red;
+                            .p-radiobutton-icon {
+                                background-color: $base-red;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.rev-checkbox {
+        .p-checkbox {
+            .p-checkbox-box {
+                border-color: $base-red;
+            }
+            &:not(.p-checkbox-disabled) {
+                .p-checkbox-box {
+                    &:hover {
+                        border-color: $red-lighten-20;
+                    }
+                    &.p-focus {
+                        border-color: $red-lighten-10;
+                        box-shadow: inset 0 0 0 rem(1px) $red-lighten-10;
+                    }
+                    &.p-highlight {
+                        background-color: $base-white;
+                        border-color: $base-red;
+                        &:hover {
+                            background-color: $base-white;
+                            border-color: $red-darken-10;
+                        }
+                        &.p-focus {
+                            border-color: $red-lighten-10;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.rev-search,
+    &.rev-search.bordered {
+        .p-inputtext {
+            &:enabled {
+                border-width: rem(1px);
+                border-color: $red-lighten-10;
+                &:hover {
+                    border-color: $base-red;
+                }
+                &:focus {
+                    border-color: $red-lighten-10;
+                    box-shadow: inset 0 0 0 rem(1px) $red-lighten-10;
+                    &:hover {
+                        border-color: $red-lighten-10;
+                        box-shadow: inset 0 0 0 rem(1px) $red-lighten-10;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Disabled */
+.disabled {
+    label,
+    .extrasmall,
+    .extra-extrasmall {
+        color: $surface-500;
+    }
+    .p-inputtext,
+    .p-calendar .p-inputtext,
+    .p-inputtextarea {
+        color: $surface-500;
+        border-color: $surface-500;
+        &::placeholder {
+            color: $surface-500;
+        }
+    }
+    .p-calendar .p-button {
+        color: $surface-500;
+        background: transparent;
+    }
+    .p-dropdown {
+        border-color: $surface-500;
+        .p-dropdown-label {
+            &.p-placeholder {
+                color: $surface-500;
+            }
+        }
+        .p-dropdown-trigger .p-dropdown-trigger-icon {
+            color: $surface-500;
+        }
+    }
+    .p-multiselect {
+        .p-multiselect-label {
+            &.p-placeholder {
+                color: $surface-500;
+            }
+        }
+        .p-multiselect-trigger {
+            .p-multiselect-trigger-icon {
+                color: $surface-500;
+            }
+        }
+    }
+    &.rev-radiobutton-group {
+        .p-radiobutton {
+            .p-radiobutton-box {
+                border-color: $surface-500;
+                .p-radiobutton-icon {
+                    background-color: $surface-500;
+                }
+            }
+            &:hover {
+                cursor: default;
+            }
+        }
+        .p-radiobutton-label {
+            color: $surface-500;
+        }
+    }
+    &.rev-checkbox {
+        .p-checkbox {
+            .p-checkbox-box {
+                background-color: $surface-500;
+                border-color: $surface-500;
+            }
+        }
+        .p-checkbox-label {
+            color: $surface-500;
+        }
+    }
+    .p-dialog {
+        .p-button {
+            color: $blue-lighten-20;
+            background-color: $blue-lighten-10;
+            border-color: $base-white;
+            cursor: context-menu;
+            &:enabled:hover {
+                color: $blue-lighten-20;
+                background-color: $blue-lighten-10;
+                border-color: $base-white;
+            }
+            &:enabled:focus {
+                background-color: $blue-lighten-10;
+                border-color: $base-white;
+                box-shadow: 0 0 0 rem(3.2px) $base-white;
+            }
+        }
+        .p-confirm-dialog-reject {
+            color: $blue-lighten-20;
+            background-color: $base-white;
+            cursor: context-menu;
+            &:enabled:hover {
+                background: $base-white;
+                border-color: $base-white;
+            }
+            &:enabled:focus {
+                background-color: $base-white;
+                border-color: $base-white;
+                box-shadow: 0 0 0 rem(3.2px) $base-white;
+            }
+        }
+    }
+    &.rev-search {
+        .p-inputtext {
+            border-width: 0;
+        }
+        .p-button {
+            background-color: $base-white;
+            .p-button-icon {
+                color: $surface-500;
+            }
+        }
+        &.bordered {
+            .p-inputtext {
+                border-width: rem(1px);
+            }
+            .p-button {
+                border: solid $surface-500;
+                border-width: rem(1px) rem(1px) rem(1px) 0;
+            }
+        }
+    }
+    &.rev-inputswitch {
+        .p-inputswitch {
+            .p-inputswitch-slider {
+                background: $surface-200;
+            }
+            &.p-inputswitch-checked .p-inputswitch-slider {
+                background: $surface-200;
+            }
+        }
+        label {
+            color: $surface-500;
+        }
+    }
+}
+
+/* Dirty */
+/* ITMOD-2405  Inputs Data Change Variant */
+.dirty {
+    .ng-dirty.p-inputtext,
+    .ng-dirty.p-inputtextarea,
+    p-calendar.ng-dirty .p-inputtext,
+    p-checkbox.ng-dirty .p-checkbox-box,
+    p-dropdown.ng-dirty .p-inputtext,
+    p-dropdown.ng-dirty .p-dropdown-trigger,
+    p-inputmask.ng-dirty .p-inputtext,
+    p-multiselect.ng-dirty .p-multiselect-label-container,
+    p-multiselect.ng-dirty .p-multiselect-trigger,
+    p-radiobutton.ng-dirty .p-radiobutton .p-radiobutton-box {
+        background-color: $blue-lighten-50;
+    }
+}
+
+/* Readonly */
+.p-inputtext[readonly] {
+    background-color: $surface-100;
+}
+
+rev-dropdown[readonly] .p-dropdown {
+    background-color: $surface-100;
+}
+
+rev-multiselect[readonly] .p-multiselect {
+    background-color: $surface-100;
+}
+
+rev-checkbox[readonly] .p-checkbox-box{
+    background-color: $surface-100;
+}

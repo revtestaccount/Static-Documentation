@@ -1,0 +1,125 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-datatable {
+    border-width: rem(1px) rem(1px) rem(1px) rem(1px);
+    border-style: solid;
+    border-color: $surface-400;
+
+    .p-datatable-wrapper {
+        .p-datatable-table {
+            .p-datatable-thead {
+                tr {
+                    th {
+                        @include label();
+                        cursor: pointer;
+                        &:hover{
+                            background-color: $surface-300;
+                        }
+                        &:focus {
+                            background-color: $surface-200;
+                            border-width: rem(1px);
+                            border-color: $base-blue;
+                        }
+                        &:active{
+                            background-color: $surface-300;
+                        }                       
+                           
+                        &.p-sortable-column {
+                            .p-sortable-column-icon {
+                                visibility: hidden;
+                                color: $surface-900;
+                                font-size: rem(12px);
+                                margin-left: rem(16px);
+                                /* the selector below was removed from v16 and replaced by an icon wrapper (sortamountupalticon) with svg icon */
+                                /*&.pi-sort-amount-up-alt {
+                                    &:before {
+                                        font-family: 'primeicons';
+                                        content: '\e99f';
+                                    }
+                                }*/
+                            }
+                            &:hover {
+                                .p-sortable-column-icon {
+                                    visibility: visible;
+                                }
+                            }
+                            &:focus {
+                                box-shadow: none;
+                            }
+                            &.p-highlight,
+                            &.p-highlight:hover {
+                                .p-sortable-column-icon {
+                                    visibility: visible;
+                                    color: $surface-900;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .p-datatable-tbody {
+                tr {
+                    &:hover {
+                        background-color: $surface-50;
+                    }
+                    .p-button-icon {
+                        &.pi-chevron-up,
+                        &.pi-chevron-down {
+                            color: $surface-900;
+                            font-size: rem(12px);
+                        }
+                    }
+                    &.expanded {
+                        td {
+                            border-bottom: 0;
+                        }
+                        + tr {
+                            td {
+                                padding: 0 rem(16px) rem(8px) rem(72px);
+                                color: $surface-900;
+                                background-color: $base-white;
+
+                                .p-divider {
+                                    &.p-divider-horizontal {
+                                        margin: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    td {
+                        vertical-align: top;
+                    }
+                }
+            }
+        }
+    }
+    /* one of the .p-paginator-bottom selector was removed from v16 and changed to .p-paginator*/
+    .p-paginator {
+        height: rem(72px);
+        padding: rem(16px) rem(16px) rem(16px) rem(8px);
+        border-color: $surface-400;
+        justify-content: flex-end;
+        .p-dropdown {
+            margin: 0;
+            width: rem(75px);
+        }
+    }
+    .p-thead-icon{
+        font-size: rem(12px);    
+        padding-left:rem(6px);
+        
+    }
+}
+/* RWP change request -ITMOD-2305*/
+.p-datatable.p-datatable-sm  {
+    .p-datatable-tbody > tr > td {
+        padding: rem(8px) rem(16px)
+    }
+    .p-datatable-thead > tr > th {
+        padding: rem(8px) rem(16px)
+    }
+    .p-paginator {
+        padding: rem(8px) rem(16px)
+    }
+}

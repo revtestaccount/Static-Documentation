@@ -1,0 +1,11 @@
+$smallest: 4px;
+$smaller: 8px;
+$small: 16px;
+$medium: 20px;
+$big: 23px;
+$bigger: 32px;
+$biggest: 48px;
+$full: 100%;
+
+$-header-padding: $small $medium $small $medium; /* 16px 20px 16px 20px */
+$-content-padding: $medium $medium $bigger $medium; /* 20px 20px 32px 20px */

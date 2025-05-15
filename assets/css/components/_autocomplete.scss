@@ -1,0 +1,41 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.rev-autocomplete {
+    p-autocomplete {
+        .p-autocomplete {
+            width: rem(230px);
+            .p-autocomplete-panel {
+                width: rem(270px);
+                .p-autocomplete-items {
+                    .p-autocomplete-item {
+                        @include small();
+                        transition: box-shadow 0.2s;
+                        &:not(.p-highlight):not(.p-disabled).p-focus {
+                            background-color: $surface-200;
+                        }
+                    }
+                }
+            }
+        }
+        &.p-autocomplete-clearable {
+            .p-autocomplete-clear-icon {
+                font-size: rem(12px);
+                margin-top: rem(-5px);
+            }
+        }
+    }
+    .p-button {
+        &.ghost {
+            &:enabled {
+                .p-button-icon {
+                    color: $surface-900;
+                }
+            }
+            &.expanded {
+                border-left: 0;
+                border-width: rem(1px);
+                border-color: $surface-600;
+            }
+        }
+    }
+}

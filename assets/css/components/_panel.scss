@@ -1,0 +1,35 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-panel {
+    background-color: $base-white;
+    &.p-panel-toggleable {
+        .p-panel-header {
+            border-bottom-color: $surface-400;
+        }
+        &.p-panel-expanded {
+            .p-panel-header {
+                border-bottom-color: transparent;
+            }
+        }
+    }
+    .p-panel-header {
+        @include h5($surface-900);
+        padding-bottom: 0px;
+        height: rem(65px); //49px + 16px
+        border-bottom-color: transparent;
+        .p-panel-header-icon {
+            @include h5($base-brandteal); 
+        }
+        .p-panel-header-icon:focus {
+            box-shadow: none;
+        }
+    }
+    .p-panel-content {
+        padding-top: 0;
+    }
+    .p-divider {
+        &.p-divider-horizontal {
+            margin: 0 0 rem(16px) 0;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+@use "sass:math";
+
+@function map-deep-get($map, $keys...) {
+    @each $key in $keys {
+        $map: map-get($map, $key);
+    }
+    @return $map;
+}
+
+
+/*  Pixels to rem */
+/* usage  font-size: rem(14px); // or rem(14) */
+
+$html-font-size: 16px;
+
+@function stripUnit($value) {
+    @return math.div($value, ($value * 0 + 1));
+}
+@function rem($pxValue) {
+    @return #{math.div(stripUnit($pxValue), stripUnit($html-font-size))}rem;
+}

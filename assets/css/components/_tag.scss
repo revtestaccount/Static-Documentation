@@ -1,0 +1,24 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+p-tag {
+    &.lg .p-tag { 
+            font-size: $extrasmall-font-size;
+            @include semibold(); 
+            padding: rem(6px) rem(8px); 
+            border-radius: rem(6px);
+            .p-tag-value {
+                line-height: $extrasmall-line-height;
+            }
+    }
+    .p-tag {
+        @include extra-extrasmall( $surface-800);
+        @include semibold();   
+        border-radius: rem(4px); 
+        background-color: $brandmint-lighten-40; 
+    }
+    .p-tag-value {
+        line-height: $extra-extrasmall-line-height;
+    }
+}
+
+ 

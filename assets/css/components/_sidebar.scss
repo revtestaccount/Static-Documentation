@@ -1,0 +1,59 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.p-sidebar {
+    min-width: rem(640px);
+    max-width: rem(960px);
+    .p-sidebar-header {
+        display: none;
+    }
+    .header {
+        padding-bottom: rem(14px);
+        margin: rem(32px) rem(17px) 0px rem(17px);
+        border-bottom: rem(1px) solid $surface-500;
+    }
+    .icon {
+        float: right;
+        padding: rem(18px); /*42-24*/
+    }
+    .p-sidebar-content {
+        height: 100%;
+        padding: 0px;
+        overflow: hidden;
+        box-shadow: 0px rem(4px) rem(11px) rgba(0, 0, 0, 0.25);
+    }
+    .content,
+    .content-view,
+    .content-edit {
+        margin: rem(16px);
+        padding-right: rem(16px);
+        padding-bottom: rem(32px);
+        height: 100%;
+        overflow-y: auto;
+        border-bottom: rem(165px) solid transparent; /*confirmed with RWP design team*/
+        &::-webkit-scrollbar {
+            width: rem(8px);
+        }
+        &::-webkit-scrollbar-track {
+            border: rem(1px) solid $surface-400;
+            margin-bottom: rem(32px);
+        }
+        &::-webkit-scrollbar-thumb {
+            background: $surface-400;
+            border-radius: rem(4px);
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background: $surface-400;
+        }
+    }
+    .content-view {
+        border-bottom: rem(100px) solid transparent; /*confirmed with RWP design team*/
+    }
+    .p-button.p-button-text {
+        color: $surface-900;
+        width: rem(24px);
+        height: rem(24px);
+    }
+    .p-sidebar-footer {
+        padding: 0px;
+    }
+}

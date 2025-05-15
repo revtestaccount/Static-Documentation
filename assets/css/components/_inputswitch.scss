@@ -1,0 +1,18 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+.rev-inputswitch { 
+    .p-inputswitch {
+        .p-inputswitch-slider {
+            border: 0px;
+        }
+        &.p-focus .p-inputswitch-slider {
+            border: 1px solid $base-white;
+            box-shadow: 0 0 0 rem(1px) $base-blue;
+        }
+    }
+    label {
+        @include small(); 
+        height: rem(21px);
+        padding-left: rem(4px);
+    }
+}

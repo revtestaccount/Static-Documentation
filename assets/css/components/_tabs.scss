@@ -1,0 +1,264 @@
+//IMPORTANT : this file is an extension of PrimeNG Design
+
+//Tabview
+.p-tabview {
+    .p-tabview-nav-container {
+        .p-tabview-nav-content {
+            .p-tabview-nav {
+                li {
+                    &:first-of-type {
+                        .p-tabview-nav-link {
+                            border-left: rem(1px) solid $surface-300;
+                        }
+                    }
+                    .p-tabview-nav-link {
+                        height: rem(40px);
+                        padding-top: rem(8px);
+                        padding-bottom: rem(8px);
+                        @include h6($surface-700);
+                        &:active {
+                            box-shadow: none;
+                        }
+                        &:focus {
+                            box-shadow: none;
+                        }
+                        .pi.pi-pencil {
+                            font-size: rem(14px);
+                            color: $surface-800;
+                            margin-right: rem(8px);
+                        }
+                        .p-badge {
+                            font-weight: $micro-2-600-font-weight;
+                            font-size: $micro-2-600-font-size;
+                            color: $surface-700;
+                            background-color: $surface-400;
+                            margin-left: rem(8px);
+                        }
+                    }
+                    &.p-highlight {
+                        .p-tabview-nav-link {
+                            color: $surface-900;
+                            border-top-width: rem(2px);
+                            border-right: rem(1px) solid $surface-300;
+                            .p-badge {
+                                font-weight: $micro-1-600-font-weight;
+                                font-size: $micro-1-600-font-size;
+                                color: $blue-darken-10;
+                                background-color: $blue-lighten-40;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .p-tabview-panels {
+        border-top: none;
+    }
+}
+
+// Tabpage
+.tabpage {
+    .p-tabview {
+        .p-tabview-nav-container {
+            height: rem(40px);
+            background-color: $base-brandmint;
+            padding: rem(4px) rem(16px) 0 rem(16px);
+            .p-tabview-nav-prev {
+                height: rem(36px);
+                width: rem(36px);
+                margin-top: rem(4px);
+                color: $base-white;
+                background-color: $base-brandmint;
+                box-shadow: rem(1px) rem(2px) rem(2px) 0 rgb(0 0 0 / 20%);
+                &:focus {
+                    box-shadow: rem(1px) rem(2px) rem(2px) 0 rgb(0 0 0 / 20%);
+                }
+                chevronlefticon {
+                    height: rem(24px);
+                    width: rem(24px);
+                    font-size: rem(8px);
+                    border-radius: 50%;
+                    padding: rem(8px);
+                    align-items: center;
+                    stroke: $base-white;
+                    stroke-width: rem(0.5px);
+                    &:hover {
+                        background-color: $brandmint-darken-10;
+                    }
+                }
+                &:focus-within {
+                    chevronlefticon {
+                        background-color: $brandmint-darken-20;
+                    }
+                }
+            }
+            .p-tabview-nav-content {
+                .p-tabview-nav {
+                    background-color: $base-brandmint;
+                    li {
+                        &.home {
+                            .p-tabview-nav-link {
+                                width: rem(38px);
+                                &:before {
+                                    content: '\e925';
+                                    font-family: 'primeicons';
+                                    width: rem(14px);
+                                    height: rem(14px);
+                                    line-height: rem(14px);
+                                }
+                            }
+                        }
+                        .p-tabview-nav-link {
+                            height: rem(36px);
+                            color: $surface-800;
+                            background-color: $brandmint-lighten-40;
+                            border-top: rem(1px) solid $base-brandmint;
+                            border-right: rem(1px) solid $base-brandmint;
+                            border-bottom: 0;
+                            border-left: rem(1px) solid $base-brandmint;
+                            border-radius: rem(4px) rem(4px) 0 0;
+                            padding: rem(6px) rem(12px);
+                            margin: 0;
+                            &:hover {
+                                background-color: $brandmint-lighten-50;
+                            }
+                            &:focus {
+                                background-color: $surface-50;
+                            }
+                            .p-tabview-title {
+                                width: rem(152px);
+                                font-family: $h6-font-family;
+                                font-size: $h6-font-size;
+                                font-style: $h6-font-style;
+                                font-weight: $h6-font-weight;
+                                line-height: $h6-line-height;
+                                color: $surface-800;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            }
+                            .p-tabview-close {
+                                color: $surface-800;
+                                padding: rem(5px);
+                                border-radius: 50%;
+                                font-size: $small-font-size;
+                                width: rem(24px);
+                                height: rem(24px);
+                                &:hover {
+                                    background-color: $brandmint-lighten-30;
+                                    cursor: pointer;
+                                }
+                                &:active {
+                                    background-color: $brandmint-lighten-20;
+                                }
+                            }
+                        }
+                        .pi-ellipsis-v {
+                            color: $surface-800;
+                            padding: rem(5px);
+                            border-radius: 50%;
+                            font-size: $small-font-size;
+                            width: rem(24px);
+                            height: rem(24px);
+                            margin-left: rem(8px);
+                            &:hover {
+                                background-color: $brandmint-lighten-30;
+                                cursor: pointer;
+                            }
+                            &:active {
+                                background-color: $brandmint-lighten-20;
+                            }
+                        }
+                        &.p-highlight {
+                            .p-tabview-nav-link {
+                                background-color: $surface-50;
+                                cursor: default;
+                            }
+                        }
+                        &.edit {
+                            .p-tabview-nav-link {
+                                background-color: $brandteal-darken-10;
+                                &:hover {
+                                    background-color: $brandteal-darken-20;
+                                }
+                                &:active {
+                                    background-color: $brandteal-darken-30;
+                                }
+                                .p-tabview-title {
+                                    color: $base-white;
+                                }
+                                .p-tabview-close {
+                                    color: $base-white;
+                                    &:hover {
+                                        background-color: $base-brandteal;
+                                    }
+                                    &:active {
+                                        background-color: $brandteal-lighten-10;
+                                    }
+                                }
+                                .pi-ellipsis-v {
+                                    color: $base-white;
+                                    &:hover {
+                                        background-color: $base-brandteal;
+                                    }
+                                    &:active {
+                                        background-color: $brandteal-lighten-10;
+                                    }
+                                }
+                            }
+                            &.p-highlight {
+                                .p-tabview-nav-link {
+                                    background-color: $brandteal-darken-30;
+                                    cursor: default;
+                                    &:hover {
+                                        background-color: $brandteal-darken-20;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .p-tabview-nav-next {
+                height: rem(36px);
+                width: rem(36px);
+                margin-top: rem(4px);
+                color: $base-white;
+                background-color: $base-brandmint;
+                box-shadow: rem(-1px) rem(2px) rem(2px) 0 rgb(0 0 0 / 20%);
+                &:focus {
+                    box-shadow: rem(-1px) rem(2px) rem(2px) 0 rgb(0 0 0 / 20%);
+                }
+                chevronrighticon {
+                    stroke-width: 100;
+                    width: rem(24px);
+                    height: rem(24px);
+                    font-size: rem(8px);
+                    border-radius: 50%;
+                    padding: rem(8px);
+                    align-items: center;
+                    stroke: $base-white;
+                    stroke-width: rem(0.5px);
+
+                    &:hover {
+                        background-color: $brandmint-darken-10;
+                    }
+                }
+                &:focus-within {
+                    chevronrighticon {
+                        background-color: $brandmint-darken-20;
+                    }
+                }
+            }
+        }
+        .p-tabview-panels {
+            background-color: $surface-50;
+            border: 0;
+        }
+    }
+
+    /* RWP doesn't use the tabview panels*/
+    .p-tabview .p-tabview-panels {
+        display: none;
+    }
+}

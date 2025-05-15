@@ -1,0 +1,327 @@
+/// Border color of a panel header
+/// @group panel #RDS
+$panelHeaderBorderColor: $surface-400;
+
+/// Border of a panel header
+/// @group panel #RDS
+$panelHeaderBorder: 1px solid $surface-400;
+
+/// Background of a panel header
+/// @group panel #RDS
+$panelHeaderBg: $base-white;
+
+/// Text color of a panel header
+/// @group panel
+$panelHeaderTextColor: $textColor;
+
+/// Font weight of a panel header
+/// @group panel #RDS
+$panelHeaderFontWeight: 600;
+
+/// Padding of a panel header
+/// @group panel #RDS
+$panelHeaderPadding: 1rem;
+
+/// Font weight of a toggleable panel header
+/// @group panel
+$panelToggleableHeaderPadding: .5rem 1rem;
+
+/// Background of a panel header in hover state e.g. toggleable state
+/// @group panel
+$panelHeaderHoverBg: #e9ecef;
+
+/// Border color of a panel header in hover state e.g. toggleable state
+/// @group panel
+$panelHeaderHoverBorderColor: #dee2e6;
+
+/// Text color of a panel header in hover state e.g. toggleable state
+/// @group panel
+$panelHeaderTextHoverColor: #495057;
+
+/// Border color for the content section of a panel
+/// @group panel #RDS
+$panelContentBorderColor: $surface-400;
+
+/// Border for the content section of a panel
+/// @group panel #RDS
+$panelContentBorder: 1px solid $surface-400;
+
+/// Background for the content section of a panel
+/// @group panel #RDS
+$panelContentBg: $base-white;
+
+/// Background for the striped row.
+/// @group panel
+$panelContentEvenRowBg: #e9ecef;
+
+/// Text color for the content section of a panel
+/// @group panel
+$panelContentTextColor: $textColor;
+
+/// Padding for the content section of a panel
+/// @group panel #RDS
+$panelContentPadding: 1rem;
+
+/// Border for the footer section of a panel
+/// @group panel
+$panelFooterBorder: 1px solid #dee2e6;
+
+/// Background for the footer section of a panel
+/// @group panel
+$panelFooterBg: #ffffff;
+
+/// Text color for the footer section of a panel
+/// @group panel
+$panelFooterTextColor: $textColor;
+
+/// Padding for the footer section of a panel
+/// @group panel
+$panelFooterPadding: 0.5rem 1rem;
+
+/// Spacing between to accordion panels
+/// @group panel
+$accordionSpacing: 0;
+
+/// Border of an accordion panel header
+/// @group panel
+$accordionHeaderBorder: $panelHeaderBorder;
+
+/// Background of an accordion panel header
+/// @group panel
+$accordionHeaderBg: $panelHeaderBg;
+
+/// Text color of an accordion panel header
+/// @group panel
+$accordionHeaderTextColor: $panelHeaderTextColor;
+
+/// Font weight of an accordion panel header
+/// @group panel
+$accordionHeaderFontWeight: $panelHeaderFontWeight;
+
+/// Padding of an accordion panel header
+/// @group panel
+$accordionHeaderPadding: $panelHeaderPadding;
+
+/// Background of an accordion panel header in hover state
+/// @group panel #RDS
+$accordionHeaderHoverBg: $surface-50;
+
+/// Border of an accordion panel header in hover state
+/// @group panel
+$accordionHeaderHoverBorderColor: $panelHeaderBorder;
+
+/// Text color of an accordion panel header in hover state
+/// @group panel
+$accordionHeaderTextHoverColor: $textColor;
+
+/// Background of an accordion panel header in expanded state
+/// @group panel
+$accordionHeaderActiveBg: $panelHeaderBg;
+
+/// Border of an accordion panel header in expanded state
+/// @group panel
+$accordionHeaderActiveBorderColor: #dee2e6;
+
+/// Text color of an accordion panel header in expanded state
+/// @group panel
+$accordionHeaderTextActiveColor: $textColor;
+
+/// Hover background of an accordion panel header in expanded state
+/// @group panel
+$accordionHeaderActiveHoverBg: #e9ecef;
+
+/// Hover border of an accordion panel header in expanded state
+/// @group panel
+$accordionHeaderActiveHoverBorderColor: #dee2e6;
+
+/// Text color of an accordion panel header in expanded state
+/// @group panel
+$accordionHeaderTextActiveHoverColor: $textColor;
+
+/// Border for a content section of an accordion panel
+/// @group panel
+$accordionContentBorder: $panelContentBorder;
+
+/// Background for a content section of an accordion panel
+/// @group panel
+$accordionContentBg: $panelContentBg;
+
+/// Text color for a content section of an accordion panel
+/// @group panel
+$accordionContentTextColor: $panelContentTextColor;
+
+/// Padding for a content section of an accordion panel
+/// @group panel
+$accordionContentPadding: $panelContentPadding;
+
+/// Border for a parent element containing all the headers of a tabview
+/// @group panel #RDS
+$tabviewNavBorder: 1px solid $surface-300;
+
+/// Border width for a parent element containing all the headers of a tabview
+/// @group panel #RDS
+$tabviewNavBorderWidth: 0 0 1px 0;
+
+/// Background for a parent element containing all the headers of a tabview
+/// @group panel #RDS
+$tabviewNavBg: transparent;
+
+/// Spacing between tabview headers
+/// @group panel
+$tabviewHeaderSpacing: 0;
+
+/// Border of a tabview header
+/// @group panel #RDS
+$tabviewHeaderBorder: solid $surface-300;
+
+/// Border width of a tabview header
+/// @group panel #RDS
+$tabviewHeaderBorderWidth: 1px 1px 1px 0;
+
+/// Border color of a tabview header
+/// @group panel #RDS
+$tabviewHeaderBorderColor: $surface-300 $surface-300 $surface-300 transparent;
+
+/// Background of a tabview header
+/// @group panel #RDS
+$tabviewHeaderBg: $surface-200;
+
+/// Text color of a tabview header
+/// @group panel #RDS
+$tabviewHeaderTextColor: $surface-700;
+
+/// Font weight of a tabview header
+/// @group panel
+$tabviewHeaderFontWeight: $panelHeaderFontWeight;
+
+/// Padding of a tabview header
+/// @group panel
+$tabviewHeaderPadding: $panelHeaderPadding;
+
+/// Margin of a tabview header
+/// @group panel
+$tabviewHeaderMargin: 0 0 -2px 0;
+
+/// Background of a tabview header in hover state
+/// @group panel #RDS
+$tabviewHeaderHoverBg: $surface-300;
+
+/// Border of a tabview header in hover state
+/// @group panel #RDS
+$tabviewHeaderHoverBorderColor: $surface-400;
+
+/// Text color of a tabview header in hover state
+/// @group panel #RDS
+$tabviewHeaderTextHoverColor: $base-blue;
+
+/// Background of a tabview header in selected state
+/// @group panel #RDS
+$tabviewHeaderActiveBg: $base-white;
+
+/// Border of a tabview header in selected state
+/// @group panel
+$tabviewHeaderActiveBorderColor: $primaryColor;
+
+/// Text color of a tabview header in selected state
+/// @group panel #RDS
+$tabviewHeaderTextActiveColor: $surface-900;
+
+/// Border for content section of a tabview tab
+/// @group panel #RDS
+$tabviewContentBorder: 1px solid $surface-300;
+
+/// Background for content section of a tabview tab
+/// @group panel
+$tabviewContentBg: $panelContentBg;
+
+/// Text color for a content section of a tabview tab
+/// @group panel
+$tabviewContentTextColor: $panelContentTextColor;
+
+/// Padding for a content section of a tabview tab
+/// @group panel
+$tabviewContentPadding: $panelContentPadding;
+
+/// Background of a fieldset header in hover state
+/// @group panel
+$panelHeaderHoverBg: #e9ecef;
+
+/// Border of a fieldset header in hover state
+/// @group panel
+$panelHeaderHoverBorderColor: #dee2e6;
+
+/// Text color of a fieldset header in hover state
+/// @group panel
+$panelHeaderTextHoverColor: $textColor;
+
+/// Border for a track bar of a scroll panel
+/// @group panel
+$scrollPanelTrackBorder: 0 none;
+
+/// Background for a track bar of a scroll panel
+/// @group panel
+$scrollPanelTrackBg: #f8f9fa;
+
+/// Padding of a card body
+/// @group panel
+$cardBodyPadding: 1rem;
+
+/// Font size of a card title
+/// @group panel
+$cardTitleFontSize: 1.5rem;
+
+/// Font weight of a card title
+/// @group panel
+$cardTitleFontWeight: 700;
+
+/// Font size of a card subtitle
+/// @group panel
+$cardSubTitleFontWeight: 700;
+
+/// Text color of a card subtitle
+/// @group panel
+$cardSubTitleColor: $textSecondaryColor;
+
+/// Padding of a card content
+/// @group panel
+$cardContentPadding: 1rem 0;
+
+/// Padding of a card footer
+/// @group panel
+$cardFooterPadding: 1rem 0 0 0;
+
+/// Box shadow of a card
+/// @group panel
+$cardShadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0,0,0,.12);
+
+/// Margin of divider in horizontal layout
+/// @group panel #RDS
+$dividerHorizontalMargin:1rem 0;
+
+/// Padding of divider in horizontal layout
+/// @group panel #RDS
+$dividerHorizontalPadding:0;
+
+/// Margin of divider in vertical layout
+/// @group panel #RDS
+$dividerVerticalMargin:0 1rem;
+
+/// Padding of divider in vertical layout
+/// @group panel #RDS
+$dividerVerticalPadding: 0;
+
+/// Border width of the divider
+/// @group panel
+$dividerSize:1px;
+
+/// Color of the divider border
+/// @group panel
+$dividerColor:#dee2e6;
+
+/// Background of the splitter gutter
+/// @group panel
+$splitterGutterBg:#f8f9fa;
+
+/// Background of the splitter gutter handle
+/// @group panel
+$splitterGutterHandleBg:#dee2e6;
