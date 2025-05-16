@@ -1,36 +1,36 @@
 const routes = {
   "/": {
-    template: "/templates/home.html",
+    template: "./templates/home.html",
     title: "Home",
     message: "This is the home page",
   },
   page1: {
-    template: "/templates/page1.html",
+    template: "./templates/page1.html",
     title: "Page 1",
     message: "placeholder text/unused",
   },
   page2: {
-    template: "/templates/page2.html",
+    template: "./templates/page2.html",
     title: "Page 2",
     message: "placeholder text/unused",
   },
   page3: {
-    template: "/templates/page3.html",
+    template: "./templates/page3.html",
     title: "Page 3",
     message: "placeholder text/unused",
   },
   pitselfserviceguide: {
-    template: "/templates/pitselfserviceguide.html",
+    template: "./templates/pitselfserviceguide.html",
     title: "PIT Self Service Application Guide",
     message: "placeholder text/unused",
   },
   toctest: {
-    template: "/templates/toctest.html",
+    template: "./templates/toctest.html",
     title: "Table of contents test 1",
     message: "placeholder text/unused",
   },
   toctest2: {
-    template: "/templates/toctest2.html",
+    template: "./templates/toctest2.html",
     title: "Table of contents test 2",
     message: "placeholder text/unused",
   }
