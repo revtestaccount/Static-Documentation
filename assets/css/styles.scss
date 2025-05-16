@@ -42,6 +42,7 @@ body {
     code{
         // color: $surface-000;
         color: $blue-darken-10;
+        background-color: $surface-200;
     }
 
     .header {
@@ -51,13 +52,24 @@ body {
         img{
             padding: 1rem;
         }
+        .PAYE_Modernisation_ERR_Documentation{
+            p{
+                font-size: 2rem;
+                color: $base-white;
+                font-weight: $bold-font-weight;
+                padding-top: 2rem;
+                };
+            text-align: center;
+            padding: 1rem;
+        }
         border-bottom: solid $base-cyan 1rem;
     };
 
     .sidebar {
         min-height: 100vh;
         // background-color: $base-brandmint;
-        background-color: $brandteal-lighten-10;
+        background-color: $base-brandteal;
+        font-weight: $semibold-font-weight;
     };
 
     .pmod {
@@ -66,7 +78,7 @@ body {
         text-align: center;
         margin-top: 2rem;
         margin-bottom: 2rem;
-        font-weight: bold;
+        font-weight: $bold-font-weight;
     };
 
     .footer {
@@ -75,9 +87,6 @@ body {
     border-top: solid $base-cyan 1rem;
     }
 }
-
-
-
 
 .sidebar a {
     color: white;
