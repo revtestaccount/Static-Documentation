@@ -2,12 +2,12 @@
  "404": {
   "template": "./templates/404.html",
   "title": "404 Page not found",
-  "message": "Revenue could not find the page you are looking for"
+  "message": "placeholder text/unused"
  },
  "/": {
   "template": "./templates/home.html",
   "title": "Home",
-  "message": "This is the home page"
+  "message": "placeholder text/unused"
  },
  "page1": {
   "template": "./templates/page1.html",

@@ -1,4 +1,12 @@
+// get JSON data from file & return to caller
+async function getJSONData(file) {
+  let data = await fetch(file);
+  return await data.json();
+}
+
 const locationHandler = async () => {
+
+  let routes = await getJSONData("./assets/js/sitemap.json");
   // get the url path, replace hash with empty string
   var location = window.location.hash.replace("#", "");
   // if the path length is 0, set it to primary page route
