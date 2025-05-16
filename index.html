@@ -21,42 +21,18 @@
             <!-- Sidebar -->
             <nav class="col-md-3 col-lg-2 sidebar">
                 <div class="position-sticky pt-3 p-sidebar-content" id="sidebarLinks">
-                    <!-- <a href="#home" class="nav-link">PMOD Home</a>
                     <a href="#page1">Page 1</a>
                     <a href="#page2">Page 2</a>
-                    <a href="#page3">Page 3</a> -->
+                    <a href="#page3">Page 3</a>
+                    <a href="#pitselfserviceguide">PIT Self Service Application Guide</a>
+                    <a href="#toctest">Table of contents test 1</a>
+                    <a href="#toctest2">Table of contents test 2</a>
                 </div>
             </nav>
 
-            <script>
-                const sidebarLinks = document.getElementById('sidebarLinks');
-
-                function getData() {
-                    return fetch('./assets/js/sitemap.json')
-                        .then(response => response.json())
-                        .then(data => {
-                            return data
-                        })
-                };
-
-                (async () => {
-                    const routes = await getData()
-
-                    for (route in routes) {
-                        let link = document.createElement('a');
-                        link.href = "#" + route;
-                        link.text = route;
-                        sidebarLinks.appendChild(link)
-                    }
-
-                })()
-
-            </script>
-
-
             <!-- <a href="#home">Home</a>-->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 main_content">
-                <div id="app">
+                <div id="content">
                     <!-- Content will be loaded here -->
                 </div>
             </main>
