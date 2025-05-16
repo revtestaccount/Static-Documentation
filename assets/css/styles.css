@@ -11143,6 +11143,7 @@ body a {
 }
 body code {
   color: rgb(0, 86, 179);
+  background-color: rgb(233, 236, 239);
 }
 body .header {
   display: flex;
@@ -11153,9 +11154,20 @@ body .header {
 body .header img {
   padding: 1rem;
 }
+body .header .PAYE_Modernisation_ERR_Documentation {
+  text-align: center;
+  padding: 1rem;
+}
+body .header .PAYE_Modernisation_ERR_Documentation p {
+  font-size: 2rem;
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+  padding-top: 2rem;
+}
 body .sidebar {
   min-height: 100vh;
-  background-color: rgb(0, 140, 143);
+  background-color: rgb(0, 90, 92);
+  font-weight: 600;
 }
 body .pmod {
   background-color: rgb(255, 255, 255);
@@ -11163,7 +11175,7 @@ body .pmod {
   text-align: center;
   margin-top: 2rem;
   margin-bottom: 2rem;
-  font-weight: bold;
+  font-weight: 700;
 }
 body .footer {
   padding: 25px 25px 25px 25px;
