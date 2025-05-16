@@ -4,4 +4,4 @@ Application used for the creation, maintenance and static deployment of Revenue 
 
 Deployed link:
 
-https://revtestaccount.github.io/Static-Documentation/#home
+https://revtestaccount.github.io/Static-Documentation/

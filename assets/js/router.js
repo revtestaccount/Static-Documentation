@@ -1,4 +1,9 @@
 const routes = {
+  404: {
+    template: "./templates/404.html",
+    title: "404 Page not found",
+    message: "Revenue could not find the page you are looking for",
+  },
   "/": {
     template: "./templates/home.html",
     title: "Home",
@@ -45,7 +50,7 @@ const locationHandler = async () => {
   }
 
   // get the route object from the routes object
-  const route = routes[location];
+  const route = routes[location] || routes["404"];
   // get the html from the template
   const html = await fetch(route.template).then((response) => response.text());
   // set the content of the content div to the html
