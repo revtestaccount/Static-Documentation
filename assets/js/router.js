@@ -1,47 +1,12 @@
-const routes = {
-  404: {
-    template: "./templates/404.html",
-    title: "404 Page not found",
-    message: "Revenue could not find the page you are looking for",
-  },
-  "/": {
-    template: "./templates/home.html",
-    title: "Home",
-    message: "This is the home page",
-  },
-  page1: {
-    template: "./templates/page1.html",
-    title: "Page 1",
-    message: "placeholder text/unused",
-  },
-  page2: {
-    template: "./templates/page2.html",
-    title: "Page 2",
-    message: "placeholder text/unused",
-  },
-  page3: {
-    template: "./templates/page3.html",
-    title: "Page 3",
-    message: "placeholder text/unused",
-  },
-  pitselfserviceguide: {
-    template: "./templates/pitselfserviceguide.html",
-    title: "PIT Self Service Application Guide",
-    message: "placeholder text/unused",
-  },
-  toctest: {
-    template: "./templates/toctest.html",
-    title: "Table of contents test 1",
-    message: "placeholder text/unused",
-  },
-  toctest2: {
-    template: "./templates/toctest2.html",
-    title: "Table of contents test 2",
-    message: "placeholder text/unused",
-  }
-};
+// get JSON data from file & return to caller
+async function getJSONData(file) {
+  let data = await fetch(file);
+  return await data.json();
+}
 
 const locationHandler = async () => {
+
+  let routes = await getJSONData("./assets/js/sitemap.json");
   // get the url path, replace hash with empty string
   var location = window.location.hash.replace("#", "");
   // if the path length is 0, set it to primary page route
