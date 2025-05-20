@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;WebServiceDefinitionMoniker Name=&quot;Enhanced Reporting&quot; WebServiceDefinitionLocationKind=&quot;File&quot; WebServiceDefinitionKind=&quot;Wsdl&quot; Title=&quot;Enhanced Reporting Web Service&quot; WebServiceDefinitionLocation=&quot;..\..\soap\v1\enhanced_reporting_pit4.wsdl&quot;&gt;&#xD;&#xA;  &lt;EndpointUri&gt;&lt;/EndpointUri&gt;&#xD;&#xA;&lt;/WebServiceDefinitionMoniker&gt;" DocType="DX.WEBSERVICE" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes>
+      <Attribute key="scrollPosition" valuetype="integer">2814</Attribute>
+    </Attributes>
+  </State>
+  <LastSelectedItem>Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method</LastSelectedItem>
+  <item qn="Enhanced Reporting_ws~r-EnhancedReportingSubmissionOperation~o-Method~q-EnhancedReportingSubmissionRequest~p-SubmissionID">
+    <exclude ChangeDateTime="2023-07-07T08:19:42.0910523Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-EnhancedReportingSubmissionOperation~o-Method~q-EnhancedReportingSubmissionRequest~p-Header">
+    <exclude ChangeDateTime="2023-07-07T08:19:44.9230253Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-EnhancedReportingSubmissionOperation~o-Method~q-EnhancedReportingSubmissionRequest~p-ExpensesBenefits">
+    <exclude ChangeDateTime="2023-07-07T08:19:46.7720131Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-EnhancedReportingSubmissionOperation~o-Method~q-EnhancedReportingSubmissionRequest~p-LineItemIDToDelete">
+    <exclude ChangeDateTime="2023-07-07T08:19:48.683Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-EnhancedReportingSubmissionOperation~o-Method~s-success_Body~p-AcknowledgementStatus">
+    <exclude ChangeDateTime="2023-07-07T08:19:52.208972Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-EnhancedReportingSubmissionOperation~o-Method~s-success_Body~p-AcknowledgementID">
+    <exclude ChangeDateTime="2023-07-07T08:19:54.0769548Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-EnhancedReportingSubmissionOperation~o-Method~s-success_Body~p-ValidationError">
+    <exclude ChangeDateTime="2023-07-07T08:19:56.3609363Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-EnhancedReportingSubmissionOperation~o-Method~s-success_Body~p-ValidationWarning">
+    <exclude ChangeDateTime="2023-07-07T08:19:58.8689379Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~q-CheckErrSubmissionRequest~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-07-07T08:20:04.699871Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~q-CheckErrSubmissionRequest~p-AgentTain">
+    <exclude ChangeDateTime="2023-07-07T08:20:06.7098753Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~q-CheckErrSubmissionRequest~p-TaxYear">
+    <exclude ChangeDateTime="2023-07-07T08:20:08.6458382Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~q-CheckErrSubmissionRequest~p-SoftwareUsed">
+    <exclude ChangeDateTime="2023-07-07T08:20:10.4848459Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~q-CheckErrSubmissionRequest~p-EnhancedReportingRunReference">
+    <exclude ChangeDateTime="2023-07-07T08:20:12.5298113Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~q-CheckErrSubmissionRequest~p-SubmissionID">
+    <exclude ChangeDateTime="2023-07-07T08:20:14.5387972Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~s-success_Body~p-SubmissionID">
+    <exclude ChangeDateTime="2023-07-07T08:20:17.3548119Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~s-success_Body~p-Status">
+    <exclude ChangeDateTime="2023-07-07T08:20:19.1817604Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~s-success_Body~p-SubmissionHeader">
+    <exclude ChangeDateTime="2023-07-07T08:20:20.9067436Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~s-success_Body~p-ExpenseBenefitSubmissionSummary">
+    <exclude ChangeDateTime="2023-07-07T08:20:22.6957484Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~s-success_Body~p-InvalidExpenseBenefit">
+    <exclude ChangeDateTime="2023-07-07T08:20:24.4947193Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~s-success_Body~p-WarningExpenseBenefit">
+    <exclude ChangeDateTime="2023-07-07T08:20:26.2757016Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrSubmissionOperation~o-Method~s-success_Body~p-ValidationError">
+    <exclude ChangeDateTime="2023-07-07T08:20:28.0646939Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrRunOperation~o-Method~q-CheckErrRunRequest~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-07-07T08:20:30.348673Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrRunOperation~o-Method~q-CheckErrRunRequest~p-AgentTain">
+    <exclude ChangeDateTime="2023-07-07T08:20:32.245657Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrRunOperation~o-Method~q-CheckErrRunRequest~p-TaxYear">
+    <exclude ChangeDateTime="2023-07-07T08:20:34.2856484Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrRunOperation~o-Method~q-CheckErrRunRequest~p-SoftwareUsed">
+    <exclude ChangeDateTime="2023-07-07T08:20:36.1516297Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrRunOperation~o-Method~q-CheckErrRunRequest~p-EnhancedReportingRunReference">
+    <exclude ChangeDateTime="2023-07-07T08:20:38.0756129Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrRunOperation~o-Method~s-success_Body~p-Status">
+    <exclude ChangeDateTime="2023-07-07T08:20:40.3255939Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrRunOperation~o-Method~s-success_Body~p-Amount">
+    <exclude ChangeDateTime="2023-07-07T08:20:42.4315795Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrRunOperation~o-Method~s-success_Body~p-ExpenseBenefitSubmissions">
+    <exclude ChangeDateTime="2023-07-07T08:20:44.3905641Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrRunOperation~o-Method~s-success_Body~p-ExpenseBenefitSummary">
+    <exclude ChangeDateTime="2023-07-07T08:20:46.1115514Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-CheckErrRunOperation~o-Method~s-success_Body~p-ValidationError">
+    <exclude ChangeDateTime="2023-07-07T08:20:48.0485382Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrStatementOperation~o-Method~q-MonthlyErrStatementRequest~p-">
+    <exclude ChangeDateTime="2023-07-07T08:20:51.1505118Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrStatementOperation~o-Method~q-MonthlyErrStatementRequest~p-AgentTain">
+    <exclude ChangeDateTime="2023-07-07T08:20:53.6975003Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrStatementOperation~o-Method~q-MonthlyErrStatementRequest~p-TaxYear">
+    <exclude ChangeDateTime="2023-07-07T08:20:55.9904828Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrStatementOperation~o-Method~q-MonthlyErrStatementRequest~p-SoftwareUsed">
+    <exclude ChangeDateTime="2023-07-07T08:20:58.2144577Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrStatementOperation~o-Method~q-MonthlyErrStatementRequest~p-Period">
+    <exclude ChangeDateTime="2023-07-07T08:21:00.1194409Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~q-MonthlyErrReportRequest~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-07-18T08:52:19.8750326Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~q-MonthlyErrReportRequest~p-AgentTain">
+    <exclude ChangeDateTime="2023-07-18T08:52:22.6950461Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~q-MonthlyErrReportRequest~p-TaxYear">
+    <exclude ChangeDateTime="2023-07-18T08:52:26.8529824Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~q-MonthlyErrReportRequest~p-Month">
+    <exclude ChangeDateTime="2023-07-18T08:52:29.1949627Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~q-MonthlyErrReportRequest~p-SoftwareUsed">
+    <exclude ChangeDateTime="2023-07-18T08:52:32.0379427Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~s-success_Body~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-07-18T08:52:35.6269225Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~s-success_Body~p-AgentTain">
+    <exclude ChangeDateTime="2023-07-18T08:52:38.1138941Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~s-success_Body~p-TaxYear">
+    <exclude ChangeDateTime="2023-07-18T08:52:40.3238826Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~s-success_Body~p-Month">
+    <exclude ChangeDateTime="2023-07-18T08:52:42.4788574Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~s-success_Body~p-NumberOfExpensesBenefits">
+    <exclude ChangeDateTime="2023-07-18T08:52:44.507842Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~s-success_Body~p-DateTimeEffective">
+    <exclude ChangeDateTime="2023-07-18T08:52:47.1898257Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~s-success_Body~p-TotalAmount">
+    <exclude ChangeDateTime="2023-07-18T08:52:49.6498031Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~s-success_Body~p-CategoryBreakdown">
+    <exclude ChangeDateTime="2023-07-18T08:52:52.0767896Z" />
+  </item>
+  <item qn="Enhanced Reporting_ws~r-MonthlyErrReportOperation~o-Method~s-success_Body~p-RunReferenceBreakdown">
+    <exclude ChangeDateTime="2023-07-18T08:52:54.7117683Z" />
+  </item>
+  <Filters>
+    <DX.WEBSERVICECONTENTSTOREFILTER>
+      <IsSourceCommentsVisible>true</IsSourceCommentsVisible>
+    </DX.WEBSERVICECONTENTSTOREFILTER>
+  </Filters>
+  <Filters>
+    <CONTENTSTORECOMMON>
+      <IsIncludedItemsOnly>true</IsIncludedItemsOnly>
+    </CONTENTSTORECOMMON>
+    <CONTENTSTORELOCALIZATION>
+      <IsPrimaryLocaleContentPreviewEnabled>true</IsPrimaryLocaleContentPreviewEnabled>
+    </CONTENTSTORELOCALIZATION>
+  </Filters>
+</ContentFile>

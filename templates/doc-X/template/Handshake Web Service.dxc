@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;WebServiceDefinitionMoniker WebServiceDefinitionLocationKind=&quot;File&quot; WebServiceDefinitionKind=&quot;Wsdl&quot; Title=&quot;Handshake Web Service&quot; Name=&quot;Handshake&quot; WebServiceDefinitionLocation=&quot;..\..\..\soap\v1\handshake_pit4.wsdl&quot;&gt;&#xD;&#xA;  &lt;EndpointUri&gt;&lt;/EndpointUri&gt;&#xD;&#xA;&lt;/WebServiceDefinitionMoniker&gt;" DocType="DX.WEBSERVICE" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes />
+  </State>
+  <LastSelectedItem>Handshake_ws~r-HandshakeOperation~o-Method~s-success_Body~p-ValidationError</LastSelectedItem>
+  <item qn="Handshake_ws~r-HandshakeOperation~o-Method~q-HandshakeRequest~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-06-08T09:27:58.303603Z" />
+  </item>
+  <item qn="Handshake_ws~r-HandshakeOperation~o-Method~q-HandshakeRequest~p-AgentTain">
+    <exclude ChangeDateTime="2023-06-08T09:28:00.0005646Z" />
+  </item>
+  <item qn="Handshake_ws~r-HandshakeOperation~o-Method~q-HandshakeRequest~p-SoftwareUsed">
+    <exclude ChangeDateTime="2023-06-08T09:28:06.9704231Z" />
+  </item>
+  <item qn="Handshake_ws~r-HandshakeOperation~o-Method~s-success_Body~p-ConnectionStatus">
+    <exclude ChangeDateTime="2023-06-08T09:28:10.8433468Z" />
+  </item>
+  <item qn="Handshake_ws~r-HandshakeOperation~o-Method~s-success_Body~p-ValidationError">
+    <exclude ChangeDateTime="2023-06-08T09:28:12.2123208Z" />
+  </item>
+  <Filters>
+    <DX.WEBSERVICECONTENTSTOREFILTER>
+      <IsSourceCommentsVisible>true</IsSourceCommentsVisible>
+    </DX.WEBSERVICECONTENTSTOREFILTER>
+  </Filters>
+  <Filters>
+    <CONTENTSTORECOMMON>
+      <IsIncludedItemsOnly>true</IsIncludedItemsOnly>
+    </CONTENTSTORECOMMON>
+    <CONTENTSTORELOCALIZATION>
+      <IsPrimaryLocaleContentPreviewEnabled>true</IsPrimaryLocaleContentPreviewEnabled>
+    </CONTENTSTORELOCALIZATION>
+  </Filters>
+</ContentFile>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;XsdSchema Name=&quot;ERN&quot; SchemaLocationType=&quot;File&quot; SchemaType=&quot;Normal&quot; Title=&quot;ERN Schema&quot; IsExternallyManaged=&quot;false&quot; SchemaId=&quot;&quot; SchemaParentItemId=&quot;&quot; SchemaLocation=&quot;..\..\soap\v1\ern\ern-schema-pit4.xsd&quot; /&gt;" DocType="DX.XSD" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes>
+      <Attribute key="scrollPosition" valuetype="integer">0</Attribute>
+    </Attributes>
+  </State>
+  <LastSelectedItem>ERN_xsd</LastSelectedItem>
+  <item qn="ERN_xsd">
+    <exclude_toc ChangeDateTime="2023-06-01T14:38:30.095048Z" />
+  </item>
+  <Filters>
+    <DX.XSDCONTENTSTOREFILTER>
+      <IsSourceCommentsVisible>true</IsSourceCommentsVisible>
+    </DX.XSDCONTENTSTOREFILTER>
+  </Filters>
+  <Filters>
+    <CONTENTSTORECOMMON>
+      <IsIncludedItemsOnly>true</IsIncludedItemsOnly>
+    </CONTENTSTORECOMMON>
+    <CONTENTSTORELOCALIZATION>
+      <IsPrimaryLocaleContentPreviewEnabled>true</IsPrimaryLocaleContentPreviewEnabled>
+    </CONTENTSTORELOCALIZATION>
+  </Filters>
+</ContentFile>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;XsdSchema Name=&quot;http://www.ros.ie/schemas/paye-employers/v1/payroll/&quot; SchemaLocationType=&quot;Embedded&quot; SchemaType=&quot;Normal&quot; Title=&quot;http://www.ros.ie/schemas/paye-employers/v1/payroll/&quot; IsExternallyManaged=&quot;true&quot; SchemaId=&quot;http://www.ros.ie/schemas/paye-employers/v1/payroll/&quot; SchemaParentItemId=&quot;Payroll&quot; /&gt;" DocType="DX.XSD" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes />
+  </State>
+  <LastSelectedItem />
+  <Filters />
+</ContentFile>

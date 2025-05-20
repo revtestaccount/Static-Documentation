@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;WebServiceDefinitionMoniker WebServiceDefinitionLocationKind=&quot;File&quot; WebServiceDefinitionKind=&quot;Wsdl&quot; Title=&quot;Payroll Web Service&quot; Name=&quot;Payroll&quot; WebServiceDefinitionLocation=&quot;..\..\..\soap\v1\payroll_pit4.wsdl&quot;&gt;&#xD;&#xA;  &lt;EndpointUri&gt;&lt;/EndpointUri&gt;&#xD;&#xA;&lt;/WebServiceDefinitionMoniker&gt;" DocType="DX.WEBSERVICE" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes>
+      <Attribute key="i-toggle-section-collapsed-i-description-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-request_PayrollSubmissionRequest-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-response_PayrollSubmissionResponse-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-tab-container-selected-tab-index" valuetype="integer">0</Attribute>
+      <Attribute key="scrollPosition" valuetype="integer">0</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-request_CheckPayrollSubmissionRequest-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-response_CheckPayrollSubmissionResponse-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-request_CheckPayrollRunRequest-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-response_CheckPayrollRunResponse-section-heading" valuetype="string">true</Attribute>
+    </Attributes>
+  </State>
+  <LastSelectedItem>Payroll_ws~r-CheckPayrollRunOperation~o-Method~s-success_Body~p-ValidationError</LastSelectedItem>
+  <item qn="Payroll_ws~r-PayrollSubmissionOperation~o-Method">
+    <examplecode ChangeDateTime="2019-08-30T10:28:56.3504499Z" title="Example" description="" pagetype="" inline="true" escaped="false" id="92adcc34-7cf3-45a4-88b3-66c845338ff3" source="..\..\examples\SOAP_Schema_Reference_Examples\2.3.1_Payroll_Submission_Request_Example.xml" lang="XML"></examplecode>
+    <examplecode ChangeDateTime="2019-08-30T10:29:07.9634499Z" title="Example2" description="" pagetype="" inline="true" escaped="false" id="128faa6c-c587-48d0-8345-694e1612c553" source="..\..\examples\SOAP_Schema_Reference_Examples\2.2.2_Check_Payroll_Sub_Response_Example.xml" lang="XML"></examplecode>
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method">
+    <examplecode ChangeDateTime="2019-08-30T10:29:33.1514499Z" title="Example" description="" pagetype="" inline="true" escaped="false" id="5e8a011e-eb49-4bda-9c65-40e2ed2b727d" source="..\..\examples\SOAP_Schema_Reference_Examples\2.2.1_Check_Payroll_Sub_Request_Example.xml" lang="XML"></examplecode>
+    <examplecode ChangeDateTime="2019-08-30T10:29:48.1294499Z" title="Example2" description="" pagetype="" inline="true" escaped="false" id="8433d6b0-5377-49aa-b22a-6f0c8043224b" source="..\..\examples\SOAP_Schema_Reference_Examples\2.2.2_Check_Payroll_Sub_Response_Example.xml" lang="XML"></examplecode>
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method">
+    <examplecode ChangeDateTime="2019-08-30T10:30:14.9584499Z" title="Example" description="" pagetype="" inline="true" escaped="false" id="523e252c-6fa1-467f-8f81-6668532415ee" source="..\..\examples\SOAP_Schema_Reference_Examples\2.1.1_Check_Payroll_Run_Request_Example.xml" lang="XML"></examplecode>
+    <examplecode ChangeDateTime="2019-08-30T10:30:28.1384499Z" title="Example2" description="" pagetype="" inline="true" escaped="false" id="7e77fca4-b81f-41dc-a982-5169e73432d5" source="..\..\examples\SOAP_Schema_Reference_Examples\2.1.2_Check_Payroll_Run_Response_Example.xml" lang="XML"></examplecode>
+  </item>
+  <item qn="Payroll_ws~r-PayrollSubmissionOperation~o-Method~q-PayrollSubmissionRequest~p-SubmissionID">
+    <exclude ChangeDateTime="2023-06-08T09:30:21.6749188Z" />
+  </item>
+  <item qn="Payroll_ws~r-PayrollSubmissionOperation~o-Method~q-PayrollSubmissionRequest~p-BatchReference">
+    <exclude ChangeDateTime="2023-06-08T09:30:23.6717392Z" />
+  </item>
+  <item qn="Payroll_ws~r-PayrollSubmissionOperation~o-Method~q-PayrollSubmissionRequest~p-Header">
+    <exclude ChangeDateTime="2023-06-08T09:30:25.5337019Z" />
+  </item>
+  <item qn="Payroll_ws~r-PayrollSubmissionOperation~o-Method~q-PayrollSubmissionRequest~p-Payslip">
+    <exclude ChangeDateTime="2023-06-08T09:30:27.1426804Z" />
+  </item>
+  <item qn="Payroll_ws~r-PayrollSubmissionOperation~o-Method~q-PayrollSubmissionRequest~p-LineItemIDToDelete">
+    <exclude ChangeDateTime="2023-06-08T09:30:28.7676507Z" />
+  </item>
+  <item qn="Payroll_ws~r-PayrollSubmissionOperation~o-Method~s-success_Body~p-AcknowledgementStatus">
+    <exclude ChangeDateTime="2023-06-08T09:30:31.2875984Z" />
+  </item>
+  <item qn="Payroll_ws~r-PayrollSubmissionOperation~o-Method~s-success_Body~p-AcknowledgementID">
+    <exclude ChangeDateTime="2023-06-08T09:30:32.8265619Z" />
+  </item>
+  <item qn="Payroll_ws~r-PayrollSubmissionOperation~o-Method~s-success_Body~p-ValidationError">
+    <exclude ChangeDateTime="2023-06-08T09:30:34.4385646Z" />
+  </item>
+  <item qn="Payroll_ws~r-PayrollSubmissionOperation~o-Method~s-success_Body~p-ValidationWarning">
+    <exclude ChangeDateTime="2023-06-08T09:30:36.2995046Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~q-CheckPayrollSubmissionRequest~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-06-08T09:30:46.1093087Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~q-CheckPayrollSubmissionRequest~p-AgentTain">
+    <exclude ChangeDateTime="2023-06-08T09:30:48.2752669Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~q-CheckPayrollSubmissionRequest~p-TaxYear">
+    <exclude ChangeDateTime="2023-06-08T09:30:50.1182498Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~q-CheckPayrollSubmissionRequest~p-SoftwareUsed">
+    <exclude ChangeDateTime="2023-06-08T09:30:51.9321979Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~q-CheckPayrollSubmissionRequest~p-PayrollRunReference">
+    <exclude ChangeDateTime="2023-06-08T09:30:53.9331587Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~q-CheckPayrollSubmissionRequest~p-SubmissionID">
+    <exclude ChangeDateTime="2023-06-08T09:30:56.5261093Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~s-success_Body~p-SubmissionID">
+    <exclude ChangeDateTime="2023-06-08T09:30:59.6040563Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~s-success_Body~p-Status">
+    <exclude ChangeDateTime="2023-06-08T09:31:01.5480138Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~s-success_Body~p-BatchCount">
+    <exclude ChangeDateTime="2023-06-08T09:31:03.1729823Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~s-success_Body~p-BatchStatus">
+    <exclude ChangeDateTime="2023-06-08T09:31:04.8429648Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~s-success_Body~p-SubmissionHeader">
+    <exclude ChangeDateTime="2023-06-08T09:31:06.5489203Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~s-success_Body~p-SubmissionSummary">
+    <exclude ChangeDateTime="2023-06-08T09:31:08.4478821Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~s-success_Body~p-InvalidPayslip">
+    <exclude ChangeDateTime="2023-06-08T09:31:10.6698407Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~s-success_Body~p-PayslipWarning">
+    <exclude ChangeDateTime="2023-06-08T09:31:13.1127989Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollSubmissionOperation~o-Method~s-success_Body~p-ValidationError">
+    <exclude ChangeDateTime="2023-06-08T09:31:14.9387602Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~q-CheckPayrollRunRequest~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-06-08T09:31:19.8516654Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~q-CheckPayrollRunRequest~p-AgentTain">
+    <exclude ChangeDateTime="2023-06-08T09:31:22.0096236Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~q-CheckPayrollRunRequest~p-TaxYear">
+    <exclude ChangeDateTime="2023-06-08T09:31:23.7465897Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~q-CheckPayrollRunRequest~p-SoftwareUsed">
+    <exclude ChangeDateTime="2023-06-08T09:31:25.6725533Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~q-CheckPayrollRunRequest~p-PayrollRunReference">
+    <exclude ChangeDateTime="2023-06-08T09:31:27.8025126Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~s-success_Body~p-Status">
+    <exclude ChangeDateTime="2023-06-08T09:31:31.3594461Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~s-success_Body~p-TaxOnIncome">
+    <exclude ChangeDateTime="2023-06-08T09:31:33.3124068Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~s-success_Body~p-PRSI">
+    <exclude ChangeDateTime="2023-06-08T09:31:35.0673756Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~s-success_Body~p-USC">
+    <exclude ChangeDateTime="2023-06-08T09:31:36.8153655Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~s-success_Body~p-LPT">
+    <exclude ChangeDateTime="2023-06-08T09:31:38.634319Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~s-success_Body~p-Submission">
+    <exclude ChangeDateTime="2023-06-08T09:31:40.2862734Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~s-success_Body~p-PayslipSummary">
+    <exclude ChangeDateTime="2023-06-08T09:31:42.3112432Z" />
+  </item>
+  <item qn="Payroll_ws~r-CheckPayrollRunOperation~o-Method~s-success_Body~p-ValidationError">
+    <exclude ChangeDateTime="2023-06-08T09:31:44.0942023Z" />
+  </item>
+  <Filters>
+    <DX.WEBSERVICECONTENTSTOREFILTER>
+      <IsSourceCommentsVisible>true</IsSourceCommentsVisible>
+    </DX.WEBSERVICECONTENTSTOREFILTER>
+  </Filters>
+  <Filters>
+    <CONTENTSTORECOMMON>
+      <IsIncludedItemsOnly>true</IsIncludedItemsOnly>
+    </CONTENTSTORECOMMON>
+    <CONTENTSTORELOCALIZATION>
+      <IsPrimaryLocaleContentPreviewEnabled>true</IsPrimaryLocaleContentPreviewEnabled>
+    </CONTENTSTORELOCALIZATION>
+  </Filters>
+</ContentFile>

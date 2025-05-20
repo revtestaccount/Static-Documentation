@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;WebServiceDefinitionMoniker Name=&quot;ERN&quot; WebServiceDefinitionLocationKind=&quot;File&quot; WebServiceDefinitionKind=&quot;Wsdl&quot; Title=&quot;ERN Web Service&quot; WebServiceDefinitionLocation=&quot;..\..\soap\v1\ern_pit4.wsdl&quot;&gt;&#xD;&#xA;  &lt;EndpointUri&gt;&lt;/EndpointUri&gt;&#xD;&#xA;&lt;/WebServiceDefinitionMoniker&gt;" DocType="DX.WEBSERVICE" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes>
+      <Attribute key="scrollPosition" valuetype="integer">0</Attribute>
+    </Attributes>
+  </State>
+  <LastSelectedItem>ERN_ws~r-LookUpERNOperation~o-Method~q-LookUpERNRequest</LastSelectedItem>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~q-LookUpERNRequest~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-06-08T09:27:18.2433838Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~q-LookUpERNRequest~p-AgentTain">
+    <exclude ChangeDateTime="2023-06-08T09:27:20.169346Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~q-LookUpERNRequest~p-SoftwareUsed">
+    <exclude ChangeDateTime="2023-06-08T09:27:23.5522819Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~q-LookUpERNRequest~p-TaxYear">
+    <exclude ChangeDateTime="2023-06-08T09:27:25.5542409Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~q-LookUpERNRequest~p-PPSN">
+    <exclude ChangeDateTime="2023-06-08T09:27:27.3752161Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~s-success_Body~p-EmployerName">
+    <exclude ChangeDateTime="2023-06-08T09:27:29.0251724Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~s-success_Body~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-06-08T09:27:31.0501377Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~s-success_Body~p-AgentTain">
+    <exclude ChangeDateTime="2023-06-08T09:27:32.5361014Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~s-success_Body~p-TaxYear">
+    <exclude ChangeDateTime="2023-06-08T09:27:34.4380649Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~s-success_Body~p-TotalERNCount">
+    <exclude ChangeDateTime="2023-06-08T09:27:35.9010358Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~s-success_Body~p-DateTimeEffective">
+    <exclude ChangeDateTime="2023-06-08T09:27:37.679006Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~s-success_Body~p-ERN">
+    <exclude ChangeDateTime="2023-06-08T09:27:39.4559652Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~s-success_Body~p-NoERN">
+    <exclude ChangeDateTime="2023-06-08T09:27:42.3449091Z" />
+  </item>
+  <item qn="ERN_ws~r-LookUpERNOperation~o-Method~s-success_Body~p-ValidationError">
+    <exclude ChangeDateTime="2023-06-08T09:27:44.7738668Z" />
+  </item>
+  <Filters>
+    <DX.WEBSERVICECONTENTSTOREFILTER>
+      <IsSourceCommentsVisible>true</IsSourceCommentsVisible>
+    </DX.WEBSERVICECONTENTSTOREFILTER>
+  </Filters>
+  <Filters>
+    <CONTENTSTORECOMMON>
+      <IsIncludedItemsOnly>true</IsIncludedItemsOnly>
+    </CONTENTSTORECOMMON>
+    <CONTENTSTORELOCALIZATION>
+      <IsPrimaryLocaleContentPreviewEnabled>true</IsPrimaryLocaleContentPreviewEnabled>
+    </CONTENTSTORELOCALIZATION>
+  </Filters>
+</ContentFile>

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;WebServiceDefinitionMoniker WebServiceDefinitionLocationKind=&quot;File&quot; WebServiceDefinitionKind=&quot;Wsdl&quot; Title=&quot;Returns Reconciliation Web Service&quot; Name=&quot;Returns Reconciliation&quot; WebServiceDefinitionLocation=&quot;..\..\..\soap\v1\returns_reconciliation_pit4.wsdl&quot;&gt;&#xD;&#xA;  &lt;EndpointUri&gt;&lt;/EndpointUri&gt;&#xD;&#xA;&lt;/WebServiceDefinitionMoniker&gt;" DocType="DX.WEBSERVICE" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes>
+      <Attribute key="scrollPosition" valuetype="integer">0</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-request_LookupPayrollDetailsByReturnPeriodRequest-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-response_LookupPayrollDetailsByReturnPeriodResponse-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-tab-container-selected-tab-index" valuetype="integer">0</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-example-section-heading" valuetype="string">true</Attribute>
+    </Attributes>
+  </State>
+  <LastSelectedItem>Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~s-success_Body~p-ValidationError</LastSelectedItem>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method">
+    <examplecode ChangeDateTime="2019-08-30T10:31:03.5244499Z" title="Example" description="" pagetype="" inline="true" escaped="false" id="9705ea45-d20b-4eb2-81e9-cb4e0b0f3fdb" source="..\..\examples\SOAP_Schema_Reference_Examples\3.1.1_Lookup_Return_Request_Example.xml" lang="XML"></examplecode>
+    <examplecode ChangeDateTime="2019-08-30T10:31:19.2614499Z" title="Example2" description="" pagetype="" inline="true" escaped="false" id="c198eb19-7209-4ebc-a324-9464cdefd5d0" source="..\..\examples\SOAP_Schema_Reference_Examples\3.1.2_Lookup_Return_Response_Example.xml" lang="XML"></examplecode>
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~q-LookupPayrollDetailsByReturnPeriodRequest~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-06-08T09:28:19.980166Z" />
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~q-LookupPayrollDetailsByReturnPeriodRequest~p-AgentTain">
+    <exclude ChangeDateTime="2023-06-08T09:28:21.6961368Z" />
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~q-LookupPayrollDetailsByReturnPeriodRequest~p-SoftwareUsed">
+    <exclude ChangeDateTime="2023-06-08T09:28:23.3221015Z" />
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~q-LookupPayrollDetailsByReturnPeriodRequest~p-ReturnPeriod">
+    <exclude ChangeDateTime="2023-06-08T09:28:25.3650688Z" />
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~s-success_Body~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-06-08T09:28:28.0650087Z" />
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~s-success_Body~p-AgentTain">
+    <exclude ChangeDateTime="2023-06-08T09:28:29.8719819Z" />
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~s-success_Body~p-ReturnPeriod">
+    <exclude ChangeDateTime="2023-06-08T09:28:31.674936Z" />
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~s-success_Body~p-DateLastUpdated">
+    <exclude ChangeDateTime="2023-06-08T09:28:33.3119063Z" />
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~s-success_Body~p-Version">
+    <exclude ChangeDateTime="2023-06-08T09:28:34.8528748Z" />
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~s-success_Body~p-PeriodSummary">
+    <exclude ChangeDateTime="2023-06-08T09:28:36.8398531Z" />
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~s-success_Body~p-PayrollRunDetails">
+    <exclude ChangeDateTime="2023-06-08T09:28:39.6467799Z" />
+  </item>
+  <item qn="Returns Reconciliation_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method~s-success_Body~p-ValidationError">
+    <exclude ChangeDateTime="2023-06-08T09:28:41.6287439Z" />
+  </item>
+  <Filters>
+    <DX.WEBSERVICECONTENTSTOREFILTER>
+      <IsSourceCommentsVisible>true</IsSourceCommentsVisible>
+    </DX.WEBSERVICECONTENTSTOREFILTER>
+  </Filters>
+  <Filters>
+    <CONTENTSTORECOMMON>
+      <IsIncludedItemsOnly>true</IsIncludedItemsOnly>
+    </CONTENTSTORECOMMON>
+    <CONTENTSTORELOCALIZATION>
+      <IsPrimaryLocaleContentPreviewEnabled>true</IsPrimaryLocaleContentPreviewEnabled>
+    </CONTENTSTORELOCALIZATION>
+  </Filters>
+</ContentFile>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;XsdSchema SchemaLocationType=&quot;File&quot; SchemaType=&quot;Normal&quot; Title=&quot;Handshake Schema&quot; IsExternallyManaged=&quot;false&quot; SchemaId=&quot;&quot; SchemaParentItemId=&quot;&quot; Name=&quot;Handshake&quot; SchemaLocation=&quot;..\..\..\soap\v1\handshake\handshake-schema-pit4.xsd&quot; /&gt;" DocType="DX.XSD" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes>
+      <Attribute key="scrollPosition" valuetype="integer">0</Attribute>
+    </Attributes>
+  </State>
+  <LastSelectedItem>Handshake_xsd</LastSelectedItem>
+  <item qn="Handshake_xsd">
+    <exclude_toc ChangeDateTime="2023-06-01T14:38:34.3909898Z" />
+    <exclude_toc ChangeDateTime="2023-06-01T14:38:38.3889043Z" />
+  </item>
+  <Filters>
+    <DX.XSDCONTENTSTOREFILTER>
+      <IsSourceCommentsVisible>true</IsSourceCommentsVisible>
+    </DX.XSDCONTENTSTOREFILTER>
+  </Filters>
+  <Filters>
+    <CONTENTSTORECOMMON>
+      <IsIncludedItemsOnly>true</IsIncludedItemsOnly>
+    </CONTENTSTORECOMMON>
+    <CONTENTSTORELOCALIZATION>
+      <IsPrimaryLocaleContentPreviewEnabled>true</IsPrimaryLocaleContentPreviewEnabled>
+    </CONTENTSTORELOCALIZATION>
+  </Filters>
+</ContentFile>
