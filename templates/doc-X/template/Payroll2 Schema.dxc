@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;XsdSchema Name=&quot;Payroll2&quot; SchemaLocationType=&quot;Embedded&quot; SchemaType=&quot;Normal&quot; Title=&quot;Payroll2&quot; IsExternallyManaged=&quot;true&quot; SchemaId=&quot;Payroll2&quot; SchemaParentItemId=&quot;Payroll&quot; /&gt;" DocType="DX.XSD" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes />
+  </State>
+  <LastSelectedItem />
+  <Filters />
+</ContentFile>

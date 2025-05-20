@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;XsdSchema Name=&quot;Returns Reconciliation2&quot; SchemaLocationType=&quot;Embedded&quot; SchemaType=&quot;Normal&quot; Title=&quot;Returns Reconciliation2&quot; IsExternallyManaged=&quot;true&quot; SchemaId=&quot;Returns Reconciliation2&quot; SchemaParentItemId=&quot;Returns Reconciliation&quot; /&gt;" DocType="DX.XSD" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes />
+  </State>
+  <LastSelectedItem />
+  <Filters />
+</ContentFile>

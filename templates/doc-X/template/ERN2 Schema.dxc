@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;XsdSchema Name=&quot;ERN2&quot; SchemaLocationType=&quot;Embedded&quot; SchemaType=&quot;Normal&quot; Title=&quot;ERN2&quot; IsExternallyManaged=&quot;true&quot; SchemaId=&quot;ERN2&quot; SchemaParentItemId=&quot;ERN&quot; /&gt;" DocType="DX.XSD" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes />
+  </State>
+  <LastSelectedItem />
+  <Filters />
+</ContentFile>

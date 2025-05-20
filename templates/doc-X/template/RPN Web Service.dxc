@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;WebServiceDefinitionMoniker WebServiceDefinitionLocationKind=&quot;File&quot; WebServiceDefinitionKind=&quot;Wsdl&quot; Title=&quot;RPN Web Service&quot; Name=&quot;RPN&quot; WebServiceDefinitionLocation=&quot;..\..\..\soap\v1\rpn_pit4.wsdl&quot;&gt;&#xD;&#xA;  &lt;EndpointUri&gt;&lt;/EndpointUri&gt;&#xD;&#xA;&lt;/WebServiceDefinitionMoniker&gt;" DocType="DX.WEBSERVICE" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes>
+      <Attribute key="scrollPosition" valuetype="integer">0</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-request_LookupRPNRequest-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-description-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-response_LookupRPNResponse-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-tab-container-selected-tab-index" valuetype="integer">1</Attribute>
+    </Attributes>
+  </State>
+  <LastSelectedItem>RPN_ws~r-NewRPNOperation~o-Method~s-success_Body~p-ValidationError</LastSelectedItem>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method">
+    <examplecode ChangeDateTime="2019-08-30T10:36:06.3274499Z" title="Example" description="" pagetype="" inline="true" escaped="false" id="44e1767a-e18f-418c-b085-977048a92a90" source="..\..\examples\SOAP_Schema_Reference_Examples\1.1.1_Lookup_RPN_Request_Example.xml" lang="XML"></examplecode>
+    <examplecode ChangeDateTime="2019-08-30T10:36:24.7584499Z" title="Example2" description="" pagetype="" inline="true" escaped="false" id="80f9f9bb-a315-46ca-b9f4-3a653671113e" source="..\..\examples\SOAP_Schema_Reference_Examples\1.1.2_Lookup_RPN_Response_Example.xml" lang="XML"></examplecode>
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~q-LookupRPNRequest~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-06-08T09:28:48.6336036Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~q-LookupRPNRequest~p-AgentTain">
+    <exclude ChangeDateTime="2023-06-08T09:28:50.2785714Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~q-LookupRPNRequest~p-SoftwareUsed">
+    <exclude ChangeDateTime="2023-06-08T09:28:52.765522Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~q-LookupRPNRequest~p-TaxYear">
+    <exclude ChangeDateTime="2023-06-08T09:28:54.9174799Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~q-LookupRPNRequest~p-DateLastUpdated">
+    <exclude ChangeDateTime="2023-06-08T09:28:57.4524475Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~q-LookupRPNRequest~p-EmployeeID">
+    <exclude ChangeDateTime="2023-06-08T09:28:59.0993961Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~q-LookupRPNRequest~p-RangeParameters">
+    <exclude ChangeDateTime="2023-06-08T09:29:00.6293722Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~q-LookupRPNRequest~p-PPSN">
+    <exclude ChangeDateTime="2023-06-08T09:29:02.1603359Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~s-success_Body~p-EmployerName">
+    <exclude ChangeDateTime="2023-06-08T09:29:04.7742889Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~s-success_Body~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-06-08T09:29:06.1572578Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~s-success_Body~p-AgentTain">
+    <exclude ChangeDateTime="2023-06-08T09:29:07.692227Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~s-success_Body~p-TaxYear">
+    <exclude ChangeDateTime="2023-06-08T09:29:09.7481968Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~s-success_Body~p-TotalRPNCount">
+    <exclude ChangeDateTime="2023-06-08T09:29:11.6591481Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~s-success_Body~p-DateTimeEffective">
+    <exclude ChangeDateTime="2023-06-08T09:29:13.378115Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~s-success_Body~p-RPN">
+    <exclude ChangeDateTime="2023-06-08T09:29:15.1630877Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~s-success_Body~p-NoRPN">
+    <exclude ChangeDateTime="2023-06-08T09:29:16.7750507Z" />
+  </item>
+  <item qn="RPN_ws~r-LookupRPNOperation~o-Method~s-success_Body~p-ValidationError">
+    <exclude ChangeDateTime="2023-06-08T09:29:18.6580112Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~q-NewRPNRequest~p-RequestID">
+    <exclude ChangeDateTime="2023-06-08T09:29:24.2719114Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~q-NewRPNRequest~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-06-08T09:29:26.5368581Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~q-NewRPNRequest~p-AgentTain">
+    <exclude ChangeDateTime="2023-06-08T09:29:28.3208209Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~q-NewRPNRequest~p-SoftwareUsed">
+    <exclude ChangeDateTime="2023-06-08T09:29:29.8437914Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~q-NewRPNRequest~p-TaxYear">
+    <exclude ChangeDateTime="2023-06-08T09:29:31.6007566Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~q-NewRPNRequest~p-EmployeeDetail">
+    <exclude ChangeDateTime="2023-06-08T09:29:33.6467156Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~s-success_Body~p-EmployerName">
+    <exclude ChangeDateTime="2023-06-08T09:29:37.5806459Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~s-success_Body~p-EmployerRegistrationNumber">
+    <exclude ChangeDateTime="2023-06-08T09:29:39.3326121Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~s-success_Body~p-AgentTain">
+    <exclude ChangeDateTime="2023-06-08T09:29:41.0765932Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~s-success_Body~p-DateTimeEffective">
+    <exclude ChangeDateTime="2023-06-08T09:29:42.7625425Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~s-success_Body~p-RPN">
+    <exclude ChangeDateTime="2023-06-08T09:29:44.707498Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~s-success_Body~p-NoRPN">
+    <exclude ChangeDateTime="2023-06-08T09:29:46.8954559Z" />
+  </item>
+  <item qn="RPN_ws~r-NewRPNOperation~o-Method~s-success_Body~p-ValidationError">
+    <exclude ChangeDateTime="2023-06-08T09:29:48.6444211Z" />
+  </item>
+  <Filters>
+    <DX.WEBSERVICECONTENTSTOREFILTER>
+      <IsSourceCommentsVisible>true</IsSourceCommentsVisible>
+    </DX.WEBSERVICECONTENTSTOREFILTER>
+  </Filters>
+  <Filters>
+    <CONTENTSTORECOMMON>
+      <IsIncludedItemsOnly>true</IsIncludedItemsOnly>
+    </CONTENTSTORECOMMON>
+    <CONTENTSTORELOCALIZATION>
+      <IsPrimaryLocaleContentPreviewEnabled>true</IsPrimaryLocaleContentPreviewEnabled>
+    </CONTENTSTORELOCALIZATION>
+  </Filters>
+</ContentFile>

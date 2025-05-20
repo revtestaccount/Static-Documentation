@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;WebServiceDefinitionMoniker WebServiceDefinitionLocationKind=&quot;File&quot; WebServiceDefinitionKind=&quot;Wsdl&quot; Title=&quot;Get Returns Web Service&quot; Name=&quot;Get Returns&quot; WebServiceDefinitionLocation=&quot;..\..\soap\v1\returns.wsdl&quot;&gt;&#xD;&#xA;  &lt;EndpointUri&gt;&lt;/EndpointUri&gt;&#xD;&#xA;&lt;/WebServiceDefinitionMoniker&gt;" DocType="DX.WEBSERVICE" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes>
+      <Attribute key="scrollPosition" valuetype="integer">0</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-response_LookUpPayrollReturnByPeriodResponse-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-remarks-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-request_LookUpPayrollReturnByPeriodRequest-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-tab-container-selected-tab-index" valuetype="integer">1</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-request_LookupPayrollDetailsByReturnPeriodRequest-section-heading" valuetype="string">true</Attribute>
+      <Attribute key="i-toggle-section-collapsed-i-response_LookupPayrollDetailsByReturnPeriodResponse-section-heading" valuetype="string">true</Attribute>
+    </Attributes>
+  </State>
+  <LastSelectedItem>Get Returns_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method</LastSelectedItem>
+  <item qn="Get Returns_ws~r-LookUpPayrollReturnByPeriodOperation~o-Method">
+    <examplecode ChangeDateTime="2018-05-18T12:10:40.6031299Z" title="Request Example" description="" pagetype="" inline="true" escaped="false" groupname="XML" id="4f0ead2c-cdef-4499-a8a2-4f0179712b1b" source="..\..\examples\Example_10_Lookup_Payroll_Return_By_Period\XML\10.1_Lookup_Payroll_Details_By_Return_Period_Request_Example.xml" lang="XML"></examplecode>
+    <examplecode ChangeDateTime="2018-05-18T12:10:53.0531299Z" title="Response Example" description="" pagetype="" inline="true" escaped="false" groupname="XML" id="ff2f7fa9-9ca0-46e7-904f-86e43b5b54ed" source="..\..\examples\Example_10_Lookup_Payroll_Return_By_Period\XML\10.2_Lookup_Payroll_Details_By_Return_Period_Response_Example.xml" lang="XML"></examplecode>
+  </item>
+  <item qn="Get Returns_ws~r-LookupPayrollDetailsByReturnPeriod~o-Method">
+    <examplecode ChangeDateTime="2018-05-21T13:42:29.5938804Z" title="Example" description="" pagetype="" inline="true" escaped="false" id="0514e677-5d6e-48fa-bdf1-fd477b6fc9aa" source="..\..\examples\Example_10_Lookup_Payroll_Return_By_Period\XML\10.1_Lookup_Payroll_Details_By_Return_Period_Request_Example.xml" lang="XML"></examplecode>
+    <examplecode ChangeDateTime="2018-05-21T13:42:37.7838804Z" title="XML Response" description="" pagetype="" inline="true" escaped="false" id="54df7625-084f-4370-a530-f352a9386f67" source="..\..\examples\Example_10_Lookup_Payroll_Return_By_Period\XML\10.2_Lookup_Payroll_Details_By_Return_Period_Response_Example.xml" lang="XML"></examplecode>
+    <summary ChangeDateTime="2018-05-24T11:14:23.3053191Z">&lt;H2&gt;&amp;nbsp;&lt;/H2&gt;
+&lt;P class=MsoNormal&gt;&lt;SPAN style="FONT-SIZE: 10pt; LINE-HEIGHT: 115%"&gt;&lt;SPAN&gt;&lt;/SPAN&gt;&lt;/SPAN&gt;&amp;nbsp;&lt;/P&gt;</summary>
+  </item>
+  <item qn="Get Returns_ws">
+    <summary ChangeDateTime="2018-05-24T11:14:12.8303191Z">&lt;H2&gt;&lt;SPAN style="FONT-SIZE: 10pt; LINE-HEIGHT: 115%"&gt;Lookup Payroll Details By Return Period Web Service&lt;/SPAN&gt;&lt;/H2&gt;
+&lt;P class=MsoNormal&gt;&lt;SPAN style="FONT-SIZE: 10pt; LINE-HEIGHT: 115%"&gt;&lt;SPAN&gt;The Lookup Payroll Return by Period web service can be used by the employer/agent to reconcile their records with Revenue’s records for a specific period (month).&lt;/SPAN&gt;&lt;/SPAN&gt;&lt;/P&gt;</summary>
+  </item>
+  <Filters>
+    <DX.WEBSERVICECONTENTSTOREFILTER>
+      <IsSourceCommentsVisible>true</IsSourceCommentsVisible>
+    </DX.WEBSERVICECONTENTSTOREFILTER>
+  </Filters>
+  <Filters>
+    <CONTENTSTORECOMMON>
+      <IsIncludedItemsOnly>true</IsIncludedItemsOnly>
+    </CONTENTSTORECOMMON>
+    <CONTENTSTORELOCALIZATION>
+      <IsPrimaryLocaleContentPreviewEnabled>true</IsPrimaryLocaleContentPreviewEnabled>
+    </CONTENTSTORELOCALIZATION>
+  </Filters>
+</ContentFile>

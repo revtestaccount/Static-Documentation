@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentFile Version="2010" Moniker="&lt;XsdSchema SchemaLocationType=&quot;File&quot; SchemaType=&quot;Normal&quot; Title=&quot;Payroll Schema&quot; IsExternallyManaged=&quot;false&quot; SchemaId=&quot;&quot; SchemaParentItemId=&quot;&quot; Name=&quot;Payroll&quot; SchemaLocation=&quot;..\..\..\soap\v1\payroll\payroll-schema-pit4.xsd&quot; /&gt;" DocType="DX.XSD" IsLocalizationDisabled="false">
+  <RelatedProject>Payroll and RPI Technical Reference.dxp</RelatedProject>
+  <State>
+    <Attributes>
+      <Attribute key="scrollPosition" valuetype="integer">0</Attribute>
+    </Attributes>
+  </State>
+  <LastSelectedItem>Payroll_xsd</LastSelectedItem>
+  <item qn="Payroll_xsd">
+    <exclude_toc ChangeDateTime="2023-06-01T14:38:48.3527335Z" />
+    <exclude_toc ChangeDateTime="2023-06-01T14:38:49.6677066Z" />
+  </item>
+  <Filters>
+    <DX.XSDCONTENTSTOREFILTER>
+      <IsSourceCommentsVisible>true</IsSourceCommentsVisible>
+    </DX.XSDCONTENTSTOREFILTER>
+  </Filters>
+  <Filters>
+    <CONTENTSTORECOMMON>
+      <IsIncludedItemsOnly>true</IsIncludedItemsOnly>
+    </CONTENTSTORECOMMON>
+    <CONTENTSTORELOCALIZATION>
+      <IsPrimaryLocaleContentPreviewEnabled>true</IsPrimaryLocaleContentPreviewEnabled>
+    </CONTENTSTORELOCALIZATION>
+  </Filters>
+</ContentFile>
