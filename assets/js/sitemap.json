@@ -1,42 +1,80 @@
 {
- "404": {
-  "template": "./templates/404.html",
-  "title": "404 Page not found",
-  "message": "placeholder text/unused"
+ "home": {
+  "404": {
+   "template": "./templates/404.html",
+   "title": "404 Page not found",
+   "message": "placeholder text/unused"
+  },
+  "/": {
+   "template": "./templates/home.html",
+   "title": "Home",
+   "message": "placeholder text/unused"
+  }
  },
- "/": {
-  "template": "./templates/home.html",
-  "title": "Home",
-  "message": "placeholder text/unused"
+ "first": {
+  "page1": {
+   "template": "./templates/page1.html",
+   "title": "Page 1",
+   "message": "placeholder text/unused"
+  },
+  "page2": {
+   "template": "./templates/page2.html",
+   "title": "Page 2",
+   "message": "placeholder text/unused"
+  },
+  "page3": {
+   "template": "./templates/page3.html",
+   "title": "Page 3",
+   "message": "placeholder text/unused"
+  }
  },
- "page1": {
-  "template": "./templates/page1.html",
-  "title": "Page 1",
-  "message": "placeholder text/unused"
+ "second": {
+  "page4": {
+   "template": "./templates/page4.html",
+   "title": "Page 4",
+   "message": "placeholder text/unused"
+  },
+  "page5": {
+   "template": "./templates/page5.html",
+   "title": "Page 5",
+   "message": "placeholder text/unused"
+  },
+  "page6": {
+   "template": "./templates/page6.html",
+   "title": "Page 6",
+   "message": "placeholder text/unused"
+  }
  },
- "page2": {
-  "template": "./templates/page2.html",
-  "title": "Page 2",
-  "message": "placeholder text/unused"
- },
- "page3": {
-  "template": "./templates/page3.html",
-  "title": "Page 3",
-  "message": "placeholder text/unused"
- },
- "pitselfserviceguide": {
-  "template": "./templates/pitselfserviceguide.html",
-  "title": "PIT Self Service Application Guide",
-  "message": "placeholder text/unused"
- },
- "toctest": {
-  "template": "./templates/toctest.html",
-  "title": "Table of contents test 1",
-  "message": "placeholder text/unused"
- },
- "toctest2": {
-  "template": "./templates/toctest2.html",
-  "title": "Table of contents test 2",
-  "message": "placeholder text/unused"
+ "third": {
+  "guide": {
+   "template": "./templates/page4.html",
+   "title": "PAYE PIT Helpdesk Guide",
+   "message": "placeholder text/unused"
+  },
+  "conformance": {
+   "template": "./templates/page5.html",
+   "title": "Conformance Testing Scenarios",
+   "message": "placeholder text/unused"
+  },
+  "faq": {
+   "template": "./templates/page6.html",
+   "title": "PAYE Modernisation Web Services - FAQ",
+   "message": "placeholder text/unused"
+  },
+  "registration": {
+   "template": "./templates/page4.html",
+   "title": "Help Desk Registration",
+   "message": "placeholder text/unused"
+  },
+  "login": {
+   "template": "./templates/page5.html",
+   "title": "Help Desk Login",
+   "message": "placeholder text/unused"
+  },
+  "nexversion": {
+   "template": "./templates/page6.html",
+   "title": "PIT Next Version Features",
+   "message": "placeholder text/unused"
+  }
  }
 }
