@@ -6,7 +6,7 @@ async function getJSONData(file) {
 
 const locationHandler = async () => {
 
-  let routes = await getJSONData("./assets/js/sitemap.json");
+  let jsonData = await getJSONData("./assets/js/sitemap.json");
   // get the url path, replace hash with empty string
   var location = window.location.hash.replace("#", "");
   // if the path length is 0, set it to primary page route
@@ -14,51 +14,43 @@ const locationHandler = async () => {
     location = "/";
   }
 
-  let k = null;
-  let v = null;
+  let routeKey = "";
+  let routeValue = "";
   let breakCheck = false;
 
-  for (key in routes) {
+  //find the block of json that contains the route information we need
+  for (key in jsonData) {
     if (breakCheck) {
       break;
     }
-    k = key;
-    for (val in routes[key]) {
+    routeKey = key;
+    for (val in jsonData[key]) {
       if (val == location) {
-        v = routes[key];
+        routeValue = jsonData[key];
         breakCheck = true;
         break;
       }
     }
   }
 
-  console.log(k);
-  console.log(v);
-  let r = "";
+  // create html that will be inserted into the 'sidebarLinks' element on our page
+  let sidebarLinksToRender = "";
 
-  for (e in v) {
-    console.log(v[e].message);
-
-
-    href = v[e].title.toLowerCase();
+  for (aRoute in routeValue) {
+    href = routeValue[aRoute].title.toLowerCase();
     href = href.replaceAll(" ", "");
-    console.log(href);
 
-    r += "<a href=\"#" + href + "\">" + v[e].title + "</a>";
+    sidebarLinksToRender += "<a href=\"#" + href + "\">" + routeValue[aRoute].title + "</a>";
   }
 
-  //<!-- <a href="#page1">Page 1</a> -->
-
   // get the route object from the routes object
-  const route = routes[k][location] || routes["404"];
+  const route = jsonData[routeKey][location] || jsonData['home']["404"];
   // get the html from the template
   const html = await fetch(route.template).then((response) => response.text());
   // set the content of the content div to the html
   document.getElementById("content").innerHTML = html;
 
-  if (location != "/" && location != "404") {
-    document.getElementById("sidebarLinks").innerHTML = r;
-  }
+  document.getElementById("sidebarLinks").innerHTML = sidebarLinksToRender;
   // set the title of the document to the title of the route
   document.title = route.title;
 
