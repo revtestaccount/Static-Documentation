@@ -46,33 +46,38 @@
   }
  },
  "third": {
+  "pithome": {
+   "template": "./templates/pithome.html",
+   "title": "PIT Home",
+   "message": "placeholder text/unused"
+  },
   "guide": {
-   "template": "./templates/page4.html",
+   "template": "./templates/demopage.html",
    "title": "PAYE PIT Helpdesk Guide",
    "message": "placeholder text/unused"
   },
   "conformance": {
-   "template": "./templates/page5.html",
+   "template": "./templates/demopage.html",
    "title": "Conformance Testing Scenarios",
    "message": "placeholder text/unused"
   },
   "faq": {
-   "template": "./templates/page6.html",
+   "template": "./templates/demopage.html",
    "title": "PAYE Modernisation Web Services - FAQ",
    "message": "placeholder text/unused"
   },
   "registration": {
-   "template": "./templates/page4.html",
+   "template": "./templates/demopage.html",
    "title": "Help Desk Registration",
    "message": "placeholder text/unused"
   },
   "login": {
-   "template": "./templates/page5.html",
+   "template": "./templates/demopage.html",
    "title": "Help Desk Login",
    "message": "placeholder text/unused"
   },
   "nexversion": {
-   "template": "./templates/page6.html",
+   "template": "./templates/demopage.html",
    "title": "PIT Next Version Features",
    "message": "placeholder text/unused"
   }

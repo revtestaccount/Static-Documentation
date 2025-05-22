@@ -40,7 +40,9 @@ const locationHandler = async () => {
     href = routeValue[aRoute].title.toLowerCase();
     href = href.replaceAll(" ", "");
 
-    sidebarLinksToRender += "<a href=\"#" + href + "\">" + routeValue[aRoute].title + "</a>";
+    if (href != 'home' && href != '404pagenotfound') {
+      sidebarLinksToRender += "<a href=\"#" + href + "\">" + routeValue[aRoute].title + "</a>";
+    }
   }
 
   // get the route object from the routes object
