@@ -18,6 +18,7 @@
 /*** Styles basement imports ***/
 @import 'base/reset';
 @import 'base/typography';
+@import "primeicons/primeicons.css";
 
 /*** Components imports ***/
 @import 'components/common';
@@ -64,6 +65,21 @@ body {
         }
         border-bottom: solid $base-cyan 1rem;
     };
+
+    main{
+        .card{
+            .card-img-top{
+                padding: 1rem !important;
+                background-color: $brandmint-lighten-50 !important;
+                max-height: 203px;
+            };
+            margin-bottom: 2rem !important;
+            .card-text{
+                font-size: $h3-font-size !important;
+                text-align: center;
+            };
+        }
+    }
 
     .sidebar {
         min-height: 100vh;

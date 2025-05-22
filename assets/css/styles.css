@@ -26,6 +26,7 @@
 /* extra-extrasmall */
 /* bold */
 /* semibold */
+@import "primeicons/primeicons.css";
 h1 {
   color: rgb(3, 5, 7);
   font-family: Segoe UI;
@@ -11163,6 +11164,18 @@ body .header .PAYE_Modernisation_ERR_Documentation p {
   color: rgb(255, 255, 255);
   font-weight: 700;
   padding-top: 2rem;
+}
+body main .card {
+  margin-bottom: 2rem !important;
+}
+body main .card .card-img-top {
+  padding: 1rem !important;
+  background-color: rgb(227, 241, 242) !important;
+  max-height: 203px;
+}
+body main .card .card-text {
+  font-size: 24.5px !important;
+  text-align: center;
 }
 body .sidebar {
   min-height: 100vh;
