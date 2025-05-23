@@ -44,6 +44,12 @@ for tag in h4:
     tag['id'] = id
     tableOfContents.append(id)
 
+table = new_html.find_all('table')
+
+for tag in table:
+    tag['class'] = "table"
+
+# finished setting up tags, generate table of contents
 for id in tableOfContents:
     newAnchor = new_html.new_tag("a")
     newAnchor['href'] = "javascript:void(0)"

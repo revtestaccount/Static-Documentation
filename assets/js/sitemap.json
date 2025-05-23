@@ -9,6 +9,11 @@
    "template": "./templates/home.html",
    "title": "Home",
    "message": "placeholder text/unused"
+  },
+  "demonstrationdocument": {
+   "template": "./templates/demodocument.html",
+   "title": "Demonstration Document",
+   "message": "placeholder text/unused"
   }
  },
  "first": {
