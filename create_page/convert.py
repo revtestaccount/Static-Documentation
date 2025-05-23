@@ -1,7 +1,7 @@
 import markdown
 from bs4 import BeautifulSoup
 
-with open("././md/toctest2.md", "r", encoding="utf-8") as input_file:
+with open("C:\Users\\ademps03\Desktop\static documentation project\md\demodocument.md", "r", encoding="utf-8") as input_file:
     text = input_file.read()
 html = markdown.markdown(text, extensions=['fenced_code', 'tables'])
 
@@ -44,6 +44,12 @@ for tag in h4:
     tag['id'] = id
     tableOfContents.append(id)
 
+table = new_html.find_all('table')
+
+for tag in table:
+    tag['class'] = "table"
+
+# finished setting up tags, generate table of contents
 for id in tableOfContents:
     newAnchor = new_html.new_tag("a")
     newAnchor['href'] = "javascript:void(0)"
@@ -62,5 +68,5 @@ for id in tableOfContents:
 #for tag in code:
 #    tag['class'] = "border border-info"
 
-with open("././md/toctest2.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
+with open("C:\Users\\ademps03\Desktop\static documentation project\md\demodocument.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
     output_file.write(str(new_html))
