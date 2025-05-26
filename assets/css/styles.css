@@ -11148,7 +11148,7 @@ body code {
 }
 body .header {
   display: flex;
-  padding: 25px 25px 25px 25px;
+  padding: 1.5625rem 1.5625rem 1.5625rem 1.5625rem;
   background-color: rgb(0, 90, 92);
   border-bottom: solid rgb(0, 198, 198) 1rem;
 }
@@ -11171,7 +11171,7 @@ body main .card {
 body main .card .card-img-top {
   padding: 1rem !important;
   background-color: rgb(227, 241, 242) !important;
-  max-height: 203px;
+  max-height: 12.6875rem;
 }
 body main .card .card-text {
   font-size: 24.5px !important;
@@ -11191,7 +11191,7 @@ body .pmod {
   font-weight: 700;
 }
 body .footer {
-  padding: 25px 25px 25px 25px;
+  padding: 1.5625rem 1.5625rem 1.5625rem 1.5625rem;
   background-color: rgb(0, 90, 92);
   border-top: solid rgb(0, 198, 198) 1rem;
 }
@@ -11199,7 +11199,7 @@ body .footer {
 .sidebar a {
   color: white;
   text-decoration: none;
-  padding: 10px;
+  padding: 0.625rem;
   display: block;
 }
 
@@ -11208,7 +11208,7 @@ body .footer {
 }
 
 .main_content {
-  max-width: 1000px;
+  max-width: 62.5rem;
   margin: auto;
 }
 

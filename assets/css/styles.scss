@@ -48,7 +48,7 @@ body {
 
     .header {
         display: flex;
-        padding: 25px 25px 25px 25px;
+        padding: 1.5625rem 1.5625rem 1.5625rem 1.5625rem;
         background-color: $base-brandteal;
         img{
             padding: 1rem;
@@ -71,7 +71,7 @@ body {
             .card-img-top{
                 padding: 1rem !important;
                 background-color: $brandmint-lighten-50 !important;
-                max-height: 203px;
+                max-height: 12.6875rem;
             };
             margin-bottom: 2rem !important;
             .card-text{
@@ -98,7 +98,7 @@ body {
     };
 
     .footer {
-    padding: 25px 25px 25px 25px;
+    padding: 1.5625rem 1.5625rem 1.5625rem 1.5625rem;
     background-color: $base-brandteal;
     border-top: solid $base-cyan 1rem;
     }
@@ -107,7 +107,7 @@ body {
 .sidebar a {
     color: white;
     text-decoration: none;
-    padding: 10px;
+    padding: 0.625rem;
     display: block;
 }
 
@@ -116,7 +116,7 @@ body {
 }
 
 .main_content {
-    max-width: 1000px;
+    max-width: 62.5rem;
     margin: auto;
 }
 
