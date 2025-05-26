@@ -1,5 +1,5 @@
 {
- "home": {
+ "general_routes": {
   "404": {
    "template": "./templates/404.html",
    "title": "404 Page not found",
@@ -9,82 +9,89 @@
    "template": "./templates/home.html",
    "title": "Home",
    "message": "placeholder text/unused"
-  },
-  "demonstrationdocument": {
-   "template": "./templates/demodocument.html",
-   "title": "Demonstration Document",
-   "message": "placeholder text/unused"
   }
  },
- "first": {
-  "page1": {
-   "template": "./templates/page1.html",
-   "title": "Page 1",
-   "message": "placeholder text/unused"
-  },
-  "page2": {
-   "template": "./templates/page2.html",
-   "title": "Page 2",
-   "message": "placeholder text/unused"
-  },
-  "page3": {
-   "template": "./templates/page3.html",
-   "title": "Page 3",
-   "message": "placeholder text/unused"
-  }
- },
- "second": {
-  "page4": {
-   "template": "./templates/page4.html",
-   "title": "Page 4",
-   "message": "placeholder text/unused"
-  },
-  "page5": {
-   "template": "./templates/page5.html",
-   "title": "Page 5",
-   "message": "placeholder text/unused"
-  },
-  "page6": {
-   "template": "./templates/page6.html",
-   "title": "Page 6",
-   "message": "placeholder text/unused"
-  }
- },
- "third": {
+ "pit_global_routes": {
   "pithome": {
    "template": "./templates/pithome.html",
    "title": "PIT Home",
    "message": "placeholder text/unused"
   },
   "guide": {
-   "template": "./templates/demopage.html",
+   "template": "./templates/demodocument.html",
    "title": "PAYE PIT Helpdesk Guide",
    "message": "placeholder text/unused"
   },
   "conformance": {
-   "template": "./templates/demopage.html",
+   "template": "./templates/demodocument.html",
    "title": "Conformance Testing Scenarios",
    "message": "placeholder text/unused"
   },
   "faq": {
-   "template": "./templates/demopage.html",
+   "template": "./templates/demodocument.html",
    "title": "PAYE Modernisation Web Services - FAQ",
    "message": "placeholder text/unused"
   },
-  "registration": {
-   "template": "./templates/demopage.html",
+  "helpdeskregistration": {
+   "template": "./templates/demodocument.html",
    "title": "Help Desk Registration",
    "message": "placeholder text/unused"
   },
   "login": {
-   "template": "./templates/demopage.html",
+   "template": "./templates/demodocument.html",
    "title": "Help Desk Login",
    "message": "placeholder text/unused"
   },
   "nexversion": {
-   "template": "./templates/demopage.html",
+   "template": "./templates/demodocument.html",
+   "title": "PIT Next Version Features",
+   "message": "placeholder text/unused"
+  }
+ },
+ "pit_3_routes": {
+  "pit3home": {
+   "template": "./templates/pit3home.html",
+   "title": "PIT3 Home",
+   "message": "placeholder text/unused"
+  }
+ },
+
+ "pit3_payroll_routes": {
+  "pit3_payroll_home": {
+   "template": "./templates/pit3_payroll_home.html",
+   "title": "PIT3 Self Service & Payroll",
+   "message": "placeholder text/unused"
+  },
+  "guide": {
+   "template": "./templates/demodocument.html",
+   "title": "PAYE PIT Helpdesk Guide",
+   "message": "placeholder text/unused"
+  },
+  "conformance": {
+   "template": "./templates/demodocument.html",
+   "title": "Conformance Testing Scenarios",
+   "message": "placeholder text/unused"
+  },
+  "faq": {
+   "template": "./templates/demodocument.html",
+   "title": "PAYE Modernisation Web Services - FAQ",
+   "message": "placeholder text/unused"
+  },
+  "helpdeskregistration": {
+   "template": "./templates/demodocument.html",
+   "title": "Help Desk Registration",
+   "message": "placeholder text/unused"
+  },
+  "login": {
+   "template": "./templates/demodocument.html",
+   "title": "Help Desk Login",
+   "message": "placeholder text/unused"
+  },
+  "nexversion": {
+   "template": "./templates/demodocument.html",
    "title": "PIT Next Version Features",
    "message": "placeholder text/unused"
   }
  }
+
 }
