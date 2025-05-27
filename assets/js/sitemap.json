@@ -55,43 +55,79 @@
    "message": "placeholder text/unused"
   }
  },
-
  "pit3_payroll_routes": {
-  "pit3_payroll_home": {
+  "pit3selfservice&payrollhome": {
    "template": "./templates/pit3_payroll_home.html",
-   "title": "PIT3 Self Service & Payroll",
+   "title": "PIT3 Self Service & Payroll Home",
    "message": "placeholder text/unused"
   },
-  "guide": {
+  "portallogin": {
    "template": "./templates/demodocument.html",
-   "title": "PAYE PIT Helpdesk Guide",
+   "title": "Portal Login",
    "message": "placeholder text/unused"
   },
-  "conformance": {
+  "pitselfserviceapplicationguide": {
    "template": "./templates/demodocument.html",
-   "title": "Conformance Testing Scenarios",
+   "title": "PIT Self Service Application Guide",
    "message": "placeholder text/unused"
   },
-  "faq": {
+  "rospayrollreportingapplicationguide": {
    "template": "./templates/demodocument.html",
-   "title": "PAYE Modernisation Web Services - FAQ",
+   "title": "ROS Payroll Reporting Application Guide",
    "message": "placeholder text/unused"
   },
-  "helpdeskregistration": {
+  "rospayrollreportingmessageguide": {
    "template": "./templates/demodocument.html",
-   "title": "Help Desk Registration",
+   "title": "ROS Payroll Reporting Message Guide",
    "message": "placeholder text/unused"
   },
-  "login": {
+  "payrollscreenuploadjsonexamples": {
    "template": "./templates/demodocument.html",
-   "title": "Help Desk Login",
+   "title": "Payroll Screen Upload JSON Examples",
    "message": "placeholder text/unused"
   },
-  "nexversion": {
+  "rospayrollreportingjsonenvelopeschema": {
    "template": "./templates/demodocument.html",
-   "title": "PIT Next Version Features",
+   "title": "ROS Payroll Reporting JSON Envelope schema",
+   "message": "placeholder text/unused"
+  },
+  "rpnrequestcsvfileresponse": {
+   "template": "./templates/demodocument.html",
+   "title": "RPN Request CSV File Response",
+   "message": "placeholder text/unused"
+  },
+  "rpncsvformat": {
+   "template": "./templates/demodocument.html",
+   "title": "RPN CSV Format",
+   "message": "placeholder text/unused"
+  },
+  "rpncsvexample": {
+   "template": "./templates/demodocument.html",
+   "title": "RPN CSV Example",
+   "message": "placeholder text/unused"
+  }
+ },
+ "guidepit3": {
+  
+  "pit3_guide_home_pit": {
+   "template": "./templates/pit3guidehome.html",
+   "title": "Documentation Guide",
+   "message": "placeholder text/unused"
+  },
+  "documentationguide": {
+   "template": "./templates/demodocument.html",
+   "title": "Documentation Guide",
+   "message": "placeholder text/unused"
+  },
+  "schemapublicationchangelog": {
+   "template": "./templates/demodocument.html",
+   "title": "Schema Publication Changelog",
+   "message": "placeholder text/unused"
+  },
+  "guidetowebservicecompression": {
+   "template": "./templates/demodocument.html",
+   "title": "Guide to web service compression",
    "message": "placeholder text/unused"
   }
  }
-
 }
