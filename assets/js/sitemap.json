@@ -17,9 +17,9 @@
    "title": "Guides and useful info",
    "message": "placeholder text/unused"
   },
-  "guide": {
-   "template": "./templates/demodocument.html",
-   "title": "PAYE PIT Helpdesk Guide",
+  "payepithelpdeskuserguide": {
+   "template": "./templates/payepithelpdeskuserguide.html",
+   "title": "PAYE PIT Helpdesk User Guide",
    "message": "placeholder text/unused"
   },
   "conformance": {

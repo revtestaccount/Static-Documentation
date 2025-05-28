@@ -1,7 +1,7 @@
 import markdown
 from bs4 import BeautifulSoup
 
-with open("demodocument.md", "r", encoding="utf-8") as input_file:
+with open("payepithelpdeskuserguide.md", "r", encoding="utf-8") as input_file:
     text = input_file.read()
 html = markdown.markdown(text, extensions=['fenced_code', 'tables'])
 
@@ -78,5 +78,5 @@ for tag in all:
         item.append(link)
         new_html.find(id="toc").append(item)
 
-with open("demodocument.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
+with open("payepithelpdeskuserguide.html", "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
     output_file.write(str(new_html))
