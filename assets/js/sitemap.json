@@ -400,49 +400,49 @@
    "title": "PIT Self Service and ROS Payroll Reporting PIT Next Version",
    "message": "placeholder text/unused"
   },
-  "portallogin": {
+  "portallogin.": {
    "template": "./templates/demodocument.html",
-   "title": "Portal Login",
+   "title": "Portal Login.",
    "message": "placeholder text/unused"
   },
-  "pitselfserviceapplicationguide": {
+  "pitselfserviceapplicationguide.": {
    "template": "./templates/demodocument.html",
-   "title": "PIT Self Service Application Guide",
+   "title": "PIT Self Service Application Guide.",
    "message": "placeholder text/unused"
   },
-  "rospayrollreportingapplicationguide": {
+  "rospayrollreportingapplicationguide.": {
    "template": "./templates/demodocument.html",
-   "title": "ROS Payroll Reporting Application Guide",
+   "title": "ROS Payroll Reporting Application Guide.",
    "message": "placeholder text/unused"
   },
-  "rospayrollreportingmessageguide": {
+  "rospayrollreportingmessageguide.": {
    "template": "./templates/demodocument.html",
-   "title": "ROS Payroll Reporting Message Guide",
+   "title": "ROS Payroll Reporting Message Guide.",
    "message": "placeholder text/unused"
   },
-  "payrollscreenuploadjsonexamples": {
+  "payrollscreenuploadjsonexamples.": {
    "template": "./templates/demodocument.html",
-   "title": "Payroll Screen Upload JSON Examples",
+   "title": "Payroll Screen Upload JSON Examples.",
    "message": "placeholder text/unused"
   },
-  "rospayrollreportingjsonenvelopeschema": {
+  "rospayrollreportingjsonenvelopeschema.": {
    "template": "./templates/demodocument.html",
-   "title": "ROS Payroll Reporting JSON Envelope schema",
+   "title": "ROS Payroll Reporting JSON Envelope schema.",
    "message": "placeholder text/unused"
   },
-  "rpnrequestcsvfileresponse": {
+  "rpnrequestcsvfileresponse.": {
    "template": "./templates/demodocument.html",
-   "title": "ROS Payroll Reporting JSON Envelope schema",
+   "title": "ROS Payroll Reporting JSON Envelope schema.",
    "message": "placeholder text/unused"
   },
-  "rpncsvformat": {
+  "rpncsvformat.": {
    "template": "./templates/demodocument.html",
-   "title": "ROS Payroll Reporting JSON Envelope schema",
+   "title": "ROS Payroll Reporting JSON Envelope schema.",
    "message": "placeholder text/unused"
   },
-  "rpncsvexample": {
+  "rpncsvexample.": {
    "template": "./templates/demodocument.html",
-   "title": "ROS Payroll Reporting JSON Envelope schema",
+   "title": "ROS Payroll Reporting JSON Envelope schema.",
    "message": "placeholder text/unused"
   }
  },
@@ -452,19 +452,19 @@
    "title": "Guide PIT Next Version",
    "message": "placeholder text/unused"
   },
-  "documentationguide": {
+  "documentationguide.": {
    "template": "./templates/demodocument.html",
-   "title": "Documentation Guide",
+   "title": "Documentation Guide.",
    "message": "placeholder text/unused"
   },
-  "schemapublicationchangelog": {
+  "schemapublicationchangelog.": {
    "template": "./templates/demodocument.html",
-   "title": "Schema Publication Changelog",
+   "title": "Schema Publication Changelog.",
    "message": "placeholder text/unused"
   },
-  "guidetowebservicecompression": {
+  "guidetowebservicecompression.": {
    "template": "./templates/demodocument.html",
-   "title": "Guide to web service compression",
+   "title": "Guide to web service compression.",
    "message": "placeholder text/unused"
   }
  },
@@ -474,49 +474,49 @@
    "title": "PAYE Web Service Specifications (SOAP/XML) PIT Next Version",
    "message": "placeholder text/unused"
   },
-  "payrollwebservicedefinition": {
+  "payrollwebservicedefinition.": {
    "template": "./templates/demodocument.html",
-   "title": "Payroll Web Service Definition",
+   "title": "Payroll Web Service Definition.",
    "message": "placeholder text/unused"
   },
-  "rpnwebservicedefinitionpit": {
+  "rpnwebservicedefinitionpit.": {
    "template": "./templates/demodocument.html",
-   "title": "RPN Web Service Definition PIT",
+   "title": "RPN Web Service Definition PIT.",
    "message": "placeholder text/unused"
   },
-  "returnsreconciliationwebservicedefinition": {
+  "returnsreconciliationwebservicedefinition.": {
    "template": "./templates/demodocument.html",
-   "title": "Returns Reconciliation Web Service Definition",
+   "title": "Returns Reconciliation Web Service Definition.",
    "message": "placeholder text/unused"
   },
-  "handshakewebservicedefinition": {
+  "handshakewebservicedefinition.": {
    "template": "./templates/demodocument.html",
-   "title": "Handshake Web Service Definition",
+   "title": "Handshake Web Service Definition.",
    "message": "placeholder text/unused"
   },
-  "payrollschema": {
+  "payrollschema.": {
    "template": "./templates/demodocument.html",
-   "title": "Payroll Schema",
+   "title": "Payroll Schema.",
    "message": "placeholder text/unused"
   },
-  "rpnschema": {
+  "rpnschema.": {
    "template": "./templates/demodocument.html",
-   "title": "RPN Schema",
+   "title": "RPN Schema.",
    "message": "placeholder text/unused"
   },
-  "returnsreconciliationschema": {
+  "returnsreconciliationschema.": {
    "template": "./templates/demodocument.html",
-   "title": "Returns Reconciliation Schema",
+   "title": "Returns Reconciliation Schema.",
    "message": "placeholder text/unused"
   },
-  "handshakeschema": {
+  "handshakeschema.": {
    "template": "./templates/demodocument.html",
-   "title": "Handshake Schema",
+   "title": "Handshake Schema.",
    "message": "placeholder text/unused"
   },
-  "commonpayetypesschema": {
+  "commonpayetypesschema.": {
    "template": "./templates/demodocument.html",
-   "title": "Common PAYE Types Schema",
+   "title": "Common PAYE Types Schema.",
    "message": "placeholder text/unused"
   },
   "soapschemareferencenextversion": {
@@ -524,29 +524,29 @@
    "title": "SOAP Schema Reference Next Version",
    "message": "placeholder text/unused"
   },
-  "soapwebserviceintegrationguide": {
+  "soapwebserviceintegrationguide.": {
    "template": "./templates/demodocument.html",
-   "title": "SOAP Web Service Integration Guide",
+   "title": "SOAP Web Service Integration Guide.",
    "message": "placeholder text/unused"
   },
-  "soaplookuprpnsbyrangeguide": {
+  "soaplookuprpnsbyrangeguide.": {
    "template": "./templates/demodocument.html",
-   "title": "SOAP Lookup RPNs by Range Guide",
+   "title": "SOAP Lookup RPNs by Range Guide.",
    "message": "placeholder text/unused"
   },
-  "soapwebserviceintegrationguideexamples": {
+  "soapwebserviceintegrationguideexamples.": {
    "template": "./templates/demodocument.html",
-   "title": "SOAP Web Service Integration Guide Examples",
+   "title": "SOAP Web Service Integration Guide Examples.",
    "message": "placeholder text/unused"
   },
-  "soapworkshoppresentation": {
+  "soapworkshoppresentation.": {
    "template": "./templates/demodocument.html",
-   "title": "SOAP Workshop Presentation",
+   "title": "SOAP Workshop Presentation.",
    "message": "placeholder text/unused"
   },
-  "soapconnectivityhandshakeguide": {
+  "soapconnectivityhandshakeguide.": {
    "template": "./templates/demodocument.html",
-   "title": "SOAP Connectivity Handshake Guide",
+   "title": "SOAP Connectivity Handshake Guide.",
    "message": "placeholder text/unused"
   }
  },
@@ -556,9 +556,9 @@
    "title": "PAYE Web Service Specifications (REST/JSON) PIT Next Version",
    "message": "placeholder text/unused"
   },
-  "restopenapispecification": {
+  "restopenapispecification.": {
    "template": "./templates/demodocument.html",
-   "title": "REST Open API Specification",
+   "title": "REST Open API Specification.",
    "message": "placeholder text/unused"
   },
   "restapireferencenextversion": {
@@ -566,19 +566,19 @@
    "title": "REST API Reference Next Version",
    "message": "placeholder text/unused"
   },
-  "restwebserviceintegrationguide": {
+  "restwebserviceintegrationguide.": {
    "template": "./templates/demodocument.html",
-   "title": "REST Web Service Integration Guide",
+   "title": "REST Web Service Integration Guide.",
    "message": "placeholder text/unused"
   },
-  "restwebserviceintegrationguidesamplemessages": {
+  "restwebserviceintegrationguidesamplemessages.": {
    "template": "./templates/demodocument.html",
-   "title": "REST Web Service Integration Guide Sample Messages",
+   "title": "REST Web Service Integration Guide Sample Messages.",
    "message": "placeholder text/unused"
   },
-  "restconnectivityhandshakeguide": {
+  "restconnectivityhandshakeguide.": {
    "template": "./templates/demodocument.html",
-   "title": "REST Connectivity Handshake Guide",
+   "title": "REST Connectivity Handshake Guide.",
    "message": "placeholder text/unused"
   }
  },
@@ -588,54 +588,54 @@
    "title": "Supporting Documentation PIT Next Version",
    "message": "placeholder text/unused"
   },
-  "payemodernisationoverview": {
+  "payemodernisationoverview.": {
    "template": "./templates/demodocument.html",
-   "title": "PAYE Modernisation Overview",
+   "title": "PAYE Modernisation Overview.",
    "message": "placeholder text/unused"
   },
-  "payrollsubmissionrequest:dataitems": {
+  "payrollsubmissionrequest:dataitems.": {
    "template": "./templates/demodocument.html",
-   "title": "Payroll Submission Request: Data Items",
+   "title": "Payroll Submission Request: Data Items.",
    "message": "placeholder text/unused"
   },
-  "rpn:dataitems": {
+  "rpn:dataitems.": {
    "template": "./templates/demodocument.html",
-   "title": "RPN : Data Items",
+   "title": "RPN : Data Items.",
    "message": "placeholder text/unused"
   },
-  "returnsreconciliationservice:dataitems": {
+  "returnsreconciliationservice:dataitems.": {
    "template": "./templates/demodocument.html",
-   "title": "Returns Reconciliation Service: Data Items",
+   "title": "Returns Reconciliation Service: Data Items.",
    "message": "placeholder text/unused"
   },
-  "validationrules:employersubmission,rpn,andreturnsreconciliation": {
+  "validationrules:employersubmission,rpn,andreturnsreconciliation.": {
    "template": "./templates/demodocument.html",
-   "title": "Validation Rules: Employer Submission, RPN, and Returns Reconciliation",
+   "title": "Validation Rules: Employer Submission, RPN, and Returns Reconciliation.",
    "message": "placeholder text/unused"
   },
-  "errormessageguide": {
+  "errormessageguide.": {
    "template": "./templates/demodocument.html",
-   "title": "Error Message Guide",
+   "title": "Error Message Guide.",
    "message": "placeholder text/unused"
   },
-  "lineitemcorrectionrules": {
+  "lineitemcorrectionrules.": {
    "template": "./templates/demodocument.html",
-   "title": "Line Item Correction Rules",
+   "title": "Line Item Correction Rules.",
    "message": "placeholder text/unused"
   },
-  "employmentidguide": {
+  "employmentidguide.": {
    "template": "./templates/demodocument.html",
-   "title": "Employment ID Guide",
+   "title": "Employment ID Guide.",
    "message": "placeholder text/unused"
   },
-  "payeregulations20180629consultation": {
+  "payeregulations20180629consultation.": {
    "template": "./templates/demodocument.html",
-   "title": "PAYE Regulations 20180629 Consultation",
+   "title": "PAYE Regulations 20180629 Consultation.",
    "message": "placeholder text/unused"
   },
-  "uscregulations20180724consultation": {
+  "uscregulations20180724consultation.": {
    "template": "./templates/demodocument.html",
-   "title": "USC Regulations 20180724 Consultation",
+   "title": "USC Regulations 20180724 Consultation.",
    "message": "placeholder text/unused"
   },
   "payewebserviceexamplespitnextversion": {
@@ -647,82 +647,82 @@
  "routes15": {
   "home13": {
    "template": "./templates/home13.html",
-   "title": "PAYE Modernisation Description Of Web Service Examples",
+   "title": "PAYE Modernisation Description Of Web Service Examples.",
    "message": "placeholder text/unused"
   },
-  "example1:fullpayemodernisationlifecycle": {
+  "example1:fullpayemodernisationlifecycle.": {
    "template": "./templates/demodocument.html",
-   "title": "Example 1: Full PAYE Modernisation Life Cycle",
+   "title": "Example 1: Full PAYE Modernisation Life Cycle.",
    "message": "placeholder text/unused"
   },
-  "example2:overpaymenttoemployee": {
+  "example2:overpaymenttoemployee.": {
    "template": "./templates/demodocument.html",
-   "title": "Example 2: Overpayment To Employee",
+   "title": "Example 2: Overpayment To Employee.",
    "message": "placeholder text/unused"
   },
-  "example3:underpaymenttoemployee": {
+  "example3:underpaymenttoemployee.": {
    "template": "./templates/demodocument.html",
-   "title": "Example 3: Underpayment To Employee",
+   "title": "Example 3: Underpayment To Employee.",
    "message": "placeholder text/unused"
   },
-  "example4:amendmentofinvalidpayrollsubmission": {
+  "example4:amendmentofinvalidpayrollsubmission.": {
    "template": "./templates/demodocument.html",
-   "title": "Example 4: Amendment Of Invalid Payroll Submission",
+   "title": "Example 4: Amendment Of Invalid Payroll Submission.",
    "message": "placeholder text/unused"
   },
-  "example5:employerwithmultipleemployees": {
+  "example5:employerwithmultipleemployees.": {
    "template": "./templates/demodocument.html",
-   "title": "Example 5: Employer With Multiple Employees",
+   "title": "Example 5: Employer With Multiple Employees.",
    "message": "placeholder text/unused"
   },
-  "example6:checkpayrollrunresponse": {
+  "example6:checkpayrollrunresponse.": {
    "template": "./templates/demodocument.html",
-   "title": "Example 6: Check Payroll Run Response",
+   "title": "Example 6: Check Payroll Run Response.",
    "message": "placeholder text/unused"
   },
-  "example7:payrollsubmissionwithinvalidpayslips": {
+  "example7:payrollsubmissionwithinvalidpayslips.": {
    "template": "./templates/demodocument.html",
-   "title": "Example 7: Payroll Submission with Invalid Payslips",
+   "title": "Example 7: Payroll Submission with Invalid Payslips.",
    "message": "placeholder text/unused"
   },
-  "example8:batchedsubmissions": {
+  "example8:batchedsubmissions.": {
    "template": "./templates/demodocument.html",
-   "title": "Example 8: Batched Submissions",
+   "title": "Example 8: Batched Submissions.",
    "message": "placeholder text/unused"
   },
-  "example9:deletionofincorrectpayslipfromsubmission": {
+  "example9:deletionofincorrectpayslipfromsubmission.": {
    "template": "./templates/demodocument.html",
-   "title": "Example 9: Deletion Of Incorrect Payslip From Submission",
+   "title": "Example 9: Deletion Of Incorrect Payslip From Submission.",
    "message": "placeholder text/unused"
   },
-  "example10:lookuppayrollreturnbyperiod": {
+  "example10:lookuppayrollreturnbyperiod.": {
    "template": "./templates/demodocument.html",
-   "title": "Example 10: Lookup Payroll Return By Period",
+   "title": "Example 10: Lookup Payroll Return By Period.",
    "message": "placeholder text/unused"
   },
-  "payrollscenarios": {
+  "payrollscenarios.": {
    "template": "./templates/demodocument.html",
-   "title": "Payroll Scenarios",
+   "title": "Payroll Scenarios.",
    "message": "placeholder text/unused"
   },
-  "payrollscenarios-xml": {
+  "payrollscenarios-xml.": {
    "template": "./templates/demodocument.html",
-   "title": "Payroll Scenarios - XML",
+   "title": "Payroll Scenarios - XML.",
    "message": "placeholder text/unused"
   },
-  "payrollscenarios-json": {
+  "payrollscenarios-json.": {
    "template": "./templates/demodocument.html",
-   "title": "Payroll Scenarios - JSON",
+   "title": "Payroll Scenarios - JSON.",
    "message": "placeholder text/unused"
   },
-  "samplecodegists": {
+  "samplecodegists.": {
    "template": "./templates/demodocument.html",
-   "title": "Sample Code Gists",
+   "title": "Sample Code Gists.",
    "message": "placeholder text/unused"
   },
-  "restrequestauthenticationpresentation": {
+  "restrequestauthenticationpresentation.": {
    "template": "./templates/demodocument.html",
-   "title": "REST Request Authentication Presentation",
+   "title": "REST Request Authentication Presentation.",
    "message": "placeholder text/unused"
   }
  }
