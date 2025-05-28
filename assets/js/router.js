@@ -36,13 +36,39 @@ const locationHandler = async () => {
   // create html that will be inserted into the 'sidebarLinks' element on our page
   let sidebarLinksToRender = "";
 
+  /* Code relating to the following:
+   'soapschemareferencecurrentversion'
+   'soapschemareferencenextversion'
+   'restapireferencecurrentversion'
+   'restapireferencenextversion'
+   is hard coded and for demonstration purposes only.
+   Needs to be reworked. */
+
+
   for (aRoute in routeValue) {
     href = routeValue[aRoute].title.toLowerCase();
     href = href.replaceAll(" ", "");
 
-    if (href != 'home' && href != '404pagenotfound') {
+    if (href != 'home' && href != '404pagenotfound' && href != 'soapschemareferencecurrentversion' && href != 'soapschemareferencenextversion' && href != 'restapireferencecurrentversion' && href != 'restapireferencenextversion') {
       sidebarLinksToRender += "<a href=\"#" + href + "\">" + routeValue[aRoute].title + "</a>";
     }
+
+    if (href == "soapschemareferencecurrentversion") {
+      sidebarLinksToRender += "<a href=\"./templates/schemas/PIT3/soap/soap-schema-reference/webframe.html\" target=\"_blank\" rel=\"noopener noreferrer\">SOAP Schema Reference Current Version</a>"
+    }
+
+    if (href == "soapschemareferencenextversion") {
+      sidebarLinksToRender += "<a href=\"./templates/schemas/PIT4/soap/soap-schema-reference/webframe.html\" target=\"_blank\" rel=\"noopener noreferrer\">SOAP Schema Reference Next Version</a>"
+    }
+
+    if (href == "restapireferencecurrentversion") {
+      sidebarLinksToRender += "<a href=\"./templates/schemas/PIT3/rest/paye-employers-rest-api-pit3.html\" target=\"_blank\" rel=\"noopener noreferrer\">REST API Reference Current Version</a>"
+    }
+
+    if (href == "restapireferencenextversion") {
+      sidebarLinksToRender += "<a href=\"./templates/schemas/PIT4/rest/paye-employers-rest-api-pit4.html\" target=\"_blank\" rel=\"noopener noreferrer\">REST API Reference Next Version</a>"
+    }
+
   }
 
   // get the route object from the routes object

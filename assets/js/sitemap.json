@@ -180,9 +180,9 @@
    "title": "Common PAYE Types Schema",
    "message": "placeholder text/unused"
   },
-  "soapschemareference": {
+  "soapschemareferencecurrentversion": {
    "template": "./templates/demodocument.html",
-   "title": "SOAP Schema Reference",
+   "title": "SOAP Schema Reference Current Version",
    "message": "placeholder text/unused"
   },
   "soapwebserviceintegrationguide": {
@@ -222,9 +222,9 @@
    "title": "REST Open API Specification",
    "message": "placeholder text/unused"
   },
-  "restapireference": {
+  "restapireferencecurrentversion": {
    "template": "./templates/demodocument.html",
-   "title": "REST API Reference",
+   "title": "REST API Reference Current Version",
    "message": "placeholder text/unused"
   },
   "restwebserviceintegrationguide": {
@@ -519,9 +519,9 @@
    "title": "Common PAYE Types Schema",
    "message": "placeholder text/unused"
   },
-  "soapschemareference": {
+  "soapschemareferencenextversion": {
    "template": "./templates/demodocument.html",
-   "title": "SOAP Schema Reference",
+   "title": "SOAP Schema Reference Next Version",
    "message": "placeholder text/unused"
   },
   "soapwebserviceintegrationguide": {
@@ -561,9 +561,9 @@
    "title": "REST Open API Specification",
    "message": "placeholder text/unused"
   },
-  "restapireference": {
+  "restapireferencenextversion": {
    "template": "./templates/demodocument.html",
-   "title": "REST API Reference",
+   "title": "REST API Reference Next Version",
    "message": "placeholder text/unused"
   },
   "restwebserviceintegrationguide": {
