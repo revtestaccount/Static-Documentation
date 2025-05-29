@@ -78,24 +78,38 @@ body {
                 font-size: $h3-font-size !important;
                 text-align: center;
             };
-        }
+        };
+
+        #content{ 
+
+            // **** temporary css class to resize h2 headings **** remove when main page headings are change to h1
+            h2 {
+                background-color: $base-white;
+                color: $base-brandteal;
+                text-align: center;
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                font-weight: $bold-font-weight;
+                font-size: $h1-700-font-size;
+            };
+        };
     }
 
-    .sidebar {
-        min-height: 100vh;
-        // background-color: $base-brandmint;
-        background-color: $base-brandteal;
-        font-weight: $semibold-font-weight;
-    };
+        .sidebar {
+            min-height: 100vh;
+            // background-color: $base-brandmint;
+            background-color: $base-brandteal;
+            font-weight: $semibold-font-weight;
+        };
 
-    .pmod {
-        background-color: $base-white;
-        color: $base-brandteal;
-        text-align: center;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
-        font-weight: $bold-font-weight;
-    };
+        .pmod {
+            background-color: $base-white;
+            color: $base-brandteal;
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            font-weight: $bold-font-weight;
+        };
 
     .footer {
     padding: 1.5625rem 1.5625rem 1.5625rem 1.5625rem;
