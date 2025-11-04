@@ -11133,6 +11133,18 @@ rev-checkbox[readonly] .p-checkbox-box {
 }
 
 /*** Pages Styles imports ***/
+/*** -- Important --- ***/
+/*** Run: "npm run watch:scss" to ensure SCSS compiles ***/
+h1 {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 90, 92);
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  font-size: 35px;
+}
+
 body {
   min-height: 100vh;
   overflow-x: hidden;
@@ -11166,7 +11178,9 @@ body .header .PAYE_Modernisation_ERR_Documentation p {
   padding-top: 2rem;
 }
 body main .card {
+  margin-top: 2rem !important;
   margin-bottom: 2rem !important;
+  margin: auto;
 }
 body main .card .card-img-top {
   padding: 1rem !important;
@@ -11178,6 +11192,15 @@ body main .card .card-text {
   text-align: center;
 }
 body main #content h2 {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 90, 92);
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  font-size: 35px;
+}
+body main #content #title {
   background-color: rgb(255, 255, 255);
   color: rgb(0, 90, 92);
   text-align: center;
@@ -11217,7 +11240,8 @@ body .footer {
 }
 
 .main_content {
-  max-width: 62.5rem;
+  max-width: 66%;
+  text-align: center;
   margin: auto;
 }
 

@@ -30,10 +30,23 @@
 /*** Pages Styles imports ***/
 @import 'pages/home';
 
+/*** -- Important --- ***/
+/*** Run: "npm run watch:scss" to ensure SCSS compiles ***/
+
+h1 {
+    background-color: $base-white;
+    color: $base-brandteal;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-weight: $bold-font-weight;
+    font-size: $h1-700-font-size;
+};
+
 body {
     min-height: 100vh;
     overflow-x: hidden;
-    font-family: $font-families-segoe-ui;
+    font-family: $font-families-segoe-ui;   
     color: $surface-000;
 
     a{
@@ -68,12 +81,15 @@ body {
 
     main{
         .card{
+            margin-top: 2rem !important;
+            margin-bottom: 2rem !important; 
+            margin: auto;
             .card-img-top{
                 padding: 1rem !important;
                 background-color: $brandmint-lighten-50 !important;
                 max-height: 12.6875rem;
             };
-            margin-bottom: 2rem !important;
+            
             .card-text{
                 font-size: $h3-font-size !important;
                 text-align: center;
@@ -82,8 +98,18 @@ body {
 
         #content{ 
 
-            // **** temporary css class to resize h2 headings **** remove when main page headings are change to h1
+            // **** temporary css class to resize h2 headings **** remove when main page headings are changed to h1
             h2 {
+                background-color: $base-white;
+                color: $base-brandteal;
+                text-align: center;
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                font-weight: $bold-font-weight;
+                font-size: $h1-700-font-size;
+            };
+
+            #title{
                 background-color: $base-white;
                 color: $base-brandteal;
                 text-align: center;
@@ -130,7 +156,8 @@ body {
 }
 
 .main_content {
-    max-width: 62.5rem;
+    max-width: 66%;
+    text-align: center;
     margin: auto;
 }
 
