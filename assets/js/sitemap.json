@@ -11,7 +11,7 @@
    "message": "placeholder text/unused"
   }
  },
- "home_nav": {
+ "_home_nav": {
   "guidesandusefulinfo": {
    "template": "",
    "title": "PIT Guides and Useful Info",
@@ -43,7 +43,7 @@
    "message": ""
   }
  },
- "nav_groups": {
+ "_nav_groups": {
   "guidesandusefulinfo": {
    "label": "PIT Guides and Useful Info",
    "children": ["payepithelpdeskuserguide", "conformance", "faq", "helpdeskregistration", "login", "nexversion"]

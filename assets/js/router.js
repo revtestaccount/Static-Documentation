@@ -24,7 +24,8 @@ const locationHandler = async () => {
     if (breakCheck) {
       break;
     }
-    if (key === "home_nav" || key === "nav_groups") {
+    // Skip all utility/nav groups — identified by underscore prefix
+    if (key.startsWith("_")) {
       continue;
     }
     routeKey = key;
@@ -40,13 +41,13 @@ const locationHandler = async () => {
   // ── Build nav links ─────────────────────────────────────────────────────────
   let sidebarLinksToRender = "";
 
-  const navGroups = jsonData["nav_groups"];
-  const homeNav   = jsonData["home_nav"];
+  const navGroups = jsonData["_nav_groups"];
+  const homeNav   = jsonData["_home_nav"];
 
   // Helper: find all route titles/templates across all route groups by key
   function findRoute(key) {
     for (let group in jsonData) {
-      if (group === "home_nav" || group === "nav_groups") continue;
+      if (group.startsWith("_")) continue;
       if (jsonData[group][key]) return jsonData[group][key];
     }
     return null;
