@@ -24,7 +24,7 @@ const locationHandler = async () => {
     if (breakCheck) {
       break;
     }
-    if (key === "home_nav") {
+    if (key === "home_nav" || key === "nav_groups") {
       continue;
     }
     routeKey = key;
