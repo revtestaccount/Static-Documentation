@@ -59,29 +59,64 @@ body {
         background-color: $surface-200;
     }
 
+    // ── Top utility bar ───────────────────────────────────────────────────────
+    .header-util {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: darken($base-brandteal, 8%);
+        padding: 0.35rem 1.25rem;
+        width: 100%;
+
+        &__context {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: $semibold-font-weight;
+        }
+
+        &__link {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+
+            &:hover {
+                color: $base-white;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    // ── Main header ───────────────────────────────────────────────────────────
     .header {
         display: flex;
         align-items: center;
-        padding: 1.5625rem;
+        padding: 0.75rem 1.25rem;
         background-color: $base-brandteal;
-        border-bottom: solid $base-cyan 1rem;
         width: 100%;
+        gap: 1.25rem;
 
-        img {
-            padding: 1rem;
+        &__logo {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+
+            img {
+                display: block;
+            }
         }
 
-        .PAYE_Modernisation_ERR_Documentation {
-            flex: 1;
-            text-align: center;
-            padding: 1rem;
+        &__divider {
+            width: 2px;
+            height: 3.5rem;
+            background-color: rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+        }
 
-            p {
-                font-size: 2rem;
-                color: $base-white;
-                font-weight: $bold-font-weight;
-                margin: 0;
-            }
+        &__app-name {
+            font-size: 1.5rem;
+            font-weight: $bold-font-weight;
+            color: $base-white;
+            letter-spacing: 0.01em;
         }
     };
 

@@ -11214,27 +11214,55 @@ body code {
   color: rgb(0, 86, 179);
   background-color: rgb(233, 236, 239);
 }
+body .header-util {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(0, 50.0869565217, 51.2);
+  padding: 0.35rem 1.25rem;
+  width: 100%;
+}
+body .header-util__context {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+body .header-util__link {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+body .header-util__link:hover {
+  color: rgb(255, 255, 255);
+  text-decoration: underline;
+}
 body .header {
   display: flex;
   align-items: center;
-  padding: 1.5625rem;
+  padding: 0.75rem 1.25rem;
   background-color: rgb(0, 90, 92);
-  border-bottom: solid rgb(0, 198, 198) 1rem;
   width: 100%;
+  gap: 1.25rem;
 }
-body .header img {
-  padding: 1rem;
+body .header__logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
-body .header .PAYE_Modernisation_ERR_Documentation {
-  flex: 1;
-  text-align: center;
-  padding: 1rem;
+body .header__logo img {
+  display: block;
 }
-body .header .PAYE_Modernisation_ERR_Documentation p {
-  font-size: 2rem;
-  color: rgb(255, 255, 255);
+body .header__divider {
+  width: 2px;
+  height: 3.5rem;
+  background-color: rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
+}
+body .header__app-name {
+  font-size: 1.5rem;
   font-weight: 700;
-  margin: 0;
+  color: rgb(255, 255, 255);
+  letter-spacing: 0.01em;
 }
 body .site-main {
   width: 100%;
