@@ -19,9 +19,13 @@ const locationHandler = async () => {
   let breakCheck = false;
 
   //find the block of json that contains the route information we need
+  // Skip home_nav — it is only used for nav rendering, not content lookup
   for (key in jsonData) {
     if (breakCheck) {
       break;
+    }
+    if (key === "home_nav") {
+      continue;
     }
     routeKey = key;
     for (val in jsonData[key]) {
@@ -33,45 +37,92 @@ const locationHandler = async () => {
     }
   }
 
-  // create html that will be inserted into the 'navLinksList' element on our page
+  // ── Build nav links ─────────────────────────────────────────────────────────
   let sidebarLinksToRender = "";
 
-  // On the home page use the dedicated home_nav group for nav links
-  const navSource = (location === "/") ? jsonData["home_nav"] : routeValue;
+  const navGroups = jsonData["nav_groups"];
+  const homeNav   = jsonData["home_nav"];
 
-  /* Code relating to the following:
-   'soapschemareferencecurrentversion'
-   'soapschemareferencenextversion'
-   'restapireferencecurrentversion'
-   'restapireferencenextversion'
-   is hard coded and for demonstration purposes only.
-   Needs to be reworked. */
+  // Helper: find all route titles/templates across all route groups by key
+  function findRoute(key) {
+    for (let group in jsonData) {
+      if (group === "home_nav" || group === "nav_groups") continue;
+      if (jsonData[group][key]) return jsonData[group][key];
+    }
+    return null;
+  }
 
+  // Helper: find which nav_group parent a given route key belongs to
+  function findParentGroup(key) {
+    for (let groupKey in navGroups) {
+      if (groupKey === key) return groupKey;                    // is itself a parent
+      if (navGroups[groupKey].children.includes(key)) return groupKey;
+    }
+    return null;
+  }
 
-  for (aRoute in navSource) {
-    href = navSource[aRoute].title.toLowerCase();
-    href = href.replaceAll(" ", "");
-
-    if (href != 'home' && href != '404pagenotfound' && href != 'soapschemareferencecurrentversion' && href != 'soapschemareferencenextversion' && href != 'restapireferencecurrentversion' && href != 'restapireferencenextversion') {
-      sidebarLinksToRender += "<li class=\"nav-item\"><a class=\"nav-link site-nav__link\" href=\"#" + aRoute + "\">" + navSource[aRoute].title + "</a></li>";
+  if (location === "/") {
+    // ── Home page: flat links for all 6 cards ──────────────────────────────
+    for (let key in homeNav) {
+      sidebarLinksToRender += `<li class="nav-item"><a class="nav-link site-nav__link" href="#${key}">${homeNav[key].title}</a></li>`;
     }
 
-    if (href == "soapschemareferencecurrentversion") {
-      sidebarLinksToRender += "<li class=\"nav-item\"><a class=\"nav-link site-nav__link\" href=\"./templates/schemas/PIT3/soap/soap-schema-reference/webframe.html\" target=\"_blank\" rel=\"noopener noreferrer\">SOAP Schema Reference Current Version</a></li>";
-    }
+  } else {
+    // ── Inner pages: find parent group and render dropdown ─────────────────
+    const parentKey = findParentGroup(location);
 
-    if (href == "soapschemareferencenextversion") {
-      sidebarLinksToRender += "<li class=\"nav-item\"><a class=\"nav-link site-nav__link\" href=\"./templates/schemas/PIT4/soap/soap-schema-reference/webframe.html\" target=\"_blank\" rel=\"noopener noreferrer\">SOAP Schema Reference Next Version</a></li>";
-    }
+    if (parentKey && navGroups[parentKey]) {
+      const group    = navGroups[parentKey];
+      const children = group.children;
+      const isOnCardPage = (location === parentKey);
 
-    if (href == "restapireferencecurrentversion") {
-      sidebarLinksToRender += "<li class=\"nav-item\"><a class=\"nav-link site-nav__link\" href=\"./templates/schemas/PIT3/rest/paye-employers-rest-api-pit3.html\" target=\"_blank\" rel=\"noopener noreferrer\">REST API Reference Current Version</a></li>";
-    }
+      // Dropdown toggle — label is the parent card title
+      sidebarLinksToRender += `
+        <li class="nav-item dropdown">
+          <a class="nav-link site-nav__link site-nav__dropdown-toggle dropdown-toggle"
+             href="#${parentKey}"
+             role="button"
+             data-bs-toggle="dropdown"
+             aria-expanded="false">
+            ${group.label}
+          </a>
+          <ul class="dropdown-menu site-nav__dropdown-menu">`;
 
-    if (href == "restapireferencenextversion") {
-      sidebarLinksToRender += "<li class=\"nav-item\"><a class=\"nav-link site-nav__link\" href=\"./templates/schemas/PIT4/rest/paye-employers-rest-api-pit4.html\" target=\"_blank\" rel=\"noopener noreferrer\">REST API Reference Next Version</a></li>";
-    }
+      // Parent card page link at top of dropdown
+      sidebarLinksToRender += `
+            <li>
+              <a class="dropdown-item site-nav__dropdown-item${isOnCardPage ? ' active' : ''}" href="#${parentKey}">
+                Overview
+              </a>
+            </li>
+            <li><hr class="dropdown-divider site-nav__divider"></li>`;
 
+      // Child pages
+      for (let childKey of children) {
+        const childRoute = findRoute(childKey);
+        if (!childRoute) continue;
+
+        const isActive  = (location === childKey);
+        const childTitle = childRoute.title;
+
+        // Handle hard-coded external links
+        if (childKey === "soapschemareferencecurrentversion") {
+          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./templates/schemas/PIT3/soap/soap-schema-reference/webframe.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+        } else if (childKey === "soapschemareferencenextversion") {
+          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./templates/schemas/PIT4/soap/soap-schema-reference/webframe.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+        } else if (childKey === "restapireferencecurrentversion") {
+          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./templates/schemas/PIT3/rest/paye-employers-rest-api-pit3.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+        } else if (childKey === "restapireferencenextversion") {
+          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./templates/schemas/PIT4/rest/paye-employers-rest-api-pit4.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+        } else {
+          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item${isActive ? ' active' : ''}" href="#${childKey}">${childTitle}</a></li>`;
+        }
+      }
+
+      sidebarLinksToRender += `
+          </ul>
+        </li>`;
+    }
   }
 
   // get the route object from the routes object

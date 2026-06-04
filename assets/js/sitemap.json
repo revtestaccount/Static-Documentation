@@ -43,6 +43,32 @@
    "message": ""
   }
  },
+ "nav_groups": {
+  "guidesandusefulinfo": {
+   "label": "PIT Guides and Useful Info",
+   "children": ["payepithelpdeskuserguide", "conformance", "faq", "helpdeskregistration", "login", "nexversion"]
+  },
+  "pmodpit3cards": {
+   "label": "PMOD PIT3 (PIT Current Version)",
+   "children": ["pit3-self-service", "pit3-guide", "pit3-soap", "pit3-rest", "pit3-supporting-docs", "pit3-examples"]
+  },
+  "pmodpit4cards": {
+   "label": "PMOD PIT4 (PIT Next Version)",
+   "children": ["pit4-self-service", "pit4-guide", "pit4-soap", "pit4-rest", "pit4-supporting-docs", "pit4-examples"]
+  },
+  "errpit3cards": {
+   "label": "ERR PIT3 (PIT Current Version)",
+   "children": ["err-pit3-technical-docs", "err-pit3-examples", "err-pit3-supporting-docs"]
+  },
+  "errpit4cards": {
+   "label": "ERR PIT4 (PIT Next Version)",
+   "children": ["err-pit4-technical-docs", "err-pit4-examples", "err-pit4-supporting-docs"]
+  },
+  "support": {
+   "label": "Support Facilities",
+   "children": []
+  }
+ },
  "routes_support": {
   "support": {
    "template": "./templates/support.html",
