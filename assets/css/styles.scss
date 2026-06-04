@@ -315,6 +315,18 @@ body {
     margin: auto;
 }
 
+// ── Home page cards ──────────────────────────────────────────────────────────────
+.home-card {
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    position: relative; // required for Bootstrap stretched-link
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+}
+
 .document-title {
     color: rgb(2, 95, 99);
 }
