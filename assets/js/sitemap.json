@@ -11,9 +11,16 @@
    "message": "placeholder text/unused"
   }
  },
+ "routes_support": {
+  "support": {
+   "template": "./templates/support.html",
+   "title": "Support Facilities",
+   "message": "placeholder text/unused"
+  }
+ },
  "routes1": {
   "guidesandusefulinfo": {
-   "template": "./templates/home1.html",
+   "template": "./templates/pit-guides.html",
    "title": "Guides and useful info",
    "message": "placeholder text/unused"
   },
@@ -53,11 +60,41 @@
    "template": "./templates/pmodpit3cards.html",
    "title": "PMOD PIT3 (PIT Current Version)",
    "message": "placeholder text/unused"
+  },
+  "pit3-self-service": {
+   "template": "./templates/pit3-self-service.html",
+   "title": "PIT Self Service and ROS Payroll Reporting PIT Current Version",
+   "message": "placeholder text/unused"
+  },
+  "pit3-guide": {
+   "template": "./templates/pit3-guide.html",
+   "title": "Guide PIT Current Version",
+   "message": "placeholder text/unused"
+  },
+  "pit3-soap": {
+   "template": "./templates/pit3-soap.html",
+   "title": "PAYE Web Service Specifications (SOAP/XML) PIT Current Version",
+   "message": "placeholder text/unused"
+  },
+  "pit3-rest": {
+   "template": "./templates/pit3-rest.html",
+   "title": "PAYE Web Service Specifications (REST/JSON) PIT Current Version",
+   "message": "placeholder text/unused"
+  },
+  "pit3-supporting-docs": {
+   "template": "./templates/pit3-supporting-docs.html",
+   "title": "Supporting Documentation PIT Current Version",
+   "message": "placeholder text/unused"
+  },
+  "pit3-examples": {
+   "template": "./templates/pit3-examples.html",
+   "title": "PAYE Web Service Examples PIT Current Version",
+   "message": "placeholder text/unused"
   }
  },
  "routes3": {
   "home2": {
-   "template": "./templates/home2.html",
+   "template": "./templates/pit3-self-service.html",
    "title": "PIT Self Service and ROS Payroll Reporting PIT Current Version",
    "message": "placeholder text/unused"
   },
@@ -109,7 +146,7 @@
  },
  "routes4": {
   "home3": {
-   "template": "./templates/home3.html",
+   "template": "./templates/pit3-guide.html",
    "title": "Guide PIT Current Version",
    "message": "placeholder text/unused"
   },
@@ -131,7 +168,7 @@
  },
  "routes5": {
   "home4": {
-   "template": "./templates/home4.html",
+   "template": "./templates/pit3-soap.html",
    "title": "PAYE Web Service Specifications (SOAP/XML) PIT Current Version",
    "message": "placeholder text/unused"
   },
@@ -213,7 +250,7 @@
  },
  "routes6": {
   "home5": {
-   "template": "./templates/home5.html",
+   "template": "./templates/pit3-rest.html",
    "title": "PAYE Web Service Specifications (REST/JSON) PIT Current Version",
    "message": "placeholder text/unused"
   },
@@ -245,7 +282,7 @@
  },
  "routes7": {
   "home6": {
-   "template": "./templates/home6.html",
+   "template": "./templates/pit3-supporting-docs.html",
    "title": "Supporting Documentation PIT Current Version",
    "message": "placeholder text/unused"
   },
@@ -307,7 +344,7 @@
  },
  "routes8": {
   "home7": {
-   "template": "./templates/home7.html",
+   "template": "./templates/pit3-examples.html",
    "title": "PAYE Modernisation Description Of Web Service Examples",
    "message": "placeholder text/unused"
   },
@@ -392,11 +429,41 @@
    "template": "./templates/pmodpit4cards.html",
    "title": "PMOD PIT4 (PIT Next Version)",
    "message": "placeholder text/unused"
+  },
+  "pit4-self-service": {
+   "template": "./templates/pit4-self-service.html",
+   "title": "PIT Self Service and ROS Payroll Reporting PIT Next Version",
+   "message": "placeholder text/unused"
+  },
+  "pit4-guide": {
+   "template": "./templates/pit4-guide.html",
+   "title": "Guide PIT Next Version",
+   "message": "placeholder text/unused"
+  },
+  "pit4-soap": {
+   "template": "./templates/pit4-soap.html",
+   "title": "PAYE Web Service Specifications (SOAP/XML) PIT Next Version",
+   "message": "placeholder text/unused"
+  },
+  "pit4-rest": {
+   "template": "./templates/pit4-rest.html",
+   "title": "PAYE Web Service Specifications (REST/JSON) PIT Next Version",
+   "message": "placeholder text/unused"
+  },
+  "pit4-supporting-docs": {
+   "template": "./templates/pit4-supporting-docs.html",
+   "title": "Supporting Documentation PIT Next Version",
+   "message": "placeholder text/unused"
+  },
+  "pit4-examples": {
+   "template": "./templates/pit4-examples.html",
+   "title": "PAYE Web Service Examples PIT Next Version",
+   "message": "placeholder text/unused"
   }
  },
  "routes10": {
   "home8": {
-   "template": "./templates/home8.html",
+   "template": "./templates/pit4-self-service.html",
    "title": "PIT Self Service and ROS Payroll Reporting PIT Next Version",
    "message": "placeholder text/unused"
   },
@@ -448,7 +515,7 @@
  },
  "routes11": {
   "home9": {
-   "template": "./templates/home9.html",
+   "template": "./templates/pit4-guide.html",
    "title": "Guide PIT Next Version",
    "message": "placeholder text/unused"
   },
@@ -470,7 +537,7 @@
  },
  "routes12": {
   "home10": {
-   "template": "./templates/home10.html",
+   "template": "./templates/pit4-soap.html",
    "title": "PAYE Web Service Specifications (SOAP/XML) PIT Next Version",
    "message": "placeholder text/unused"
   },
@@ -552,7 +619,7 @@
  },
  "routes13": {
   "home11": {
-   "template": "./templates/home11.html",
+   "template": "./templates/pit4-rest.html",
    "title": "PAYE Web Service Specifications (REST/JSON) PIT Next Version",
    "message": "placeholder text/unused"
   },
@@ -584,7 +651,7 @@
  },
  "routes14": {
   "home12": {
-   "template": "./templates/home12.html",
+   "template": "./templates/pit4-supporting-docs.html",
    "title": "Supporting Documentation PIT Next Version",
    "message": "placeholder text/unused"
   },
@@ -644,9 +711,53 @@
    "message": "placeholder text/unused"
   }
  },
+ "routes16": {
+  "errpit3cards": {
+   "template": "./templates/errpit3cards.html",
+   "title": "ERR PIT3 (PIT Current Version)",
+   "message": "placeholder text/unused"
+  },
+  "err-pit3-technical-docs": {
+   "template": "./templates/err-pit3-technical-docs.html",
+   "title": "ERR Technical Support Documentation PIT Current Version",
+   "message": "placeholder text/unused"
+  },
+  "err-pit3-examples": {
+   "template": "./templates/err-pit3-examples.html",
+   "title": "ERR Examples PIT Current Version",
+   "message": "placeholder text/unused"
+  },
+  "err-pit3-supporting-docs": {
+   "template": "./templates/demodocument.html",
+   "title": "ERR Supporting Documentation PIT Current Version",
+   "message": "placeholder text/unused"
+  }
+ },
+ "routes17": {
+  "errpit4cards": {
+   "template": "./templates/errpit4cards.html",
+   "title": "ERR PIT4 (PIT Next Version)",
+   "message": "placeholder text/unused"
+  },
+  "err-pit4-technical-docs": {
+   "template": "./templates/err-pit4-technical-docs.html",
+   "title": "ERR Technical Support Documentation PIT Next Version",
+   "message": "placeholder text/unused"
+  },
+  "err-pit4-examples": {
+   "template": "./templates/err-pit4-examples.html",
+   "title": "ERR Examples PIT Next Version",
+   "message": "placeholder text/unused"
+  },
+  "err-pit4-supporting-docs": {
+   "template": "./templates/demodocument.html",
+   "title": "ERR Supporting Documentation PIT Next Version",
+   "message": "placeholder text/unused"
+  }
+ },
  "routes15": {
   "home13": {
-   "template": "./templates/home13.html",
+   "template": "./templates/pit4-examples.html",
    "title": "PAYE Modernisation Description Of Web Service Examples.",
    "message": "placeholder text/unused"
   },

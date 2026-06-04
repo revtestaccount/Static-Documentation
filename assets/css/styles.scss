@@ -80,6 +80,10 @@ body {
     };
 
     main{
+        p{
+            text-align:left ;
+        };
+
         .card{
             margin-top: 2rem !important;
             margin-bottom: 2rem !important; 
@@ -96,8 +100,7 @@ body {
             };
         };
 
-        #content{ 
-
+        #content{  
             // **** temporary css class to resize h2 headings **** remove when main page headings are changed to h1
             h2 {
                 background-color: $base-white;
@@ -175,4 +178,234 @@ code {
 
 .no-dot {
     list-style: none;
+}
+
+// ── PIT Section ───────────────────────────────────────────────────────────────
+.pit-section {
+    background: #fff;
+    border: 1px solid #ddd;
+    max-width: 960px;
+    margin: 2rem auto;
+
+    // Section header bar
+    &__header {
+        background-color: $base-brandteal;
+        padding: 0.85rem 1.25rem;
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+    // Section heading text
+    &__title {
+        font-size: 1.1rem;
+        font-weight: $bold-font-weight;
+        color: $base-white;
+        letter-spacing: 0.01em;
+        margin: 0;
+    }
+
+    // Intro paragraph + bullet list
+    &__intro {
+        padding: 1rem 1.25rem 0.5rem;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #444;
+
+        p {
+            margin-bottom: 0.5rem;
+        }
+
+        ul {
+            margin: 0.25rem 0 0 1.25rem;
+        }
+
+        li {
+            margin-bottom: 0.35rem;
+        }
+    }
+
+    // Document table
+    &__table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.75rem;
+
+        thead tr {
+            background-color: #e8e8e8;
+            border-bottom: 2px solid $base-brandteal;
+        }
+
+        thead th {
+            padding: 0.6rem 1rem;
+            font-weight: $bold-font-weight;
+            font-size: 0.9rem;
+            color: #222;
+            text-align: left;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.95rem;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                background-color: #f0f8f8;
+            }
+        }
+
+        tbody td {
+            padding: 0.7rem 1rem;
+            vertical-align: middle;
+            color: #333;
+
+            a {
+                color: $base-brandteal;
+                text-decoration: none;
+                font-weight: $semibold-font-weight;
+
+                &:hover {
+                    text-decoration: underline;
+                    color: darken($base-brandteal, 8%);
+                }
+            }
+        }
+    }
+
+    // Column widths
+    &__col--description { width: 45%; }
+    &__col--type        { width: 10%; }
+    &__col--env         { width: 25%; }
+    &__col--date        { width: 20%; }
+
+    // Type badges — squared corners per Revenue design conventions
+    &__badge {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: $bold-font-weight;
+        padding: 0.2rem 0.55rem;
+        border-radius: 0;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+
+        &--pdf {
+            background-color: #d9534f;
+            color: $base-white;
+        }
+
+        &--link {
+            background-color: $base-brandteal;
+            color: $base-white;
+        }
+
+        &--zip {
+            background-color: #6f42c1;
+            color: $base-white;
+        }
+
+        &--schema {
+            background-color: #0d6efd;
+            color: $base-white;
+        }
+
+        &--csv {
+            background-color: #198754;
+            color: $base-white;
+        }
+
+        &--xlsx {
+            background-color: #1d6f42;
+            color: $base-white;
+        }
+
+        &--wsdl {
+            background-color: #6c757d;
+            color: $base-white;
+        }
+
+        &--api {
+            background-color: #6610f2;
+            color: $base-white;
+        }
+
+        &--excel {
+            background-color: #1d6f42;
+            color: $base-white;
+        }
+    }
+
+    // Footnote superscript reference in table
+    &__footnote-ref {
+        font-size: 0.7rem;
+        color: $base-brandteal;
+        margin-left: 0.15rem;
+        vertical-align: super;
+    }
+
+    // Prose content block (for non-table pages e.g. Support)
+    &__content {
+        padding: 1.25rem 1.5rem 1.5rem;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: #333;
+
+        p {
+            margin-bottom: 1rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        a {
+            color: $base-brandteal;
+            font-weight: $semibold-font-weight;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+                color: darken($base-brandteal, 8%);
+            }
+        }
+    }
+
+    // Bullet list inside content block
+    &__list {
+        margin: 0.25rem 0 1rem 1.5rem;
+        padding: 0;
+
+        li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+            color: #333;
+        }
+    }
+
+    // Footnotes block below the table
+    &__footnotes {
+        padding: 0.85rem 1.25rem 1rem;
+        border-top: 1px solid #e0e0e0;
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+        color: #555;
+        line-height: 1.6;
+
+        p {
+            margin-bottom: 0.5rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        sup {
+            font-size: 0.7rem;
+            margin-right: 0.2rem;
+            color: $base-brandteal;
+        }
+    }
 }

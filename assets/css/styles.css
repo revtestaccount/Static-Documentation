@@ -11177,6 +11177,9 @@ body .header .PAYE_Modernisation_ERR_Documentation p {
   font-weight: 700;
   padding-top: 2rem;
 }
+body main p {
+  text-align: left;
+}
 body main .card {
   margin-top: 2rem !important;
   margin-bottom: 2rem !important;
@@ -11259,6 +11262,194 @@ code {
 
 .no-dot {
   list-style: none;
+}
+
+.pit-section {
+  background: #fff;
+  border: 1px solid #ddd;
+  max-width: 960px;
+  margin: 2rem auto;
+}
+.pit-section__header {
+  background-color: rgb(0, 90, 92);
+  padding: 0.85rem 1.25rem;
+}
+.pit-section__header a {
+  text-decoration: none;
+}
+.pit-section__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+.pit-section__intro {
+  padding: 1rem 1.25rem 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #444;
+}
+.pit-section__intro p {
+  margin-bottom: 0.5rem;
+}
+.pit-section__intro ul {
+  margin: 0.25rem 0 0 1.25rem;
+}
+.pit-section__intro li {
+  margin-bottom: 0.35rem;
+}
+.pit-section__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.75rem;
+}
+.pit-section__table thead tr {
+  background-color: #e8e8e8;
+  border-bottom: 2px solid rgb(0, 90, 92);
+}
+.pit-section__table thead th {
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #222;
+  text-align: left;
+}
+.pit-section__table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.95rem;
+}
+.pit-section__table tbody tr:last-child {
+  border-bottom: none;
+}
+.pit-section__table tbody tr:hover {
+  background-color: #f0f8f8;
+}
+.pit-section__table tbody td {
+  padding: 0.7rem 1rem;
+  vertical-align: middle;
+  color: #333;
+}
+.pit-section__table tbody td a {
+  color: rgb(0, 90, 92);
+  text-decoration: none;
+  font-weight: 600;
+}
+.pit-section__table tbody td a:hover {
+  text-decoration: underline;
+  color: rgb(0, 50.0869565217, 51.2);
+}
+.pit-section__col--description {
+  width: 45%;
+}
+.pit-section__col--type {
+  width: 10%;
+}
+.pit-section__col--env {
+  width: 25%;
+}
+.pit-section__col--date {
+  width: 20%;
+}
+.pit-section__badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.pit-section__badge--pdf {
+  background-color: #d9534f;
+  color: rgb(255, 255, 255);
+}
+.pit-section__badge--link {
+  background-color: rgb(0, 90, 92);
+  color: rgb(255, 255, 255);
+}
+.pit-section__badge--zip {
+  background-color: #6f42c1;
+  color: rgb(255, 255, 255);
+}
+.pit-section__badge--schema {
+  background-color: #0d6efd;
+  color: rgb(255, 255, 255);
+}
+.pit-section__badge--csv {
+  background-color: #198754;
+  color: rgb(255, 255, 255);
+}
+.pit-section__badge--xlsx {
+  background-color: #1d6f42;
+  color: rgb(255, 255, 255);
+}
+.pit-section__badge--wsdl {
+  background-color: #6c757d;
+  color: rgb(255, 255, 255);
+}
+.pit-section__badge--api {
+  background-color: #6610f2;
+  color: rgb(255, 255, 255);
+}
+.pit-section__badge--excel {
+  background-color: #1d6f42;
+  color: rgb(255, 255, 255);
+}
+.pit-section__footnote-ref {
+  font-size: 0.7rem;
+  color: rgb(0, 90, 92);
+  margin-left: 0.15rem;
+  vertical-align: super;
+}
+.pit-section__content {
+  padding: 1.25rem 1.5rem 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #333;
+}
+.pit-section__content p {
+  margin-bottom: 1rem;
+}
+.pit-section__content p:last-child {
+  margin-bottom: 0;
+}
+.pit-section__content a {
+  color: rgb(0, 90, 92);
+  font-weight: 600;
+  text-decoration: none;
+}
+.pit-section__content a:hover {
+  text-decoration: underline;
+  color: rgb(0, 50.0869565217, 51.2);
+}
+.pit-section__list {
+  margin: 0.25rem 0 1rem 1.5rem;
+  padding: 0;
+}
+.pit-section__list li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+  color: #333;
+}
+.pit-section__footnotes {
+  padding: 0.85rem 1.25rem 1rem;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.6;
+}
+.pit-section__footnotes p {
+  margin-bottom: 0.5rem;
+}
+.pit-section__footnotes p:last-child {
+  margin-bottom: 0;
+}
+.pit-section__footnotes sup {
+  font-size: 0.7rem;
+  margin-right: 0.2rem;
+  color: rgb(0, 90, 92);
 }
 
 /*# sourceMappingURL=styles.css.map */
