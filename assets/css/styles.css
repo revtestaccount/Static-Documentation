@@ -2164,7 +2164,6 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 
 .fc {
   /* FullCalendar 4 */
-  /* FullCalendar 5 */
 }
 .fc.fc-unthemed .fc-view-container th {
   background: rgb(255, 255, 255);
@@ -2219,18 +2218,22 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-left {
   font-family: "PrimeIcons" !important;
   text-indent: 0;
-  font-size: 0.875rem;
 }
 .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-left:before {
   content: "\e900";
 }
+.fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-left {
+  font-size: 0.875rem;
+}
 .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-right {
   font-family: "PrimeIcons" !important;
   text-indent: 0;
-  font-size: 0.875rem;
 }
 .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-right:before {
   content: "\e901";
+}
+.fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-right {
+  font-size: 0.875rem;
 }
 .fc.fc-unthemed .fc-toolbar .fc-button:focus {
   outline: 0 none;
@@ -2275,6 +2278,9 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
 }
+.fc {
+  /* FullCalendar 5 */
+}
 .fc.fc-theme-standard .fc-view-harness .fc-scrollgrid {
   border-color: rgb(206, 212, 218);
 }
@@ -2307,6 +2313,11 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   justify-content: center;
   overflow: hidden;
   font-family: "PrimeIcons" !important;
+}
+.fc.fc-theme-standard .fc-view-harness .fc-popover .fc-popover-header .fc-popover-close:before {
+  content: "\e90b";
+}
+.fc.fc-theme-standard .fc-view-harness .fc-popover .fc-popover-header .fc-popover-close {
   font-size: 0.875rem;
   width: 1.5rem;
   height: 1.5rem;
@@ -2315,9 +2326,6 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   background: transparent;
   border-radius: 50%;
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-}
-.fc.fc-theme-standard .fc-view-harness .fc-popover .fc-popover-header .fc-popover-close:before {
-  content: "\e90b";
 }
 .fc.fc-theme-standard .fc-view-harness .fc-popover .fc-popover-header .fc-popover-close:enabled:hover {
   color: rgb(3, 5, 7);
@@ -2387,18 +2395,22 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-left {
   font-family: "PrimeIcons" !important;
   text-indent: 0;
-  font-size: 0.875rem;
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-left:before {
   content: "\e900";
 }
+.fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-left {
+  font-size: 0.875rem;
+}
 .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-right {
   font-family: "PrimeIcons" !important;
   text-indent: 0;
-  font-size: 0.875rem;
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-right:before {
   content: "\e901";
+}
+.fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-right {
+  font-size: 0.875rem;
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button:focus {
   outline: 0 none;
@@ -2784,7 +2796,6 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   background: transparent;
   border-radius: 50%;
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-  margin-right: 0.5rem;
 }
 .p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
   color: rgb(3, 5, 7);
@@ -2795,6 +2806,9 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: inset 0 0 0 1px rgb(0, 111, 230);
+}
+.p-dialog .p-dialog-header .p-dialog-header-icon {
+  margin-right: 0.5rem;
 }
 .p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
   margin-right: 0;
@@ -3865,14 +3879,6 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 }
 
 /* Primary Button */
-.p-button {
-  /* Secondary Button */
-  /* Tertiary Button */
-  /* Ghost Button */
-  /* Fluid Buttons */
-  /* Text Icon Buttons */
-  /* Icon Only Buttons */
-}
 .p-button .p-button-label {
   color: rgb(255, 255, 255);
 }
@@ -3881,6 +3887,9 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 }
 .p-button:enabled:active {
   box-shadow: none;
+}
+.p-button {
+  /* Secondary Button */
 }
 .p-button.p-button-secondary:enabled:focus {
   background-color: rgb(52, 58, 64);
@@ -3901,6 +3910,9 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 }
 .p-button.p-button-secondary:enabled:active:focus {
   border-color: rgb(108, 117, 125);
+}
+.p-button {
+  /* Tertiary Button */
 }
 .p-button.p-button-tertiary {
   color: rgb(0, 111, 230);
@@ -3942,6 +3954,9 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 .p-button.p-button-tertiary:disabled {
   background-color: transparent;
 }
+.p-button {
+  /* Ghost Button */
+}
 .p-button.ghost {
   background-color: transparent;
   border-color: transparent;
@@ -3980,6 +3995,9 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 .p-button.ghost:disabled .p-button-icon {
   color: rgb(173, 181, 189);
 }
+.p-button {
+  /* Fluid Buttons */
+}
 .p-button.p-fluid {
   width: 100%;
 }
@@ -4004,6 +4022,9 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   width: 4rem;
   height: 4rem;
   padding: 0;
+}
+.p-button {
+  /* Text Icon Buttons */
 }
 .p-button.p-button-text {
   padding: 0.15625rem 0.25rem;
@@ -4079,6 +4100,9 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
 }
 .p-button.p-button-text:disabled .p-button-label {
   color: rgb(173, 181, 189);
+}
+.p-button {
+  /* Icon Only Buttons */
 }
 .p-button.p-button-icon-only {
   height: 2.5rem;
@@ -4897,13 +4921,13 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
 .p-datatable .p-paginator .p-dropdown .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
   height: 2.5rem;
 }
-.p-paginator .p-paginator-pages,
-.p-datatable .p-paginator .p-paginator-pages {
-  height: 2.5rem;
-}
 .p-paginator .p-paginator-pages .p-paginator-page,
 .p-datatable .p-paginator .p-paginator-pages .p-paginator-page {
   color: rgb(108, 117, 125);
+}
+.p-paginator .p-paginator-pages,
+.p-datatable .p-paginator .p-paginator-pages {
+  height: 2.5rem;
 }
 .p-paginator .p-paginator-current,
 .p-datatable .p-paginator .p-paginator-current {
@@ -5190,7 +5214,6 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
   border-width: 0.0625rem 0.0625rem 0.0625rem 0.0625rem;
   border-style: solid;
   border-color: rgb(206, 212, 218);
-  /* one of the .p-paginator-bottom selector was removed from v16 and changed to .p-paginator*/
 }
 .p-datatable .p-datatable-wrapper .p-datatable-table .p-datatable-thead tr th {
   cursor: pointer;
@@ -5249,6 +5272,9 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
 }
 .p-datatable .p-datatable-wrapper .p-datatable-table .p-datatable-tbody tr td {
   vertical-align: top;
+}
+.p-datatable {
+  /* one of the .p-paginator-bottom selector was removed from v16 and changed to .p-paginator*/
 }
 .p-datatable .p-paginator {
   height: 4.5rem;
@@ -5318,9 +5344,6 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
   border-top: none;
 }
 
-.tabpage {
-  /* RWP doesn't use the tabview panels*/
-}
 .tabpage .p-tabview .p-tabview-nav-container {
   height: 2.5rem;
   background-color: rgb(66, 143, 148);
@@ -5499,6 +5522,9 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
   background-color: rgb(244, 244, 244);
   border: 0;
 }
+.tabpage {
+  /* RWP doesn't use the tabview panels*/
+}
 .tabpage .p-tabview .p-tabview-panels {
   display: none;
 }
@@ -5536,12 +5562,6 @@ p-tag .p-tag-value {
 }
 
 /*** import the customised external primeng designer theme ***/
-.external-theme {
-  /* Customizations to the designer theme should be defined here */
-  /** RDS mixins **/
-  /* Primary Button */
-  /* RWP change request -ITMOD-2305*/
-}
 .external-theme :root {
   --surface-a: #ffffff;
   --surface-b: #f8f9fa;
@@ -7444,7 +7464,6 @@ p-tag .p-tag-value {
 }
 .external-theme .fc {
   /* FullCalendar 4 */
-  /* FullCalendar 5 */
 }
 .external-theme .fc.fc-unthemed .fc-view-container th {
   background: rgb(255, 255, 255);
@@ -7499,18 +7518,22 @@ p-tag .p-tag-value {
 .external-theme .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-left {
   font-family: "PrimeIcons" !important;
   text-indent: 0;
-  font-size: 0.875rem;
 }
 .external-theme .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-left:before {
   content: "\e900";
 }
+.external-theme .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-left {
+  font-size: 0.875rem;
+}
 .external-theme .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-right {
   font-family: "PrimeIcons" !important;
   text-indent: 0;
-  font-size: 0.875rem;
 }
 .external-theme .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-right:before {
   content: "\e901";
+}
+.external-theme .fc.fc-unthemed .fc-toolbar .fc-button .fc-icon-chevron-right {
+  font-size: 0.875rem;
 }
 .external-theme .fc.fc-unthemed .fc-toolbar .fc-button:focus {
   outline: 0 none;
@@ -7555,6 +7578,9 @@ p-tag .p-tag-value {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
+.external-theme .fc {
+  /* FullCalendar 5 */
+}
 .external-theme .fc.fc-theme-standard .fc-view-harness .fc-scrollgrid {
   border-color: rgb(206, 212, 218);
 }
@@ -7587,6 +7613,11 @@ p-tag .p-tag-value {
   justify-content: center;
   overflow: hidden;
   font-family: "PrimeIcons" !important;
+}
+.external-theme .fc.fc-theme-standard .fc-view-harness .fc-popover .fc-popover-header .fc-popover-close:before {
+  content: "\e90b";
+}
+.external-theme .fc.fc-theme-standard .fc-view-harness .fc-popover .fc-popover-header .fc-popover-close {
   font-size: 0.875rem;
   width: 1.5rem;
   height: 1.5rem;
@@ -7595,9 +7626,6 @@ p-tag .p-tag-value {
   background: transparent;
   border-radius: 50%;
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-}
-.external-theme .fc.fc-theme-standard .fc-view-harness .fc-popover .fc-popover-header .fc-popover-close:before {
-  content: "\e90b";
 }
 .external-theme .fc.fc-theme-standard .fc-view-harness .fc-popover .fc-popover-header .fc-popover-close:enabled:hover {
   color: rgb(3, 5, 7);
@@ -7667,18 +7695,22 @@ p-tag .p-tag-value {
 .external-theme .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-left {
   font-family: "PrimeIcons" !important;
   text-indent: 0;
-  font-size: 0.875rem;
 }
 .external-theme .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-left:before {
   content: "\e900";
 }
+.external-theme .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-left {
+  font-size: 0.875rem;
+}
 .external-theme .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-right {
   font-family: "PrimeIcons" !important;
   text-indent: 0;
-  font-size: 0.875rem;
 }
 .external-theme .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-right:before {
   content: "\e901";
+}
+.external-theme .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-right {
+  font-size: 0.875rem;
 }
 .external-theme .fc.fc-theme-standard .fc-toolbar .fc-button:focus {
   outline: 0 none;
@@ -8058,7 +8090,6 @@ p-tag .p-tag-value {
   background: transparent;
   border-radius: 50%;
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
-  margin-right: 0.5rem;
 }
 .external-theme .p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
   color: rgb(3, 5, 7);
@@ -8069,6 +8100,9 @@ p-tag .p-tag-value {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: inset 0 0 0 1px rgb(0, 111, 230);
+}
+.external-theme .p-dialog .p-dialog-header .p-dialog-header-icon {
+  margin-right: 0.5rem;
 }
 .external-theme .p-dialog .p-dialog-header .p-dialog-header-icon:last-child {
   margin-right: 0;
@@ -9045,6 +9079,10 @@ p-tag .p-tag-value {
   margin-right: 0.25rem;
   font-size: 0.75rem;
 }
+.external-theme {
+  /* Customizations to the designer theme should be defined here */
+  /** RDS mixins **/
+}
 .external-theme .p-accordion .p-element .p-accordion-tab .p-accordion-header .p-accordion-header-link {
   border-bottom-color: rgb(255, 255, 255);
 }
@@ -9116,13 +9154,8 @@ p-tag .p-tag-value {
   border-width: 0.0625rem;
   border-color: rgb(108, 117, 125);
 }
-.external-theme .p-button {
-  /* Secondary Button */
-  /* Tertiary Button */
-  /* Ghost Button */
-  /* Fluid Buttons */
-  /* Text Icon Buttons */
-  /* Icon Only Buttons */
+.external-theme {
+  /* Primary Button */
 }
 .external-theme .p-button .p-button-label {
   color: rgb(255, 255, 255);
@@ -9132,6 +9165,9 @@ p-tag .p-tag-value {
 }
 .external-theme .p-button:enabled:active {
   box-shadow: none;
+}
+.external-theme .p-button {
+  /* Secondary Button */
 }
 .external-theme .p-button.p-button-secondary:enabled:focus {
   background-color: rgb(52, 58, 64);
@@ -9152,6 +9188,9 @@ p-tag .p-tag-value {
 }
 .external-theme .p-button.p-button-secondary:enabled:active:focus {
   border-color: rgb(108, 117, 125);
+}
+.external-theme .p-button {
+  /* Tertiary Button */
 }
 .external-theme .p-button.p-button-tertiary {
   color: rgb(0, 111, 230);
@@ -9193,6 +9232,9 @@ p-tag .p-tag-value {
 .external-theme .p-button.p-button-tertiary:disabled {
   background-color: transparent;
 }
+.external-theme .p-button {
+  /* Ghost Button */
+}
 .external-theme .p-button.ghost {
   background-color: transparent;
   border-color: transparent;
@@ -9231,6 +9273,9 @@ p-tag .p-tag-value {
 .external-theme .p-button.ghost:disabled .p-button-icon {
   color: rgb(173, 181, 189);
 }
+.external-theme .p-button {
+  /* Fluid Buttons */
+}
 .external-theme .p-button.p-fluid {
   width: 100%;
 }
@@ -9255,6 +9300,9 @@ p-tag .p-tag-value {
   width: 4rem;
   height: 4rem;
   padding: 0;
+}
+.external-theme .p-button {
+  /* Text Icon Buttons */
 }
 .external-theme .p-button.p-button-text {
   padding: 0.15625rem 0.25rem;
@@ -9330,6 +9378,9 @@ p-tag .p-tag-value {
 }
 .external-theme .p-button.p-button-text:disabled .p-button-label {
   color: rgb(173, 181, 189);
+}
+.external-theme .p-button {
+  /* Icon Only Buttons */
 }
 .external-theme .p-button.p-button-icon-only {
   height: 2.5rem;
@@ -10128,13 +10179,13 @@ p-tag .p-tag-value {
 .external-theme .p-datatable .p-paginator .p-dropdown .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
   height: 2.5rem;
 }
-.external-theme .p-paginator .p-paginator-pages,
-.external-theme .p-datatable .p-paginator .p-paginator-pages {
-  height: 2.5rem;
-}
 .external-theme .p-paginator .p-paginator-pages .p-paginator-page,
 .external-theme .p-datatable .p-paginator .p-paginator-pages .p-paginator-page {
   color: rgb(108, 117, 125);
+}
+.external-theme .p-paginator .p-paginator-pages,
+.external-theme .p-datatable .p-paginator .p-paginator-pages {
+  height: 2.5rem;
 }
 .external-theme .p-paginator .p-paginator-current,
 .external-theme .p-datatable .p-paginator .p-paginator-current {
@@ -10415,7 +10466,6 @@ p-tag .p-tag-value {
   border-width: 0.0625rem 0.0625rem 0.0625rem 0.0625rem;
   border-style: solid;
   border-color: rgb(206, 212, 218);
-  /* one of the .p-paginator-bottom selector was removed from v16 and changed to .p-paginator*/
 }
 .external-theme .p-datatable .p-datatable-wrapper .p-datatable-table .p-datatable-thead tr th {
   cursor: pointer;
@@ -10475,6 +10525,9 @@ p-tag .p-tag-value {
 .external-theme .p-datatable .p-datatable-wrapper .p-datatable-table .p-datatable-tbody tr td {
   vertical-align: top;
 }
+.external-theme .p-datatable {
+  /* one of the .p-paginator-bottom selector was removed from v16 and changed to .p-paginator*/
+}
 .external-theme .p-datatable .p-paginator {
   height: 4.5rem;
   padding: 1rem 1rem 1rem 0.5rem;
@@ -10488,6 +10541,9 @@ p-tag .p-tag-value {
 .external-theme .p-datatable .p-thead-icon {
   font-size: 0.75rem;
   padding-left: 0.375rem;
+}
+.external-theme {
+  /* RWP change request -ITMOD-2305*/
 }
 .external-theme .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
   padding: 0.5rem 1rem;
@@ -10538,9 +10594,6 @@ p-tag .p-tag-value {
 }
 .external-theme .p-tabview .p-tabview-panels {
   border-top: none;
-}
-.external-theme .tabpage {
-  /* RWP doesn't use the tabview panels*/
 }
 .external-theme .tabpage .p-tabview .p-tabview-nav-container {
   height: 2.5rem;
@@ -10719,6 +10772,9 @@ p-tag .p-tag-value {
 .external-theme .tabpage .p-tabview .p-tabview-panels {
   background-color: rgb(244, 244, 244);
   border: 0;
+}
+.external-theme .tabpage {
+  /* RWP doesn't use the tabview panels*/
 }
 .external-theme .tabpage .p-tabview .p-tabview-panels {
   display: none;
@@ -11160,14 +11216,17 @@ body code {
 }
 body .header {
   display: flex;
-  padding: 1.5625rem 1.5625rem 1.5625rem 1.5625rem;
+  align-items: center;
+  padding: 1.5625rem;
   background-color: rgb(0, 90, 92);
   border-bottom: solid rgb(0, 198, 198) 1rem;
+  width: 100%;
 }
 body .header img {
   padding: 1rem;
 }
 body .header .PAYE_Modernisation_ERR_Documentation {
+  flex: 1;
   text-align: center;
   padding: 1rem;
 }
@@ -11175,7 +11234,11 @@ body .header .PAYE_Modernisation_ERR_Documentation p {
   font-size: 2rem;
   color: rgb(255, 255, 255);
   font-weight: 700;
-  padding-top: 2rem;
+  margin: 0;
+}
+body .site-main {
+  width: 100%;
+  padding: 2rem 2rem;
 }
 body main p {
   text-align: left;
@@ -11212,10 +11275,57 @@ body main #content #title {
   font-weight: 700;
   font-size: 35px;
 }
-body .sidebar {
-  min-height: 100vh;
-  background-color: rgb(0, 90, 92);
-  font-weight: 600;
+body .site-nav {
+  background-color: rgb(0, 65.0543478261, 66.5);
+  border-bottom: 3px solid rgb(0, 198, 198);
+  width: 100%;
+  padding: 0 1rem;
+}
+body .site-nav__home {
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  padding: 0.65rem 1rem;
+  white-space: nowrap;
+}
+body .site-nav__home:hover {
+  color: rgb(0, 198, 198);
+}
+body .site-nav__links {
+  flex-wrap: wrap;
+  gap: 0;
+}
+body .site-nav__link {
+  color: rgb(255, 255, 255) !important;
+  font-size: 0.88rem;
+  padding: 0.65rem 0.85rem !important;
+  white-space: nowrap;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+body .site-nav__link:hover, body .site-nav__link:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: rgb(0, 198, 198) !important;
+}
+body .site-nav__toggler {
+  border-color: rgba(255, 255, 255, 0.5);
+  margin-left: auto;
+}
+body .site-nav__toggler:focus {
+  box-shadow: none;
+}
+body .site-nav__hamburger {
+  filter: invert(1);
+}
+@media (max-width: 767.98px) {
+  body .site-nav__link {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1rem !important;
+  }
+  body .site-nav__links {
+    padding: 0.5rem 0;
+  }
 }
 body .pmod {
   background-color: rgb(255, 255, 255);

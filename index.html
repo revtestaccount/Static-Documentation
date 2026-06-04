@@ -9,34 +9,46 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container-fluid p-0">
 
-            <header class="header">
-                <a class="logo col-md-2 col-lg-2" href="#/"><img alt="Revenue Irish Tax and Customs" class="float-right"
-                        height="105" width="220" src="./assets/images/ictl_logo.png"></a>
-                <div class="col-md-10 col-lg-10 PAYE_Modernisation_ERR_Documentation">
-                    <p class="PAYE_Modernisation_ERR_Webservices">PAYE Modernisation / ERR Documentation</p>
+        <!-- Header -->
+        <header class="header">
+            <a class="logo" href="#/">
+                <img alt="Revenue Irish Tax and Customs" height="105" width="220" src="./assets/images/ictl_logo.png">
+            </a>
+            <div class="PAYE_Modernisation_ERR_Documentation">
+                <p class="PAYE_Modernisation_ERR_Webservices">PAYE Modernisation / ERR Documentation</p>
+            </div>
+        </header>
+
+        <!-- Navbar -->
+        <nav class="site-nav navbar navbar-expand-md">
+            <div class="container-fluid">
+                <!-- Home link always visible -->
+                <a class="site-nav__home" href="#/">Home</a>
+
+                <!-- Hamburger toggle for small screens -->
+                <button class="navbar-toggler site-nav__toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#navLinks"
+                    aria-controls="navLinks" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon site-nav__hamburger"></span>
+                </button>
+
+                <!-- Nav links injected by router -->
+                <div class="collapse navbar-collapse" id="navLinks">
+                    <ul class="navbar-nav site-nav__links" id="navLinksList">
+                    </ul>
                 </div>
-            </header>
+            </div>
+        </nav>
 
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 sidebar">
-                <!-- <div class="position-sticky pt-3 p-sidebar-content">
-                    <a href="/">Main Page</a>
-                </div> -->
-                <div class="position-sticky pt-3 p-sidebar-content" id="sidebarLinks">
-                </div>
-            </nav>
+        <!-- Main content -->
+        <main class="site-main">
+            <div id="content">
+                <!-- Content will be loaded here -->
+            </div>
+        </main>
 
-            <!-- <a href="#home">Home</a>-->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 main_content">
-                <div id="content">
-                    <!-- Content will be loaded here -->
-                </div>
-            </main>
-
-        </div>
     </div>
 
     <footer class="footer">

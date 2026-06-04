@@ -11,6 +11,38 @@
    "message": "placeholder text/unused"
   }
  },
+ "home_nav": {
+  "guidesandusefulinfo": {
+   "template": "",
+   "title": "PIT Guides and Useful Info",
+   "message": ""
+  },
+  "pmodpit3cards": {
+   "template": "",
+   "title": "PMOD PIT3 (PIT Current Version)",
+   "message": ""
+  },
+  "pmodpit4cards": {
+   "template": "",
+   "title": "PMOD PIT4 (PIT Next Version)",
+   "message": ""
+  },
+  "errpit3cards": {
+   "template": "",
+   "title": "ERR PIT3 (PIT Current Version)",
+   "message": ""
+  },
+  "errpit4cards": {
+   "template": "",
+   "title": "ERR PIT4 (PIT Next Version)",
+   "message": ""
+  },
+  "support": {
+   "template": "",
+   "title": "Support Facilities",
+   "message": ""
+  }
+ },
  "routes_support": {
   "support": {
    "template": "./templates/support.html",

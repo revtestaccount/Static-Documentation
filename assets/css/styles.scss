@@ -61,23 +61,34 @@ body {
 
     .header {
         display: flex;
-        padding: 1.5625rem 1.5625rem 1.5625rem 1.5625rem;
+        align-items: center;
+        padding: 1.5625rem;
         background-color: $base-brandteal;
-        img{
+        border-bottom: solid $base-cyan 1rem;
+        width: 100%;
+
+        img {
             padding: 1rem;
         }
-        .PAYE_Modernisation_ERR_Documentation{
-            p{
+
+        .PAYE_Modernisation_ERR_Documentation {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+
+            p {
                 font-size: 2rem;
                 color: $base-white;
                 font-weight: $bold-font-weight;
-                padding-top: 2rem;
-                };
-            text-align: center;
-            padding: 1rem;
+                margin: 0;
+            }
         }
-        border-bottom: solid $base-cyan 1rem;
     };
+
+    .site-main {
+        width: 100%;
+        padding: 2rem 2rem;
+    }
 
     main{
         p{
@@ -124,11 +135,70 @@ body {
         };
     }
 
-        .sidebar {
-            min-height: 100vh;
-            // background-color: $base-brandmint;
-            background-color: $base-brandteal;
-            font-weight: $semibold-font-weight;
+        // ── Site Navbar ───────────────────────────────────────────
+        .site-nav {
+            background-color: darken($base-brandteal, 5%);
+            border-bottom: 3px solid $base-cyan;
+            width: 100%;
+            padding: 0 1rem;
+
+            &__home {
+                color: $base-white;
+                font-weight: $bold-font-weight;
+                font-size: 0.95rem;
+                text-decoration: none;
+                padding: 0.65rem 1rem;
+                white-space: nowrap;
+
+                &:hover {
+                    color: $base-cyan;
+                }
+            }
+
+            &__links {
+                flex-wrap: wrap;
+                gap: 0;
+            }
+
+            &__link {
+                color: $base-white !important;
+                font-size: 0.88rem;
+                padding: 0.65rem 0.85rem !important;
+                white-space: nowrap;
+                border-left: 1px solid rgba(255,255,255,0.15);
+
+                &:hover, &:focus {
+                    background-color: rgba(255,255,255,0.12);
+                    color: $base-cyan !important;
+                }
+            }
+
+            // Hamburger button
+            &__toggler {
+                border-color: rgba(255,255,255,0.5);
+                margin-left: auto;
+
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+
+            &__hamburger {
+                filter: invert(1);
+            }
+
+            // Mobile expanded menu
+            @media (max-width: 767.98px) {
+                &__link {
+                    border-left: none;
+                    border-top: 1px solid rgba(255,255,255,0.1);
+                    padding: 0.75rem 1rem !important;
+                }
+
+                &__links {
+                    padding: 0.5rem 0;
+                }
+            }
         };
 
         .pmod {
