@@ -1,0 +1,282 @@
+﻿# Static-Documentation - Project Assessment
+Date: June 2025
+Project: Static-Documentation (replacement for paye-employers-documentation)
+Platform: GitHub Pages (static hosting)
+Source Project: O:\git\paye-employers-documentation
+New Project: O:\Static-Documentation / C:\temp\Static-Documentation
+
+================================================================================
+1. PROJECT OVERVIEW
+================================================================================
+
+The goal of Static-Documentation is to replace the existing paye-employers-documentation
+GitHub Pages site, which currently serves a mix of PDFs, Excel spreadsheets, HTML pages,
+and schema documentation (WSDL, XSD, JSON). The replacement project aims to:
+
+  - Remove all PDFs, converting their content to rendered HTML pages
+  - Retain Excel spreadsheets and schema documentation (WSDL, XSD, JSON/HTML API refs)
+  - Style the new site using the Revenue Design System (REVDS)
+  - Provide a WYSIWYG page builder for future content authoring and updates
+  - Continue hosting on GitHub Pages (static files only - no server-side processing)
+
+The migration pipeline converts PDFs to Markdown (via PyMuPDF scripts), then renders
+the Markdown to HTML. Scripts are in migrationScripts/. A WYSIWYG page builder tool is
+in create_page/.
+
+================================================================================
+2. WHAT IS WORKING WELL
+================================================================================
+
+  - PDF to Markdown to HTML pipeline: The core migration approach is sound. PyMuPDF
+    extraction, heading detection, image extraction and link conversion are functional.
+
+  - SPA router: The hash-based single-page router (assets/js/router.js) with
+    sitemap.json as its data source is well-suited to GitHub Pages. No server
+    configuration is needed.
+
+  - Navigation hierarchy: The three-level card structure (Home > Section Card > Inner
+    Page) maps cleanly to the source project PIT3/PIT4 folder structure.
+
+  - Navbar with dropdowns: The context-sensitive navbar (flat links on home, dropdown
+    with active state on inner pages) provides good wayfinding without a sidebar.
+
+  - WYSIWYG page builder: The create_page tool gives content authors a path to create
+    and update pages without writing HTML directly.
+
+  - Underscore convention for sitemap utility groups: The _ prefix on non-content
+    groups (_home_nav, _nav_groups) in sitemap.json prevents routing conflicts as the
+    sitemap grows.
+
+================================================================================
+3. KEY ISSUES
+================================================================================
+
+3.1 File Structure - Inconsistent with Source Project
+------------------------------------------------------
+The current Static-Documentation template and asset files are scattered across:
+
+  templates/          - rendered HTML pages
+  templates/schemas/  - REST and SOAP schema references
+  templates/soap/     - SOAP WSDLs and XSDs (PIT3 only)
+  migrationScripts/   - PDFs, markdown files, extracted image folders
+
+There is no clear mapping between where a file lives in Static-Documentation and where
+it came from in paye-employers-documentation. This makes it difficult to audit what has
+been migrated and what remains outstanding.
+
+3.2 Missing PIT4 SOAP Files
+----------------------------
+The PIT4 WSDL and XSD files exist in the source project at:
+
+    paye-employers-documentation/PIT4/soap/v1/
+
+But were not copied across to Static-Documentation. As a result, all WSDL and XSD links
+on the pit4-soap.html page return 404 errors. The PIT4 SOAP schema reference was copied
+correctly to templates/schemas/PIT4/soap/soap-schema-reference/ and works.
+
+Files missing from Static-Documentation:
+
+    payroll_pit4.wsdl
+    rpn_pit4.wsdl
+    returns_reconciliation_pit4.wsdl
+    handshake_pit4.wsdl
+    enhanced_reporting_pit4.wsdl
+    ern_pit4.wsdl
+    payroll/payroll-schema-pit4.xsd
+    rpn/rpn-schema-pit4.xsd
+    returns_reconciliation/returns_reconciliation-schema-pit4.xsd
+    handshake/handshake-schema-pit4.xsd
+    common/paye-types-pit4.xsd
+    enhanced_reporting/enhanced_reporting-schema-pit4.xsd
+    ern/ern-schema-pit4.xsd
+
+3.3 REVDS Styling - Angular Cannot Run on GitHub Pages
+-------------------------------------------------------
+The Revenue Design System (REVDS) is an Angular component library. GitHub Pages serves
+only static files - it cannot execute an Angular build pipeline at deploy time. The REVDS
+Angular components therefore cannot be used directly.
+
+The current approach (Bootstrap 5 + custom SCSS using Revenue colour tokens) approximates
+the REVDS visual style but does not use the actual REVDS component CSS. This means any
+updates to REVDS will not automatically propagate to this site.
+
+3.4 Migration Script Limitations
+----------------------------------
+The pdfToMarkdown.py script has several issues that affect output quality:
+
+  - Image paths are fragile: The script constructs image paths relative to the script
+    directory using os.path.dirname(__file__). This breaks when the script is run from
+    a different working directory.
+
+  - Heading detection is unreliable: Any uppercase text is treated as a heading. Many
+    PDFs use all-caps for non-heading text (e.g. labels, form fields, table headers).
+
+  - Output location: Markdown files and image folders are written to migrationScripts/
+    alongside the source PDFs, not to the templates/ directory where they are needed.
+
+  - No table detection: Tab-separated detection covers only a subset of PDF table
+    layouts; most complex tables in the source documents will not convert correctly.
+
+3.5 No Audit Trail of Migration Status
+----------------------------------------
+There is currently no tracking of which source PDFs have been migrated, which are in
+progress, and which are outstanding. With approximately 30+ PDF documents across PIT3,
+PIT4, PIT (shared), ERR, and data-items folders in the source project, it is easy to
+lose track of migration status.
+
+3.6 Validation Rules and Data Items - Not Yet Migrated
+-------------------------------------------------------
+The source project contains:
+
+  PIT3/validation-rules/Employer_Submission_RPN_Validation_Rules.xlsx
+  PIT3/validation-rules/Enhanced Reporting Validation Rules.xlsx
+  PIT3/data-items/ - 6 PDFs covering payroll submission, RPN, returns reconciliation,
+                     and ERR data items
+  PIT4/validation-rules/ and PIT4/data-items/ - equivalent PIT4 versions
+
+None of these have been migrated or copied to Static-Documentation. The placeholder
+demodocument.html is currently served for these routes.
+
+================================================================================
+4. RECOMMENDATIONS
+================================================================================
+
+4.1 Restructure File Layout to Mirror Source Project (Priority: HIGH)
+-----------------------------------------------------------------------
+Adopt a content/PIT3/ and content/PIT4/ directory structure that mirrors the source
+project exactly. This makes it immediately clear what has and has not been migrated.
+
+Proposed structure:
+
+    Static-Documentation/
+    |-- assets/
+    |   |-- css/
+    |   |-- js/
+    |   +-- images/
+    |-- content/
+    |   |-- shared/                         # home, support, 404, pit-guides
+    |   |-- pit/                            # PIT-level guides (not PIT3/PIT4 specific)
+    |   |-- PIT3/
+    |   |   |-- cards.html                  # PIT3 section card page
+    |   |   |-- soap/
+    |   |   |   |-- v1/                     # WSDLs and XSDs
+    |   |   |   |-- soap-schema-reference/  # HTML schema reference
+    |   |   |   +-- soap.html               # Rendered page
+    |   |   |-- rest/
+    |   |   |   |-- paye-employers-rest-api-pit3.json
+    |   |   |   |-- paye-employers-rest-api-pit3.html
+    |   |   |   +-- rest.html               # Rendered page
+    |   |   |-- guide/                      # Rendered markdown pages
+    |   |   |-- examples/                   # ZIPs + rendered markdown pages
+    |   |   |-- data-items/                 # Rendered markdown pages
+    |   |   |-- validation-rules/           # Excel files
+    |   |   +-- self-service/               # Rendered markdown pages
+    |   +-- PIT4/
+    |       +-- ...                         # Mirrors PIT3 exactly
+    |-- migrationScripts/
+    |   |-- pdfToMarkdown.py
+    |   |-- extractImagesFromPdf.py
+    |   +-- input/                          # Source PDFs go here
+    |-- create_page/
+    |-- index.html
+    +-- sitemap.json                        # Moved to root for clarity
+
+4.2 Copy Missing PIT4 SOAP Files Immediately (Priority: HIGH)
+--------------------------------------------------------------
+Copy the following from O:\git\paye-employers-documentation\PIT4\soap\ into the new
+project to fix the broken links on pit4-soap.html:
+
+    Source:      paye-employers-documentation/PIT4/soap/v1/
+    Destination: Static-Documentation/content/PIT4/soap/v1/
+
+Then update all href values in pit4-soap.html to reflect the new paths.
+
+4.3 Extract Compiled REVDS CSS for Authentic Styling (Priority: MEDIUM)
+------------------------------------------------------------------------
+Rather than approximating REVDS with custom SCSS, extract the compiled CSS output from
+the local Angular REVDS build at O:\git\RevenueDesignSystem. This gives the site
+authentic REVDS styling without requiring Angular at runtime.
+
+Steps:
+    1. Build the local REVDS Angular project (ng build)
+    2. Extract the compiled CSS from the dist/ output
+    3. Include it as a static stylesheet in index.html
+    4. Remove the custom SCSS approximations that duplicate REVDS rules
+
+This approach is fully compatible with GitHub Pages and will reflect REVDS updates when
+the CSS is rebuilt and recommitted.
+
+4.4 Improve Migration Script Output (Priority: MEDIUM)
+-------------------------------------------------------
+Suggested improvements to pdfToMarkdown.py:
+
+  - Add an --output argument to specify the target directory (e.g. content/PIT3/guide/)
+    so output goes directly to the right place rather than alongside the source PDF.
+
+  - Replace the uppercase-equals-heading heuristic with font-size detection using
+    PyMuPDF get_text("dict") method, which exposes font size per text block.
+
+  - Add a --pit argument (pit3 or pit4) so the script automatically places output in
+    the correct content/PIT3/ or content/PIT4/ subdirectory.
+
+  - Write a companion renderMarkdown.py script that converts the output Markdown to the
+    pit-section HTML structure used by the existing templates.
+
+4.5 Create a Migration Status Tracker (Priority: MEDIUM)
+---------------------------------------------------------
+Create a MIGRATION_STATUS.md at the project root tracking each source document:
+
+    Source File                                   | Type    | Target Page               | Status
+    ----------------------------------------------|---------|---------------------------|--------
+    SOAP_Web_Service_Integration_Guide.pdf        | PDF->MD | pit3-soap.html            | Pending
+    paye-employers-rest-api-pit3.json             | Schema  | pit3-rest.html            | Done
+    Employer_Submission_RPN_Validation_Rules.xlsx | Excel   | pit3-supporting-docs.html | Pending
+
+4.6 Migrate Validation Rules and Data Items (Priority: MEDIUM)
+---------------------------------------------------------------
+The Excel validation rules files can be served directly as downloadable files - no
+conversion needed. The data-items PDFs should be converted via the migration script.
+These are currently among the most useful reference documents in the source project
+and their absence is noticeable.
+
+4.7 Move sitemap.json to Project Root (Priority: LOW)
+------------------------------------------------------
+sitemap.json is effectively the site content manifest. Having it buried in assets/js/
+makes it harder to find and maintain. Moving it to the project root alongside index.html
+makes the site structure more legible.
+
+================================================================================
+5. IMMEDIATE ACTION PLAN
+================================================================================
+
+    #  | Action                                          | Effort
+    ---|--------------------------------------------------|----------
+    1  | Copy PIT4 SOAP v1 files from source project     | 1 hour
+    2  | Copy PIT4 SOAP schema reference from source     | 30 mins
+    3  | Copy validation rules Excel files from source   | 30 mins
+    4  | Restructure templates/ -> content/              | Half day
+    5  | Update pit4-soap.html links to new paths        | 30 mins
+    6  | Extract REVDS compiled CSS from local build     | 1-2 hours
+    7  | Create MIGRATION_STATUS.md tracker              | 1 hour
+    8  | Improve pdfToMarkdown.py output directory arg   | 2 hours
+
+================================================================================
+6. GITHUB PAGES CONSTRAINTS - REFERENCE
+================================================================================
+
+    Technology                                | Compatible | Notes
+    ------------------------------------------|------------|--------------------------------
+    HTML / CSS / JavaScript                   | YES        | Core platform
+    Static JSON files                         | YES        | sitemap.json, API specs
+    Bootstrap 5 (CDN or local)                | YES        | Currently in use
+    WSDL / XSD / JSON schema files            | YES        | Served as static downloads
+    Excel (.xlsx) files                       | YES        | Served as static downloads
+    Compiled REVDS CSS (extracted from build) | YES        | Recommended approach
+    Angular (runtime)                         | NO         | Requires server / build step
+    Python / Node.js server-side              | NO         | No server execution
+    Jekyll (GitHub built-in SSG)              | YES        | Limited - not currently used
+    fetch() to same-origin static files       | YES        | Used by router.js
+
+================================================================================
+Document generated from project review - Static-Documentation, June 2025
+================================================================================
