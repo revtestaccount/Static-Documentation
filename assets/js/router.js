@@ -1,4 +1,4 @@
-// get JSON data from file & return to caller
+﻿// get JSON data from file & return to caller
 async function getJSONData(file) {
   let data = await fetch(file);
   return await data.json();
@@ -19,12 +19,12 @@ const locationHandler = async () => {
   let breakCheck = false;
 
   //find the block of json that contains the route information we need
-  // Skip home_nav — it is only used for nav rendering, not content lookup
+  // Skip home_nav â€” it is only used for nav rendering, not content lookup
   for (key in jsonData) {
     if (breakCheck) {
       break;
     }
-    // Skip all utility/nav groups — identified by underscore prefix
+    // Skip all utility/nav groups â€” identified by underscore prefix
     if (key.startsWith("_")) {
       continue;
     }
@@ -38,7 +38,7 @@ const locationHandler = async () => {
     }
   }
 
-  // ── Build nav links ─────────────────────────────────────────────────────────
+  // â”€â”€ Build nav links â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   let sidebarLinksToRender = "";
 
   const navGroups = jsonData["_nav_groups"];
@@ -63,13 +63,13 @@ const locationHandler = async () => {
   }
 
   if (location === "/") {
-    // ── Home page: flat links for all 6 cards ──────────────────────────────
+    // â”€â”€ Home page: flat links for all 6 cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     for (let key in homeNav) {
       sidebarLinksToRender += `<li class="nav-item"><a class="nav-link site-nav__link" href="#${key}">${homeNav[key].title}</a></li>`;
     }
 
   } else {
-    // ── Inner pages: find parent group and render dropdown ─────────────────
+    // â”€â”€ Inner pages: find parent group and render dropdown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     const parentKey = findParentGroup(location);
 
     if (parentKey && navGroups[parentKey]) {
@@ -77,7 +77,7 @@ const locationHandler = async () => {
       const children = group.children;
       const isOnCardPage = (location === parentKey);
 
-      // Dropdown toggle — label is the parent card title
+      // Dropdown toggle â€” label is the parent card title
       sidebarLinksToRender += `
         <li class="nav-item dropdown">
           <a class="nav-link site-nav__link site-nav__dropdown-toggle dropdown-toggle"
@@ -108,13 +108,13 @@ const locationHandler = async () => {
 
         // Handle hard-coded external links
         if (childKey === "soapschemareferencecurrentversion") {
-          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./templates/schemas/PIT3/soap/soap-schema-reference/webframe.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./content/PIT3/soap/soap-schema-reference/webframe.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
         } else if (childKey === "soapschemareferencenextversion") {
-          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./templates/schemas/PIT4/soap/soap-schema-reference/webframe.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./content/PIT4/soap/soap-schema-reference/webframe.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
         } else if (childKey === "restapireferencecurrentversion") {
-          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./templates/schemas/PIT3/rest/paye-employers-rest-api-pit3.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./content/PIT3/rest/paye-employers-rest-api-pit3.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
         } else if (childKey === "restapireferencenextversion") {
-          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./templates/schemas/PIT4/rest/paye-employers-rest-api-pit4.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./content/PIT4/rest/paye-employers-rest-api-pit4.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
         } else {
           sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item${isActive ? ' active' : ''}" href="#${childKey}">${childTitle}</a></li>`;
         }
