@@ -1,2 +1,4 @@
 env/
 migrationScripts/test.py
+
+node_modules/
