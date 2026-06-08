@@ -128,32 +128,16 @@ body {
         }
 
         main{
-                // Constrain prose text to the same width as Bootstrap's .container at each breakpoint
-        // so text and card grid are always the same width regardless of viewport
-        #content > p,
-        #content > h1,
-        #content > h2 {
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
-            padding-left: 0.75rem;
-            padding-right: 0.75rem;
-        }
-        @media (min-width: 576px) {
-            #content > p, #content > h1, #content > h2 { max-width: 540px; }
-        }
-        @media (min-width: 768px) {
-            #content > p, #content > h1, #content > h2 { max-width: 720px; }
-        }
-        @media (min-width: 992px) {
-            #content > p, #content > h1, #content > h2 { max-width: 960px; }
-        }
-        @media (min-width: 1200px) {
-            #content > p, #content > h1, #content > h2 { max-width: 1140px; }
-        }
-        @media (min-width: 1400px) {
-            #content > p, #content > h1, #content > h2 { max-width: 1320px; }
-        }
+                // Constrain prose text to the same visual width as the 3-column card grid.
+                // 3 cards x 18rem = 54rem, plus Bootstrap row gutters (2 x 0.75rem) = 55.5rem.
+                // Using the same max-width as .container so prose aligns with the card outer edges.
+                #content > p,
+                #content > h1,
+                #content > h2 {
+                    max-width: 55.5rem;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
 
         p{
             text-align: left;
@@ -338,11 +322,17 @@ body {
     margin-top: 2rem;
 }
 
-// Gap above the first card row only when preceded by a paragraph of text.
-// Selector reads: a <p> that is a sibling before .container, targeting .container's first .row
-// This matches home.html and pmodpit*cards.html structure (p then div.container)
+// Gap above the first card row only when preceded by a paragraph of text
 p ~ .container > .row:first-child {
     margin-top: 2rem;
+}
+
+// Centre cards within their column.
+// .col-sm stretches to fill the row equally but the card is a fixed 18rem wide.
+// Without this the card sits left-aligned leaving a gap to its right.
+.container .col-sm {
+    display: flex;
+    justify-content: center;
 }
 
 // ── Home page cards ──────────────────────────────────────────────────────────────
