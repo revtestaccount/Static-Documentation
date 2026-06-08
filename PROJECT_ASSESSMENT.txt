@@ -1,5 +1,5 @@
 ﻿# Static-Documentation - Project Assessment
-Date: June 2025
+Date: June 2025 (updated June 2026)
 Project: Static-Documentation (replacement for paye-employers-documentation)
 Platform: GitHub Pages (static hosting)
 Source Project: O:\git\paye-employers-documentation
@@ -51,44 +51,42 @@ in create_page/.
 3. KEY ISSUES
 ================================================================================
 
-3.1 File Structure - Inconsistent with Source Project
-------------------------------------------------------
-The current Static-Documentation template and asset files are scattered across:
+3.1 File Structure - RESOLVED (June 2026)
+-----------------------------------------
+~~The current Static-Documentation template and asset files are scattered across
+templates/, migrationScripts/, etc.~~
 
-  templates/          - rendered HTML pages
-  templates/schemas/  - REST and SOAP schema references
-  templates/soap/     - SOAP WSDLs and XSDs (PIT3 only)
-  migrationScripts/   - PDFs, markdown files, extracted image folders
+RESOLVED: The content/ directory restructure is complete. All pages and static assets
+now live under:
 
-There is no clear mapping between where a file lives in Static-Documentation and where
-it came from in paye-employers-documentation. This makes it difficult to audit what has
-been migrated and what remains outstanding.
+  content/PIT3/   - PIT3 pages, examples, SOAP/REST files, scenarios, validation rules
+  content/PIT4/   - PIT4 pages, examples, SOAP/REST files, scenarios, validation rules
+  content/pit/    - PIT-level guides (not version-specific)
+  content/shared/ - Home, support, 404, card pages, ERR pages
 
-3.2 Missing PIT4 SOAP Files
-----------------------------
-The PIT4 WSDL and XSD files exist in the source project at:
+This mirrors the source project structure and makes migration auditing straightforward.
+See MIGRATION_STATUS.md for the current file-by-file tracking.
 
-    paye-employers-documentation/PIT4/soap/v1/
+3.2 Missing PIT4 SOAP Files - RESOLVED (June 2026)
+----------------------------------------------------
+~~All WSDL and XSD links on pit4-soap.html returned 404 errors.~~
 
-But were not copied across to Static-Documentation. As a result, all WSDL and XSD links
-on the pit4-soap.html page return 404 errors. The PIT4 SOAP schema reference was copied
-correctly to templates/schemas/PIT4/soap/soap-schema-reference/ and works.
+RESOLVED: All PIT4 SOAP v1 files have been copied to content/PIT4/soap/v1/ and
+all href values in pit4-soap.html updated to reflect the new paths:
 
-Files missing from Static-Documentation:
-
-    payroll_pit4.wsdl
-    rpn_pit4.wsdl
-    returns_reconciliation_pit4.wsdl
-    handshake_pit4.wsdl
-    enhanced_reporting_pit4.wsdl
-    ern_pit4.wsdl
-    payroll/payroll-schema-pit4.xsd
-    rpn/rpn-schema-pit4.xsd
-    returns_reconciliation/returns_reconciliation-schema-pit4.xsd
-    handshake/handshake-schema-pit4.xsd
-    common/paye-types-pit4.xsd
-    enhanced_reporting/enhanced_reporting-schema-pit4.xsd
-    ern/ern-schema-pit4.xsd
+    content/PIT4/soap/v1/payroll_pit4.wsdl
+    content/PIT4/soap/v1/rpn_pit4.wsdl
+    content/PIT4/soap/v1/returns_reconciliation_pit4.wsdl
+    content/PIT4/soap/v1/handshake_pit4.wsdl
+    content/PIT4/soap/v1/enhanced_reporting_pit4.wsdl
+    content/PIT4/soap/v1/ern_pit4.wsdl
+    content/PIT4/soap/v1/payroll/payroll-schema-pit4.xsd
+    content/PIT4/soap/v1/rpn/rpn-schema-pit4.xsd
+    content/PIT4/soap/v1/returns_reconciliation/returns_reconciliation-schema-pit4.xsd
+    content/PIT4/soap/v1/handshake/handshake-schema-pit4.xsd
+    content/PIT4/soap/v1/common/paye-types-pit4.xsd
+    content/PIT4/soap/v1/enhanced_reporting/enhanced_reporting-schema-pit4.xsd
+    content/PIT4/soap/v1/ern/ern-schema-pit4.xsd
 
 3.3 REVDS Styling - Angular Cannot Run on GitHub Pages
 -------------------------------------------------------
@@ -117,12 +115,13 @@ The pdfToMarkdown.py script has several issues that affect output quality:
   - No table detection: Tab-separated detection covers only a subset of PDF table
     layouts; most complex tables in the source documents will not convert correctly.
 
-3.5 No Audit Trail of Migration Status
-----------------------------------------
-There is currently no tracking of which source PDFs have been migrated, which are in
-progress, and which are outstanding. With approximately 30+ PDF documents across PIT3,
-PIT4, PIT (shared), ERR, and data-items folders in the source project, it is easy to
-lose track of migration status.
+3.5 No Audit Trail of Migration Status - RESOLVED (June 2026)
+-------------------------------------------------------------
+~~There is currently no tracking of which source PDFs have been migrated.~~
+
+RESOLVED: MIGRATION_STATUS.md has been created at the project root. It tracks every
+source asset (PDF, Excel, JSON, WSDL/XSD) with status (migrated / outstanding) and
+the target content/ path. Progress is currently 576/649 assets (89%).
 
 3.6 Validation Rules and Data Items - Not Yet Migrated
 -------------------------------------------------------
@@ -141,124 +140,84 @@ demodocument.html is currently served for these routes.
 4. RECOMMENDATIONS
 ================================================================================
 
-4.1 Restructure File Layout to Mirror Source Project (Priority: HIGH)
------------------------------------------------------------------------
-Adopt a content/PIT3/ and content/PIT4/ directory structure that mirrors the source
-project exactly. This makes it immediately clear what has and has not been migrated.
-
-Proposed structure:
+4.1 Restructure File Layout to Mirror Source Project - DONE
+------------------------------------------------------------
+Completed. The content/ directory now mirrors the source project layout:
 
     Static-Documentation/
-    |-- assets/
-    |   |-- css/
-    |   |-- js/
-    |   +-- images/
+    |-- assets/css/, assets/js/, assets/images/
     |-- content/
-    |   |-- shared/                         # home, support, 404, pit-guides
-    |   |-- pit/                            # PIT-level guides (not PIT3/PIT4 specific)
-    |   |-- PIT3/
-    |   |   |-- cards.html                  # PIT3 section card page
-    |   |   |-- soap/
-    |   |   |   |-- v1/                     # WSDLs and XSDs
-    |   |   |   |-- soap-schema-reference/  # HTML schema reference
-    |   |   |   +-- soap.html               # Rendered page
-    |   |   |-- rest/
-    |   |   |   |-- paye-employers-rest-api-pit3.json
-    |   |   |   |-- paye-employers-rest-api-pit3.html
-    |   |   |   +-- rest.html               # Rendered page
-    |   |   |-- guide/                      # Rendered markdown pages
-    |   |   |-- examples/                   # ZIPs + rendered markdown pages
-    |   |   |-- data-items/                 # Rendered markdown pages
-    |   |   |-- validation-rules/           # Excel files
-    |   |   +-- self-service/               # Rendered markdown pages
-    |   +-- PIT4/
-    |       +-- ...                         # Mirrors PIT3 exactly
+    |   |-- shared/    - home, support, 404, card pages, ERR pages
+    |   |-- pit/       - PIT-level guides
+    |   |-- PIT3/      - examples/, guide/, rest/, soap/, scenarios/,
+    |   |               validation-rules/, data-items/, screens/
+    |   +-- PIT4/      - mirrors PIT3 exactly
     |-- migrationScripts/
-    |   |-- pdfToMarkdown.py
-    |   |-- extractImagesFromPdf.py
-    |   +-- input/                          # Source PDFs go here
     |-- create_page/
     |-- index.html
-    +-- sitemap.json                        # Moved to root for clarity
+    +-- MIGRATION_STATUS.md
 
-4.2 Copy Missing PIT4 SOAP Files Immediately (Priority: HIGH)
---------------------------------------------------------------
-Copy the following from O:\git\paye-employers-documentation\PIT4\soap\ into the new
-project to fix the broken links on pit4-soap.html:
+4.2 Copy Missing PIT4 SOAP Files - DONE
+----------------------------------------
+Completed. All PIT4 SOAP v1 WSDLs and XSDs are now in content/PIT4/soap/v1/.
+All hrefs in pit4-soap.html updated.
 
-    Source:      paye-employers-documentation/PIT4/soap/v1/
-    Destination: Static-Documentation/content/PIT4/soap/v1/
+4.3 Extract Compiled REVDS CSS for Authentic Styling (Priority: MEDIUM - STILL OPEN)
+--------------------------------------------------------------------------------------
+Not yet done. The site still uses Bootstrap 5 + custom SCSS approximating REVDS tokens.
 
-Then update all href values in pit4-soap.html to reflect the new paths.
-
-4.3 Extract Compiled REVDS CSS for Authentic Styling (Priority: MEDIUM)
-------------------------------------------------------------------------
-Rather than approximating REVDS with custom SCSS, extract the compiled CSS output from
-the local Angular REVDS build at O:\git\RevenueDesignSystem. This gives the site
-authentic REVDS styling without requiring Angular at runtime.
-
-Steps:
-    1. Build the local REVDS Angular project (ng build)
+Steps when ready:
+    1. Build the local REVDS Angular project (ng build) from O:\git\RevenueDesignSystem
     2. Extract the compiled CSS from the dist/ output
-    3. Include it as a static stylesheet in index.html
-    4. Remove the custom SCSS approximations that duplicate REVDS rules
+    3. Include as a static stylesheet in index.html
+    4. Remove the custom SCSS approximations
 
-This approach is fully compatible with GitHub Pages and will reflect REVDS updates when
-the CSS is rebuilt and recommitted.
+This is fully compatible with GitHub Pages and will reflect REVDS updates when the CSS
+is rebuilt and recommitted.
 
-4.4 Improve Migration Script Output (Priority: MEDIUM)
--------------------------------------------------------
-Suggested improvements to pdfToMarkdown.py:
+4.4 Improve Migration Script Output (Priority: MEDIUM - STILL OPEN)
+--------------------------------------------------------------------
+Suggested improvements to pdfToMarkdown.py still pending:
 
-  - Add an --output argument to specify the target directory (e.g. content/PIT3/guide/)
-    so output goes directly to the right place rather than alongside the source PDF.
+  - Add an --output argument (target directory, e.g. content/PIT3/guide/)
+  - Replace uppercase-equals-heading heuristic with font-size detection
+    (PyMuPDF get_text("dict") exposes font size per text block)
+  - Add a --pit argument (pit3 or pit4) for auto-placement
+  - Write a companion renderMarkdown.py for Markdown -> pit-section HTML conversion
 
-  - Replace the uppercase-equals-heading heuristic with font-size detection using
-    PyMuPDF get_text("dict") method, which exposes font size per text block.
+4.5 Create a Migration Status Tracker - DONE
+---------------------------------------------
+Completed. MIGRATION_STATUS.md exists at the project root with file-by-file tracking
+for all PIT3 and PIT4 assets (576/649 migrated, 89%).
 
-  - Add a --pit argument (pit3 or pit4) so the script automatically places output in
-    the correct content/PIT3/ or content/PIT4/ subdirectory.
+4.6 Migrate Validation Rules and Data Items (Priority: MEDIUM - STILL OPEN)
+----------------------------------------------------------------------------
+Excel validation rules files are present in content/PIT3/validation-rules/ and
+content/PIT4/validation-rules/ but are not yet linked from the supporting-docs pages.
+The data-items PDFs still need PDF->HTML conversion via the migration script.
 
-  - Write a companion renderMarkdown.py script that converts the output Markdown to the
-    pit-section HTML structure used by the existing templates.
-
-4.5 Create a Migration Status Tracker (Priority: MEDIUM)
----------------------------------------------------------
-Create a MIGRATION_STATUS.md at the project root tracking each source document:
-
-    Source File                                   | Type    | Target Page               | Status
-    ----------------------------------------------|---------|---------------------------|--------
-    SOAP_Web_Service_Integration_Guide.pdf        | PDF->MD | pit3-soap.html            | Pending
-    paye-employers-rest-api-pit3.json             | Schema  | pit3-rest.html            | Done
-    Employer_Submission_RPN_Validation_Rules.xlsx | Excel   | pit3-supporting-docs.html | Pending
-
-4.6 Migrate Validation Rules and Data Items (Priority: MEDIUM)
----------------------------------------------------------------
-The Excel validation rules files can be served directly as downloadable files - no
-conversion needed. The data-items PDFs should be converted via the migration script.
-These are currently among the most useful reference documents in the source project
-and their absence is noticeable.
-
-4.7 Move sitemap.json to Project Root (Priority: LOW)
-------------------------------------------------------
-sitemap.json is effectively the site content manifest. Having it buried in assets/js/
-makes it harder to find and maintain. Moving it to the project root alongside index.html
-makes the site structure more legible.
+4.7 Move sitemap.json to Project Root (Priority: LOW - STILL OPEN)
+-------------------------------------------------------------------
+sitemap.json is still in assets/js/. It functions correctly there but moving it to
+the project root would improve discoverability. Low priority - no functional impact.
 
 ================================================================================
-5. IMMEDIATE ACTION PLAN
+5. REMAINING ACTION PLAN (as of June 2026)
 ================================================================================
 
-    #  | Action                                          | Effort
-    ---|--------------------------------------------------|----------
-    1  | Copy PIT4 SOAP v1 files from source project     | 1 hour
-    2  | Copy PIT4 SOAP schema reference from source     | 30 mins
-    3  | Copy validation rules Excel files from source   | 30 mins
-    4  | Restructure templates/ -> content/              | Half day
-    5  | Update pit4-soap.html links to new paths        | 30 mins
-    6  | Extract REVDS compiled CSS from local build     | 1-2 hours
-    7  | Create MIGRATION_STATUS.md tracker              | 1 hour
-    8  | Improve pdfToMarkdown.py output directory arg   | 2 hours
+    #  | Action                                          | Status    | Effort
+    ---|--------------------------------------------------|-----------|----------
+    1  | Copy PIT4 SOAP v1 files from source project     | DONE      | -
+    2  | Copy PIT4 SOAP schema reference from source     | DONE      | -
+    3  | Copy validation rules Excel files from source   | DONE      | -
+    4  | Restructure templates/ -> content/              | DONE      | -
+    5  | Update pit4-soap.html links to new paths        | DONE      | -
+    6  | Create MIGRATION_STATUS.md tracker              | DONE      | -
+    7  | Link validation rules Excel from content pages  | OPEN      | 1 hour
+    8  | Convert PDF guides to HTML (PIT3 + PIT4)        | OPEN      | 2-3 days
+    9  | Extract REVDS compiled CSS from local build     | OPEN      | 1-2 hours
+    10 | Improve pdfToMarkdown.py output directory arg   | OPEN      | 2 hours
+    11 | Move sitemap.json to project root               | OPEN      | 30 mins
 
 ================================================================================
 6. GITHUB PAGES CONSTRAINTS - REFERENCE
