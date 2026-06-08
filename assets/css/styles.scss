@@ -646,10 +646,138 @@ code {
             }
         }
 
-        sup {
+                sup {
             font-size: 0.7rem;
             margin-right: 0.2rem;
             color: $base-brandteal;
+        }
+    }
+}
+
+// ── FAQ page ───────────────────────────────────────────────────────────────
+// Migrated from Angular paye-employers-pit-faq project.
+// Uses native <details>/<summary> for the accordion — no JS required, fully accessible.
+.faq {
+    max-width: 60rem;
+    margin: 0 auto;
+
+    // Section block (one per tab in the original Angular app)
+    &__section {
+        margin-bottom: 2rem;
+    }
+
+    // Section heading — Revenue teal bar, matching .pit-section__header style
+    &__section-title {
+        background-color: $base-brandteal;
+        color: $base-white;
+        font-size: 1.1rem;
+        font-weight: $bold-font-weight;
+        padding: 0.85rem 1.25rem;
+        margin: 0 0 0.25rem 0;
+        letter-spacing: 0.01em;
+    }
+
+    // Individual accordion item
+    &__item {
+        border: 0.0625rem solid #ddd;
+        border-top: none;   // sections share borders — no double border between items
+        background: $base-white;
+
+        &:first-of-type {
+            border-top: 0.0625rem solid #ddd;
+        }
+
+        // Remove the default browser marker — we add our own via CSS
+        summary {
+            list-style: none;
+            &::-webkit-details-marker { display: none; }
+        }
+
+        // Open state: tint the item
+        &[open] {
+            .faq__question {
+                background-color: #f0f8f8;
+                color: $base-brandteal;
+                border-bottom: 0.0625rem solid #ddd;
+            }
+        }
+    }
+
+    // Clickable question row
+    &__question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.85rem 1.25rem;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: $semibold-font-weight;
+        color: #222;
+        user-select: none;
+        transition: background-color 0.15s ease, color 0.15s ease;
+
+        &:hover {
+            background-color: #f0f8f8;
+            color: $base-brandteal;
+        }
+
+        // Chevron indicator — rotates when open
+        &::after {
+            content: '\203A'; // › single right angle quotation
+            font-size: 1.25rem;
+            font-weight: $bold-font-weight;
+            color: $base-brandteal;
+            transform: rotate(90deg);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+    }
+
+    // Rotate chevron when item is open
+    &__item[open] &__question::after {
+        transform: rotate(270deg);
+    }
+
+    // Answer content area
+    &__answer {
+        padding: 1rem 1.25rem 1.25rem;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: #333;
+
+        p {
+            margin-bottom: 0.75rem;
+            &:last-child { margin-bottom: 0; }
+        }
+
+        ul {
+            margin: 0.25rem 0 0.75rem 1.5rem;
+            li { margin-bottom: 0.35rem; }
+        }
+
+        pre {
+            background-color: $surface-200;
+            padding: 0.75rem 1rem;
+            overflow-x: auto;
+            margin-bottom: 0.75rem;
+
+            code {
+                background: none;
+                padding: 0;
+                font-size: 0.875rem;
+            }
+        }
+
+        a {
+            color: $base-brandteal;
+            font-weight: $semibold-font-weight;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+                color: $brandteal-darken-10;
+            }
         }
     }
 }
