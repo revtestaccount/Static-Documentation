@@ -303,12 +303,30 @@ body {
     margin: auto;
 }
 
+// ── Card container layout ───────────────────────────────────────────────────────
+// Matches the max-width constraint applied to #content / .pit-section (60rem)
+// so card grids don't stretch edge-to-edge on wide screens
+.container {
+    max-width: 60rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Gap between consecutive card rows
+.container .row + .row {
+    margin-top: 2rem;
+}
+
+// Gap above the first card row only when preceded by a paragraph of text.
+// Selector reads: a <p> that is a sibling before .container, targeting .container's first .row
+// This matches home.html and pmodpit*cards.html structure (p then div.container)
+p ~ .container > .row:first-child {
+    margin-top: 2rem;
+}
+
 // ── Home page cards ──────────────────────────────────────────────────────────────
 // Uses Bootstrap stretched-link for full-card clickability (Bootstrap still loaded from CDN)
 // width: 18rem was previously inline on every card — centralised here
-.container .row + .row {
-    margin-top: 2rem; // vertical gap between card rows
-}
 
 .home-card {
     width: 18rem;           // moved from inline style="width: 18rem" on all card HTML
