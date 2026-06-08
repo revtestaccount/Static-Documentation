@@ -11274,9 +11274,37 @@ body .site-main {
 body main #content > p,
 body main #content > h1,
 body main #content > h2 {
-  max-width: 55.5rem;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  box-sizing: border-box;
+}
+@media (min-width: 36rem) {
+  body main #content > p, body main #content > h1, body main #content > h2 {
+    max-width: 33.75rem;
+  }
+}
+@media (min-width: 48rem) {
+  body main #content > p, body main #content > h1, body main #content > h2 {
+    max-width: 45rem;
+  }
+}
+@media (min-width: 62rem) {
+  body main #content > p, body main #content > h1, body main #content > h2 {
+    max-width: 60rem;
+  }
+}
+@media (min-width: 75rem) {
+  body main #content > p, body main #content > h1, body main #content > h2 {
+    max-width: 71.25rem;
+  }
+}
+@media (min-width: 87.5rem) {
+  body main #content > p, body main #content > h1, body main #content > h2 {
+    max-width: 82.5rem;
+  }
 }
 body main p {
   text-align: left;

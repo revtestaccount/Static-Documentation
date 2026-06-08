@@ -128,15 +128,32 @@ body {
         }
 
         main{
-                // Constrain prose text to the same visual width as the 3-column card grid.
-                // 3 cards x 18rem = 54rem, plus Bootstrap row gutters (2 x 0.75rem) = 55.5rem.
-                // Using the same max-width as .container so prose aligns with the card outer edges.
+                // Constrain prose text using the exact same breakpoints as Bootstrap's .container
+                // so text and card grid share identical left/right edges at every viewport width.
                 #content > p,
                 #content > h1,
                 #content > h2 {
-                    max-width: 55.5rem;
+                    width: 100%;
                     margin-left: auto;
                     margin-right: auto;
+                    padding-left: 0.75rem;
+                    padding-right: 0.75rem;
+                    box-sizing: border-box;
+                }
+                @media (min-width: 36rem) {      // 576px
+                    #content > p, #content > h1, #content > h2 { max-width: 33.75rem; } // 540px
+                }
+                @media (min-width: 48rem) {      // 768px
+                    #content > p, #content > h1, #content > h2 { max-width: 45rem; }    // 720px
+                }
+                @media (min-width: 62rem) {      // 992px
+                    #content > p, #content > h1, #content > h2 { max-width: 60rem; }    // 960px
+                }
+                @media (min-width: 75rem) {      // 1200px
+                    #content > p, #content > h1, #content > h2 { max-width: 71.25rem; } // 1140px
+                }
+                @media (min-width: 87.5rem) {    // 1400px
+                    #content > p, #content > h1, #content > h2 { max-width: 82.5rem; }  // 1320px
                 }
 
         p{
