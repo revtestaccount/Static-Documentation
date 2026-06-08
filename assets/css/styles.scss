@@ -11,37 +11,38 @@
 @import 'vendors/primeng-designer/themes/main/theme'; 
 
 /*** import the customised external primeng designer theme ***/
-.external-theme {    
-    @import 'vendors/primeng-designer/themes/external/theme';  
+.external-theme {
+    @import 'vendors/primeng-designer/themes/external/theme';
 }
 
 /*** Styles basement imports ***/
 @import 'base/reset';
 @import 'base/typography';
-@import "primeicons/primeicons.css";
 
 /*** Components imports ***/
 @import 'components/common';
+@import 'components/uishell';
 @import 'components/file-upload';
 @import 'components/labelfield';
 @import 'components/progressspinner';
-@import 'components/uishell';
-
-/*** Pages Styles imports ***/
-@import 'pages/home';
 
 /*** -- Important --- ***/
 /*** Run: "npm run watch:scss" to ensure SCSS compiles ***/
+/*** Recompile whenever abstracts or component partials change ***/
+/*** NOTE: Bootstrap is NOT imported here — it is loaded from index.html ***/
+/*** TODO: Remove Bootstrap CDN from index.html once all Bootstrap classes ***/
+/*** are replaced with REVDS/custom equivalents in content HTML files. ***/
 
+// Page-level h1: centred, Revenue teal — used for main section headings in content pages
+// Note: keep background-color transparent (not white) so it works on non-white backgrounds
 h1 {
-    background-color: $base-white;
     color: $base-brandteal;
     text-align: center;
     margin-top: 2rem;
     margin-bottom: 2rem;
     font-weight: $bold-font-weight;
     font-size: $h1-700-font-size;
-};
+}
 
 body {
     min-height: 100vh;
@@ -64,7 +65,7 @@ body {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background-color: darken($base-brandteal, 8%);
+        background-color: $brandteal-darken-10; // ~8% darker than Revenue Green
         padding: 0.35rem 1.25rem;
         width: 100%;
 
@@ -87,6 +88,7 @@ body {
     }
 
     // ── Main header ───────────────────────────────────────────────────────────
+    // Revenue Green: #025F63 — matches $base-brandteal after token fix
     .header {
         display: flex;
         align-items: center;
@@ -171,8 +173,10 @@ body {
     }
 
         // ── Site Navbar ───────────────────────────────────────────
+        // ── Site Navbar ───────────────────────────────────────────
+        // Navbar sits slightly darker than the header to create the three-band effect
         .site-nav {
-            background-color: darken($base-brandteal, 5%);
+            background-color: $brandteal-darken-10; // Revenue Green darkened — creates visual depth
             border-bottom: 3px solid $base-cyan;
             width: 100%;
             padding: 0 1rem;
@@ -230,7 +234,7 @@ body {
             }
 
             &__dropdown-menu {
-                background-color: darken($base-brandteal, 5%);
+                background-color: $brandteal-darken-10;
                 border: none;
                 border-radius: 0;
                 padding: 0.25rem 0;
@@ -316,14 +320,39 @@ body {
 }
 
 // ── Home page cards ──────────────────────────────────────────────────────────────
+// Uses Bootstrap stretched-link for full-card clickability (Bootstrap still loaded from CDN)
 .home-card {
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     position: relative; // required for Bootstrap stretched-link
+    border-radius: 0 !important; // Revenue: squared corners always
 
     &:hover {
         transform: translateY(-3px);
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    // Card image area — mint background per REVDS card convention
+    .card-img-top {
+        padding: 1rem;
+        background-color: $brandmint-lighten-50;
+        max-height: 12.6875rem;
+        object-fit: contain;
+        border-radius: 0; // squared corners
+    }
+
+    // Card text — centred, uses h3 scale
+    .card-text {
+        font-size: $h3-font-size;
+        text-align: center;
+        font-family: $font-families-segoe-ui;
+    }
+
+    // Hide the 'Click here' anchor text — card is fully clickable via stretched-link
+    .stretched-link {
+        font-size: 0;
+        position: absolute;
+        inset: 0;
     }
 }
 
@@ -433,7 +462,7 @@ code {
 
                 &:hover {
                     text-decoration: underline;
-                    color: darken($base-brandteal, 8%);
+                    color: $brandteal-darken-10;
                 }
             }
         }
@@ -531,7 +560,7 @@ code {
 
             &:hover {
                 text-decoration: underline;
-                color: darken($base-brandteal, 8%);
+                color: $brandteal-darken-10;
             }
         }
     }

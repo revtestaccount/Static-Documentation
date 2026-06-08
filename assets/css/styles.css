@@ -1,7 +1,9 @@
+@charset "UTF-8";
 /*** Abstracts imports ***/
 /*  Pixels to rem */
 /* usage  font-size: rem(14px); // or rem(14) */
 /* Color changes to fix contrast accessibility issues */
+/* Revenue Green: #025F63 — the canonical Revenue brand colour */
 /* Surface colours, to be used for e.g. inputs, text, panel background */
 /* Percentage values based on base brandteal */
 /* Percentage values based on base brandmint */
@@ -26,7 +28,6 @@
 /* extra-extrasmall */
 /* bold */
 /* semibold */
-@import "primeicons/primeicons.css";
 h1 {
   color: rgb(3, 5, 7);
   font-family: Segoe UI;
@@ -4188,7 +4189,7 @@ p-togglebutton.ng-dirty.ng-invalid > .p-togglebutton.p-button {
   border-color: rgb(255, 255, 255);
 }
 .p-button.p-button-icon-only.p-button-rounded.brand:enabled:hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .p-button.p-button-icon-only.p-button-rounded.brand:enabled:active {
   background-color: rgb(0, 140, 143);
@@ -4414,7 +4415,7 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
   font-size: 1rem;
 }
 .p-menubar .p-menubar-button:hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .p-menubar .p-menubar-button:focus {
   outline: 0 none;
@@ -4440,7 +4441,7 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
   margin: 0px;
 }
 .p-menubar .p-menuitem-link:not(.p-disabled):hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .p-menubar .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
   color: rgb(255, 255, 255);
@@ -4452,7 +4453,7 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
   position: absolute;
   display: none;
   padding: 0;
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
   border: 0 none;
   box-shadow: 0 0.125rem 0.75rem 0 rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -4491,7 +4492,7 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
   width: 1rem;
 }
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link:not(.p-disabled):hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
   color: rgb(255, 255, 255);
@@ -4527,7 +4528,7 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
   width: 1rem;
 }
 .p-menubar .p-menubar-root-list .p-submenu-list .p-menuitem > .p-menuitem-content .p-menuitem-link:not(.p-disabled):hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .p-menubar .p-menubar-root-list .p-submenu-list .p-menuitem-active .p-menuitem-content .p-menuitem-link {
   padding: 0.5rem 0.75rem 0.5rem 2.25rem;
@@ -4570,7 +4571,7 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
 .p-menubar .p-menubar-root-list .p-menuitem.p-menuitem-active > .p-menuitem-content > .p-menuitem-link:focus:not(.p-disabled):hover,
 .p-menubar .p-menubar-root-list .p-menuitem.p-menuitem-active.p-focus > .p-menuitem-content > .p-menuitem-link:not(.p-disabled):hover,
 .p-menubar .p-menubar-root-list .p-submenu-list .p-menuitem-active > .p-menuitem-content .p-menuitem-link:not(.p-disabled):hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .p-menubar.p-menubar-mobile-active .p-menubar-button barsicon svg {
   display: none;
@@ -4964,7 +4965,7 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
   border-bottom-color: transparent;
 }
 .p-panel .p-panel-header .p-panel-header-icon {
-  color: rgb(0, 90, 92);
+  color: rgb(2, 95, 99);
 }
 .p-panel .p-panel-header .p-panel-header-icon:focus {
   box-shadow: none;
@@ -5469,7 +5470,7 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
   color: rgb(255, 255, 255);
 }
 .tabpage .p-tabview .p-tabview-nav-container .p-tabview-nav-content .p-tabview-nav li.edit .p-tabview-nav-link .p-tabview-close:hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .tabpage .p-tabview .p-tabview-nav-container .p-tabview-nav-content .p-tabview-nav li.edit .p-tabview-nav-link .p-tabview-close:active {
   background-color: rgb(0, 140, 143);
@@ -5478,7 +5479,7 @@ rev-datepicker .readonly .p-calendar .p-datepicker {
   color: rgb(255, 255, 255);
 }
 .tabpage .p-tabview .p-tabview-nav-container .p-tabview-nav-content .p-tabview-nav li.edit .p-tabview-nav-link .pi-ellipsis-v:hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .tabpage .p-tabview .p-tabview-nav-container .p-tabview-nav-content .p-tabview-nav li.edit .p-tabview-nav-link .pi-ellipsis-v:active {
   background-color: rgb(0, 140, 143);
@@ -9466,7 +9467,7 @@ p-tag .p-tag-value {
   border-color: rgb(255, 255, 255);
 }
 .external-theme .p-button.p-button-icon-only.p-button-rounded.brand:enabled:hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .external-theme .p-button.p-button-icon-only.p-button-rounded.brand:enabled:active {
   background-color: rgb(0, 140, 143);
@@ -9680,7 +9681,7 @@ p-tag .p-tag-value {
   font-size: 1rem;
 }
 .external-theme .p-menubar .p-menubar-button:hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .external-theme .p-menubar .p-menubar-button:focus {
   outline: 0 none;
@@ -9706,7 +9707,7 @@ p-tag .p-tag-value {
   margin: 0px;
 }
 .external-theme .p-menubar .p-menuitem-link:not(.p-disabled):hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .external-theme .p-menubar .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
   color: rgb(255, 255, 255);
@@ -9718,7 +9719,7 @@ p-tag .p-tag-value {
   position: absolute;
   display: none;
   padding: 0;
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
   border: 0 none;
   box-shadow: 0 0.125rem 0.75rem 0 rgba(0, 0, 0, 0.1);
   width: 100%;
@@ -9757,7 +9758,7 @@ p-tag .p-tag-value {
   width: 1rem;
 }
 .external-theme .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link:not(.p-disabled):hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .external-theme .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-content .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
   color: rgb(255, 255, 255);
@@ -9793,7 +9794,7 @@ p-tag .p-tag-value {
   width: 1rem;
 }
 .external-theme .p-menubar .p-menubar-root-list .p-submenu-list .p-menuitem > .p-menuitem-content .p-menuitem-link:not(.p-disabled):hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .external-theme .p-menubar .p-menubar-root-list .p-submenu-list .p-menuitem-active .p-menuitem-content .p-menuitem-link {
   padding: 0.5rem 0.75rem 0.5rem 2.25rem;
@@ -9836,7 +9837,7 @@ p-tag .p-tag-value {
 .external-theme .p-menubar .p-menubar-root-list .p-menuitem.p-menuitem-active > .p-menuitem-content > .p-menuitem-link:focus:not(.p-disabled):hover,
 .external-theme .p-menubar .p-menubar-root-list .p-menuitem.p-menuitem-active.p-focus > .p-menuitem-content > .p-menuitem-link:not(.p-disabled):hover,
 .external-theme .p-menubar .p-menubar-root-list .p-submenu-list .p-menuitem-active > .p-menuitem-content .p-menuitem-link:not(.p-disabled):hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .external-theme .p-menubar.p-menubar-mobile-active .p-menubar-button barsicon svg {
   display: none;
@@ -10221,7 +10222,7 @@ p-tag .p-tag-value {
   border-bottom-color: transparent;
 }
 .external-theme .p-panel .p-panel-header .p-panel-header-icon {
-  color: rgb(0, 90, 92);
+  color: rgb(2, 95, 99);
 }
 .external-theme .p-panel .p-panel-header .p-panel-header-icon:focus {
   box-shadow: none;
@@ -10720,7 +10721,7 @@ p-tag .p-tag-value {
   color: rgb(255, 255, 255);
 }
 .external-theme .tabpage .p-tabview .p-tabview-nav-container .p-tabview-nav-content .p-tabview-nav li.edit .p-tabview-nav-link .p-tabview-close:hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .external-theme .tabpage .p-tabview .p-tabview-nav-container .p-tabview-nav-content .p-tabview-nav li.edit .p-tabview-nav-link .p-tabview-close:active {
   background-color: rgb(0, 140, 143);
@@ -10729,7 +10730,7 @@ p-tag .p-tag-value {
   color: rgb(255, 255, 255);
 }
 .external-theme .tabpage .p-tabview .p-tabview-nav-container .p-tabview-nav-content .p-tabview-nav li.edit .p-tabview-nav-link .pi-ellipsis-v:hover {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
 }
 .external-theme .tabpage .p-tabview .p-tabview-nav-container .p-tabview-nav-content .p-tabview-nav li.edit .p-tabview-nav-link .pi-ellipsis-v:active {
   background-color: rgb(0, 140, 143);
@@ -11094,6 +11095,30 @@ rev-checkbox[readonly] .p-checkbox-box {
   background-color: rgb(248, 249, 250);
 }
 
+/* UI Shell Scrolling */
+.rds.sticky {
+  position: fixed;
+  top: -5rem;
+  z-index: 9999;
+  width: 100%;
+  box-shadow: 0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2);
+  transition-duration: 1s;
+}
+
+.rds.sticky.rds-scroll-up {
+  position: fixed;
+  top: 0rem;
+  z-index: 9999;
+  width: 100%;
+  box-shadow: 0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2);
+  transition-duration: 1s;
+}
+
+/* Entity Bar Customization */
+.entity-bar {
+  background-color: rgb(244, 244, 244);
+}
+
 .p-fileupload .p-fileupload-buttonbar .p-button.p-fileupload-choose.p-button-tertiary .p-button-label {
   color: rgb(0, 111, 230);
 }
@@ -11164,36 +11189,14 @@ rev-checkbox[readonly] .p-checkbox-box {
   animation: none;
 }
 
-/* UI Shell Scrolling */
-.rds.sticky {
-  position: fixed;
-  top: -5rem;
-  z-index: 9999;
-  width: 100%;
-  box-shadow: 0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2);
-  transition-duration: 1s;
-}
-
-.rds.sticky.rds-scroll-up {
-  position: fixed;
-  top: 0rem;
-  z-index: 9999;
-  width: 100%;
-  box-shadow: 0px 0.25rem 0.25rem 0px rgba(0, 0, 0, 0.2);
-  transition-duration: 1s;
-}
-
-/* Entity Bar Customization */
-.entity-bar {
-  background-color: rgb(244, 244, 244);
-}
-
-/*** Pages Styles imports ***/
 /*** -- Important --- ***/
 /*** Run: "npm run watch:scss" to ensure SCSS compiles ***/
+/*** Recompile whenever abstracts or component partials change ***/
+/*** NOTE: Bootstrap is NOT imported here — it is loaded from index.html ***/
+/*** TODO: Remove Bootstrap CDN from index.html once all Bootstrap classes ***/
+/*** are replaced with REVDS/custom equivalents in content HTML files. ***/
 h1 {
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 90, 92);
+  color: rgb(2, 95, 99);
   text-align: center;
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -11218,7 +11221,7 @@ body .header-util {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgb(0, 50.0869565217, 51.2);
+  background-color: rgb(0, 64, 66);
   padding: 0.35rem 1.25rem;
   width: 100%;
 }
@@ -11240,7 +11243,7 @@ body .header {
   display: flex;
   align-items: center;
   padding: 0.75rem 1.25rem;
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
   width: 100%;
   gap: 1.25rem;
 }
@@ -11287,7 +11290,7 @@ body main .card .card-text {
 }
 body main #content h2 {
   background-color: rgb(255, 255, 255);
-  color: rgb(0, 90, 92);
+  color: rgb(2, 95, 99);
   text-align: center;
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -11296,7 +11299,7 @@ body main #content h2 {
 }
 body main #content #title {
   background-color: rgb(255, 255, 255);
-  color: rgb(0, 90, 92);
+  color: rgb(2, 95, 99);
   text-align: center;
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -11304,7 +11307,7 @@ body main #content #title {
   font-size: 35px;
 }
 body .site-nav {
-  background-color: rgb(0, 65.0543478261, 66.5);
+  background-color: rgb(0, 64, 66);
   border-bottom: 3px solid rgb(0, 198, 198);
   width: 100%;
   padding: 0 1rem;
@@ -11349,7 +11352,7 @@ body .site-nav__dropdown-toggle::after {
   margin-left: 0.4em;
 }
 body .site-nav__dropdown-menu {
-  background-color: rgb(0, 65.0543478261, 66.5);
+  background-color: rgb(0, 64, 66);
   border: none;
   border-radius: 0;
   padding: 0.25rem 0;
@@ -11393,7 +11396,7 @@ body .site-nav__divider {
 }
 body .pmod {
   background-color: rgb(255, 255, 255);
-  color: rgb(0, 90, 92);
+  color: rgb(2, 95, 99);
   text-align: center;
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -11401,7 +11404,7 @@ body .pmod {
 }
 body .footer {
   padding: 1.5625rem 1.5625rem 1.5625rem 1.5625rem;
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
   border-top: solid rgb(0, 198, 198) 1rem;
 }
 
@@ -11426,10 +11429,28 @@ body .footer {
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   position: relative;
+  border-radius: 0 !important;
 }
 .home-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+.home-card .card-img-top {
+  padding: 1rem;
+  background-color: rgb(227, 241, 242);
+  max-height: 12.6875rem;
+  object-fit: contain;
+  border-radius: 0;
+}
+.home-card .card-text {
+  font-size: 24.5px;
+  text-align: center;
+  font-family: Segoe UI;
+}
+.home-card .stretched-link {
+  font-size: 0;
+  position: absolute;
+  inset: 0;
 }
 
 .document-title {
@@ -11455,7 +11476,7 @@ code {
   margin: 2rem auto;
 }
 .pit-section__header {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
   padding: 0.85rem 1.25rem;
 }
 .pit-section__header a {
@@ -11490,7 +11511,7 @@ code {
 }
 .pit-section__table thead tr {
   background-color: #e8e8e8;
-  border-bottom: 2px solid rgb(0, 90, 92);
+  border-bottom: 2px solid rgb(2, 95, 99);
 }
 .pit-section__table thead th {
   padding: 0.6rem 1rem;
@@ -11515,13 +11536,13 @@ code {
   color: #333;
 }
 .pit-section__table tbody td a {
-  color: rgb(0, 90, 92);
+  color: rgb(2, 95, 99);
   text-decoration: none;
   font-weight: 600;
 }
 .pit-section__table tbody td a:hover {
   text-decoration: underline;
-  color: rgb(0, 50.0869565217, 51.2);
+  color: rgb(0, 64, 66);
 }
 .pit-section__col--description {
   width: 45%;
@@ -11549,7 +11570,7 @@ code {
   color: rgb(255, 255, 255);
 }
 .pit-section__badge--link {
-  background-color: rgb(0, 90, 92);
+  background-color: rgb(2, 95, 99);
   color: rgb(255, 255, 255);
 }
 .pit-section__badge--zip {
@@ -11582,7 +11603,7 @@ code {
 }
 .pit-section__footnote-ref {
   font-size: 0.7rem;
-  color: rgb(0, 90, 92);
+  color: rgb(2, 95, 99);
   margin-left: 0.15rem;
   vertical-align: super;
 }
@@ -11599,13 +11620,13 @@ code {
   margin-bottom: 0;
 }
 .pit-section__content a {
-  color: rgb(0, 90, 92);
+  color: rgb(2, 95, 99);
   font-weight: 600;
   text-decoration: none;
 }
 .pit-section__content a:hover {
   text-decoration: underline;
-  color: rgb(0, 50.0869565217, 51.2);
+  color: rgb(0, 64, 66);
 }
 .pit-section__list {
   margin: 0.25rem 0 1rem 1.5rem;
@@ -11633,7 +11654,5 @@ code {
 .pit-section__footnotes sup {
   font-size: 0.7rem;
   margin-right: 0.2rem;
-  color: rgb(0, 90, 92);
+  color: rgb(2, 95, 99);
 }
-
-/*# sourceMappingURL=styles.css.map */
