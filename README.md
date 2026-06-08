@@ -1,201 +1,233 @@
-# Revenue static site generator
+# PAYE Modernisation Web Services — Documentation Site
 
-Application used for the creation, maintenance and static deployment of Revenue articles.
+A static documentation portal for Revenue's PAYE Modernisation Public Interface Testing (PIT) environments. Serves technical documentation — PDFs, schemas, WSDLs, JSON/XML examples — to external software developers integrating with Revenue's PAYE web services.
 
-Deployed link:
+**Deployed:** https://revtestaccount.github.io/Static-Documentation/
 
-https://revtestaccount.github.io/Static-Documentation/
-
-
-# Important
-Run: `npm run watch:scss` to ensure SCSS compiles.
+> **Replaces** the deprecated AngularJS project `paye-employers-documentation`.  
+> **Integrates** the Angular 14 FAQ project `paye-employers-pit-faq` as native static HTML.
 
 ---
 
-## Project Overview — PAYE Modernisation Web Services Documentation Site
+## Quick Start
 
-A **static documentation portal** for Revenue's PAYE Modernisation Public Interface Testing (PIT) environment. It serves technical documentation (PDFs, schemas, WSDLs, examples) to external software developers integrating with Revenue's PAYE web services.
+### Prerequisites
+- Node.js (for Sass compilation only)
+- Any static file server (e.g. `npx serve`, Python `http.server`, Live Server)
+
+### Compile SCSS
+```powershell
+node "C:\NodeJs\node-v22.14.0-win-x64\node_modules\sass\sass.js" `
+  "assets/css/styles.scss" `
+  "assets/css/styles.css" `
+  --no-source-map `
+  --silence-deprecation=import `
+  --silence-deprecation=global-builtin `
+  --silence-deprecation=color-functions
+```
+
+### Run Locally
+```bash
+npx serve .
+```
+Open `http://localhost:3000`. The router uses `fetch()` so the site **must** be served over HTTP — `file://` will not work.
 
 ---
 
 ## Architecture
 
-### Single Page App with Hash-Based Routing
+### Single-Page App with Hash-Based Routing
 
 ```
-index.html  ←  loads router.js
-               ↓
-           reads sitemap.json  →  maps URL hash to template file
-               ↓
-           injects template HTML into #content div
-           injects sidebar links into #sidebarLinks div
+index.html
+  └─ router.js
+       └─ reads sitemap.json
+            └─ maps URL hash → HTML fragment file
+                 └─ fetches fragment → injects into #content div
+                 └─ builds navbar links from _nav_groups
 ```
 
-- **`index.html`** — Shell page. Bootstrap 5 grid layout with a fixed header, a sidebar `<nav>`, and a `<main>` content area. The Revenue logo and page title live here.
-- **`assets/js/router.js`** — Vanilla JS hash router. Watches `window.location.hash`, looks up the route in `sitemap.json`, fetches the corresponding template HTML, and injects it into the page. Also builds the sidebar nav dynamically from the route group.
-- **`assets/js/sitemap.json`** — The routing table. Organised into route groups (`general_routes`, `routes1`–`routes15`). Each group represents a section. Within a group, one entry is the "parent" page (e.g. `home2`) and the rest are child document entries (currently pointing to `demodocument.html` as placeholders).
+| File | Role |
+|---|---|
+| `index.html` | Shell — header, navbar, `#content` div, footer |
+| `assets/js/router.js` | Hash router, nav builder, content loader |
+| `assets/js/sitemap.json` | Route table: hash key → template path + page title |
+| `assets/css/styles.scss` | Master SCSS (imports REVDS tokens + partials) |
+| `assets/css/styles.css` | Compiled output — do not edit directly |
+| `content/shared/*.html` | Shared content fragments (home, cards, guides, FAQ) |
+| `content/PIT3/*.html` | PIT3-specific content fragments |
+| `content/PIT4/*.html` | PIT4-specific content fragments |
+
+### Routing Convention
+
+- Routes are defined in `assets/js/sitemap.json` as key → `{ template, title }` pairs
+- `_`-prefixed keys (`_nav_groups`, `_home_nav`) are utility groups for nav rendering — skipped during content lookup
+- Home page navbar renders flat links from `_home_nav`
+- Inner page navbar renders a dropdown from the parent `_nav_groups` entry
+- Four special child routes are hard-coded in `router.js` to open in a new tab (SOAP/REST schema references)
+
+### Adding a New Route
+1. Add an entry to `assets/js/sitemap.json` in the appropriate `routes*` group
+2. Add the route key to the relevant `_nav_groups.children` array
+3. Create the HTML fragment at the path given in `template`
+4. Recompile SCSS if any styling changes were made
 
 ---
 
-## Template Structure
+## Content Structure
 
-### `home*.html` — Section Landing Pages
+### Page Types
 
-The 13 `home*.html` files are the section landing pages. Each maps to a route group in `sitemap.json`:
-
-| File | Route Group | Section |
+| Type | Example | Description |
 |---|---|---|
-| `pit-guides.html` | `routes1` | Public Interface Testing – Guides and useful info |
-| `pit3-self-service.html` | `routes3` | PIT Self Service and ROS Payroll Reporting – Current Version |
-| `pit3-guide.html` | `routes4` | Guide – Current Version |
-| `pit3-soap.html` | `routes5` | PAYE Web Service Specifications (SOAP/XML) – Current Version |
-| `pit3-rest.html` | `routes6` | PAYE Web Service Specifications (REST/JSON) – Current Version |
-| `pit3-supporting-docs.html` | `routes7` | Supporting Documentation – Current Version |
-| `pit3-examples.html` | `routes8` | PAYE Web Service Examples – Current Version |
-| `pit4-self-service.html` | `routes10` | PIT Self Service and ROS Payroll Reporting – Next Version |
-| `pit4-guide.html` | `routes11` | Guide – Next Version |
-| `pit4-soap.html` | `routes12` | PAYE Web Service Specifications (SOAP/XML) – Next Version |
-| `pit4-rest.html` | `routes13` | PAYE Web Service Specifications (REST/JSON) – Next Version |
-| `pit4-supporting-docs.html` | `routes14` | Supporting Documentation – Next Version |
-| `pit4-examples.html` | `routes15` | PAYE Web Service Examples – Next Version |
+| Home / card grid | `content/shared/home.html` | Bootstrap card grid, top-level navigation |
+| Section card hub | `content/shared/pmodpit3cards.html` | Card grid linking to section child pages |
+| Document listing | `content/PIT3/soap.html` | `.pit-section` table of downloadable files |
+| FAQ | `content/shared/faq.html` | Native `<details>`/`<summary>` accordion |
+| Schema browser | `content/PIT3/soap/soap-schema-reference/` | Generated HTML from SOAP schema tool |
+| REST API reference | `content/PIT3/rest/paye-employers-rest-api-pit3.html` | Swagger-generated reference |
+| Placeholder | `content/shared/demodocument.html` | Temporary placeholder for unbuilt routes |
 
-### Hub / Card Pages
+### Route Coverage (as of 2026-06-08)
 
-Two hub pages act as navigation intermediaries between the root landing page and the section pages:
+| Status | Count |
+|---|---|
+| Routes with real content | 38 |
+| Routes still using `demodocument.html` placeholder | 122 |
+| **Total routes** | **160** |
 
-- **`pmodpit3cards.html`** (`routes2`) — PMOD PIT3 (Current Version) hub. Bootstrap card grid linking to `pit3-self-service` through `pit3-examples`.
-- **`pmodpit4cards.html`** (`routes9`) — PMOD PIT4 (Next Version) hub. Bootstrap card grid linking to `pit4-self-service` through `pit4-examples`.
-- **`errpit3cards.html`** (`routes16`) — ERR PIT3 (Current Version) hub. Bootstrap card grid linking to `err-pit3-soap`, `err-pit3-rest`, and `err-pit3-supporting-docs`.
-- **`errpit4cards.html`** (`routes17`) — ERR PIT4 (Next Version) hub. Bootstrap card grid linking to `err-pit4-soap`, `err-pit4-rest`, and `err-pit4-supporting-docs`.
+### PIT3 vs PIT4
 
-### Root Landing Page
+`PIT3` = Current Version (mirrors live environment)  
+`PIT4` = Next Version (upcoming functionality)
 
-- **`home.html`** — Root page (`/`). Bootstrap card grid with 6 top-level section links (PIT Guides, PMOD PIT3, PMOD PIT4, ERR PIT3, ERR PIT4, Support).
+All asset paths, route keys, and template names follow this convention consistently.
 
 ---
 
 ## Styling
 
-- **`assets/css/styles.scss`** — Main stylesheet compiled via Sass. Imports Revenue Design System abstracts (`$base-brandteal`, `$base-white`, `$bold-font-weight`, etc.) and all component/page partials.
-- **Bootstrap 5.3.2** — Loaded via CDN in `index.html`. Used for the grid layout, sidebar, cards, and general structure.
-- **PrimeNG / PrimeIcons** — npm dependencies used within the Revenue Design System.
+### Revenue Design System (REVDS)
 
-### `.pit-section` BEM Component
+- **Primary colour:** `#025F63` (Revenue Green / `$base-brandteal`)
+- **Border radius:** `0` — squared corners always, no exceptions
+- **Font:** Segoe UI 14px (internal applications)
+- **Sizing:** `rem` units throughout — no `px` in authored CSS (border widths use `px` per convention)
+- **Accessibility:** WCAG 2.1 AA target
 
-All 13 section pages (`home1.html`–`home13.html`) use a shared `.pit-section` BEM block defined in `styles.scss`. It provides:
-- Revenue Green (`#025F63`) section header bar
-- Semantic `<table>` for document listings
-- Colour-coded file type badges (squared corners per Revenue conventions)
-- Footnote reference superscripts and footnote blocks
-- Row hover states
+### Key CSS Components
+
+#### `.pit-section` — Document Listing Block
+Used on all section content pages. Provides:
+- Revenue Green header bar
+- Semantic `<table>` for document listings with hover states
+- Colour-coded file type badges (squared corners)
+- Footnote blocks
 
 #### Badge Variants
 
-| Class | Colour | Used for |
+| Class | Colour | File type |
 |---|---|---|
-| `pit-section__badge--pdf` | Red `#d9534f` | PDF documents |
-| `pit-section__badge--link` | Revenue Green `#025F63` | External/internal links |
-| `pit-section__badge--zip` | Purple `#6f42c1` | ZIP archive files |
-| `pit-section__badge--schema` | Blue `#0d6efd` | JSON/XSD schema files |
-| `pit-section__badge--csv` | Green `#198754` | CSV data files |
-| `pit-section__badge--xlsx` | Dark green `#1d6f42` | Excel XLSX files |
-| `pit-section__badge--excel` | Dark green `#1d6f42` | Excel files (labelled "Excel File") |
-| `pit-section__badge--wsdl` | Grey `#6c757d` | WSDL web service definition files |
-| `pit-section__badge--api` | Indigo `#6610f2` | OpenAPI specification files |
+| `--pdf` | Red `#d9534f` | PDF |
+| `--link` | Revenue Green `#025F63` | External/internal link |
+| `--zip` | Purple `#6f42c1` | ZIP archive |
+| `--schema` | Blue `#0d6efd` | JSON/XSD schema |
+| `--csv` | Green `#198754` | CSV |
+| `--xlsx` / `--excel` | Dark green `#1d6f42` | Excel |
+| `--wsdl` | Grey `#6c757d` | WSDL |
+| `--api` | Indigo `#6610f2` | OpenAPI spec |
 
----
+#### `.home-card` — Navigation Cards
+- `width: 18rem`, `height: 100%` — equal-height cards in a row
+- Fixed image area `height: 8rem` with `object-fit: contain`
+- `flex: 1` on `.card-body` — vertically centres text regardless of line count
+- Bootstrap `stretched-link` makes the entire card clickable
 
-## Key Conventions
-
-- **`PIT3` = Current Version, `PIT4` = Next Version** — consistent throughout asset paths, template names, and route keys.
-- **`sitemap.json` drives everything** — new pages need a route entry here; new sections need a new route group.
-- **The sidebar is dynamic** — rendered from all routes in the current route group. The router derives `href` values by lowercasing the route title and stripping spaces.
-- **Child document routes** — most still point to `demodocument.html` as placeholders. The migration work in `migrationScripts/` is progressively replacing these with real rendered content.
-- **SOAP Schema Reference and REST API Reference links** — hard-coded in `router.js` to open in a new tab (these are standalone HTML reference sites, not injected templates).
+#### `.faq` — FAQ Accordion
+- Native `<details>`/`<summary>` — no JavaScript required
+- Revenue Green section title bars matching `.pit-section__header`
+- CSS chevron rotates on open/close
+- Fully keyboard accessible
 
 ---
 
 ## Directory Structure
 
 ```
-├── index.html                  # SPA shell
+├── index.html                        # SPA shell
+├── README.md
+├── PROJECT_ASSESSMENT.md             # Full project assessment and status
+├── migration_status.md               # Asset migration tracking
 ├── assets/
 │   ├── css/
-│   │   ├── styles.scss         # Main SCSS entry point
-│   │   ├── styles.css          # Compiled output (do not edit directly)
-│   │   ├── abstracts/          # SCSS variables, mixins, functions
-│   │   ├── components/         # Component-level SCSS partials
-│   │   ├── pages/              # Page-level SCSS partials
-│   │   └── vendors/            # PrimeNG designer theme files
+│   │   ├── styles.scss               # Master SCSS entry point
+│   │   ├── styles.css                # Compiled output (do not edit directly)
+│   │   ├── abstracts/                # SCSS tokens — colours, fonts, lengths
+│   │   ├── components/               # Component SCSS partials
+│   │   └── vendors/                  # PrimeNG designer theme
 │   ├── js/
-│   │   ├── router.js           # Hash-based SPA router
-│   │   └── sitemap.json        # Route configuration table
+│   │   ├── router.js                 # Hash-based SPA router + nav builder
+│   │   └── sitemap.json              # All 160 route definitions
 │   └── images/
-│       └── ictl_logo.png       # Revenue logo
-├── templates/
-│   ├── home.html               # Root landing page
-│   ├── pit-guides.html         # PIT Guides and useful info
-│   ├── pit3-self-service.html  # PIT Self Service – Current Version
-│   ├── pit3-guide.html         # Guide – Current Version
-│   ├── pit3-soap.html          # SOAP/XML specs – Current Version
-│   ├── pit3-rest.html          # REST/JSON specs – Current Version
-│   ├── pit3-supporting-docs.html # Supporting docs – Current Version
-│   ├── pit3-examples.html      # Web service examples – Current Version
-│   ├── pit4-self-service.html  # PIT Self Service – Next Version
-│   ├── pit4-guide.html         # Guide – Next Version
-│   ├── pit4-soap.html          # SOAP/XML specs – Next Version
-│   ├── pit4-rest.html          # REST/JSON specs – Next Version
-│   ├── pit4-supporting-docs.html # Supporting docs – Next Version
-│   ├── pit4-examples.html      # Web service examples – Next Version
-│   ├── pmodpit3cards.html      # PMOD PIT3 hub/card page
-│   ├── pmodpit4cards.html      # PMOD PIT4 hub/card page
-│   ├── errpit3cards.html       # ERR PIT3 hub/card page
-│   ├── errpit4cards.html       # ERR PIT4 hub/card page
-│   ├── demodocument.html       # Placeholder for child document routes
-│   ├── 404.html                # Not found page
-│   ├── soap/                   # SOAP schema files (WSDLs, XSDs)
-│   └── home/                   # SVG icons used on landing/hub pages
-├── create_page/
-│   ├── create_page.html        # In-browser content authoring tool
-│   └── create_page_script.js   # Authoring tool logic
-├── migrationScripts/
-│   ├── pdfToMarkdown.py        # Converts PDFs to Markdown
-│   ├── extractImagesFromPdf.py # Extracts images from PDFs
-│   └── [document folders]/     # Converted Markdown + images output
-└── package.json                # npm scripts and dependencies
+│       └── ictl_logo.png             # Revenue logo
+├── content/
+│   ├── shared/                       # Shared pages (home, cards, guides, FAQ)
+│   │   ├── home.html                 # Root landing page (6-card grid)
+│   │   ├── faq.html                  # Integrated FAQ (was paye-employers-pit-faq)
+│   │   ├── pit-guides.html           # PIT Guides section
+│   │   ├── pmodpit3cards.html        # PMOD PIT3 hub
+│   │   ├── pmodpit4cards.html        # PMOD PIT4 hub
+│   │   ├── errpit3cards.html         # ERR PIT3 hub
+│   │   ├── errpit4cards.html         # ERR PIT4 hub
+│   │   ├── support.html              # Support Facilities
+│   │   └── demodocument.html         # Placeholder (122 routes) — remove pre-production
+│   ├── pit/                          # PIT Help Desk guides
+│   ├── PIT3/                         # PIT3 content and assets
+│   │   ├── *.html                    # Section content fragments
+│   │   ├── soap/                     # SOAP schemas, WSDLs, schema browser
+│   │   ├── rest/                     # REST API reference + examples
+│   │   ├── examples/                 # ZIP/JSON/PDF examples
+│   │   ├── scenarios/                # JSON/XML scenario files
+│   │   ├── screens/                  # Screen upload examples + CSVs
+│   │   ├── guide/                    # PDF guides
+│   │   ├── data-items/               # PDF data item specs
+│   │   └── validation-rules/         # XLSX validation rule files
+│   └── PIT4/                         # PIT4 content and assets (mirrors PIT3)
+├── templates/                        # Mirror of content/ (legacy — kept for reference)
+├── tools/
+│   └── fix_mojibake.py               # Byte-level encoding fix utility
+└── package.json
 ```
 
 ---
 
-## Development
+## Development Notes
 
-### Prerequisites
+### Branch Strategy
 
-- Node.js and npm
-- Sass (installed via npm)
+| Branch | Purpose |
+|---|---|
+| `main` | Production baseline |
+| `dev_traditionalNavbar` | Navbar redesign + CSS overhaul (styling work) |
+| `dev_contentMigration` | Content migration (branched from `dev_traditionalNavbar`) |
 
-### Setup
+No direct commits to `main`. Feature branches are merged via PR.
 
-```bash
-npm install
-```
+### Key Conventions
 
-### Compile SCSS
+- **All sizes in `rem`** — no `px` in authored CSS (border widths are the only accepted exception)
+- **Squared corners always** — `border-radius: 0` everywhere, no exceptions
+- **Revenue Green `#025F63`** — used for all header/navbar backgrounds
+- **`demodocument.html`** — intentional placeholder; must be replaced with real content before production
+- **SCSS must be recompiled** after any change to `.scss` files — the browser loads `styles.css` only
 
-```bash
-npm run watch:scss
-```
+### Tools
 
-This watches `assets/css/styles.scss` and compiles to `assets/css/styles.css` on every save.
+| Tool | Purpose |
+|---|---|
+| `tools/fix_mojibake.py` | Fixes double-encoded UTF-8 smart quotes/dashes in HTML files |
 
-### Running Locally
+### Further Documentation
 
-Serve the project root with any static file server, for example:
-
-```bash
-npx serve .
-```
-
-Then open `http://localhost:3000` in your browser.
-
-> **Note:** The router uses `fetch()` to load templates, so the site must be served over HTTP — opening `index.html` directly as a `file://` URL will not work.
+- [`PROJECT_ASSESSMENT.md`](PROJECT_ASSESSMENT.md) — full architecture assessment, design decisions, outstanding work
+- [`migration_status.md`](migration_status.md) — asset migration tracking from source projects
