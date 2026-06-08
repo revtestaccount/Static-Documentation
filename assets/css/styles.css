@@ -11269,7 +11269,14 @@ body .header__app-name {
 }
 body .site-main {
   width: 100%;
-  padding: 2rem 2rem;
+  padding: 2rem;
+}
+body main #content > p,
+body main #content > h1,
+body main #content > h2 {
+  max-width: 60rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 body main p {
   text-align: left;
@@ -11409,12 +11416,6 @@ body .footer {
   max-width: 66%;
   text-align: center;
   margin: auto;
-}
-
-.container {
-  max-width: 60rem;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .container .row + .row {

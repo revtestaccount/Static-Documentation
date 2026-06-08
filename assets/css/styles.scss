@@ -122,12 +122,23 @@ body {
         }
     };
 
-    .site-main {
-        width: 100%;
-        padding: 2rem 2rem;
-    }
+        .site-main {
+            width: 100%;
+            padding: 2rem;
+        }
 
-    main{
+        main{
+        // Constrain prose text width to match .pit-section and card grid (60rem)
+        // Only targets p, h1, h2 that are direct children of #content
+        // — does NOT affect .container so card columns are unaffected
+        #content > p,
+        #content > h1,
+        #content > h2 {
+            max-width: 60rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         p{
             text-align: left;
         };
@@ -306,12 +317,6 @@ body {
 // ── Card container layout ───────────────────────────────────────────────────────
 // Matches the max-width constraint applied to #content / .pit-section (60rem)
 // so card grids don't stretch edge-to-edge on wide screens
-.container {
-    max-width: 60rem;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 // Gap between consecutive card rows
 .container .row + .row {
     margin-top: 2rem;
