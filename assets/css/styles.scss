@@ -1,4 +1,4 @@
-/*** Abstracts imports ***/
+﻿/*** Abstracts imports ***/
 @import 'abstracts/functions';
 @import 'abstracts/colors';
 @import 'abstracts/lengths';
@@ -129,23 +129,7 @@ body {
 
     main{
         p{
-            text-align:left ;
-        };
-
-        .card{
-            margin-top: 2rem !important;
-            margin-bottom: 2rem !important; 
-            margin: auto;
-            .card-img-top{
-                padding: 1rem !important;
-                background-color: $brandmint-lighten-50 !important;
-                max-height: 12.6875rem;
-            };
-            
-            .card-text{
-                font-size: $h3-font-size !important;
-                text-align: center;
-            };
+            text-align: left;
         };
 
         #content{  
@@ -322,8 +306,13 @@ body {
 // ── Home page cards ──────────────────────────────────────────────────────────────
 // Uses Bootstrap stretched-link for full-card clickability (Bootstrap still loaded from CDN)
 // width: 18rem was previously inline on every card — centralised here
+.container .row + .row {
+    margin-top: 2rem; // vertical gap between card rows
+}
+
 .home-card {
     width: 18rem;           // moved from inline style="width: 18rem" on all card HTML
+    height: 100%;           // fills the Bootstrap column so all cards in a row are equal height
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     position: relative;     // required for Bootstrap stretched-link
