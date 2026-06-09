@@ -220,6 +220,36 @@ These `sitemap.json` routes exist but have no real content yet:
 
 ---
 
+## 8. Migration Script Improvements
+
+**File:** `migrationScripts/pdfToMarkdown.py`
+
+The script currently converts PDFs to Markdown using PyMuPDF (`fitz`). Several improvements are outstanding:
+
+### Known Bugs
+- **Line 22: `exit` instead of `exit()`** — bare `exit` is a site object reference, not a function call. It does not terminate the script. Should be `sys.exit(1)` or removed.
+
+### Suggested Improvements
+
+| # | Improvement | Detail |
+|---|---|---|
+| 1 | **`--output` argument** | Currently output lands alongside the source PDF. Add `--output <dir>` so files go directly to e.g. `content/PIT3/guide/` |
+| 2 | **`--pit` argument** | Add `--pit pit3` or `--pit pit4` flag so the script automatically places output in the correct `content/PIT3/` or `content/PIT4/` subdirectory |
+| 3 | **Font-size heading detection** | Replace the `isupper()` heading heuristic (unreliable — all-caps body text triggers false positives) with PyMuPDF's `get_text("dict")` method which exposes font size per text block. Larger font = heading. |
+| 4 | **Table detection** | Current tab-character detection covers only a subset of PDF table layouts. Most complex tables in the source documents will not convert correctly. Consider using `pdfplumber` for table extraction. |
+| 5 | **Companion `renderMarkdown.py` script** | Write a second script that converts the Markdown output into the `.pit-section` HTML structure used by the existing content pages, completing the PDF → HTML pipeline. |
+
+### Improved Script Signature (proposed)
+```
+python pdfToMarkdown.py <pdf_path> [--output <dir>] [--pit pit3|pit4]
+
+Examples:
+  python pdfToMarkdown.py source.pdf --output content/PIT3/guide/
+  python pdfToMarkdown.py source.pdf --pit pit4
+```
+
+---
+
 ## 8. Known Issues
 
 | Issue | Impact | Status |
