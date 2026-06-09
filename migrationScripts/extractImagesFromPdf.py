@@ -1,55 +1,72 @@
-from email.mime import image
 import os
 import sys
 import fitz
 
-#*** Run Commmand ****
-#python extractImagesFromPdf.py O:\paye-employers-documentation-v2\paye-employers-documentation-v2-python-scripts\PITSelfServiceGuide.pdf
-
-#Create ouput directory
-print('Script Parameters', sys.argv)
-firstParameter = str(sys.argv[1])
-# print(firstParameter)
-
-# Define the input PDF and output Markdown filenames
-pdf_filename = firstParameter
-directoryPath = os.path.dirname(pdf_filename)
-# print(directoryPath)
-fileNameExtn = os.path.basename(pdf_filename)
-fileName = os.path.splitext(fileNameExtn)[0]
-# print(fileName)
-imageDirectory = os.path.join(directoryPath,fileName,"images")
-print(imageDirectory)
-
-if not os.path.exists(imageDirectory):
-    os.makedirs(imageDirectory)
-    print(fileName + "images created store @ " + imageDirectory)
-    
-
-#open PDF file
-doc = fitz.open(firstParameter)
+# *** Run Command ***
+# python extractImagesFromPdf.py <pdf_path> [output_dir]
+#
+# Examples:
+#   python extractImagesFromPdf.py source.pdf
+#   python extractImagesFromPdf.py source.pdf content/PIT3/guide/
+#
+# Can also be imported and called from pdfToMarkdown.py:
+#   from extractImagesFromPdf import extract_images_from_pdf
 
 
-#extracts images from each page
-image_counter = 1
-for page_num in range(len(doc)):
-    page = doc[page_num]
-    images = page.get_images(full=True)
-    for img_index, img in enumerate(images):
-        xref=img[0]
-        base_images = doc.extract_image(xref)
-        image_data = base_images["image"]
-        # image_filename = os.path.join(imageDirectory, f"image({image_counter}).png")
-        # imageName = "image_"+str(image_counter)+".png"
-        imageName = f"image_{image_counter}.png"
-        print(imageName)
-        image_filename = os.path.join(imageDirectory, imageName)
+def extract_images_from_pdf(pdf_filename, output_dir=None):
+    """
+    Extract all images from a PDF into a subfolder named after the document.
 
-        #save the image data as a file
-        
-        with open(image_filename, "wb") as image_file:
-            image_file.write(image_data)
-        print(f"Saved image {image_counter} from page {page_num + 1} as {image_filename}")
-        image_counter += 1
+    Folder structure created:
+        <output_dir>/<document_name>/images/image_1.png
+                                            image_2.png ...
 
-print(f"All images have been extracted and saved to '{imageDirectory}'!") 
+    Args:
+        pdf_filename (str): Path to the source PDF file.
+        output_dir (str):   Directory to write output into.
+                            Defaults to the same directory as the PDF.
+
+    Returns:
+        str: Path to the images directory that was created.
+    """
+    file_name_ext = os.path.basename(pdf_filename)
+    file_name = os.path.splitext(file_name_ext)[0]
+
+    base_dir = output_dir if output_dir else os.path.dirname(pdf_filename)
+    image_directory = os.path.join(base_dir, file_name, "images")
+
+    if not os.path.exists(image_directory):
+        os.makedirs(image_directory)
+        print(f"Created image directory: {image_directory}")
+
+    doc = fitz.open(pdf_filename)
+    image_counter = 1
+
+    for page_num in range(len(doc)):
+        page = doc[page_num]
+        for img in page.get_images(full=True):
+            xref = img[0]
+            base_image = doc.extract_image(xref)
+            image_data = base_image["image"]
+            image_name = f"image_{image_counter}.png"
+            image_path = os.path.join(image_directory, image_name)
+
+            with open(image_path, "wb") as image_file:
+                image_file.write(image_data)
+
+            print(f"Saved image {image_counter} from page {page_num + 1}: {image_path}")
+            image_counter += 1
+
+    print(f"All images extracted to '{image_directory}'")
+    return image_directory
+
+
+# ── Entry point when run directly ─────────────────────────────────────────────
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python extractImagesFromPdf.py <pdf_path> [output_dir]")
+        sys.exit(1)
+
+    pdf_path = sys.argv[1]
+    out_dir = sys.argv[2] if len(sys.argv) > 2 else None
+    extract_images_from_pdf(pdf_path, out_dir)
