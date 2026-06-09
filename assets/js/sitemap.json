@@ -93,7 +93,7 @@
    "message": "placeholder text/unused"
   },
   "faq": {
-   "template": "./content/shared/demodocument.html",
+   "template": "./content/shared/faq.html",
    "title": "PAYE Modernisation Web Services - FAQ",
    "message": "placeholder text/unused"
   },
