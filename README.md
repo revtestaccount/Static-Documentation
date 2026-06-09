@@ -16,14 +16,15 @@ A static documentation portal for Revenue's PAYE Modernisation Public Interface 
 - Any static file server (e.g. `npx serve`, Python `http.server`, Live Server)
 
 ### Compile SCSS
-```powershell
-node "C:\NodeJs\node-v22.14.0-win-x64\node_modules\sass\sass.js" `
-  "assets/css/styles.scss" `
-  "assets/css/styles.css" `
-  --no-source-map `
-  --silence-deprecation=import `
-  --silence-deprecation=global-builtin `
-  --silence-deprecation=color-functions
+
+Compile once:
+```
+npm run build:scss
+```
+
+Compile and watch for changes during development:
+```
+npm run watch:scss
 ```
 
 ### Run Locally
@@ -219,7 +220,7 @@ No direct commits to `main`. Feature branches are merged via PR.
 - **Squared corners always** — `border-radius: 0` everywhere, no exceptions
 - **Revenue Green `#025F63`** — used for all header/navbar backgrounds
 - **`demodocument.html`** — intentional placeholder; must be replaced with real content before production
-- **SCSS must be recompiled** after any change to `.scss` files — the browser loads `styles.css` only
+- **SCSS must be recompiled** after any change to `.scss` files — run `npm run build:scss` or keep `npm run watch:scss` running during development
 
 ### Tools
 
