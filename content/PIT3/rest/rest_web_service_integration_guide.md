@@ -139,9 +139,9 @@ The web services for the PAYE Modernisation messages are described in the REST O
 
 The OpenAPI, REST Security version specifications we are following include:
 
-Open API Specification Version 3.0: [https://github.com/OAI/OpenAPI-](https://github.com/OAI/OpenAPI-) Specification/blob/master/versions/3.0.0.md
+[Open API Specification Version 3.0](https://github.com/OAI/OpenAPI-) Specification/blob/master/versions/3.0.0.md
 
-HTTP Signatures Version 08: [https://tools.ietf.org/html/draft-cavage-http-signatures-08](https://tools.ietf.org/html/draft-cavage-http-signatures-08)
+[HTTP Signatures Version 08](https://tools.ietf.org/html/draft-cavage-http-signatures-08)
 
 ### 2.1. REST Endpoints
 
@@ -152,19 +152,19 @@ The PAYE Modernisation web service endpoints are detailed below.
 |---|---|---|---|---|---|---|
 |  |  | Met |  |  |  |  |
 |  |  | hod |  |  |  |  |
-| * Look Up RPN By Employer and optionally filter by date last updated and/or employee id's web service | GET |  |  | [https://www.ros.ie/](https://www.ros.ie/) paye-employers /v1/rest/rpn/{employer RegistrationNumber}/{t axYear} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) o employeeIDs (optional) o dateLastUpdate d (optional) | lookUpRPNByEmpl oyer |
-| Lookup RPN by Employee web service | GET |  |  | [https://www.ros.ie/](https://www.ros.ie/) paye-employers /v1/rest/rpn/{employer RegistrationNumber}/{t axYear}/{employeeId} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | lookUpRPNByEmpl oyee |
-| New RPN web service | POST |  |  | [https://www.ros.ie/](https://www.ros.ie/) paye- employers/v1/rest/rpn /{employerRegistration Number}/{taxYear} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | createNewRPN |
-| Payroll Submission web service | POST |  |  | [https://www.ros.ie/](https://www.ros.ie/) paye-employers /v1/rest/payroll/{empl oyerRegistrationNumbe | Query Parameters o softwareUsed o softwareVersio n | createPayrollSubmi ssion |
+| * Look Up RPN By Employer and optionally filter by date last updated and/or employee id's web service | GET |  |  | https://www.ros.ie/ paye-employers /v1/rest/rpn/{employer RegistrationNumber}/{t axYear} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) o employeeIDs (optional) o dateLastUpdate d (optional) | lookUpRPNByEmpl oyer |
+| Lookup RPN by Employee web service | GET |  |  | https://www.ros.ie/ paye-employers /v1/rest/rpn/{employer RegistrationNumber}/{t axYear}/{employeeId} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | lookUpRPNByEmpl oyee |
+| New RPN web service | POST |  |  | https://www.ros.ie/ paye- employers/v1/rest/rpn /{employerRegistration Number}/{taxYear} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | createNewRPN |
+| Payroll Submission web service | POST |  |  | https://www.ros.ie/ paye-employers /v1/rest/payroll/{empl oyerRegistrationNumbe | Query Parameters o softwareUsed o softwareVersio n | createPayrollSubmi ssion |
 
 
 |  |  | r}/{taxYear}/{payrollRu nReference}/{submissio nID} | o AgentTain (optional*) |  |
 |---|---|---|---|---|
-| Check Payroll Submission web service | GET | [https://www.ros.ie/](https://www.ros.ie/) paye-employers /v1/rest/payroll/{empl oyerRegistrationNumbe r}/{taxYear}/{payrollRu nReference}/{submissio nID} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | checkPayrollSubmis sionComplete |
-| Check Payroll Run web service | GET | [https://www.ros.ie/](https://www.ros.ie/) paye- employers/v1/rest/pay roll/{employerRegistrat ionNumber}/{taxYear}/{ payrollRunReference} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | checkPayrollRunCo mplete |
-| Enhanced Reporting Submission web service | POST | [https://www.ros.ie/](https://www.ros.ie/) paye- employers/v1/rest/enh anced_reporting /{employerRegistration Number}/{taxYear}/{en hancedReportingRunRe ference}/{submissionID } | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | submitEmployerRe portingSubmission |
-| Check ERR Submission web service | GET | [https://www.ros.ie/](https://www.ros.ie/) paye- employers/v1/rest/enh anced_reporting/{empl oyerRegistrationNumbe r}/{taxYear}/{runRefere nce}/{submissionID} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | checkEnhancedRep ortingRequirement sSubmission |
-| Check ERR Run web service | GET | [https://www.ros.ie/](https://www.ros.ie/) paye- employers/v1/rest/ enhanced_reporting/{e mployerRegistrationNu mber}/{taxYear}/{runRe ference} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | checkEnhancedRep ortingRequirement sRun |
+| Check Payroll Submission web service | GET | https://www.ros.ie/ paye-employers /v1/rest/payroll/{empl oyerRegistrationNumbe r}/{taxYear}/{payrollRu nReference}/{submissio nID} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | checkPayrollSubmis sionComplete |
+| Check Payroll Run web service | GET | https://www.ros.ie/ paye- employers/v1/rest/pay roll/{employerRegistrat ionNumber}/{taxYear}/{ payrollRunReference} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | checkPayrollRunCo mplete |
+| Enhanced Reporting Submission web service | POST | https://www.ros.ie/ paye- employers/v1/rest/enh anced_reporting /{employerRegistration Number}/{taxYear}/{en hancedReportingRunRe ference}/{submissionID } | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | submitEmployerRe portingSubmission |
+| Check ERR Submission web service | GET | https://www.ros.ie/ paye- employers/v1/rest/enh anced_reporting/{empl oyerRegistrationNumbe r}/{taxYear}/{runRefere nce}/{submissionID} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | checkEnhancedRep ortingRequirement sSubmission |
+| Check ERR Run web service | GET | https://www.ros.ie/ paye- employers/v1/rest/ enhanced_reporting/{e mployerRegistrationNu mber}/{taxYear}/{runRe ference} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | checkEnhancedRep ortingRequirement sRun |
 
 
 *Agent Tain is conditionally optional. It is required when using an Agent Cert
@@ -179,9 +179,9 @@ Although the ‘X-HTTP-Method-Override’ HTTP header is not currently a standar
 The ‘Content-Type’ header must be set to ‘application/x-www-form-urlencoded’ and the request body must meet the ‘application/x-www-form-urlencoded’ standard. See below HTTP request example
 
 
-| * Look Up ERN web service | GET | [https://www.ros.ie/](https://www.ros.ie/) paye- employers/v1/rest/ern/ {employerRegistration Number}/{taxYear} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) o PPSNs | lookUpERN |
+| * Look Up ERN web service | GET | https://www.ros.ie/ paye- employers/v1/rest/ern/ {employerRegistration Number}/{taxYear} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) o PPSNs | lookUpERN |
 |---|---|---|---|---|
-| Monthly ERR Report web service | GET | [https://www.ros.ie/](https://www.ros.ie/) paye- employers/v1/rest/ enhanced-reporting/ reports/monthly /{employerRegistration Number}/{taxYear}/{m onth} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | requestMonthlyErr Report |
+| Monthly ERR Report web service | GET | https://www.ros.ie/ paye- employers/v1/rest/ enhanced-reporting/ reports/monthly /{employerRegistration Number}/{taxYear}/{m onth} | Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) | requestMonthlyErr Report |
 
 
 | POST v1/rest/rpn/0000001W/2019/1/1?agentTain=11221w&softwareUsed=SoftwareXYZ |  |

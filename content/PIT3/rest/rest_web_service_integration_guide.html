@@ -1,13 +1,15 @@
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8" />
     <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <title>REST Web Service Integration Guide</title>
 </head>
 <body><div class="document-content"><h1 class="document-title" id="title">REST Web Service Integration Guide</h1>
 <div style="display:flex; gap:2rem; justify-content:center; align-items:center; margin:1.5rem 0;">
     <img alt="Workflow icon" src="../../../assets/images/icon-helpdesk-workflow.svg" width="240" height="240" />
     <img alt="Filing icon" src="../../../assets/images/icon-helpdesk-filing.svg" width="240" height="240" />
     <img alt="Sync icon" src="../../../assets/images/icon-helpdesk-sync.svg" width="240" height="240" />
-</div><h2 class="pmod" id="table_of_contents">Table of Contents</h2><ul id="toc"><li><a href="javascript:void(0)" onclick="document.getElementById('paye_modernisation').scrollIntoView()">PAYE Modernisation</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('contents').scrollIntoView()">Contents</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('audience').scrollIntoView()">Audience</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('document_context').scrollIntoView()">Document context</a></li><li><a href="javascript:void(0)" onclick="document.getElementById('1._introduction').scrollIntoView()">1. Introduction</a></li><li><a href="javascript:void(0)" onclick="document.getElementById('2._calling_the_services').scrollIntoView()">2. Calling the Services</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('2.1._rest_endpoints').scrollIntoView()">2.1. REST Endpoints</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('2.1.1._additional_information').scrollIntoView()">2.1.1. Additional Information</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('2.2._digital_signatures').scrollIntoView()">2.2. Digital Signatures</a></li><li><a href="javascript:void(0)" onclick="document.getElementById('3._interpreting_the_responses').scrollIntoView()">3. Interpreting the Responses</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.1._validation_errors').scrollIntoView()">3.1. Validation Errors</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.1.1._request_validation').scrollIntoView()">3.1.1. Request Validation</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.1.2._line_item_validation').scrollIntoView()">3.1.2. Line Item Validation</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.2._lookup_revenue_payroll_notification_(rpn)_web_service').scrollIntoView()">3.2. Lookup Revenue Payroll Notification (RPN) Web Service</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.3._new_rpn_web_service').scrollIntoView()">3.3. New RPN Web Service</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.4._payroll_submission_web_service').scrollIntoView()">3.4. Payroll Submission Web Service</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.5._check_payroll_submission_web_service').scrollIntoView()">3.5. Check Payroll Submission Web Service</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.6._check_payroll_run_web_service').scrollIntoView()">3.6. Check Payroll Run Web Service</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.7._enhanced_reporting_submission_web_service').scrollIntoView()">3.7. Enhanced Reporting Submission Web Service</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.8._check_err_run_web_service').scrollIntoView()">3.8. Check ERR Run Web Service</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.9._check_err_submission_web_service').scrollIntoView()">3.9. Check ERR Submission Web Service</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.10._lookup_ern_web_service').scrollIntoView()">3.10. Lookup ERN Web Service</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('3.11._monthly_err_report_web_service').scrollIntoView()">3.11. Monthly ERR Report Web Service</a></li><li><a href="javascript:void(0)" onclick="document.getElementById('4._digital_signatures').scrollIntoView()">4. Digital Signatures</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('4.1._http_signatures').scrollIntoView()">4.1. HTTP Signatures</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('4.1.1._http_signature_sample').scrollIntoView()">4.1.1. HTTP Signature Sample</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('4.1.2._http_signature_components').scrollIntoView()">4.1.2. HTTP Signature Components</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('4.1.3._signature_string_construction').scrollIntoView()">4.1.3. Signature String Construction</a></li><li style="margin-left: 1.5rem;"><a href="javascript:void(0)" onclick="document.getElementById('4.1.4._signature_creation').scrollIntoView()">4.1.4. Signature Creation</a></li><li><a href="javascript:void(0)" onclick="document.getElementById('5._example_messages').scrollIntoView()">5. Example Messages</a></li><li><a href="javascript:void(0)" onclick="document.getElementById('appendix_a_–_extracting_from_a_.p12_file').scrollIntoView()">Appendix A – Extracting from a .p12 File</a></li></ul>
+</div><h2 class="pmod" id="table_of_contents">Table of Contents</h2><ul id="toc"><li><a href="#paye_modernisation">PAYE Modernisation</a></li><li style="margin-left: 1.5rem;"><a href="#contents">Contents</a></li><li style="margin-left: 1.5rem;"><a href="#audience">Audience</a></li><li style="margin-left: 1.5rem;"><a href="#document_context">Document context</a></li><li><a href="#1._introduction">1. Introduction</a></li><li><a href="#2._calling_the_services">2. Calling the Services</a></li><li style="margin-left: 1.5rem;"><a href="#2.1._rest_endpoints">2.1. REST Endpoints</a></li><li style="margin-left: 1.5rem;"><a href="#2.1.1._additional_information">2.1.1. Additional Information</a></li><li style="margin-left: 1.5rem;"><a href="#2.2._digital_signatures">2.2. Digital Signatures</a></li><li><a href="#3._interpreting_the_responses">3. Interpreting the Responses</a></li><li style="margin-left: 1.5rem;"><a href="#3.1._validation_errors">3.1. Validation Errors</a></li><li style="margin-left: 1.5rem;"><a href="#3.1.1._request_validation">3.1.1. Request Validation</a></li><li style="margin-left: 1.5rem;"><a href="#3.1.2._line_item_validation">3.1.2. Line Item Validation</a></li><li style="margin-left: 1.5rem;"><a href="#3.2._lookup_revenue_payroll_notification_(rpn)_web_service">3.2. Lookup Revenue Payroll Notification (RPN) Web Service</a></li><li style="margin-left: 1.5rem;"><a href="#3.3._new_rpn_web_service">3.3. New RPN Web Service</a></li><li style="margin-left: 1.5rem;"><a href="#3.4._payroll_submission_web_service">3.4. Payroll Submission Web Service</a></li><li style="margin-left: 1.5rem;"><a href="#3.5._check_payroll_submission_web_service">3.5. Check Payroll Submission Web Service</a></li><li style="margin-left: 1.5rem;"><a href="#3.6._check_payroll_run_web_service">3.6. Check Payroll Run Web Service</a></li><li style="margin-left: 1.5rem;"><a href="#3.7._enhanced_reporting_submission_web_service">3.7. Enhanced Reporting Submission Web Service</a></li><li style="margin-left: 1.5rem;"><a href="#3.8._check_err_run_web_service">3.8. Check ERR Run Web Service</a></li><li style="margin-left: 1.5rem;"><a href="#3.9._check_err_submission_web_service">3.9. Check ERR Submission Web Service</a></li><li style="margin-left: 1.5rem;"><a href="#3.10._lookup_ern_web_service">3.10. Lookup ERN Web Service</a></li><li style="margin-left: 1.5rem;"><a href="#3.11._monthly_err_report_web_service">3.11. Monthly ERR Report Web Service</a></li><li><a href="#4._digital_signatures">4. Digital Signatures</a></li><li style="margin-left: 1.5rem;"><a href="#4.1._http_signatures">4.1. HTTP Signatures</a></li><li style="margin-left: 1.5rem;"><a href="#4.1.1._http_signature_sample">4.1.1. HTTP Signature Sample</a></li><li style="margin-left: 1.5rem;"><a href="#4.1.2._http_signature_components">4.1.2. HTTP Signature Components</a></li><li style="margin-left: 1.5rem;"><a href="#4.1.3._signature_string_construction">4.1.3. Signature String Construction</a></li><li style="margin-left: 1.5rem;"><a href="#4.1.4._signature_creation">4.1.4. Signature Creation</a></li><li><a href="#5._example_messages">5. Example Messages</a></li><li><a href="#appendix_a_–_extracting_from_a_.p12_file">Appendix A – Extracting from a .p12 File</a></li></ul>
 <h2 class="pmod" id="paye_modernisation">PAYE Modernisation</h2>
 <h3 class="pmod" id="contents">Contents</h3>
 <p>3.1.1. Request Validation 9</p>
@@ -18,21 +20,21 @@
 <p>4.1.4. Signature Creation 15</p>
 <p><img alt="Image" src="content/PIT3/rest/rest_web_service_integration_guide/images/image_6.png"/></p>
 <p>Version ERR Milestone 1 Version Date 19/07/2023</p>
-<table class="table">
+<table class="table" tabindex="0">
 <thead>
 <tr>
-<th></th>
-<th>Version History</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
+<th scope="col"></th>
+<th scope="col">Version History</th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
 </tr>
 </thead>
 <tbody>
@@ -626,10 +628,10 @@
 </tr>
 </tbody>
 </table>
-<table class="table">
+<table class="table" tabindex="0">
 <thead>
 <tr>
-<th>1.0 Release</th>
+<th scope="col">1.0 Release</th>
 </tr>
 </thead>
 <tbody>
@@ -642,21 +644,21 @@
 <p>This document is for any software provider who has chosen to build or update their products to allow for PAYE Modernisation.</p>
 <h3 class="pmod" id="document_context">Document context</h3>
 <p>This document provides a technical overview of how to integrate with Revenue’s REST web services including how to sign requests validly. This document is designed to be read in conjunction with the REST/JSON example files as well as the rest of the Revenue Commissioners’ PAYE Modernisation documentation suite including the relevant technical documents.</p>
-<table class="table">
+<table class="table" tabindex="0">
 <thead>
 <tr>
-<th></th>
-<th></th>
-<th></th>
-<th>04/05/2023</th>
-<th></th>
-<th></th>
-<th>1, 2.1, 3.8, 3.9</th>
-<th></th>
-<th></th>
-<th></th>
-<th>Added Enhanced Reporting Check</th>
-<th></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col">04/05/2023</th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col">1, 2.1, 3.8, 3.9</th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col">Added Enhanced Reporting Check</th>
+<th scope="col"></th>
 </tr>
 </thead>
 <tbody>
@@ -732,15 +734,15 @@
 </tr>
 </tbody>
 </table>
-<table class="table">
+<table class="table" tabindex="0">
 <thead>
 <tr>
-<th></th>
-<th>Document References</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
+<th scope="col"></th>
+<th scope="col">Document References</th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col"></th>
 </tr>
 </thead>
 <tbody>
@@ -837,20 +839,20 @@
 <h2 class="pmod" id="2._calling_the_services">2. Calling the Services</h2>
 <p>The web services for the PAYE Modernisation messages are described in the REST OpenAPI Specification JSON file provided under ‘PAYE Web Service Specifications (REST/JSON)’ on the Documents Homepage.</p>
 <p>The OpenAPI, REST Security version specifications we are following include:</p>
-<p>Open API Specification Version 3.0: <a href="https://github.com/OAI/OpenAPI-">https://github.com/OAI/OpenAPI-</a> Specification/blob/master/versions/3.0.0.md</p>
-<p>HTTP Signatures Version 08: <a href="https://tools.ietf.org/html/draft-cavage-http-signatures-08">https://tools.ietf.org/html/draft-cavage-http-signatures-08</a></p>
+<p><a href="https://github.com/OAI/OpenAPI-">Open API Specification Version 3.0</a> Specification/blob/master/versions/3.0.0.md</p>
+<p><a href="https://tools.ietf.org/html/draft-cavage-http-signatures-08">HTTP Signatures Version 08</a></p>
 <h3 class="pmod" id="2.1._rest_endpoints">2.1. REST Endpoints</h3>
 <p>The PAYE Modernisation web service endpoints are detailed below.</p>
-<table class="table">
+<table class="table" tabindex="0">
 <thead>
 <tr>
-<th>Description</th>
-<th></th>
-<th>HTTP</th>
-<th></th>
-<th>Endpoint URL</th>
-<th>Additional Information</th>
-<th>Links</th>
+<th scope="col">Description</th>
+<th scope="col"></th>
+<th scope="col">HTTP</th>
+<th scope="col"></th>
+<th scope="col">Endpoint URL</th>
+<th scope="col">Additional Information</th>
+<th scope="col">Links</th>
 </tr>
 </thead>
 <tbody>
@@ -877,7 +879,7 @@
 <td>GET</td>
 <td></td>
 <td></td>
-<td><a href="https://www.ros.ie/">https://www.ros.ie/</a> paye-employers /v1/rest/rpn/{employer RegistrationNumber}/{t axYear}</td>
+<td>https://www.ros.ie/ paye-employers /v1/rest/rpn/{employer RegistrationNumber}/{t axYear}</td>
 <td>Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) o employeeIDs (optional) o dateLastUpdate d (optional)</td>
 <td>lookUpRPNByEmpl oyer</td>
 </tr>
@@ -886,7 +888,7 @@
 <td>GET</td>
 <td></td>
 <td></td>
-<td><a href="https://www.ros.ie/">https://www.ros.ie/</a> paye-employers /v1/rest/rpn/{employer RegistrationNumber}/{t axYear}/{employeeId}</td>
+<td>https://www.ros.ie/ paye-employers /v1/rest/rpn/{employer RegistrationNumber}/{t axYear}/{employeeId}</td>
 <td>Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*)</td>
 <td>lookUpRPNByEmpl oyee</td>
 </tr>
@@ -895,7 +897,7 @@
 <td>POST</td>
 <td></td>
 <td></td>
-<td><a href="https://www.ros.ie/">https://www.ros.ie/</a> paye- employers/v1/rest/rpn /{employerRegistration Number}/{taxYear}</td>
+<td>https://www.ros.ie/ paye- employers/v1/rest/rpn /{employerRegistration Number}/{taxYear}</td>
 <td>Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*)</td>
 <td>createNewRPN</td>
 </tr>
@@ -904,55 +906,55 @@
 <td>POST</td>
 <td></td>
 <td></td>
-<td><a href="https://www.ros.ie/">https://www.ros.ie/</a> paye-employers /v1/rest/payroll/{empl oyerRegistrationNumbe</td>
+<td>https://www.ros.ie/ paye-employers /v1/rest/payroll/{empl oyerRegistrationNumbe</td>
 <td>Query Parameters o softwareUsed o softwareVersio n</td>
 <td>createPayrollSubmi ssion</td>
 </tr>
 </tbody>
 </table>
-<table class="table">
+<table class="table" tabindex="0">
 <thead>
 <tr>
-<th></th>
-<th></th>
-<th>r}/{taxYear}/{payrollRu nReference}/{submissio nID}</th>
-<th>o AgentTain (optional*)</th>
-<th></th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col">r}/{taxYear}/{payrollRu nReference}/{submissio nID}</th>
+<th scope="col">o AgentTain (optional*)</th>
+<th scope="col"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Check Payroll Submission web service</td>
 <td>GET</td>
-<td><a href="https://www.ros.ie/">https://www.ros.ie/</a> paye-employers /v1/rest/payroll/{empl oyerRegistrationNumbe r}/{taxYear}/{payrollRu nReference}/{submissio nID}</td>
+<td>https://www.ros.ie/ paye-employers /v1/rest/payroll/{empl oyerRegistrationNumbe r}/{taxYear}/{payrollRu nReference}/{submissio nID}</td>
 <td>Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*)</td>
 <td>checkPayrollSubmis sionComplete</td>
 </tr>
 <tr>
 <td>Check Payroll Run web service</td>
 <td>GET</td>
-<td><a href="https://www.ros.ie/">https://www.ros.ie/</a> paye- employers/v1/rest/pay roll/{employerRegistrat ionNumber}/{taxYear}/{ payrollRunReference}</td>
+<td>https://www.ros.ie/ paye- employers/v1/rest/pay roll/{employerRegistrat ionNumber}/{taxYear}/{ payrollRunReference}</td>
 <td>Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*)</td>
 <td>checkPayrollRunCo mplete</td>
 </tr>
 <tr>
 <td>Enhanced Reporting Submission web service</td>
 <td>POST</td>
-<td><a href="https://www.ros.ie/">https://www.ros.ie/</a> paye- employers/v1/rest/enh anced_reporting /{employerRegistration Number}/{taxYear}/{en hancedReportingRunRe ference}/{submissionID }</td>
+<td>https://www.ros.ie/ paye- employers/v1/rest/enh anced_reporting /{employerRegistration Number}/{taxYear}/{en hancedReportingRunRe ference}/{submissionID }</td>
 <td>Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*)</td>
 <td>submitEmployerRe portingSubmission</td>
 </tr>
 <tr>
 <td>Check ERR Submission web service</td>
 <td>GET</td>
-<td><a href="https://www.ros.ie/">https://www.ros.ie/</a> paye- employers/v1/rest/enh anced_reporting/{empl oyerRegistrationNumbe r}/{taxYear}/{runRefere nce}/{submissionID}</td>
+<td>https://www.ros.ie/ paye- employers/v1/rest/enh anced_reporting/{empl oyerRegistrationNumbe r}/{taxYear}/{runRefere nce}/{submissionID}</td>
 <td>Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*)</td>
 <td>checkEnhancedRep ortingRequirement sSubmission</td>
 </tr>
 <tr>
 <td>Check ERR Run web service</td>
 <td>GET</td>
-<td><a href="https://www.ros.ie/">https://www.ros.ie/</a> paye- employers/v1/rest/ enhanced_reporting/{e mployerRegistrationNu mber}/{taxYear}/{runRe ference}</td>
+<td>https://www.ros.ie/ paye- employers/v1/rest/ enhanced_reporting/{e mployerRegistrationNu mber}/{taxYear}/{runRe ference}</td>
 <td>Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*)</td>
 <td>checkEnhancedRep ortingRequirement sRun</td>
 </tr>
@@ -966,31 +968,31 @@ truncation. In this case integrators should switch from GET to POST, use the ‘
 </ul>
 <p>Although the ‘X-HTTP-Method-Override’ HTTP header is not currently a standard, this is the approach taken by Google for the Google Data API. The X-HTTP-Method-Override header tells the PAYE Modernisation API to treat the request as a GET request, even though it is being conducted as a POST request.</p>
 <p>The ‘Content-Type’ header must be set to ‘application/x-www-form-urlencoded’ and the request body must meet the ‘application/x-www-form-urlencoded’ standard. See below HTTP request example</p>
-<table class="table">
+<table class="table" tabindex="0">
 <thead>
 <tr>
-<th>* Look Up ERN web service</th>
-<th>GET</th>
-<th><a href="https://www.ros.ie/">https://www.ros.ie/</a> paye- employers/v1/rest/ern/ {employerRegistration Number}/{taxYear}</th>
-<th>Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) o PPSNs</th>
-<th>lookUpERN</th>
+<th scope="col">* Look Up ERN web service</th>
+<th scope="col">GET</th>
+<th scope="col">https://www.ros.ie/ paye- employers/v1/rest/ern/ {employerRegistration Number}/{taxYear}</th>
+<th scope="col">Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*) o PPSNs</th>
+<th scope="col">lookUpERN</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Monthly ERR Report web service</td>
 <td>GET</td>
-<td><a href="https://www.ros.ie/">https://www.ros.ie/</a> paye- employers/v1/rest/ enhanced-reporting/ reports/monthly /{employerRegistration Number}/{taxYear}/{m onth}</td>
+<td>https://www.ros.ie/ paye- employers/v1/rest/ enhanced-reporting/ reports/monthly /{employerRegistration Number}/{taxYear}/{m onth}</td>
 <td>Query Parameters o softwareUsed o softwareVersio n o AgentTain (optional*)</td>
 <td>requestMonthlyErr Report</td>
 </tr>
 </tbody>
 </table>
-<table class="table">
+<table class="table" tabindex="0">
 <thead>
 <tr>
-<th>POST v1/rest/rpn/0000001W/2019/1/1?agentTain=11221w&amp;softwareUsed=SoftwareXYZ</th>
-<th></th>
+<th scope="col">POST v1/rest/rpn/0000001W/2019/1/1?agentTain=11221w&amp;softwareUsed=SoftwareXYZ</th>
+<th scope="col"></th>
 </tr>
 </thead>
 <tbody>
@@ -1142,15 +1144,15 @@ signature : The signature component is a base 64 encoded digital signature. The 
 <p>}/{taxYear}?softwareUsed=XYZ&amp;softwareVersion=1.0 ** The ‘x-date’ headers field value should ONLY be used in conjunction with the X-Date HTTP header if a Date HTTP header cannot be added to the HTTP request programmatically. The Date header has a limitation when using javascript in a browser to build and send a HTTP signature. The limitation is that you cannot add a ‘Date’ HTTP header when executing javascript in a browser. The native xmlhttprequest object prohibits addition of a ‘Date’ HTTP header. Building the signature string that will be signed with an ‘x-date’ header instead of a ‘date’ header removes this restriction.
 *** The ‘Digest’ HTTP header is created using the POST body/payload. The payload should be converted to a byte array, hashed using the SHA-512 algorithm and finally base64 encoded before adding it as a HTTP header.
 **** Although Content-Type does not have to be part of the Signature string, it is required as a HTTP Header if HTTP Method Type is POST. If the request is a standard POST (i.e. not a header ‘ X-HTTP- Method-Override’ POST, then the Content-Type should be set to ‘application/json’ or ‘application/json;charset=UTF-8’ All other header field values are created by concatenating the lowercase header field name followed by an ASCII colon <code>:</code>, an ASCII space <code></code>, and the header field value.  Leading and trailing whitespace in the header field value MUST be omitted. If the header field is not the last value defined in the <code>headers</code> signature field, then append an ASCII newline <code>\n</code>. See sample below.</p>
-<table class="table">
+<table class="table" tabindex="0">
 <thead>
 <tr>
-<th></th>
-<th>Value</th>
-<th></th>
-<th></th>
-<th>Mandatory</th>
-<th></th>
+<th scope="col"></th>
+<th scope="col">Value</th>
+<th scope="col"></th>
+<th scope="col"></th>
+<th scope="col">Mandatory</th>
+<th scope="col"></th>
 </tr>
 </thead>
 <tbody>

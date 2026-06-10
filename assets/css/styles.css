@@ -11543,6 +11543,17 @@ p ~ .container > .row:first-child {
   border-left: 0.175rem solid rgb(0, 64, 66);
   padding: 0.35rem 0.75rem;
 }
+.document-content p a,
+.document-content li a,
+.document-content td a {
+  text-decoration: underline;
+  color: rgb(2, 95, 99);
+}
+.document-content p a:hover,
+.document-content li a:hover,
+.document-content td a:hover {
+  color: rgb(0, 64, 66);
+}
 .document-content ul#toc {
   background-color: #f9f9f9;
   border: 0.0625rem solid #ddd;

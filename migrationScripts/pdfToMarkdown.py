@@ -598,7 +598,7 @@ for page_num in range(len(doc)):
 print("\nConverting PDF to Markdown...")
 title_emitted = False
 
-def convert_pages(plumber_doc=None):
+def convert_pages(md_path: str, plumber_doc=None):
     global title_emitted
     with open(md_path, "w", encoding="utf-8") as md_file:
         # Write the document title as h1 first, before the page loop.
@@ -621,8 +621,27 @@ def convert_pages(plumber_doc=None):
             # a path segment) gets joined before linkification.
             text = re.sub(r'(https?://[^\s]+)\s*\n\s*([^\s\[\]<>"{}|^`#%]+)', r'\1\2', text)
 
-            # Convert URLs to Markdown links
-            text = re.sub(r'(https?://[^\s\)\]]+)', r'[\1](\1)', text)
+            # Convert URLs to Markdown links.
+            # Skip lines that are already inside a markdown table cell (start with |)
+            # or inside a code block fence (```) to avoid double-linking.
+            # For spec reference lines of the form "Description: https://..."
+            # use the description as the link label.
+            def linkify_line(line):
+                stripped = line.strip()
+                # Don't linkify inside table cells or code fences
+                if stripped.startswith('|') or stripped.startswith('```'):
+                    return line
+                # Pattern: "Some Label Text: https://url" or "Some Label: https://url"
+                label_url = re.match(r'^(.+?):\s+(https?://\S+)(.*)$', stripped)
+                if label_url:
+                    label = label_url.group(1).strip()
+                    url   = label_url.group(2)
+                    rest  = label_url.group(3)
+                    return f'[{label}]({url}){rest}'
+                # Plain URL on its own or mid-sentence: wrap as [url](url)
+                return re.sub(r'(https?://\S+)', r'[\1](\1)', line)
+
+            text = '\n'.join(linkify_line(l) for l in text.split('\n'))
 
             # Build image references for this page (skip duplicates)
             image_refs = []
@@ -654,8 +673,8 @@ def convert_pages(plumber_doc=None):
 
 if PDFPLUMBER_AVAILABLE:
     with pdfplumber.open(pdf_filename) as plumber_doc:
-        convert_pages(plumber_doc)
+        convert_pages(md_path, plumber_doc)
 else:
-    convert_pages(None)
+    convert_pages(md_path, None)
 
 print(f"\nDone. Markdown written to '{md_path}'")

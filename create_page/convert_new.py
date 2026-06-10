@@ -87,6 +87,12 @@ for tag in new_html.find_all("table"):
     tag["class"] = "table"
     tag["tabindex"] = "0"
 
+# -- Add scope="col" to all <th> elements inside <thead> rows -----------------
+for tag in new_html.find_all("thead"):
+    for th in tag.find_all("th"):
+        if not th.get("scope"):
+            th["scope"] = "col"
+
 # -- Generate Table of Contents (h2, h3, h4 only - h1 title never included) -----
 title_tag = new_html.find(id="title")
 if title_tag:
@@ -109,8 +115,7 @@ if title_tag:
         elif tag.name == "h4":
             item["style"] = "margin-left: 3rem;"
         link = new_html.new_tag("a")
-        link["href"] = "javascript:void(0)"
-        link["onclick"] = "document.getElementById('" + str(tag.get("id")) + "').scrollIntoView()"
+        link["href"] = "#" + str(tag.get("id"))
         link.string = tag.get_text(separator=" ", strip=True)
         item.append(link)
         toc.append(item)
@@ -173,12 +178,26 @@ if body:
 # -- Write output ----------------------------------------------------------------
 os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
 
-# lxml strips <head> from the BeautifulSoup tree, so we prepend the stylesheet
-# as a raw string rather than via BS4 DOM manipulation.
+# lxml strips <head> from the BeautifulSoup tree, so we write the full <html>
+# opening as a raw string rather than relying on BS4 DOM manipulation.
+# We always inject lang="en", <meta charset>, and <title>.
+doc_title = ""
+title_tag = new_html.find(id="title")
+if title_tag:
+    doc_title = title_tag.get_text(strip=True)
+
 html_out = str(new_html)
+stylesheet_link = ""
 if args.stylesheet:
-    head_block = f'<head>\n    <link rel="stylesheet" href="{args.stylesheet}" />\n</head>\n'
-    html_out = html_out.replace("<html>", f"<html>\n{head_block}", 1)
+    stylesheet_link = f'\n    <link rel="stylesheet" href="{args.stylesheet}" />'
+
+head_block = (
+    f'<head>\n'
+    f'    <meta charset="UTF-8" />{stylesheet_link}\n'
+    f'    <title>{doc_title}</title>\n'
+    f'</head>\n'
+)
+html_out = html_out.replace("<html>", f'<html lang="en">\n{head_block}', 1)
 
 with open(output_path, "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
     output_file.write(html_out)

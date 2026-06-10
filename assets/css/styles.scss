@@ -458,6 +458,18 @@ p ~ .container > .row:first-child {
         padding: 0.35rem 0.75rem;
     }
 
+        // Body links — always underlined so they are distinguishable without colour (WCAG 1.4.1)
+    p a,
+    li a,
+    td a {
+        text-decoration: underline;
+        color: $base-brandteal;
+
+        &:hover {
+            color: $brandteal-darken-10;
+        }
+    }
+
     // TOC list
     ul#toc {
         background-color: #f9f9f9;
