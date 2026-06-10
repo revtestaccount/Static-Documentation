@@ -2,3 +2,8 @@ env/
 migrationScripts/test.py
 
 node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo

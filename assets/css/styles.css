@@ -11505,6 +11505,131 @@ p ~ .container > .row:first-child {
   color: rgb(2, 95, 99);
 }
 
+.document-content {
+  max-width: 60rem;
+  margin: 2rem auto;
+  padding: 0 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #333;
+}
+.document-content h1.document-title {
+  text-align: center;
+  color: rgb(2, 95, 99);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+.document-content h1.document-title + p > img:only-child,
+.document-content h1.document-title + p > img:first-child {
+  border: none;
+  margin: 0 auto 1.5rem auto;
+  max-height: 12rem;
+  object-fit: contain;
+}
+.document-content h2.pmod, .document-content h3.pmod, .document-content h4.pmod {
+  text-align: left;
+  color: rgb(2, 95, 99);
+  font-weight: 700;
+  font-size: 1.05rem;
+  background-color: #f0f8f8;
+  border-left: 0.25rem solid rgb(2, 95, 99);
+  padding: 0.5rem 0.85rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.document-content h4.pmod {
+  font-size: 0.95rem;
+  background-color: transparent;
+  border-left: 0.175rem solid rgb(0, 64, 66);
+  padding: 0.35rem 0.75rem;
+}
+.document-content ul#toc {
+  background-color: #f9f9f9;
+  border: 0.0625rem solid #ddd;
+  padding: 1rem 1rem 1rem 2rem;
+  margin-bottom: 2rem;
+  line-height: 2;
+}
+.document-content ul#toc a {
+  color: rgb(2, 95, 99);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.document-content ul#toc a:hover {
+  text-decoration: underline;
+}
+.document-content table.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.875rem;
+  overflow-x: auto;
+  display: block;
+}
+.document-content table.table thead tr {
+  background-color: rgb(2, 95, 99);
+  color: rgb(255, 255, 255);
+}
+.document-content table.table thead th {
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.document-content table.table tbody tr {
+  border-bottom: 0.0625rem solid #e0e0e0;
+}
+.document-content table.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.document-content table.table tbody tr:hover {
+  background-color: #f0f8f8;
+}
+.document-content table.table tbody td {
+  padding: 0.55rem 0.85rem;
+  vertical-align: top;
+}
+.document-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border: 0.0625rem solid #e0e0e0;
+}
+.document-content pre {
+  background-color: #f4f4f4;
+  border-left: 0.25rem solid rgb(2, 95, 99);
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+}
+.document-content pre code {
+  background: none;
+  color: #333;
+  padding: 0;
+}
+.document-content p code {
+  background-color: #f0f0f0;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.875rem;
+  color: rgb(0, 86, 179);
+}
+.document-content ul, .document-content ol {
+  margin: 0.5rem 0 1rem 1.5rem;
+}
+.document-content ul li, .document-content ol li {
+  margin-bottom: 0.35rem;
+}
+.document-content a {
+  color: rgb(2, 95, 99);
+  text-decoration: none;
+}
+.document-content a:hover {
+  text-decoration: underline;
+  color: rgb(0, 64, 66);
+}
+
 .heading {
   color: rgb(2, 95, 99);
 }

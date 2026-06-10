@@ -1,8 +1,8 @@
 # Migration Status
 
-> **Last updated:** 2026-06-08  
+> **Last updated:** 2026-06-10  
 > **Branch:** `dev_contentMigration` (branched from `dev_traditionalNavbar`)  
-> **Total commits:** 121
+> **Total commits:** ~135
 
 ---
 
@@ -25,8 +25,8 @@
 
 | Category | Count |
 |---|---|
-| Routes with real content | **38** |
-| Routes pointing to `demodocument.html` placeholder | **122** |
+| Routes with real content | **40** |
+| Routes pointing to `demodocument.html` placeholder | **120** |
 | **Total routes defined in sitemap.json** | **160** |
 
 ---
@@ -67,6 +67,17 @@
 - ✅ PAYE PIT Help Desk User Guide (`content/pit/payepithelpdeskuserguide.html`)
 - ✅ PIT Self-Service Guide (`content/pit/pitselfserviceguide.html`)
 
+### PDF → HTML Migration (new)
+- ✅ PIT3 REST Web Service Integration Guide (`content/PIT3/rest/rest_web_service_integration_guide.html`)
+- ✅ PIT3 REST Connectivity Handshake Guide (`content/PIT3/rest/rest_connectivity_handshake_guide.html`)
+- ✅ PIT4 REST Web Service Integration Guide (`content/PIT4/rest/rest_web_service_integration_guide.html`)
+
+### Tooling (new)
+- ✅ `migrationScripts/pdfToMarkdown.py` — PDF → Markdown (PyMuPDF + pdfplumber, heading detection, table merging, image deduplication)
+- ✅ `create_page/convert_new.py` — Markdown → HTML (TOC, REVDS classes, bullet conversion, tabindex, stylesheet injection)
+- ✅ `tools/migration_pipeline.py` — single-command pipeline (PDF → MD → HTML → sitemap update → listing page update)
+- ✅ `tools/accessibility_audit.py` — static WCAG 2.1 AA audit across all migrated HTML files
+
 ### External Project Integration
 - ✅ `paye-employers-pit-faq` (Angular 14 / PrimeNG accordion) → `content/shared/faq.html`
   - Native `<details>`/`<summary>` accordion — no JS, fully accessible (WCAG)
@@ -90,7 +101,8 @@
 | Screens (PIT3 + PIT4) | Portal login, Self-service guide, Payroll reporting guide, Message guide, JSON examples, Schema, CSV responses |
 | Guide (PIT3 + PIT4) | Documentation guide, Schema changelog, Compression guide |
 | SOAP (PIT3 + PIT4) | All service definitions, schemas, integration guides, examples, handshake guides |
-| REST (PIT3 + PIT4) | OpenAPI spec, integration guides, sample messages, handshake guide |
+| REST (PIT3 + PIT4) | OpenAPI spec, sample messages |
+| REST PIT4 | Handshake guide (PDF not yet migrated) |
 | Supporting Docs (PIT3 + PIT4) | Data items, validation rules, error guide, line item correction, employment ID guide, regulations |
 | Examples (PIT3 + PIT4) | All 10 life-cycle examples, ERR scenarios, REST auth presentation |
 | Scenarios | PSDA Scenarios |

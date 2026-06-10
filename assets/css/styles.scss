@@ -412,6 +412,161 @@ p ~ .container > .row:first-child {
     color: rgb(2, 95, 99);
 }
 
+// ── Generated document pages (convert.py output) ─────────────────────────────
+// Constrains migrated PDF->HTML pages to the same width as .pit-section and .faq
+.document-content {
+    max-width: 60rem;
+    margin: 2rem auto;
+    padding: 0 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #333;
+
+        h1.document-title {
+        text-align: center;
+        color: $base-brandteal;
+        font-weight: $bold-font-weight;
+        margin-bottom: 1.5rem;
+    }
+
+    // Cover page graphic — image immediately after h1 title
+    // Displayed as a centred header graphic with no border, sits close to the title
+    h1.document-title + p > img:only-child,
+    h1.document-title + p > img:first-child {
+        border: none;
+        margin: 0 auto 1.5rem auto;
+        max-height: 12rem;
+        object-fit: contain;
+    }
+
+    h2.pmod, h3.pmod, h4.pmod {
+        text-align: left;
+        color: $base-brandteal;
+        font-weight: $bold-font-weight;
+        font-size: 1.05rem;
+        background-color: #f0f8f8;
+        border-left: 0.25rem solid $base-brandteal;
+        padding: 0.5rem 0.85rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    h4.pmod {
+        font-size: 0.95rem;
+        background-color: transparent;
+        border-left: 0.175rem solid $brandteal-darken-10;
+        padding: 0.35rem 0.75rem;
+    }
+
+    // TOC list
+    ul#toc {
+        background-color: #f9f9f9;
+        border: 0.0625rem solid #ddd;
+        padding: 1rem 1rem 1rem 2rem;
+        margin-bottom: 2rem;
+        line-height: 2;
+
+        a {
+            color: $base-brandteal;
+            text-decoration: none;
+            font-size: 0.9rem;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    // General tables
+    table.table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.25rem 0;
+        font-size: 0.875rem;
+        overflow-x: auto;
+        display: block;
+
+        thead tr {
+            background-color: $base-brandteal;
+            color: $base-white;
+        }
+
+        thead th {
+            padding: 0.6rem 0.85rem;
+            text-align: left;
+            font-weight: $bold-font-weight;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 0.0625rem solid #e0e0e0;
+
+            &:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+
+            &:hover {
+                background-color: #f0f8f8;
+            }
+        }
+
+        tbody td {
+            padding: 0.55rem 0.85rem;
+            vertical-align: top;
+        }
+    }
+
+    // Images
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 1rem auto;
+        border: 0.0625rem solid #e0e0e0;
+    }
+
+    // Code blocks
+    pre {
+        background-color: #f4f4f4;
+        border-left: 0.25rem solid $base-brandteal;
+        padding: 0.85rem 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+        font-size: 0.85rem;
+
+        code {
+            background: none;
+            color: #333;
+            padding: 0;
+        }
+    }
+
+    // Inline code
+    p code {
+        background-color: #f0f0f0;
+        padding: 0.1rem 0.35rem;
+        font-size: 0.875rem;
+        color: $blue-darken-10;
+    }
+
+    // Lists
+    ul, ol {
+        margin: 0.5rem 0 1rem 1.5rem;
+        li { margin-bottom: 0.35rem; }
+    }
+
+    // Links
+    a {
+        color: $base-brandteal;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+            color: $brandteal-darken-10;
+        }
+    }
+}
+
 .heading {
     color: rgb(2, 95, 99);
 }

@@ -1,8 +1,8 @@
 # Project Assessment — Static Documentation Site
 
-> **Last updated:** 2026-06-08  
+> **Last updated:** 2026-06-10  
 > **Active branch:** `dev_contentMigration`  
-> **Total commits:** 121  
+> **Total commits:** ~135  
 
 ---
 
@@ -220,46 +220,91 @@ These `sitemap.json` routes exist but have no real content yet:
 
 ---
 
-## 8. Migration Script Improvements
+## 8. PDF Migration Pipeline
 
-**File:** `migrationScripts/pdfToMarkdown.py`
+A full PDF → HTML migration pipeline is now in place across three scripts:
 
-The script currently converts PDFs to Markdown using PyMuPDF (`fitz`). Several improvements are outstanding:
+### Scripts
 
-### Implemented
-- ✅ **`exit` bug fixed** — replaced bare `exit` with `sys.exit(1)`
-- ✅ **`--output` argument** — specify target directory directly from the command line
-- ✅ **Font-size heading detection** — replaced `isupper()` heuristic with PyMuPDF `get_text("dict")` font-size analysis. Body size detected as most common font size; headings derived from ratio (1.1× = h3, 1.3× = h2, 1.6× = h1)
-- ✅ **Image extraction consolidated** — `extractImagesFromPdf.py` refactored to expose `extract_images_from_pdf()` function; called automatically from `pdfToMarkdown.py` via import. Both scripts still work independently.
-- ✅ **Image subfolder structure preserved** — images land in `<output_dir>/<document_name>/images/image_N.png`; Markdown references use relative paths
+| Script | Location | Purpose |
+|---|---|---|
+| `pdfToMarkdown.py` | `migrationScripts/` | PDF → Markdown (PyMuPDF + pdfplumber) |
+| `convert_new.py` | `create_page/` | Markdown → site-ready HTML with TOC |
+| `migration_pipeline.py` | `tools/` | Single-command orchestrator — runs both scripts in sequence |
+| `accessibility_audit.py` | `tools/` | Static WCAG 2.1 AA audit across all migrated HTML files |
 
-### Still Outstanding
-- ❌ **Table detection** — tab-character detection covers only simple tables. Complex multi-column PDF tables will not convert correctly. Consider `pdfplumber` for table extraction.
-- ❌ **`renderMarkdown.py`** — companion script to convert Markdown output into `.pit-section` HTML structure not yet written
-- ❌ **`--pit` argument** — auto-placement into `content/PIT3/` or `content/PIT4/` not yet implemented
-
-### Current Script Usage
+### Pipeline Usage
 ```
-python pdfToMarkdown.py <pdf_path> [--output <dir>]
-
-Examples:
-  python pdfToMarkdown.py source.pdf
-  python pdfToMarkdown.py source.pdf --output content/PIT3/guide/
-
-# extractImagesFromPdf.py can still be run standalone:
-  python extractImagesFromPdf.py source.pdf [output_dir]
+cd tools
+python migration_pipeline.py "../content/PIT3/<section>/<doc>.pdf" --pit PIT3
+python migration_pipeline.py "../content/PIT4/<section>/<doc>.pdf" --pit PIT4
 ```
+
+### What the Pipeline Does Automatically
+1. Converts PDF → Markdown (font-size heading detection, image extraction, table merging)
+2. Converts Markdown → HTML (TOC generation, bullet conversion, REVDS classes)
+3. Injects `<head>` with correct relative stylesheet path
+4. Injects SVG branding block after `<h1>`
+5. Adds `tabindex="0"` to all `<table>` and `<pre>` elements (WCAG 2.1.3)
+6. Validates environment hostnames (PIT3 vs PIT4)
+7. Updates `sitemap.json` route to point to HTML (not PDF)
+8. Updates section listing page — changes `href` and badge from PDF to LINK
+
+### pdfToMarkdown.py Improvements (implemented)
+- ✅ Font-size heading detection (PyMuPDF `get_text("dict")`)
+- ✅ pdfplumber table extraction with consecutive table merging
+- ✅ Image deduplication (MD5 hash)
+- ✅ Repeating header/footer suppression
+- ✅ Visual TOC detection and suppression
+- ✅ Bullet character (•) → markdown list conversion
+- ✅ Sub-bullet (`o `) → indented markdown list item
+- ✅ Code block detection (HTTP methods, headers, signature components)
+- ✅ `(request-target):` and signature lines detected as code blocks
+- ✅ Split URL fragment joining before linkification
+- ✅ Page 1 images suppressed (cover logos replaced by SVG branding block)
+- ✅ Paragraph joining for flowing body text
+
+### Known Remaining Limitations (manual fix required after pipeline)
+- Complex multi-column tables split across PDF page breaks may not merge cleanly
+- HTTP example blocks formatted as PDF tables render as `<table>` not `<pre><code>`
+- Cover page version history tables have phantom empty columns from merged PDF cells
+- Appendix numbered lists where PDF indents continuation lines need manual cleanup
 
 ---
 
-## 8. Known Issues
+## 9. Accessibility
+
+### WCAG 2.1 AA Compliance
+All migrated HTML pages target WCAG 2.1 AA compliance. The following measures are in place:
+
+- `<html lang="en">` on all hand-authored pages
+- `<title>` element present and descriptive
+- `tabindex="0"` on all `<table>` and `<pre>` elements (keyboard scrollability)
+- `scope="col"` / `scope="row"` on all `<th>` elements
+- Decorative SVG images marked `alt="" role="presentation"`
+- TOC links use `href="#id"` anchors (not `javascript:void(0)`)
+- Heading hierarchy checked — no skipped levels
+
+### Tooling
+- **`tools/accessibility_audit.py`** — static WCAG 2.1 AA audit script; run against all migrated HTML files
+- **Axe DevTools** — in-browser tool used for runtime checks (colour contrast, focus order, dynamic ARIA)
+
+### Audit Workflow
+1. Run `python tools/accessibility_audit.py` after each migration
+2. Run Axe DevTools in-browser on each migrated page
+3. Report findings; fix in HTML and/or update pipeline scripts to prevent recurrence
+
+---
+
+## 10. Known Issues
 
 | Issue | Impact | Status |
 |---|---|---|
 | Bootstrap CDN dependency | External dependency; minor CORS risk | Planned for removal |
-| `demodocument.html` as 122 route placeholder | Users see demo content instead of real pages | Accepted — content authoring in progress |
+| `demodocument.html` as 120 route placeholder | Users see demo content instead of real pages | Accepted — content authoring in progress |
 | SOAP schema topic HTML has legacy meta charset | No visible issue; browser handles correctly | Low priority |
 | Some file names contain spaces | Works on Windows/Mac; potential issues on Linux servers | Monitor |
+| PIT3 REST Web Service Integration Guide PDF contains wrong hostname | `softwaretestnextversion.ros.ie` in signature example | Fixed manually post-migration; source PDF error |
 
 ---
 

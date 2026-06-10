@@ -35,6 +35,13 @@ parser.add_argument(
     default=None,
     dest="content_path"
 )
+parser.add_argument(
+    "--stylesheet", "-s",
+    help="Relative path to the stylesheet to inject into <head> "
+         "(e.g. ../../../assets/css/styles.css). Calculated from output file depth.",
+    default=None,
+    dest="stylesheet"
+)
 args = parser.parse_args()
 
 input_path = args.input
@@ -78,6 +85,7 @@ for tag in new_html.find_all("h4"):
 
 for tag in new_html.find_all("table"):
     tag["class"] = "table"
+    tag["tabindex"] = "0"
 
 # -- Generate Table of Contents (h2, h3, h4 only - h1 title never included) -----
 title_tag = new_html.find(id="title")
@@ -105,7 +113,7 @@ if title_tag:
         link["onclick"] = "document.getElementById('" + str(tag.get("id")) + "').scrollIntoView()"
         link.string = tag.get_text(separator=" ", strip=True)
         item.append(link)
-        new_html.find(id="toc").append(item)
+        toc.append(item)
 
 # -- Rewrite image paths if --content-path supplied ------------------------------
 # Relative paths like ./rest_web_service.../images/image_1.png must be prefixed
@@ -116,6 +124,42 @@ if args.content_path:
         src = img.get("src", "")
         if src and not src.startswith(("http", "/", "content/")):
             img["src"] = prefix + src.lstrip("./")
+
+# -- Convert any surviving bullet paragraphs (• text) to proper <ul><li> lists --
+# Safety net: pdfToMarkdown.py converts • to markdown `- ` list items, but if any
+# slip through as <p> tags they are caught here and converted to proper HTML lists.
+# Strategy: find all bullet <p> tags, group consecutive ones, replace each group
+# with a single <ul>. Done in two passes to avoid mutating the list while iterating.
+body = new_html.find("body")
+if body:
+    # Pass 1: tag all bullet <p> elements
+    bullet_paras = [
+        p for p in body.find_all("p", recursive=False)
+        if p.get_text().strip().startswith('\u2022')
+    ]
+    # Pass 2: group consecutive bullet <p> elements and replace with <ul>
+    while bullet_paras:
+        p = bullet_paras.pop(0)
+        # Build the <ul> from this and any immediately following bullet <p> siblings
+        ul = new_html.new_tag('ul')
+        li = new_html.new_tag('li')
+        li.string = p.get_text().strip().lstrip('\u2022').strip()
+        ul.append(li)
+        nxt = p.find_next_sibling()
+        while nxt and nxt.name == 'p' and nxt.get_text().strip().startswith('\u2022'):
+            li = new_html.new_tag('li')
+            li.string = nxt.get_text().strip().lstrip('\u2022').strip()
+            ul.append(li)
+            to_remove = nxt
+            nxt = nxt.find_next_sibling()
+            to_remove.decompose()
+            if to_remove in bullet_paras:
+                bullet_paras.remove(to_remove)
+        p.replace_with(ul)
+
+# -- Add tabindex="0" to all <pre> blocks so keyboard users can scroll them -----
+for tag in new_html.find_all("pre"):
+    tag["tabindex"] = "0"
 
 # -- Wrap all body content in a constrained .document-content div ---------------
 body = new_html.find("body")
@@ -129,7 +173,52 @@ if body:
 # -- Write output ----------------------------------------------------------------
 os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
 
+# lxml strips <head> from the BeautifulSoup tree, so we prepend the stylesheet
+# as a raw string rather than via BS4 DOM manipulation.
+html_out = str(new_html)
+if args.stylesheet:
+    head_block = f'<head>\n    <link rel="stylesheet" href="{args.stylesheet}" />\n</head>\n'
+    html_out = html_out.replace("<html>", f"<html>\n{head_block}", 1)
+
 with open(output_path, "w", encoding="utf-8", errors="xmlcharrefreplace") as output_file:
-    output_file.write(str(new_html))
+    output_file.write(html_out)
 
 print(f"Done. HTML written to '{output_path}'")
+
+# -- Environment hostname validation ------------------------------------------
+# PIT3 documents must use softwaretest.ros.ie
+# PIT4 documents must use softwaretestnextversion.ros.ie
+# Flag any mismatch so it can be corrected before publishing.
+PIT3_HOST = "softwaretest.ros.ie"
+PIT4_HOST = "softwaretestnextversion.ros.ie"
+
+output_norm = output_path.replace("\\", "/").lower()
+
+correct_host = ""
+wrong_host   = ""
+
+if "/pit3/" in output_norm or "/pit3" in output_norm:
+    env = "PIT3"
+    correct_host = PIT3_HOST
+    wrong_host   = PIT4_HOST
+elif "/pit4/" in output_norm or "/pit4" in output_norm:
+    env = "PIT4"
+    correct_host = PIT4_HOST
+    wrong_host   = PIT3_HOST
+else:
+    env = None
+
+if env:
+    with open(output_path, "r", encoding="utf-8") as f:
+        html_text = f.read()
+    warnings = []
+    if wrong_host in html_text:
+        count = html_text.count(wrong_host)
+        warnings.append(
+            f"  [HOSTNAME WARNING] {env} document contains '{wrong_host}' ({count} occurrence{'s' if count > 1 else ''})."
+            f"\n  Expected '{correct_host}'. Please review and correct before publishing."
+        )
+    if warnings:
+        print("\n" + "\n".join(warnings))
+    else:
+        print(f"[hostname check] OK — no wrong-environment hostnames found for {env}.")

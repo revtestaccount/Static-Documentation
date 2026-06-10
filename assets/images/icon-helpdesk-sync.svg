@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <defs/>
+
+  <!-- Outer teal circle ring -->
+  <circle cx="100" cy="100" r="88" fill="white" stroke="#025F63" stroke-width="12"/>
+
+    <!-- Grey arc: stops just after 9 o'clock -->
+    <path d="M 137 63 A 52 52 0 0 0 48 95"
+          fill="none" stroke="#8C8C8C" stroke-width="18"
+          stroke-linecap="butt"/>
+    <!-- Grey arrowhead: wider than arc at base -->
+    <polygon points="48,116 34,94 62,94" fill="#8C8C8C"/>
+
+    <!-- Teal arc: stops just after 3 o'clock -->
+    <path d="M 63 137 A 52 52 0 0 0 152 105"
+          fill="none" stroke="#025F63" stroke-width="18"
+          stroke-linecap="butt"/>
+    <!-- Teal arrowhead: wider than arc at base -->
+    <polygon points="152,84 138,106 166,106" fill="#025F63"/>
+
+  <!-- Gear -->
+  <path d="M 117.5 95.8 L 127.7 95.6 L 127.7 104.4 L 117.5 104.2
+    L 115.4 109.4 L 122.7 116.5 L 116.5 122.7 L 109.4 115.4
+    L 104.2 117.5 L 104.4 127.7 L 95.6 127.7 L 95.8 117.5
+    L 90.6 115.4 L 83.5 122.7 L 77.4 116.5 L 84.7 109.4
+    L 82.5 104.2 L 72.4 104.4 L 72.4 95.6 L 82.5 95.8
+    L 84.7 90.6 L 77.4 83.5 L 83.5 77.4 L 90.6 84.7
+    L 95.8 82.5 L 95.6 72.4 L 104.4 72.4 L 104.2 82.5
+    L 109.4 84.7 L 116.5 77.4 L 122.7 83.5 L 115.4 90.6 Z"
+    fill="#025F63"/>
+
+  <!-- Centre hole -->
+  <circle cx="100" cy="100" r="10" fill="white"/>
+</svg>

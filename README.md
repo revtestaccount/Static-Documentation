@@ -89,12 +89,12 @@ index.html
 | REST API reference | `content/PIT3/rest/paye-employers-rest-api-pit3.html` | Swagger-generated reference |
 | Placeholder | `content/shared/demodocument.html` | Temporary placeholder for unbuilt routes |
 
-### Route Coverage (as of 2026-06-08)
+### Route Coverage (as of 2026-06-10)
 
 | Status | Count |
 |---|---|
-| Routes with real content | 38 |
-| Routes still using `demodocument.html` placeholder | 122 |
+| Routes with real content | 40 |
+| Routes still using `demodocument.html` placeholder | 120 |
 | **Total routes** | **160** |
 
 ### PIT3 vs PIT4
@@ -195,8 +195,17 @@ Used on all section content pages. Provides:
 │   │   └── validation-rules/         # XLSX validation rule files
 │   └── PIT4/                         # PIT4 content and assets (mirrors PIT3)
 ├── templates/                        # Mirror of content/ (legacy — kept for reference)
+├── migrationScripts/
+│   ├── pdfToMarkdown.py              # PDF → Markdown converter (PyMuPDF + pdfplumber)
+│   └── extractImagesFromPdf.py       # Image extraction utility (called by pdfToMarkdown)
+├── create_page/
+│   └── convert_new.py               # Markdown → HTML converter with TOC generation
 ├── tools/
-│   └── fix_mojibake.py               # Byte-level encoding fix utility
+│   ├── fix_mojibake.py              # Byte-level encoding fix utility
+│   ├── fix_links.py                 # Batch link/badge updater
+│   ├── update_migration_status.py   # Migration status tracker
+│   ├── migration_pipeline.py        # Single-command PDF → HTML pipeline
+│   └── accessibility_audit.py       # Static WCAG 2.1 AA audit tool
 └── package.json
 ```
 
@@ -227,6 +236,12 @@ No direct commits to `main`. Feature branches are merged via PR.
 | Tool | Purpose |
 |---|---|
 | `tools/fix_mojibake.py` | Fixes double-encoded UTF-8 smart quotes/dashes in HTML files |
+| `tools/fix_links.py` | Batch link/badge updater for section listing pages |
+| `tools/update_migration_status.py` | Updates migration status tracking |
+| `tools/migration_pipeline.py` | Single-command PDF → Markdown → HTML migration pipeline |
+| `tools/accessibility_audit.py` | Static WCAG 2.1 AA audit across all migrated HTML files |
+| `migrationScripts/pdfToMarkdown.py` | Converts PDF to Markdown using PyMuPDF + pdfplumber |
+| `create_page/convert_new.py` | Converts Markdown to site-ready HTML fragment with TOC |
 
 ### Further Documentation
 

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Outer grey circle ring -->
+  <circle cx="100" cy="100" r="88" fill="white" stroke="#AAAAAA" stroke-width="13"/>
+
+  <!-- Top drawer tab (narrow bar) -->
+  <rect x="64" y="55" width="72" height="9" rx="1" fill="#025F63"/>
+
+  <!-- Second drawer tab -->
+  <rect x="60" y="69" width="80" height="9" rx="1" fill="#025F63"/>
+
+  <!-- Third tray — wider with open front notch -->
+  <path d="M 54 82 L 146 82 L 146 100 L 120 100 L 120 95 L 80 95 L 80 100 L 54 100 Z"
+        fill="#025F63"/>
+
+  <!-- Main inbox tray box -->
+  <path d="M 50 103 L 150 103 L 150 148 L 50 148 Z" fill="#025F63"/>
+
+  <!-- Tray inner notch (white cutout at front top centre) -->
+  <path d="M 72 103 L 72 112 L 85 112 L 85 108 L 115 108 L 115 112 L 128 112 L 128 103 Z"
+        fill="white"/>
+</svg>
