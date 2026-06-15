@@ -4,17 +4,9 @@
 
 ### Contents
 
-3.1.1. Request Validation 9
-
-3.1.2. Line Item Validation 9
-
 4.1.1. HTTP Signature Sample
 
-4.1.2. HTTP Signature Components 12
-
 4.1.3. Signature String Construction
-
-4.1.4. Signature Creation 15
 
 ![Image](./rest_web_service_integration_guide/images/image_6.png)
 

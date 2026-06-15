@@ -151,10 +151,24 @@ def get_repeating_lines(doc, min_repeat=3, header_zone=12.0, footer_zone=88.0):
 
 def is_toc_line(line):
     """
-    Return True if a line looks like a visual TOC entry (dot leaders).
-    e.g. "Introduction ..................... 5"
+    Return True if a line looks like a visual TOC entry.
+    Handles:
+      - Dot leaders:  "Introduction ..................... 5"
+      - Wide space:   "Introduction                     5"
+      - Single space: "3.1.1. Request Validation 9"
+                      "4.1.2. HTTP Signature Components 12"
     """
-    return bool(re.search(r'\.{4,}', line)) or bool(re.search(r'\s{3,}\d+\s*$', line))
+    # Dot leaders
+    if re.search(r'\.{4,}', line):
+        return True
+    # 3+ spaces before trailing page number
+    if re.search(r'\s{3,}\d+\s*$', line):
+        return True
+    # Section-style TOC: starts with a number pattern and ends with a page number
+    # e.g. "3.1.1. Request Validation 9" or "4.1.2. HTTP Signature Components 12"
+    if re.match(r'^\d+(\.\d+)*\.?\s+.+\s+\d{1,3}\s*$', line.strip()):
+        return True
+    return False
 
 
 def is_toc_block(lines):
@@ -166,6 +180,10 @@ def is_toc_block(lines):
         return False
     header = lines[0].strip().lower()
     if header in ('contents', 'table of contents'):
+        return True
+    # A block starting with 'contents' followed by section entries
+    non_empty = [l.strip() for l in lines if l.strip()]
+    if non_empty and non_empty[0].lower() == 'contents':
         return True
     toc_line_count = sum(1 for l in lines if is_toc_line(l))
     return toc_line_count >= len(lines) * 0.5

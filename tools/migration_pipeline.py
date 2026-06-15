@@ -189,8 +189,21 @@ result = subprocess.run(
         "--content-path", content_path,
         "--stylesheet", stylesheet_href
     ],
-    cwd=os.path.dirname(convert_script)
+    cwd=os.path.dirname(convert_script),
+    capture_output=True,
+    text=True
 )
+
+# Replay stdout so it still appears in the terminal
+print(result.stdout)
+if result.stderr:
+    print(result.stderr)
+
+# Capture hostname warning for the final summary
+hostname_warning = ""
+for line in result.stdout.splitlines():
+    if "HOSTNAME WARNING" in line:
+        hostname_warning = line.strip()
 
 if result.returncode != 0:
     print(f"\nError: convert_new.py failed with exit code {result.returncode}.")
@@ -200,7 +213,7 @@ if not os.path.isfile(html_path):
     print(f"\nError: expected HTML file not found after conversion: {html_path}")
     sys.exit(1)
 
-print(f"\nOK HTML written to: {html_path}")
+print(f"OK HTML written to: {html_path}")
 sys.stdout.flush()
 
 
@@ -392,6 +405,37 @@ sys.stdout.flush()
 
 
 # ---------------------------------------------------------------------------
+# POST-GENERATION: CHECK FOR EMPTY-BODY TABLES
+# ---------------------------------------------------------------------------
+
+empty_table_warnings = []
+try:
+    from bs4 import BeautifulSoup
+    with open(html_path, "r", encoding="utf-8") as f:
+        html_check = f.read()
+    soup = BeautifulSoup(html_check, "lxml")
+    for table in soup.find_all("table"):
+        thead = table.find("thead")
+        tbody = table.find("tbody")
+        if not thead:
+            continue
+        header_cells = [th.get_text(strip=True) for th in thead.find_all("th") if th.get_text(strip=True)]
+        header_preview = " | ".join(header_cells[:4]) if header_cells else "(no header text)"
+        if tbody:
+            data_rows = tbody.find_all("tr")
+            all_empty = all(
+                all(not td.get_text(strip=True) for td in row.find_all("td"))
+                for row in data_rows
+            )
+            if all_empty and data_rows:
+                empty_table_warnings.append(header_preview)
+        else:
+            empty_table_warnings.append(header_preview)
+except Exception:
+    pass
+
+
+# ---------------------------------------------------------------------------
 # DONE
 # ---------------------------------------------------------------------------
 
@@ -404,6 +448,16 @@ print()
 print("  Manual review still required:")
 print("  1. Review the generated HTML for any table splits or")
 print("     formatting issues that the scripts could not auto-fix.")
-print("  2. If the hostname warning fired, correct the host value")
-print("     in the HTML before publishing.")
+if hostname_warning:
+    print()
+    print("  !! HOSTNAME WARNING (action required before publishing):")
+    print(f"     {hostname_warning}")
+else:
+    print("  2. Hostname check passed - no wrong-environment hostnames found.")
+if empty_table_warnings:
+    print()
+    print(f"  !! EMPTY TABLE BODY DETECTED ({len(empty_table_warnings)} table(s)) - likely cross-page split:")
+    for w in empty_table_warnings:
+        print(f"     Table header: {w!r}")
+    print("     Check these tables manually against the source PDF.")
 print("=" * 60)
