@@ -205,6 +205,7 @@ Used on all section content pages. Provides:
 │   ├── fix_links.py                 # Batch link/badge updater
 │   ├── update_migration_status.py   # Migration status tracker
 │   ├── migration_pipeline.py        # Single-command PDF → HTML pipeline
+│   ├── fix_rest_endpoints_table.py  # Post-pipeline fixes for REST Web Service Integration Guide
 │   └── accessibility_audit.py       # Static WCAG 2.1 AA audit tool
 └── package.json
 ```
@@ -239,6 +240,7 @@ No direct commits to `main`. Feature branches are merged via PR.
 | `tools/fix_links.py` | Batch link/badge updater for section listing pages |
 | `tools/update_migration_status.py` | Updates migration status tracking |
 | `tools/migration_pipeline.py` | Single-command PDF → Markdown → HTML migration pipeline |
+| `tools/fix_rest_endpoints_table.py` | Post-pipeline fixes for REST Web Service Integration Guide (PIT3 + PIT4) |
 | `tools/accessibility_audit.py` | Static WCAG 2.1 AA audit across all migrated HTML files |
 | `migrationScripts/pdfToMarkdown.py` | Converts PDF to Markdown using PyMuPDF + pdfplumber |
 | `create_page/convert_new.py` | Converts Markdown to site-ready HTML fragment with TOC |

@@ -1,8 +1,8 @@
 # Migration Status
 
-> **Last updated:** 2026-06-10  
+> **Last updated:** 2026-06-16  
 > **Branch:** `dev_contentMigration` (branched from `dev_traditionalNavbar`)  
-> **Total commits:** ~135
+> **Total commits:** ~140
 
 ---
 
@@ -71,11 +71,13 @@
 - ✅ PIT3 REST Web Service Integration Guide (`content/PIT3/rest/rest_web_service_integration_guide.html`)
 - ✅ PIT3 REST Connectivity Handshake Guide (`content/PIT3/rest/rest_connectivity_handshake_guide.html`)
 - ✅ PIT4 REST Web Service Integration Guide (`content/PIT4/rest/rest_web_service_integration_guide.html`)
+- ✅ PIT4 REST Connectivity Handshake Guide (`content/PIT4/rest/rest_connectivity_handshake_guide.html`)
 
 ### Tooling (new)
 - ✅ `migrationScripts/pdfToMarkdown.py` — PDF → Markdown (PyMuPDF + pdfplumber, heading detection, table merging, image deduplication)
 - ✅ `create_page/convert_new.py` — Markdown → HTML (TOC, REVDS classes, bullet conversion, tabindex, stylesheet injection)
 - ✅ `tools/migration_pipeline.py` — single-command pipeline (PDF → MD → HTML → sitemap update → listing page update)
+- ✅ `tools/fix_rest_endpoints_table.py` — post-pipeline fixes for REST Web Service Integration Guide (section 2.1 table, 4.1.3 table, footnote ordering, code blocks, version history spillover)
 - ✅ `tools/accessibility_audit.py` — static WCAG 2.1 AA audit across all migrated HTML files
 
 ### External Project Integration
@@ -102,7 +104,7 @@
 | Guide (PIT3 + PIT4) | Documentation guide, Schema changelog, Compression guide |
 | SOAP (PIT3 + PIT4) | All service definitions, schemas, integration guides, examples, handshake guides |
 | REST (PIT3 + PIT4) | OpenAPI spec, sample messages |
-| REST PIT4 | Handshake guide (PDF not yet migrated) |
+| REST PIT3 + PIT4 | Sample messages page |
 | Supporting Docs (PIT3 + PIT4) | Data items, validation rules, error guide, line item correction, employment ID guide, regulations |
 | Examples (PIT3 + PIT4) | All 10 life-cycle examples, ERR scenarios, REST auth presentation |
 | Scenarios | PSDA Scenarios |

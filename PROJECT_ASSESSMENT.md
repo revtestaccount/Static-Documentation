@@ -1,8 +1,8 @@
 # Project Assessment — Static Documentation Site
 
-> **Last updated:** 2026-06-10  
+> **Last updated:** 2026-06-16  
 > **Active branch:** `dev_contentMigration`  
-> **Total commits:** ~135  
+> **Total commits:** ~140  
 
 ---
 
@@ -231,6 +231,7 @@ A full PDF → HTML migration pipeline is now in place across three scripts:
 | `pdfToMarkdown.py` | `migrationScripts/` | PDF → Markdown (PyMuPDF + pdfplumber) |
 | `convert_new.py` | `create_page/` | Markdown → site-ready HTML with TOC |
 | `migration_pipeline.py` | `tools/` | Single-command orchestrator — runs both scripts in sequence |
+| `fix_rest_endpoints_table.py` | `tools/` | Post-pipeline fixes for REST Web Service Integration Guide |
 | `accessibility_audit.py` | `tools/` | Static WCAG 2.1 AA audit across all migrated HTML files |
 
 ### Pipeline Usage
@@ -265,10 +266,12 @@ python migration_pipeline.py "../content/PIT4/<section>/<doc>.pdf" --pit PIT4
 - ✅ Paragraph joining for flowing body text
 
 ### Known Remaining Limitations (manual fix required after pipeline)
-- Complex multi-column tables split across PDF page breaks may not merge cleanly
-- HTTP example blocks formatted as PDF tables render as `<table>` not `<pre><code>`
-- Cover page version history tables have phantom empty columns from merged PDF cells
+- Complex multi-column tables split across PDF page breaks may not merge cleanly — use `fix_rest_endpoints_table.py` as a template for document-specific fix scripts
+- HTTP example blocks formatted as PDF tables may render as `<table>` not `<pre><code>` — fixed for REST Web Service Integration Guide
+- Cover page version history tables may have phantom empty columns from merged PDF cells
+- Visual TOC suppression works across blocks but relies on heading numbering patterns — verify on each new document
 - Appendix numbered lists where PDF indents continuation lines need manual cleanup
+- Footnote paragraphs may be merged into a single `<p>` by the pipeline — may need splitting post-migration
 
 ---
 
@@ -304,7 +307,8 @@ All migrated HTML pages target WCAG 2.1 AA compliance. The following measures ar
 | `demodocument.html` as 120 route placeholder | Users see demo content instead of real pages | Accepted — content authoring in progress |
 | SOAP schema topic HTML has legacy meta charset | No visible issue; browser handles correctly | Low priority |
 | Some file names contain spaces | Works on Windows/Mac; potential issues on Linux servers | Monitor |
-| PIT3 REST Web Service Integration Guide PDF contains wrong hostname | `softwaretestnextversion.ros.ie` in signature example | Fixed manually post-migration; source PDF error |
+| PIT3 REST Web Service Integration Guide PDF contains wrong hostname | `softwaretestnextversion.ros.ie` in signature example | Fixed manually post-migration via PowerShell replace; source PDF error |
+| REST Web Service Integration Guide tables split across PDF page breaks | Section 2.1, 4.1.3 tables and HTTP example block render incorrectly | Fixed via `tools/fix_rest_endpoints_table.py` — run after pipeline for this document |
 
 ---
 
