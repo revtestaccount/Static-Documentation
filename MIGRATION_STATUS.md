@@ -78,6 +78,7 @@
 - ✅ `create_page/convert_new.py` — Markdown → HTML (TOC, REVDS classes, bullet conversion, tabindex, stylesheet injection)
 - ✅ `tools/migration_pipeline.py` — single-command pipeline (PDF → MD → HTML → sitemap update → listing page update)
 - ✅ `tools/fix_rest_endpoints_table.py` — post-pipeline fixes for REST Web Service Integration Guide (section 2.1 table, 4.1.3 table, footnote ordering, code blocks, version history spillover)
+- ✅ `tools/fix_pre_tabindex.py` — patches missing `tabindex="0"` on hand-authored `<pre>` elements (WCAG 2.1 keyboard accessibility)
 - ✅ `tools/accessibility_audit.py` — static WCAG 2.1 AA audit across all migrated HTML files
 
 ### External Project Integration

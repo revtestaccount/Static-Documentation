@@ -232,6 +232,7 @@ A full PDF → HTML migration pipeline is now in place across three scripts:
 | `convert_new.py` | `create_page/` | Markdown → site-ready HTML with TOC |
 | `migration_pipeline.py` | `tools/` | Single-command orchestrator — runs both scripts in sequence |
 | `fix_rest_endpoints_table.py` | `tools/` | Post-pipeline fixes for REST Web Service Integration Guide |
+| `fix_pre_tabindex.py` | `tools/` | Patches missing `tabindex="0"` on hand-authored `<pre>` elements (WCAG 2.1) |
 | `accessibility_audit.py` | `tools/` | Static WCAG 2.1 AA audit across all migrated HTML files |
 
 ### Pipeline Usage
@@ -290,12 +291,14 @@ All migrated HTML pages target WCAG 2.1 AA compliance. The following measures ar
 
 ### Tooling
 - **`tools/accessibility_audit.py`** — static WCAG 2.1 AA audit script; run against all migrated HTML files
+- **`tools/fix_pre_tabindex.py`** — run against any HTML file containing hand-authored `<pre>` blocks to ensure `tabindex="0"` is present
 - **Axe DevTools** — in-browser tool used for runtime checks (colour contrast, focus order, dynamic ARIA)
 
 ### Audit Workflow
 1. Run `python tools/accessibility_audit.py` after each migration
-2. Run Axe DevTools in-browser on each migrated page
-3. Report findings; fix in HTML and/or update pipeline scripts to prevent recurrence
+2. Run `python tools/fix_pre_tabindex.py <file>` after hand-authoring any `<pre>` blocks
+3. Run Axe DevTools in-browser on each migrated page
+4. Report findings; fix in HTML and/or update pipeline scripts to prevent recurrence
 
 ---
 

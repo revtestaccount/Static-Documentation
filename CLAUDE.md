@@ -1,4 +1,4 @@
-# CLAUDE.md — Project Context for RevAssist / Claude Code
+﻿# CLAUDE.md — Project Context for RevAssist / Claude Code
 
 > This file is read automatically at the start of every session.
 > It provides the context needed to work effectively on this project without re-explanation.
@@ -102,6 +102,7 @@ python migration_pipeline.py "../content/PIT4/<section>/<doc>.pdf" --pit PIT4
 4. **Check footnotes** - the pipeline sometimes merges multiple footnote paragraphs into one `<p>`
 5. **Check version history** - cover page version history tables can spill into body sections
 6. **Hostname check** - pipeline warns automatically; fix with PowerShell replace if needed
+7. **After hand-authoring any `<pre>` blocks** - run `fix_pre_tabindex.py` to ensure `tabindex="0"` is present (WCAG 2.1)
 
 ### PIT3 Hostname Fix (required for PIT3 REST Web Service Integration Guide)
 
@@ -139,6 +140,17 @@ python fix_rest_endpoints_table.py --pit PIT4
 | Fix 6 | Replaces broken section 4.1.3 headers table with clean 2-column table and moves footnote paragraphs to after the table |
 
 **Pattern for new documents:** If a new PDF has similar issues, create a new script following the same pattern - one `fix_html()` function with numbered fix blocks, each using `re.subn()` with clear change logging.
+
+### `tools/fix_pre_tabindex.py`
+
+Ensures all hand-authored `<pre>` elements have `tabindex="0"` for WCAG 2.1 keyboard accessibility. The pipeline adds this automatically, but hand-authored `<pre>` blocks in fix scripts bypass that step.
+
+```powershell
+cd tools
+python fix_pre_tabindex.py "../content/PIT3/rest/rest_web_service_integration_guide.html"
+```
+
+Idempotent - safe to run multiple times. Run against any HTML file after hand-authoring `<pre>` blocks.
 
 ---
 
