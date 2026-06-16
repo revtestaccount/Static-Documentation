@@ -1,171 +1,156 @@
-﻿<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../assets/css/styles.css" />
+    <title>PAYE PIT Help Desk – User Guide</title>
+</head>
+<body><div class="document-content"><h1 class="document-title" id="title">PAYE PIT Help Desk – User Guide</h1>
+<div style="display:flex; gap:2rem; justify-content:center; align-items:center; margin:1.5rem 0;">
+    <img alt="Workflow icon" src="../../assets/images/icon-helpdesk-workflow.svg" width="240" height="240" />
+    <img alt="Filing icon" src="../../assets/images/icon-helpdesk-filing.svg" width="240" height="240" />
+    <img alt="Sync icon" src="../../assets/images/icon-helpdesk-sync.svg" width="240" height="240" />
+</div><h2 class="pmod" id="table_of_contents">Table of Contents</h2><ul id="toc"><li><a href="#paye_modernisation">PAYE Modernisation</a></li><li style="margin-left: 1.5rem;"><a href="#contents">Contents</a></li><li style="margin-left: 1.5rem;"><a href="#audience">Audience</a></li><li style="margin-left: 1.5rem;"><a href="#document_context">Document context</a></li><li><a href="#1._introduction">1. Introduction</a></li><li><a href="#2._prerequisites">2. Prerequisites</a></li><li><a href="#3._paye_pit_help_desk_registration">3. PAYE PIT Help Desk Registration</a></li><li><a href="#4._raising_and_tracking_queries">4. Raising and Tracking Queries</a></li></ul>
+<h2 class="pmod" id="paye_modernisation">PAYE Modernisation</h2>
+<h3 class="pmod" id="contents">Contents</h3>
+<p><img alt="Image" src="content/pit/paye pit help desk user guide/images/image_6.png"/></p>
+<p>Version 1.0 Release Candidate 2 Version Date 02/09/2019</p>
+<h3 class="pmod" id="audience">Audience</h3>
+<p>This document is for any software provider who has chosen to build or update their products to allow for PAYE Modernisation.</p>
+<h3 class="pmod" id="document_context">Document context</h3>
+<p>This document provides details for accessing and using the PAYE PIT Help Desk – a dedicated online service to support developers/testers conducting PAYE Modernisation public interface testing of their products with Revenue.</p>
+<table class="table pit-section__table" tabindex="0">
+    <thead>
+        <tr>
+            <th scope="col" colspan="4" style="text-align:center; background-color:#025F63; color:#fff;">Version History</th>
+        </tr>
+        <tr>
+            <th scope="col">Version</th>
+            <th scope="col">Change Date</th>
+            <th scope="col">Section</th>
+            <th scope="col">Change Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>0.1</td>
+            <td>05/03/2018</td>
+            <td>All</td>
+            <td>Initial Draft</td>
+        </tr>
+        <tr>
+            <td rowspan="3"><strong>1.0 Release Candidate 2</strong></td>
+            <td>24/05/2018</td>
+            <td>Version</td>
+            <td>Version changed to <strong>1.0 Release Candidate 2</strong></td>
+        </tr>
+        <tr>
+            <td>02/09/2019</td>
+            <td>Section 1</td>
+            <td>Added description of differences between PIT &amp; PIT Next Version</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Section 3</td>
+            <td>Updated screenshot with new registration page &amp; noted new drop down</td>
+        </tr>
+    </tbody>
+</table>
+<table class="table pit-section__table" tabindex="0">
+    <thead>
+        <tr>
+            <th scope="col" colspan="2" style="text-align:center; background-color:#025F63; color:#fff;">Document References</th>
+        </tr>
+        <tr>
+            <th scope="col">Reference</th>
+            <th scope="col">Document Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Documents Homepage</td>
+            <td><a href="https://revenue-ie.github.io/paye-employers-documentation/">Documents Homepage</a></td>
+        </tr>
+    </tbody>
+</table>
 
-<body>
-    <h1 class="document-title" id="title">PAYE PIT Help Desk – User Guide</h1>
-    <div style="display:flex; gap:2rem; justify-content:center; align-items:center; margin:1.5rem 0;">
-        <img alt="Workflow icon" src="./assets/images/icon-helpdesk-workflow.svg" width="120" height="120" />
-        <img alt="Filing icon" src="./assets/images/icon-helpdesk-filing.svg" width="120" height="120" />
-        <img alt="Sync icon" src="./assets/images/icon-helpdesk-sync.svg" width="120" height="120" />
-    </div>
-    <h2 class="pmod">Table of Contents</h2>
-    <ul id="toc">
-        <li><a href="javascript:void(0)" onclick="document.getElementById('None').scrollIntoView()">Table of
-                Contents</a></li>
-        <li><a href="javascript:void(0)" onclick="document.getElementById('audience').scrollIntoView()">Audience</a>
-        </li>
-        <li><a href="javascript:void(0)" onclick="document.getElementById('document_context').scrollIntoView()">Document
-                context</a></li>
-        <li><a href="javascript:void(0)"
-                onclick="document.getElementById('document_references').scrollIntoView()">Document References</a></li>
-        <li><a href="javascript:void(0)"
-                onclick="document.getElementById('abbreviations_and_acronyms').scrollIntoView()">Abbreviations and
-                Acronyms</a></li>
-        <li><a href="javascript:void(0)"
-                onclick="document.getElementById('introduction').scrollIntoView()">Introduction</a></li>
-        <li><a href="javascript:void(0)"
-                onclick="document.getElementById('prerequisites').scrollIntoView()">Prerequisites</a></li>
-        <li><a href="javascript:void(0)"
-                onclick="document.getElementById('paye_pit_help_desk_registration').scrollIntoView()">PAYE PIT Help Desk
-                Registration</a></li>
-        <li><a href="javascript:void(0)"
-                onclick="document.getElementById('raising_and_tracking_queries').scrollIntoView()">Raising and Tracking
-                Queries</a></li>
-    </ul>
-    <h2 class="pmod" id="audience">Audience</h2>
-    <p>This document is for any software provider who has chosen to build or update their products to allow for PAYE
-        Modernisation.</p>
-    <h2 class="pmod" id="document_context">Document context</h2>
-    <p>This document provides details for accessing and using the PAYE PIT Help Desk – a dedicated online service to
-        support developers/testers conducting PAYE Modernisation public interface testing of their products with
-        Revenue.</p>
-    <h2 class="pmod" id="document_references">Document References</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Reference</th>
-                <th>Document Link</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Documents Homepage</td>
-                <td><a href="https://revenue-ie.github.io/paye-employers-documentation/">Documents Homepage</a></td>
-            </tr>
-        </tbody>
-    </table>
-    <h2 class="pmod" id="abbreviations_and_acronyms">Abbreviations and Acronyms</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Acronym</th>
-                <th>Meaning</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>PIT</td>
-                <td>Public Interface Testing</td>
-            </tr>
-            <tr>
-                <td>PAYE</td>
-                <td>Pay As You Earn</td>
-            </tr>
-        </tbody>
-    </table>
-    <h2 class="pmod" id="introduction">Introduction</h2>
-    <p>Revenue is making available a dedicated Public Interface Test (PIT) environment to enable payroll
-        software developers verify the compatibility of their software packages with PAYE Modernisation
-        changes. </p>
-    <p>There are two PIT Environments available to software developers, the first PIT environment is a
-        representation of the live environment with functionality kept up to date with the functionality
-        currently available in the live environment. The second PIT environment is the PIT Next Version
-        environment, which will contain upcoming functionality that is pertinent for developers to test their
-        software ahead of the live release.</p>
-    <p>To support developers and testers through the PIT process, Revenue has provisioned a dedicated
-        online PAYE PIT Help Desk. By using the PAYE PIT Help Desk developers and testers can: </p>
-    <ul>
-        <li>Notify Revenue of their interest in public interface testing </li>
-        <li>Raise and track ticketed queries </li>
-    </ul>
-    <p>This document provides a step by step guide to registering for the PAYE PIT Help Desk and
-        subsequently using it to raise and track queries. </p>
-    <p>Please note that images used throughout this document are broadly indicative of the final product
-        but may be subject to change. </p>
-    <h2 class="pmod" id="prerequisites">Prerequisites</h2>
-    <p>Logging into the PAYE PIT Help Desk is a two-step verification process requiring the interested
-        developer/tester to have: </p>
-    <ul>
-        <li>A valid email address </li>
-        <li>A smart device installed with Google Authenticator </li>
-    </ul>
-    <h2 class="pmod" id="paye_pit_help_desk_registration">PAYE PIT Help Desk Registration</h2>
-    <p>Interested developers/testers can register for the PAYE PIT Help Desk by completing a short online
-        form available at the following URL: </p>
-    <p><a
-            href="https://revenuehelpdesk.canfigure.net/portal/revenueie/register.html">https://revenuehelpdesk.canfigure.net/portal/revenueie/register.html</a>
-    </p>
-    <p><img alt="Registration screen" src="./content/pit/payepithelpdeskuserguide/image_11.png" /></p>
-    <p><em>Figure 1 New User Registration screen</em></p>
-    <p>The information supplied under the ‘Company/Business Name’ field will be used by Revenue to
-        group users belonging to the same Business/Company together. Users belonging to the same group
-        will have access to each other’s queries raised through the PAYE PIT Help Desk1. <br />
-        For the purpose of assigning the user to the PAYE PIT Help Desk, PAYE Modernisation should be
-        selected from the drop down for “System to be tested in PIT”.
-        Upon successful completion of the form, the developer/tester will be asked to check the email
-        address inputted on the form for further instructions. </p>
-    <p><em>As part of reviewing pending registrations Revenue will not associate a registration with a particular
-            business/company group until it has verified that this is allowed by the business/company.</em></p>
-    <p><img alt="Registration Successful" src="./content/pit/payepithelpdeskuserguide/image_13.png" /></p>
-    <p><em>Figure 2 Registration Successful</em></p>
-    <p>The email instructs the developer/tester to verify their email address through clicking on the
-        supplied link.</p>
-    <p><strong>Note:</strong> Email clients may treat an initial email from the Help Desk as spam so please check spam
-        folders if expected email has not arrived. </p>
-    <p><img alt="Email Verification" src="./content/pit/payepithelpdeskuserguide/image_15.png" /></p>
-    <p><em>Figure 3 Email Verification</em></p>
-    <p>Clicking on the link will present the developer/tester with the following message: </p>
-    <p><img alt="Email successfully verified" src="./content/pit/payepithelpdeskuserguide/image_16.png" /></p>
-    <p><em>Figure 4 Email successfully verified</em></p>
-    <p>At this point in the process Revenue will be alerted of the registration request and will review the
-        supplied registration details before associating the registration with the specified company/business
-        group and activating access to the Help Desk.</p>
-    <p>The developer/tester will be notified of successful registration by email which will include
-        instructions on how to complete the process and log in to the Help Desk:</p>
-    <p><img alt="Login instruction email" src="./content/pit/payepithelpdeskuserguide/image_18.png" /></p>
-    <p><em>Figure 5 Login instruction email</em></p>
-    <h2 class="pmod" id="raising_and_tracking_queries">Raising and Tracking Queries</h2>
-    <p>To raise a PIT related query the developer/tester must first log into the Help Desk using the email
-        address specified at registration time and the associated code from Google Authenticator </p>
-    <p><img alt="Login with email" src="./content/pit/payepithelpdeskuserguide/image_20.png" /></p>
-    <p><em>Figure 6 Login with email</em></p>
-    <p><img alt="Google Authenticator" src="./content/pit/payepithelpdeskuserguide/image_21.png" /></p>
-    <p><em>Figure 7 Enter Google Authenticator code</em></p>
-    <p>Upon successful login the developer/tester is presented with the following dashboard view:</p>
-    <p><img alt="PAYE PIT Helpdesk Dashboard" src="./content/pit/payepithelpdeskuserguide/image_23.png" /></p>
-    <p><em>Figure 8 PAYE PIT Helpdesk Dashboard</em></p>
-    <p>The developer/tester can raise a new query by clicking on the ‘New Ticket’ icon available in the left
-        hand bar.</p>
-    <p>This presents the following screen where the developer/tester can supply the details of their query
-        and attach any supporting files:</p>
-    <p><img alt="Raising a query" src="./content/pit/payepithelpdeskuserguide/image_24.png" /></p>
-    <p><em>Figure 9 Raising a query</em></p>
-    <p>On saving the query the developer/tester will receive an email receipt including the ticket number
-        for tracking purposes: </p>
-    <p><img alt="Email receipt" src="./content/pit/payepithelpdeskuserguide/image_26.png" /></p>
-    <p><em>Figure 10 Email receipt</em></p>
-    <p>The developer/tester can view the status of their open queries by clicking on the ‘My Open Tickets’
-        icon available in the left hand bar:</p>
-    <p><img alt="My Open Tickets" src="./content/pit/payepithelpdeskuserguide/image_29.png" /></p>
-    <p><em>Figure 11 My Open Tickets</em></p>
-    <p>The developer/tester will only be able to see tickets raised by themselves and those tickets
-        associated with their company/business group.</p>
-    <p>On resolution of the query or if further information is required, the developer/tester will receive an
-        email notification with the details: </p>
-    <p><img alt="Resolution notification email" src="./content/pit/payepithelpdeskuserguide/image_31.png" /></p>
-    <p><em>Figure 12 Resolution notification email</em></p>
-    <p>The same information will also be available from within the tool itself: </p>
-    <p><img alt="Resolved queries" src="./content/pit/payepithelpdeskuserguide/image_33.png" /></p>
-    <p><em>Figure 13 Resolved queries</em></p>
-</body>
-
-</html>
+<table class="table pit-section__table" tabindex="0">
+    <thead>
+        <tr>
+            <th scope="col" colspan="2" style="text-align:center; background-color:#025F63; color:#fff;">Abbreviations and Acronyms</th>
+        </tr>
+        <tr>
+            <th scope="col">Acronym</th>
+            <th scope="col">Meaning</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>PIT</td>
+            <td>Public Interface Testing</td>
+        </tr>
+        <tr>
+            <td>PAYE</td>
+            <td>Pay As You Earn</td>
+        </tr>
+    </tbody>
+</table>
+<h2 class="pmod" id="1._introduction">1. Introduction</h2>
+<p>Revenue is making available a dedicated Public Interface Test (PIT) environment to enable payroll software developers verify the compatibility of their software packages with PAYE Modernisation changes.</p>
+<p>There are two PIT Environments available to software developers, the first PIT environment is a representation of the live environment with functionality kept up to date with the functionality currently available in the live environment. The second PIT environment is the PIT Next Version environment, which will contain upcoming functionality that is pertinent for developers to test their software ahead of the live release.</p>
+<p>To support developers and testers through the PIT process, Revenue has provisioned a dedicated online PAYE PIT Help Desk.  By using the PAYE PIT Help Desk developers and testers can:</p>
+<p> Notify Revenue of their interest in public interface testing</p>
+<p> Raise and track ticketed queries</p>
+<p>This document provides a step by step guide to registering for the PAYE PIT Help Desk and subsequently using it to raise and track queries.</p>
+<p>Please note that images used throughout this document are broadly indicative of the final product but may be subject to change.</p>
+<h2 class="pmod" id="2._prerequisites">2. Prerequisites</h2>
+<p>Logging into the PAYE PIT Help Desk is a two-step verification process requiring the interested developer/tester to have:</p>
+<p> A valid email address  A smart device installed with Google Authenticator</p>
+<h2 class="pmod" id="3._paye_pit_help_desk_registration">3. PAYE PIT Help Desk Registration</h2>
+<p><a href="https://revenuehelpdesk.canfigure.net/portal/revenueie/register.html">Interested developers/testers can register for the PAYE PIT Help Desk by completing a short online form available at</a></p>
+<p>Figure 1 New User Registration screen</p>
+<p>The information supplied under the ‘Company/Business Name’ field will be used by Revenue to group users belonging to the same Business/Company together.  Users belonging to the same group will have access to each other’s queries raised through the PAYE PIT Help Desk 1 .</p>
+<p>For the purpose of assigning the user to the PAYE PIT Help Desk, PAYE Modernisation should be selected from the drop down for “System to be tested in PIT”.</p>
+<p>Upon successful completion of the form, the developer/tester will be asked to check the email address inputted on the form for further instructions.</p>
+<p>1 As part of reviewing pending registrations Revenue will not associate a registration with a particular business/company group until it has verified that this is allowed by the business/company.</p>
+<p><img alt="Image" src="content/pit/paye pit help desk user guide/images/image_7.png"/></p>
+<p>Figure 2 Registration Successful</p>
+<p>The email instructs the developer/tester to verify their email address through clicking on the supplied link.</p>
+<p>Note: Email clients may treat an initial email from the Help Desk as spam so please check spam folders if expected email has not arrived.</p>
+<p><img alt="Image" src="content/pit/paye pit help desk user guide/images/image_8.png"/></p>
+<p>Figure 3 Email Verification</p>
+<p>Clicking on the link will present the developer/tester with the following message:</p>
+<p>Figure 4 Email successfully verified</p>
+<p>At this point in the process Revenue will be alerted of the registration request and will review the supplied registration details before associating the registration with the specified company/business group and activating access to the Help Desk.</p>
+<p>The developer/tester will be notified of successful registration by email which will include instructions on how to complete the process and log in to the Help Desk:</p>
+<p><img alt="Image" src="content/pit/paye pit help desk user guide/images/image_9.png"/>
+<img alt="Image" src="content/pit/paye pit help desk user guide/images/image_10.png"/></p>
+<p>Figure 5 Login instruction email</p>
+<p><img alt="Image" src="content/pit/paye pit help desk user guide/images/image_11.png"/></p>
+<h2 class="pmod" id="4._raising_and_tracking_queries">4. Raising and Tracking Queries</h2>
+<p>To raise a PIT related query the developer/tester must first log into the Help Desk using the email address specified at registration time and the associated code from Google Authenticator</p>
+<p>Figure 6 Login with email</p>
+<p>Figure 7 Enter Google Authenticator code</p>
+<p><img alt="Image" src="content/pit/paye pit help desk user guide/images/image_12.png"/>
+<img alt="Image" src="content/pit/paye pit help desk user guide/images/image_13.png"/></p>
+<p>Upon successful login the developer/tester is presented with the following dashboard view:</p>
+<p>Figure 8 PAYE PIT Helpdesk Dashboard</p>
+<p>The developer/tester can raise a new query by clicking on the ‘New Ticket’ icon available in the left hand bar.</p>
+<p>This presents the following screen where the developer/tester can supply the details of their query and attach any supporting files:</p>
+<p>Figure 9 Raising a query</p>
+<p>On saving the query the developer/tester will receive an email receipt including the ticket number for tracking purposes:</p>
+<p><img alt="Image" src="content/pit/paye pit help desk user guide/images/image_14.png"/>
+<img alt="Image" src="content/pit/paye pit help desk user guide/images/image_15.png"/></p>
+<p>Figure 10 Email receipt</p>
+<p><img alt="Image" src="content/pit/paye pit help desk user guide/images/image_16.png"/>
+<img alt="Image" src="content/pit/paye pit help desk user guide/images/image_17.png"/></p>
+<p>The developer/tester can view the status of their open queries by clicking on the ‘My Open Tickets’ icon available in the left hand bar:</p>
+<p>Figure 11 My Open Tickets</p>
+<p>The developer/tester will only be able to see tickets raised by themselves and those tickets associated with their company/business group.</p>
+<p>On resolution of the query or if further information is required, the developer/tester will receive an email notification with the details:</p>
+<p><img alt="Image" src="content/pit/paye pit help desk user guide/images/image_18.png"/></p>
+<p>Figure 12 Resolution notification email</p>
+<p>The same information will also be available from within the tool itself:</p>
+<p>Figure 13 Resolved queries</p>
+<p><img alt="Image" src="content/pit/paye pit help desk user guide/images/image_19.png"/>
+<img alt="Image" src="content/pit/paye pit help desk user guide/images/image_20.png"/>
+<img alt="Image" src="content/pit/paye pit help desk user guide/images/image_21.png"/></p></div></body></html>
