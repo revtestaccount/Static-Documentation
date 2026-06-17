@@ -2,10 +2,20 @@
 
 A static documentation portal for Revenue's PAYE Modernisation Public Interface Testing (PIT) environments. Serves technical documentation — PDFs, schemas, WSDLs, JSON/XML examples — to external software developers integrating with Revenue's PAYE web services.
 
-**Deployed:** https://revtestaccount.github.io/Static-Documentation/
-
 > **Replaces** the deprecated AngularJS project `paye-employers-documentation`.  
 > **Integrates** the Angular 14 FAQ project `paye-employers-pit-faq` as native static HTML.
+
+---
+
+## Deployments
+
+| Environment | URL | Audience |
+|---|---|---|
+| **Internal test** | https://revtestaccount.github.io/Static-Documentation/ | Revenue staff only — never share externally |
+| **Pre-release (legacy)** | https://revtestaccount.github.io/paye-employers-documentation/ | Revenue staff only — never share externally |
+| **Public release** | https://revenue-ie.github.io/paye-employers-documentation/ | Software integrators (public) |
+
+> On completion, the Static-Documentation project will replace `paye-employers-documentation` at the public URL.
 
 ---
 
@@ -246,6 +256,12 @@ No direct commits to `main`. Feature branches are merged via PR.
 | `tools/accessibility_audit.py` | Static WCAG 2.1 AA audit across all migrated HTML files |
 | `migrationScripts/pdfToMarkdown.py` | Converts PDF to Markdown using PyMuPDF + pdfplumber |
 | `create_page/convert_new.py` | Converts Markdown to site-ready HTML fragment with TOC |
+
+### WYSIWYG Page Editor
+
+A bare-bones WYSIWYG page editor is in place and will be improved to support all page components (TOC, tables, code blocks, etc.) and editing of existing pages. **The editor and all page-editing scripts must not be included in the public release deployment.**
+
+---
 
 ### Further Documentation
 

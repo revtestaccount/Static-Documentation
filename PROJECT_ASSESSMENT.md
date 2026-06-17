@@ -14,6 +14,16 @@
 **FAQ project:** `O:\git\paye-employers-pit-faq` (Angular 14, now integrated)  
 **Replacement project:** `O:\git\Static-Documentation` (static HTML/CSS/JS)
 
+### Deployments
+
+| Environment | URL | Audience | Notes |
+|---|---|---|---|
+| **Internal test** | https://revtestaccount.github.io/Static-Documentation/ | Revenue staff only | Current dev build — never share externally |
+| **Pre-release (legacy)** | https://revtestaccount.github.io/paye-employers-documentation/ | Revenue staff only | Test/approval of old project — never share externally |
+| **Public release** | https://revenue-ie.github.io/paye-employers-documentation/ | Software integrators (public) | Live public-facing site |
+
+On completion, Static-Documentation will replace `paye-employers-documentation` at the public URL.
+
 ---
 
 ## 2. Architecture
@@ -190,6 +200,8 @@ Routes prefixed with `_` (e.g., `_nav_groups`, `_home_nav`) are utility groups u
 
 ### High Priority
 - ❌ **122 routes** still pointing to `demodocument.html` placeholder — need real content pages authored
+- ❌ **WYSIWYG page editor** — bare-bones editor in place; needs improvement to support all pipeline-generated components (TOC, tables, code blocks, headings, lists) and editing of existing pages
+- ❌ **Public/internal feature gating** — editor and all page-editing scripts must be excluded from public release deployment; gating mechanism to be designed and implemented
 - ❌ **Bootstrap removal** — replace `.row`, `.col-sm`, `.card`, `.container` with native CSS or REVDS equivalents; remove Bootstrap CDN from `index.html`
 - ❌ **Font migration** — update to Nunito Sans stack (deferred)
 
