@@ -11578,8 +11578,10 @@ p ~ .container > .row:first-child {
   display: block;
 }
 .document-content table.table thead tr {
-  background-color: rgb(2, 95, 99);
-  color: rgb(255, 255, 255);
+  background-color: rgb(2, 95, 99) !important;
+  --bs-table-bg: rgb(2, 95, 99);
+  --bs-table-color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255) !important;
 }
 .document-content table.table thead th {
   padding: 0.6rem 0.85rem;

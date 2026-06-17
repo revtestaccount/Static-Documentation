@@ -190,10 +190,9 @@
    "title": "Portal Login",
    "message": "placeholder text/unused"
   },
-  "pitselfserviceapplicationguide": {
-   "template": "./content/shared/demodocument.html",
-   "title": "PIT Self Service Application Guide",
-   "message": "placeholder text/unused"
+    "pitselfserviceapplicationguide": {
+   "template": "./content/PIT3/screens/pitselfserviceguide.html",
+   "title": "PIT Self Service Application Guide"
   },
   "rospayrollreportingapplicationguide": {
    "template": "./content/shared/demodocument.html",
@@ -559,10 +558,9 @@
    "title": "Portal Login.",
    "message": "placeholder text/unused"
   },
-  "pitselfserviceapplicationguide.": {
-   "template": "./content/shared/demodocument.html",
-   "title": "PIT Self Service Application Guide.",
-   "message": "placeholder text/unused"
+    "pitselfserviceapplicationguide.": {
+   "template": "./content/PIT4/screens/pitselfserviceguide.html",
+   "title": "PIT Self Service Application Guide"
   },
   "rospayrollreportingapplicationguide.": {
    "template": "./content/shared/demodocument.html",

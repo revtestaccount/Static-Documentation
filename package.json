@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "build:scss": "sass assets/css/styles.scss assets/css/styles.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions",
-    "watch:scss": "sass -w assets/css/styles.scss assets/css/styles.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions"
+    "build:scss": "node C:/NodeJs/node-v22.14.0-win-x64/node_modules/sass/sass.js assets/css/styles.scss assets/css/styles.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions",
+    "watch:scss": "node C:/NodeJs/node-v22.14.0-win-x64/node_modules/sass/sass.js --watch assets/css/styles.scss assets/css/styles.css --no-source-map --silence-deprecation=import --silence-deprecation=global-builtin --silence-deprecation=color-functions"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
