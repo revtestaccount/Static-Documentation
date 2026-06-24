@@ -162,6 +162,17 @@ if body:
                 bullet_paras.remove(to_remove)
         p.replace_with(ul)
 
+# -- Apply .figure-caption class to Figure N caption paragraphs ----------------
+# Captions are plain <p> elements starting with 'Figure N' — apply the class
+# so they render centred italic beneath their associated image.
+if body:
+    import re as _re
+    _fig_re = _re.compile(r'^Figure\s+\d+', _re.IGNORECASE)
+    for p in body.find_all('p'):
+        text = p.get_text(strip=True)
+        if _fig_re.match(text):
+            p['class'] = 'figure-caption'
+
 # -- Add tabindex="0" to all <pre> blocks so keyboard users can scroll them -----
 for tag in new_html.find_all("pre"):
     tag["tabindex"] = "0"

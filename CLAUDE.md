@@ -96,12 +96,13 @@ python migration_pipeline.py "../content/PIT4/<section>/<doc>.pdf" --pit PIT4
 
 ### What the Pipeline Does Automatically
 
-1. **PDF → Markdown** (`migrationScripts/pdfToMarkdown.py`) — font-size heading detection, table extraction via pdfplumber, image deduplication, repeating header/footer suppression, visual TOC suppression, bullet conversion, code block detection
-2. **Markdown → HTML** (`create_page/convert_new.py`) — TOC generation, REVDS classes, `tabindex="0"` on tables/pre, stylesheet injection
+1. **PDF → Markdown** (`migrationScripts/pdfToMarkdown.py`) — embedded image extraction with 10KB artefact filter and MD5 deduplication, font-size heading detection, table extraction via pdfplumber, repeating header/footer suppression, visual TOC suppression, bullet conversion, code block detection, automatic caption/image ordering fix
+2. **Markdown → HTML** (`create_page/convert_new.py`) — TOC generation, REVDS classes, `tabindex="0"` on tables/pre, stylesheet injection, `.figure-caption` class applied to all Figure N captions
 3. Injects SVG branding block after `<h1>`
 4. Validates environment hostnames (warns if wrong environment hostname detected)
 5. Updates `sitemap.json` route to point to HTML (not PDF)
 6. Updates section listing page — changes `href` and badge from PDF to LINK
+7. **Mojibake fix** — automatically corrects corrupted smart quotes and dashes
 
 ### After Every Pipeline Run — Manual Checks Required
 
@@ -189,12 +190,35 @@ When implementing the editor and any related tooling, ensure there is a clear me
 
 ---
 
+## Bootstrap Removal (Next Task)
+
+Bootstrap 5 (CDN) is the last external dependency. Removal plan identified:
+
+### Phase 1 — Card grid (straightforward)
+Replace `container` / `row` / `col-sm` / `card` / `card-body` / `card-img-top` / `stretched-link`
+with PrimeFlex grid (`grid` / `col-12 md:col-4`) and custom `.home-card` CSS already in `styles.scss`.
+
+### Phase 2 — Navbar collapse/hamburger (requires custom JS)
+Bootstrap JS powers the mobile hamburger toggle via `data-bs-toggle="collapse"`.
+Needs a small vanilla JS implementation before Bootstrap JS (`bootstrap.bundle.min.js`) can be removed.
+The toggle logic will live in `assets/js/router.js` or a new `assets/js/nav.js`.
+
+### Important — Customer-Facing Application
+This is a **public-facing** application. All styling decisions must use:
+- **Font:** FiraSans-Regular 16px (`RevdsExternalPreset`)
+- **REVDS preset:** `externalPreset` (not `internalPreset`)
+- **WCAG 2.1 AA:** Mandatory throughout
+- REVDS 22 UI rules loaded as session context — apply PrimeFlex layouts (Rule 6), never Bootstrap grid
+
+---
+
 ## 9. Completed PDF → HTML Migrations
 
 | Document | PIT3 | PIT4 |
 |---|---|---|
 | REST Web Service Integration Guide | ✅ | ✅ |
 | REST Connectivity Handshake Guide | ✅ | ✅ |
+| Overview of ROS Payroll Reporting | ✅ | ⏳ |
 
 ---
 

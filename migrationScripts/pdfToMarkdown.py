@@ -1,4 +1,4 @@
-import os
+﻿import os
 import sys
 import re
 import hashlib
@@ -6,7 +6,7 @@ import argparse
 import fitz  # PyMuPDF
 from collections import Counter
 
-# pdfplumber is optional — provides better table extraction
+# pdfplumber is optional â€” provides better table extraction
 # Install via: pip install pdfplumber
 try:
     import pdfplumber
@@ -73,7 +73,7 @@ def get_font_metrics(doc):
                         y_pct = span["bbox"][1] / page_h * 100
                         candidates.append((y_pct, size, text))
         if candidates:
-            # Sort by y% descending — the document title sits lowest on the cover page.
+            # Sort by y% descending â€” the document title sits lowest on the cover page.
             # Branding/logo text is typically higher up (smaller y%) than the actual title.
             candidates.sort(key=lambda x: x[0], reverse=True)
             _, title_size, title_text = candidates[0]
@@ -465,11 +465,11 @@ def extract_page_text(page, plumber_page, title_size, body_size,
             if not line_text:
                 continue
 
-            # Convert PDF bullet character (•) to markdown list item
+            # Convert PDF bullet character (â€¢) to markdown list item
             if line_text.startswith('\u2022'):
                 line_text = '- ' + line_text[1:].strip()
             elif '\u2022' in line_text:
-                # Multiple bullets on one line: "• item1 • item2"
+                # Multiple bullets on one line: "â€¢ item1 â€¢ item2"
                 parts = [p.strip() for p in line_text.split('\u2022') if p.strip()]
                 if len(parts) > 1:
                     for part in parts:
@@ -593,22 +593,31 @@ for page_num in range(len(doc)):
         xref = img[0]
         h = get_image_hash(doc, xref)
         if h and h in seen_hashes:
-            img_map[(page_num, img_index)] = None  # duplicate — skip
+            img_map[(page_num, img_index)] = None  # duplicate â€” skip
             print(f"  page {page_num+1} img {img_index+1}: duplicate, skipped")
         else:
-            if h:
-                seen_hashes.add(h)
-            img_name = f"image_{global_counter}.png"
-            img_path = os.path.join(image_dir, img_name)
+            # Extract image bytes
             try:
                 base_image = doc.extract_image(xref)
-                with open(img_path, "wb") as f:
-                    f.write(base_image["image"])
-                print(f"  page {page_num+1} img {img_index+1}: saved as {img_name}")
+                image_data = base_image["image"]
             except Exception as e:
                 print(f"  page {page_num+1} img {img_index+1}: error {e}")
                 img_map[(page_num, img_index)] = None
                 continue
+
+            # Filter out artefact images below 10KB — real screenshots are 10KB+
+            if len(image_data) < 10240:
+                img_map[(page_num, img_index)] = None
+                print(f"  page {page_num+1} img {img_index+1}: artefact ({len(image_data)} bytes), skipped")
+                continue
+
+            if h:
+                seen_hashes.add(h)
+            img_name = f"image_{global_counter}.png"
+            img_path = os.path.join(image_dir, img_name)
+            with open(img_path, "wb") as f:
+                f.write(image_data)
+            print(f"  page {page_num+1} img {img_index+1}: saved as {img_name} ({len(image_data):,} bytes)")
             img_map[(page_num, img_index)] = img_name
             global_counter += 1
 
@@ -634,7 +643,7 @@ def convert_pages(md_path: str, plumber_doc=None):
                 title_emitted, repeating_lines
             )
 
-            # Join split URLs — PDFs sometimes break long URLs across lines.
+            # Join split URLs â€” PDFs sometimes break long URLs across lines.
             # A line ending with a URL fragment (no space, starts next line with
             # a path segment) gets joined before linkification.
             text = re.sub(r'(https?://[^\s]+)\s*\n\s*([^\s\[\]<>"{}|^`#%]+)', r'\1\2', text)
@@ -670,7 +679,7 @@ def convert_pages(md_path: str, plumber_doc=None):
                         f"![Image](./{file_name}/images/{img_name})"
                     )
 
-            # Skip page 1 images entirely — these are cover page branding/logos.
+            # Skip page 1 images entirely â€” these are cover page branding/logos.
             # The SVG branding block added by migration_pipeline.py replaces them.
             if page_num == 0:
                 image_refs = []
@@ -685,6 +694,23 @@ def convert_pages(md_path: str, plumber_doc=None):
     with open(md_path, 'r', encoding='utf-8') as f:
         md_content = f.read()
     md_content = merge_consecutive_tables(md_content)
+
+    # Post-process: fix caption/image ordering
+    # Captions (Figure N ...) often appear before their image in the PDF
+    # text flow. Swap adjacent caption-then-image pairs so image comes first.
+    print("\nFixing caption ordering...")
+    import re as _re
+    _CAPTION_RE = _re.compile(
+        r'(?m)^(Figure\s+\d+[\.:][^\n]*)\n\n(!\[[^\n]*\]\([^\n]*\))\n'
+    )
+    _swap_count = [0]
+    def _swap_caption(m):
+        _swap_count[0] += 1
+        return m.group(2) + "\n" + m.group(1) + "\n\n"
+    md_content = _CAPTION_RE.sub(_swap_caption, md_content)
+    if _swap_count[0]:
+        print(f"  [caption ordering] swapped {_swap_count[0]} caption/image pair(s)")
+
     with open(md_path, 'w', encoding='utf-8') as f:
         f.write(md_content)
 

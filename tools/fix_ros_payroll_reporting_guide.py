@@ -3,8 +3,27 @@ fix_ros_payroll_reporting_guide.py
 ===================================
 Post-pipeline fixes for Overview of ROS Payroll Reporting (PIT3 + PIT4).
 
-Fix 1: Replaces broken multi-column version history table with clean
-       4-column hand-authored table (with rowspan for merged version cells).
+These fixes address artefacts that the migration pipeline cannot automatically
+resolve due to the structure of this specific PDF.
+
+Fix 1:  Replaces broken multi-column version history table with clean
+        4-column hand-authored table (with rowspan for merged version cells).
+Fix 2:  Removes duplicate cover page headings and orphaned version string.
+Fix 3:  Removes orphaned version string paragraph.
+Fix 4:  Removes stray duplicate Table of Contents h3 heading.
+Fix 5:  Removes dead TOC entries for suppressed cover page headings.
+Fix 6:  Promotes version history heading from h4 to h2.pmod.
+Fix 8:  Merges split section 4.1 heading into a single h2.
+Fix 9:  Merges split section 4.2.2 heading into a single h3.
+Fix 10: Corrects the TOC entries for sections 4.1 and 4.2.2 to match.
+
+NOTE: The following fixes were removed because the improved pipeline
+      (page rendering, caption ordering, mojibake) now handles them:
+  - Fix 0:  image path correction (pipeline writes correct paths)
+  - Fix 0b: mojibake in headings (pipeline is clean throughout)
+  - Fix 7:  stray cover image (page rendering; no cover images escape)
+  - Fix 11: missing Figure 1 image (page rendering includes all pages)
+  - Fix 12: missing Figure 12 caption (pipeline caption ordering)
 
 Usage:
     python fix_ros_payroll_reporting_guide.py --pit PIT3
@@ -84,26 +103,6 @@ def fix_html(html: str) -> tuple[str, list[str]]:
     changes = []
 
     # ------------------------------------------------------------------
-    # Fix 0: Image paths — pipeline writes absolute-style paths
-    # (content/PIT3/screens/...) but the router serves from project root
-    # so paths need to be relative to the HTML file location
-    # ------------------------------------------------------------------
-    html, count0 = re.subn(
-        r'src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/',
-        'src="overview_of_ros_payroll_reporting/images/',
-        html
-    )
-    if count0 > 0:
-        changes.append(f"Fix 0: Fixed {count0} image path(s) - removed absolute prefix")
-
-    # ------------------------------------------------------------------
-    # Fix 0b: Fix mojibake in headings - replace \u6639 (朹) with en dash
-    # ------------------------------------------------------------------
-    html, count0b = re.subn(r'\u6639', '\u2013', html)
-    if count0b > 0:
-        changes.append(f"Fix 0b: Fixed {count0b} mojibake dash character(s) in headings")
-
-    # ------------------------------------------------------------------
     # Fix 1: Replace broken multi-column version history table
     # ------------------------------------------------------------------
     pattern = re.compile(
@@ -111,7 +110,6 @@ def fix_html(html: str) -> tuple[str, list[str]]:
         r'<th[^>]*>Version History</th>[\s\S]*?</table>',
         re.DOTALL
     )
-
     html, count = re.subn(pattern, CLEAN_VERSION_TABLE, html)
     if count > 0:
         changes.append(f"Fix 1: Replaced broken version history table ({count} occurrence(s))")
@@ -119,133 +117,88 @@ def fix_html(html: str) -> tuple[str, list[str]]:
         changes.append("Fix 1: WARNING - version history table pattern not found")
 
     # ------------------------------------------------------------------
-    # Fix 2a: Replace incorrectly extracted paragraph tables with <p> tags
-    # Tables 2+3 (section 3.3 first summary screen)
+    # Fix 2a/2e: Replace section 3.3 bullet-list tables with proper ul/li
     # ------------------------------------------------------------------
-    old_t2 = (
-        '<table class="table" tabindex="0">\n'
-        '<thead>\n<tr>\n'
-        '<th scope="col">This screen makes the user aware of how many RPNs on their request were successful. The three</th>\n'
-        '</tr>\n</thead>\n'
-        '<tbody>\n'
-        '<tr>\n<td>possible outcomes are:</td>\n</tr>\n'
-        '<tr>\n<td>\ufffd RPNs not returned - This is the number of employee RPNs that were not returned</td>\n</tr>\n'
-        '<tr>\n<td>\ufffd Validation errors \ufffd This is the number of validation errors in the request</td>\n</tr>\n'
-        '</tbody>\n</table>'
-    )
-    new_t2 = (
-        '<p>This screen makes the user aware of how many RPNs on their request were successful. '
-        'The three possible outcomes are:</p>\n'
+    _BULLET_LIST_NEW = (
+        '<p>{intro} The three possible outcomes are:</p>\n'
         '<ul>\n'
-        '<li>RPNs not returned - This is the number of employee RPNs that were not returned</li>\n'
+        '<li>RPNs not returned \u2013 This is the number of employee RPNs that were not returned</li>\n'
         '<li>Validation errors \u2013 This is the number of validation errors in the request</li>\n'
         '</ul>'
     )
-    if old_t2 in html:
-        html = html.replace(old_t2, new_t2)
-        changes.append("Fix 2a: Converted section 3.3 first summary table to paragraph + list")
-
-    old_t3 = (
-        '<table class="table" tabindex="0">\n'
-        '<thead>\n<tr>\n'
-        '<th scope="col">An RPN response file is automatically downloaded for the user in their selected file format which</th>\n'
-        '</tr>\n</thead>\n'
-        '<tbody>\n'
-        '<tr>\n<td>details the outcome of the RPN request. The user can then input this file to their payroll software in</td>\n</tr>\n'
-        '<tr>\n<td>order to complete the next stage of their payroll process.</td>\n</tr>\n'
-        '<tr>\n<td></td>\n</tr>\n'
-        '<tr>\n<td></td>\n</tr>\n'
-        '<tr>\n<td></td>\n</tr>\n'
-        '</tbody>\n</table>'
-    )
-    new_t3 = (
-        '<p>An RPN response file is automatically downloaded for the user in their selected file format which '
-        'details the outcome of the RPN request. The user can then input this file to their payroll software in '
-        'order to complete the next stage of their payroll process.</p>'
-    )
-    if old_t3 in html:
-        html = html.replace(old_t3, new_t3)
-        changes.append("Fix 2b: Converted section 3.3 response file table to paragraph")
-
-    old_t4 = (
-        '<table class="table" tabindex="0">\n'
-        '<thead>\n<tr>\n'
-        '<th scope="col"></th>\n'
-        '</tr>\n</thead>\n'
-        '<tbody>\n'
-        '<tr>\n<td>The other summary screen the user may get is if they have completed the online form to request RPNs</td>\n</tr>\n'
-        '<tr>\n<td>for new employees or requested RPNs for a specific subset of existing employees:</td>\n</tr>\n'
-        '<tr>\n<td></td>\n</tr>\n'
-        '</tbody>\n</table>'
-    )
-    new_t4 = (
-        '<p>The other summary screen the user may get is if they have completed the online form to request RPNs '
-        'for new employees or requested RPNs for a specific subset of existing employees:</p>'
-    )
-    if old_t4 in html:
-        html = html.replace(old_t4, new_t4)
-        changes.append("Fix 2c: Converted section 3.3 second summary intro table to paragraph")
-
-    # Empty 2-column table (split TOC artifact)
-    old_t5 = (
-        '<table class="table" tabindex="0">\n'
-        '<thead>\n<tr>\n'
-        '<th scope="col"></th>\n'
-        '<th scope="col"></th>\n'
-        '</tr>\n</thead>\n'
-        '<tbody>\n'
-        '<tr>\n<td></td>\n<td></td>\n</tr>\n'
-        '</tbody>\n</table>'
-    )
-    if old_t5 in html:
-        html = html.replace(old_t5, '')
-        changes.append("Fix 2d: Removed empty split-TOC artifact table")
-
-    old_t6 = (
-        '<table class="table" tabindex="0">\n'
-        '<thead>\n<tr>\n'
-        '<th scope="col">This screen will make the user aware of how many RPNs on their request were successful. The three</th>\n'
-        '</tr>\n</thead>\n'
-        '<tbody>\n'
-        '<tr>\n<td>possible outcomes are:</td>\n</tr>\n'
-        '<tr>\n<td>\ufffd RPNs not returned - This is the number of employee RPNs that were not returned</td>\n</tr>\n'
-        '<tr>\n<td>\ufffd Validation errors \ufffd This is the number of validation errors in the request</td>\n</tr>\n'
-        '</tbody>\n</table>'
-    )
-    new_t6 = (
-        '<p>This screen will make the user aware of how many RPNs on their request were successful. '
-        'The three possible outcomes are:</p>\n'
-        '<ul>\n'
-        '<li>RPNs not returned - This is the number of employee RPNs that were not returned</li>\n'
-        '<li>Validation errors \u2013 This is the number of validation errors in the request</li>\n'
-        '</ul>'
-    )
-    if old_t6 in html:
-        html = html.replace(old_t6, new_t6)
-        changes.append("Fix 2e: Converted section 3.3 second summary screen table to paragraph + list")
-
-    old_t7 = (
-        '<table class="table" tabindex="0">\n'
-        '<thead>\n<tr>\n'
-        '<th scope="col">An RPN response file is automatically downloaded for the user in their selected file format which</th>\n'
-        '</tr>\n</thead>\n'
-        '<tbody>\n'
-        '<tr>\n<td>details the outcome of the RPN request. The user can then input this file to their payroll software in</td>\n</tr>\n'
-        '<tr>\n<td>order to complete the next stage of their payroll process.</td>\n</tr>\n'
-        '</tbody>\n</table>'
-    )
-    new_t7 = (
-        '<p>An RPN response file is automatically downloaded for the user in their selected file format which '
-        'details the outcome of the RPN request. The user can then input this file to their payroll software in '
-        'order to complete the next stage of their payroll process.</p>'
-    )
-    if old_t7 in html:
-        html = html.replace(old_t7, new_t7)
-        changes.append("Fix 2f: Converted section 3.3 second response file table to paragraph")
+    for intro, label in [
+        ('This screen makes the user aware of how many RPNs on their request were successful.', '2a'),
+        ('This screen will make the user aware of how many RPNs on their request were successful.', '2e'),
+    ]:
+        pat = re.compile(
+            r'<table[^>]*>\s*<thead>\s*<tr>\s*'
+            r'<th[^>]*>' + re.escape(intro) + r' The three</th>\s*'
+            r'</tr>\s*</thead>\s*<tbody>\s*'
+            r'<tr>\s*<td>possible outcomes are:</td>\s*</tr>\s*'
+            r'<tr>\s*<td>[\u2022\ufffd] RPNs not returned - This is the number of employee RPNs that were not returned</td>\s*</tr>\s*'
+            r'<tr>\s*<td>[\u2022\ufffd] Validation errors [\u2013\u2014\ufffd-] This is the number of validation errors in the request</td>\s*</tr>\s*'
+            r'</tbody>\s*</table>',
+            re.DOTALL
+        )
+        html, n = re.subn(pat, _BULLET_LIST_NEW.format(intro=intro), html)
+        if n:
+            changes.append(f'Fix {label}: Converted section 3.3 summary bullet table to ul/li ({intro[:30]}...)')
 
     # ------------------------------------------------------------------
-    # Fix 2: Remove duplicate cover page headings and version string
-    # that appear before Audience section (same pattern as selfservice guide)
+    # Fix 2b/2f: Replace split RPN response file paragraph-tables with p
+    # ------------------------------------------------------------------
+    _RPN_RESPONSE_P = (
+        '<p>An RPN response file is automatically downloaded for the user in their selected '
+        'file format which details the outcome of the RPN request. The user can then input '
+        'this file to their payroll software in order to complete the next stage of their '
+        'payroll process.</p>'
+    )
+    rpn_pat = re.compile(
+        r'<table[^>]*>\s*<thead>\s*<tr>\s*'
+        r'<th[^>]*>An RPN response file is automatically downloaded for the user in their selected file format which</th>\s*'
+        r'</tr>\s*</thead>\s*<tbody>\s*'
+        r'<tr>\s*<td>details the outcome of the RPN request\. The user can then input this file to their payroll software in</td>\s*</tr>\s*'
+        r'<tr>\s*<td>order to complete the next stage of their payroll process\.</td>\s*</tr>\s*'
+        r'(?:<tr>\s*<td></td>\s*</tr>\s*)*'
+        r'</tbody>\s*</table>',
+        re.DOTALL
+    )
+    html, n = re.subn(rpn_pat, _RPN_RESPONSE_P, html)
+    if n:
+        changes.append(f'Fix 2b/2f: Converted {n} RPN response file paragraph-table(s) to p')
+
+    # ------------------------------------------------------------------
+    # Fix 2c: Replace split "other summary screen" intro paragraph-table
+    # ------------------------------------------------------------------
+    other_pat = re.compile(
+        r'<table[^>]*>\s*<thead>\s*<tr>\s*<th[^>]*>(?:</th>|)</th>?\s*</tr>\s*</thead>\s*<tbody>\s*'
+        r'<tr>\s*<td>The other summary screen the user may get is if they have completed the online form to request RPNs</td>\s*</tr>\s*'
+        r'<tr>\s*<td>for new employees or requested RPNs for a specific subset of existing employees:</td>\s*</tr>\s*'
+        r'(?:<tr>\s*<td></td>\s*</tr>\s*)*'
+        r'</tbody>\s*</table>',
+        re.DOTALL
+    )
+    html, n = re.subn(
+        other_pat,
+        '<p>The other summary screen the user may get is if they have completed the online form '
+        'to request RPNs for new employees or requested RPNs for a specific subset of existing employees:</p>',
+        html
+    )
+    if n:
+        changes.append('Fix 2c: Converted section 3.3 second summary intro paragraph-table to p')
+
+    # Fix 2d: Empty 2-column table (split TOC artifact)
+    empty2col_pat = re.compile(
+        r'<table[^>]*>\s*<thead>\s*<tr>\s*<th[^>]*></th>\s*<th[^>]*></th>\s*</tr>\s*</thead>\s*'
+        r'<tbody>\s*<tr>\s*<td></td>\s*<td></td>\s*</tr>\s*</tbody>\s*</table>',
+        re.DOTALL
+    )
+    html, n = re.subn(empty2col_pat, '', html)
+    if n:
+        changes.append('Fix 2d: Removed empty 2-column split-TOC artifact table')
+
+    # ------------------------------------------------------------------
+    # Fix 2: Remove duplicate cover page headings
     # ------------------------------------------------------------------
     pattern2 = re.compile(
         r'<h2[^>]*id="overview_of_ros_payroll_reporting"[^>]*>.*?</h2>\s*'
@@ -256,24 +209,20 @@ def fix_html(html: str) -> tuple[str, list[str]]:
     if count2 > 0:
         changes.append(f"Fix 2: Removed {count2} duplicate cover page heading(s)")
 
-    # Remove orphaned version string paragraph before Audience
+    # Fix 3: Remove orphaned version string paragraph
     pattern3 = re.compile(r'<p>Version [^<]*Version Date [^<]*</p>\s*')
     html, count3 = re.subn(pattern3, '', html)
     if count3 > 0:
         changes.append(f"Fix 3: Removed orphaned version string paragraph ({count3} occurrence(s))")
 
-    # Remove stray duplicate "Table of Contents" <h3> heading that appears mid-page
-    # after the version history table. The real TOC uses <h2> + <ul id="toc"> at the
-    # top of the document — only <h3> variants are stray duplicates.
+    # Fix 4: Remove stray duplicate Table of Contents h3
     pattern4 = re.compile(r'<h3[^>]*id="table_of_contents"[^>]*>Table of Contents</h3>\s*')
     html, count4 = re.subn(pattern4, '', html)
     if count4 > 0:
-        changes.append(f"Fix 4: Removed {count4} stray duplicate 'Table of Contents' <h3> heading(s)")
+        changes.append(f"Fix 4: Removed {count4} stray duplicate 'Table of Contents' h3 heading(s)")
 
     # ------------------------------------------------------------------
-    # Fix 5: Remove dead TOC <li> entries for cover-page headings that the
-    # pipeline suppressed from the body — links to non-existent anchors
-    # (#overview_of_ros_payroll_reporting and #paye_modernisation)
+    # Fix 5: Remove dead TOC entries for suppressed cover page headings
     # ------------------------------------------------------------------
     pattern5 = re.compile(
         r'<li><a href="#overview_of_ros_payroll_reporting">[^<]*</a></li>'
@@ -282,6 +231,70 @@ def fix_html(html: str) -> tuple[str, list[str]]:
     html, count5 = re.subn(pattern5, '', html)
     if count5 > 0:
         changes.append(f"Fix 5: Removed {count5} dead cover-page TOC entry/entries")
+
+    # ------------------------------------------------------------------
+    # Fix 6: Promote version history heading from h4 to h2.pmod
+    # ------------------------------------------------------------------
+    html, count6 = re.subn(
+        r'<h4 id="version_history">Version History</h4>',
+        '<h2 class="pmod" id="version_history">Version History</h2>',
+        html
+    )
+    if count6 > 0:
+        changes.append(f"Fix 6: Promoted version history heading to h2.pmod")
+
+    # ------------------------------------------------------------------
+    # Fix 8: Merge split section 4.1 heading
+    # ------------------------------------------------------------------
+    html, count8 = re.subn(
+        r'<h2 class="pmod" id="4\.1">4\.1</h2>\s*'
+        r'<h2 class="pmod" id="submit_payroll_[\u2013-]_upload_payroll_file">Submit Payroll [\u2013-] Upload Payroll File</h2>',
+        '<h2 class="pmod" id="4.1_submit_payroll_\u2013_upload_payroll_file">4.1 Submit Payroll \u2013 Upload Payroll File</h2>',
+        html
+    )
+    if count8 > 0:
+        changes.append("Fix 8: Merged split section 4.1 heading into single h2")
+    else:
+        changes.append("Fix 8: WARNING - split 4.1 heading pattern not found")
+
+    # ------------------------------------------------------------------
+    # Fix 9: Merge split section 4.2.2 heading
+    # ------------------------------------------------------------------
+    html, count9 = re.subn(
+        r'<h3 class="pmod" id="4\.2\.2_payroll_submission_[\u2013-]_acknowledgement_screen_[\u2013-]_status:_complete_with">'
+        r'4\.2\.2 Payroll Submission [\u2013-] Acknowledgement Screen [\u2013-] Status: Complete with</h3>\s*'
+        r'<h3 class="pmod" id="warnings_and/or_errors">Warnings and/or Errors</h3>',
+        '<h3 class="pmod" id="4.2.2_payroll_submission_\u2013_acknowledgement_screen_\u2013_status:_complete_with_warnings_and_errors">'
+        '4.2.2 Payroll Submission \u2013 Acknowledgement Screen \u2013 Status: Complete with Warnings and/or Errors</h3>',
+        html
+    )
+    if count9 > 0:
+        changes.append("Fix 9: Merged split section 4.2.2 heading into single h3")
+    else:
+        changes.append("Fix 9: WARNING - split 4.2.2 heading pattern not found")
+
+    # ------------------------------------------------------------------
+    # Fix 10: Correct TOC entries for sections 4.1 and 4.2.2
+    # ------------------------------------------------------------------
+    html, count10a = re.subn(
+        r'<li[^>]*><a href="#4\.1">4\.1</a></li>\s*'
+        r'<li[^>]*><a href="#submit_payroll_[\u2013-]_upload_payroll_file">Submit Payroll [\u2013-] Upload Payroll File</a></li>',
+        '<li><a href="#4.1_submit_payroll_\u2013_upload_payroll_file">4.1 Submit Payroll \u2013 Upload Payroll File</a></li>',
+        html
+    )
+    html, count10b = re.subn(
+        r'<li[^>]*><a href="#4\.2\.2_payroll_submission_[\u2013-]_acknowledgement_screen_[\u2013-]_status:_complete_with">'
+        r'4\.2\.2 Payroll Submission [\u2013-] Acknowledgement Screen [\u2013-] Status: Complete with</a></li>\s*'
+        r'<li[^>]*><a href="#warnings_and/or_errors">Warnings and/or Errors</a></li>',
+        '<li><a href="#4.2.2_payroll_submission_\u2013_acknowledgement_screen_\u2013_status:_complete_with_warnings_and_errors">'
+        '4.2.2 Payroll Submission \u2013 Acknowledgement Screen \u2013 Status: Complete with Warnings and/or Errors</a></li>',
+        html
+    )
+    total10 = count10a + count10b
+    if total10 > 0:
+        changes.append(f"Fix 10: Corrected {total10} TOC entry/entries for sections 4.1 and/or 4.2.2")
+    else:
+        changes.append("Fix 10: WARNING - TOC entry pattern(s) for 4.1/4.2.2 not found")
 
     return html, changes
 

@@ -11543,6 +11543,21 @@ p ~ .container > .row:first-child {
   border-left: 0.175rem solid rgb(0, 64, 66);
   padding: 0.35rem 0.75rem;
 }
+.document-content h3.pmod {
+  font-size: 1.05rem;
+}
+.document-content h4.pmod {
+  font-size: 0.95rem;
+  background-color: transparent;
+  border-left: 0.175rem solid rgb(0, 64, 66);
+  padding: 0.35rem 0.75rem;
+}
+.document-content h4.pmod {
+  font-size: 0.95rem;
+  background-color: transparent;
+  border-left: 0.175rem solid rgb(0, 64, 66);
+  padding: 0.35rem 0.75rem;
+}
 .document-content p a,
 .document-content li a,
 .document-content td a {
@@ -11608,6 +11623,14 @@ p ~ .container > .row:first-child {
   display: block;
   margin: 1rem auto;
   border: 0.0625rem solid #e0e0e0;
+}
+.document-content .figure-caption {
+  text-align: center;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: -0.5rem;
+  margin-bottom: 1.25rem;
 }
 .document-content pre {
   background-color: #f4f4f4;

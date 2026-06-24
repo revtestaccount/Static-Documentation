@@ -439,7 +439,7 @@ p ~ .container > .row:first-child {
         object-fit: contain;
     }
 
-    h2.pmod, h3.pmod, h4.pmod {
+            h2.pmod, h3.pmod, h4.pmod {
         text-align: left;
         color: $base-brandteal;
         font-weight: $bold-font-weight;
@@ -449,6 +449,24 @@ p ~ .container > .row:first-child {
         padding: 0.5rem 0.85rem;
         margin-top: 2rem;
         margin-bottom: 1rem;
+    }
+
+    h4.pmod {
+        font-size: 0.95rem;
+        background-color: transparent;
+        border-left: 0.175rem solid $brandteal-darken-10;
+        padding: 0.35rem 0.75rem;
+    }
+
+    h3.pmod {
+        font-size: 1.05rem;
+    }
+
+    h4.pmod {
+        font-size: 0.95rem;
+        background-color: transparent;
+        border-left: 0.175rem solid $brandteal-darken-10;
+        padding: 0.35rem 0.75rem;
     }
 
     h4.pmod {
@@ -537,6 +555,16 @@ p ~ .container > .row:first-child {
         display: block;
         margin: 1rem auto;
         border: 0.0625rem solid #e0e0e0;
+    }
+
+    // Figure captions — centred italic text beneath each screenshot
+    .figure-caption {
+        text-align: center;
+        font-style: italic;
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: -0.5rem;
+        margin-bottom: 1.25rem;
     }
 
     // Code blocks

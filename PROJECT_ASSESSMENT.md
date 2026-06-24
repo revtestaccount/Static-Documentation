@@ -1,6 +1,6 @@
 # Project Assessment — Static Documentation Site
 
-> **Last updated:** 2026-06-16  
+> **Last updated:** 2026-06-24  
 > **Active branch:** `dev_contentMigration`  
 > **Total commits:** ~140  
 
@@ -120,8 +120,8 @@ Routes prefixed with `_` (e.g., `_nav_groups`, `_home_nav`) are utility groups u
 
 | Category | Count |
 |---|---|
-| Routes with real content | **38** |
-| Routes still pointing to `demodocument.html` placeholder | **122** |
+| Routes with real content | **39** |
+| Routes still pointing to `demodocument.html` placeholder | **121** |
 | Total routes defined | **160** |
 
 ### Asset Files in `content/`
@@ -202,7 +202,10 @@ Routes prefixed with `_` (e.g., `_nav_groups`, `_home_nav`) are utility groups u
 - ❌ **122 routes** still pointing to `demodocument.html` placeholder — need real content pages authored
 - ❌ **WYSIWYG page editor** — bare-bones editor in place; needs improvement to support all pipeline-generated components (TOC, tables, code blocks, headings, lists) and editing of existing pages
 - ❌ **Public/internal feature gating** — editor and all page-editing scripts must be excluded from public release deployment; gating mechanism to be designed and implemented
-- ❌ **Bootstrap removal** — replace `.row`, `.col-sm`, `.card`, `.container` with native CSS or REVDS equivalents; remove Bootstrap CDN from `index.html`
+- ❌ **Bootstrap removal** — replacement plan identified and ready to execute:
+  - **Phase 1 (card grid):** Replace `container`/`row`/`col-sm`/`card` with PrimeFlex `grid`/`col-12 md:col-4` and existing `.home-card` CSS
+  - **Phase 2 (navbar collapse):** Replace Bootstrap JS hamburger toggle with custom vanilla JS; remove `bootstrap.bundle.min.js` CDN reference
+  - **Note:** Customer-facing app — FiraSans-Regular 16px, `RevdsExternalPreset`, WCAG 2.1 AA mandatory throughout
 - ❌ **Font migration** — update to Nunito Sans stack (deferred)
 
 ### Content Pages Needed
@@ -240,10 +243,12 @@ A full PDF → HTML migration pipeline is now in place across three scripts:
 
 | Script | Location | Purpose |
 |---|---|---|
-| `pdfToMarkdown.py` | `migrationScripts/` | PDF → Markdown (PyMuPDF + pdfplumber) |
-| `convert_new.py` | `create_page/` | Markdown → site-ready HTML with TOC |
-| `migration_pipeline.py` | `tools/` | Single-command orchestrator — runs both scripts in sequence |
+| `pdfToMarkdown.py` | `migrationScripts/` | PDF → Markdown — embedded image extraction with artefact filter, caption ordering fix |
+| `convert_new.py` | `create_page/` | Markdown → site-ready HTML — TOC, REVDS classes, `.figure-caption` injection |
+| `migration_pipeline.py` | `tools/` | Single-command orchestrator — 5 steps including mojibake fix |
+| `fix_mojibake.py` | `tools/` | Mojibake fix — called automatically by pipeline, also available standalone |
 | `fix_rest_endpoints_table.py` | `tools/` | Post-pipeline fixes for REST Web Service Integration Guide |
+| `fix_ros_payroll_reporting_guide.py` | `tools/` | Post-pipeline fixes for Overview of ROS Payroll Reporting |
 | `fix_pre_tabindex.py` | `tools/` | Patches missing `tabindex="0"` on hand-authored `<pre>` elements (WCAG 2.1) |
 | `accessibility_audit.py` | `tools/` | Static WCAG 2.1 AA audit across all migrated HTML files |
 
@@ -265,18 +270,25 @@ python migration_pipeline.py "../content/PIT4/<section>/<doc>.pdf" --pit PIT4
 8. Updates section listing page — changes `href` and badge from PDF to LINK
 
 ### pdfToMarkdown.py Improvements (implemented)
+- ✅ **Embedded image extraction with 10KB artefact filter** — images below 10KB (blank squares, hairlines) are discarded; real screenshots are 10KB+
+- ✅ **MD5 deduplication** — repeated images (header logos on every page) extracted only once
+- ✅ **Caption/image ordering fix** — post-processing pass swaps `Figure N caption` before `![Image](...)` pairs automatically
 - ✅ Font-size heading detection (PyMuPDF `get_text("dict")`)
 - ✅ pdfplumber table extraction with consecutive table merging
-- ✅ Image deduplication (MD5 hash)
 - ✅ Repeating header/footer suppression
 - ✅ Visual TOC detection and suppression
 - ✅ Bullet character (•) → markdown list conversion
 - ✅ Sub-bullet (`o `) → indented markdown list item
 - ✅ Code block detection (HTTP methods, headers, signature components)
-- ✅ `(request-target):` and signature lines detected as code blocks
 - ✅ Split URL fragment joining before linkification
 - ✅ Page 1 images suppressed (cover logos replaced by SVG branding block)
 - ✅ Paragraph joining for flowing body text
+
+### convert_new.py Improvements (implemented)
+- ✅ **`.figure-caption` class** — automatically applied to all `<p>` elements starting with `Figure N`, rendering them centred italic beneath their image
+
+### migration_pipeline.py Improvements (implemented)
+- ✅ **Step 5: Mojibake fix** — `fix_mojibake.py` called automatically after HTML generation
 
 ### Known Remaining Limitations (manual fix required after pipeline)
 - Complex multi-column tables split across PDF page breaks may not merge cleanly — use `fix_rest_endpoints_table.py` as a template for document-specific fix scripts
@@ -285,6 +297,7 @@ python migration_pipeline.py "../content/PIT4/<section>/<doc>.pdf" --pit PIT4
 - Visual TOC suppression works across blocks but relies on heading numbering patterns — verify on each new document
 - Appendix numbered lists where PDF indents continuation lines need manual cleanup
 - Footnote paragraphs may be merged into a single `<p>` by the pipeline — may need splitting post-migration
+- PDF paragraphs that wrap around images (text split before and after the image in the PDF) cannot be automatically reordered — manual fix required post-pipeline
 
 ---
 

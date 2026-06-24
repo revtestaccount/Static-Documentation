@@ -1,4 +1,4 @@
-"""
+﻿"""
 migration_pipeline.py
 =====================
 Single-command PDF -> HTML migration pipeline.
@@ -118,7 +118,7 @@ if project_root is None:
 # to prefix relative image src attributes so they resolve from the project root.
 content_path = os.path.relpath(pdf_dir, project_root).replace("\\", "/") + "/"
 
-# Paths to the two scripts — both are siblings of tools/ at the project root level
+# Paths to the two scripts â€” both are siblings of tools/ at the project root level
 pdf_to_md_script = os.path.join(project_root, "migrationScripts", "pdfToMarkdown.py")
 convert_script   = os.path.join(project_root, "create_page", "convert_new.py")
 
@@ -302,7 +302,7 @@ try:
             doc_key_norm = doc_name.lower().replace("_", "").replace("-", "")
             route_key_norm = route_key.lower().replace("_", "").replace("-", "").rstrip(".")
             if template == pdf_template or template == html_template:
-                # Already pointing at PDF or HTML — update to HTML
+                # Already pointing at PDF or HTML â€” update to HTML
                 if template != html_template:
                     route_val["template"] = html_template
                     sitemap_updated = True
@@ -310,7 +310,7 @@ try:
                 else:
                     print(f"  Route '{route_key}' already points to HTML. No change needed.")
             elif route_key_norm == doc_key_norm and "demodocument" in template:
-                # Placeholder route whose key matches the doc name — update it
+                # Placeholder route whose key matches the doc name â€” update it
                 route_val["template"] = html_template
                 sitemap_updated = True
                 print(f"  Updated placeholder route '{route_key}': {template} -> {html_template}")
@@ -354,7 +354,7 @@ try:
         with open(listing_path, "r", encoding="utf-8") as f:
             listing_text = f.read()
 
-        # Case-insensitive search — filenames in hrefs may differ in case from
+        # Case-insensitive search â€” filenames in hrefs may differ in case from
         # the actual file on disk (e.g. REST_Connectivity_Handshake_Guide.pdf
         # vs rest_connectivity_handshake_guide.pdf)
         listing_lower = listing_text.lower()
@@ -434,6 +434,38 @@ try:
 except Exception:
     pass
 
+
+
+# ---------------------------------------------------------------------------
+# STEP 5 - MOJIBAKE FIX
+# ---------------------------------------------------------------------------
+
+print("\n[ Step 5 ] Mojibake fix (smart quotes and dashes)\n")
+sys.stdout.flush()
+
+try:
+    import importlib.util
+    mojibake_script = os.path.join(project_root, "tools", "fix_mojibake.py")
+    spec = importlib.util.spec_from_file_location("fix_mojibake", mojibake_script)
+    mojibake_mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mojibake_mod)
+
+    with open(html_path, "r", encoding="utf-8") as f:
+        html_text = f.read()
+
+    fixed = mojibake_mod.fix_mojibake(html_text)
+
+    if fixed != html_text:
+        with open(html_path, "w", encoding="utf-8") as f:
+            f.write(fixed)
+        print(f"  OK Mojibake fixed.")
+    else:
+        print(f"  OK No mojibake found.")
+
+except Exception as e:
+    print(f"  Warning: mojibake fix failed: {e}")
+
+sys.stdout.flush()
 
 # ---------------------------------------------------------------------------
 # DONE
