@@ -1,0 +1,37 @@
+{
+  "documents": [
+    {
+      "key": "rest_integration_guide",
+      "description": "REST Web Service Integration Guide",
+      "html_filename": "rest_web_service_integration_guide.html",
+      "content_path": "rest",
+      "environments": ["PIT3", "PIT4"],
+      "fixes": ["rest_integration_guide"]
+    },
+    {
+      "key": "ros_payroll_reporting",
+      "description": "Overview of ROS Payroll Reporting",
+      "html_filename": "overview_of_ros_payroll_reporting.html",
+      "content_path": "screens",
+      "environments": ["PIT3", "PIT4"],
+      "fixes": ["ros_payroll_reporting"]
+    },
+    {
+      "key": "selfservice_guide",
+      "description": "PIT Self Service Application Guide",
+      "html_filename": "pitselfserviceguide.html",
+      "content_path": "screens",
+      "environments": ["PIT3", "PIT4"],
+      "fixes": ["selfservice_coverpage", "selfservice_appendix"]
+    },
+    {
+      "key": "helpdesk_guide",
+      "description": "PAYE PIT Help Desk User Guide",
+      "html_filename": "payepithelpdeskuserguide.html",
+      "content_path": "pit",
+      "environments": ["PIT3"],
+      "notes": "PIT3 only. Pipeline produces a spaced filename — fix_helpdesk renames it.",
+      "fixes": ["helpdesk_guide"]
+    }
+  ]
+}
