@@ -65,7 +65,7 @@ const locationHandler = async () => {
   if (location === "/") {
     // â”€â”€ Home page: flat links for all 6 cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
     for (let key in homeNav) {
-      sidebarLinksToRender += `<li class="nav-item"><a class="nav-link site-nav__link" href="#${key}">${homeNav[key].title}</a></li>`;
+      sidebarLinksToRender += `<li class="site-nav__item"><a class="site-nav__link" href="#${key}">${homeNav[key].title}</a></li>`;
     }
 
   } else {
@@ -79,24 +79,23 @@ const locationHandler = async () => {
 
       // Dropdown toggle â€” label is the parent card title
       sidebarLinksToRender += `
-        <li class="nav-item dropdown">
-          <a class="nav-link site-nav__link site-nav__dropdown-toggle dropdown-toggle"
+        <li class="site-nav__dropdown">
+          <a class="site-nav__link site-nav__dropdown-toggle"
              href="#${parentKey}"
-             role="button"
-             data-bs-toggle="dropdown"
+             aria-haspopup="true"
              aria-expanded="false">
-            ${group.label}
+            ${group.label} <span class="site-nav__dropdown-arrow" aria-hidden="true">&#9660;</span>
           </a>
-          <ul class="dropdown-menu site-nav__dropdown-menu">`;
+          <ul class="site-nav__dropdown-menu">`;
 
       // Parent card page link at top of dropdown
       sidebarLinksToRender += `
             <li>
-              <a class="dropdown-item site-nav__dropdown-item${isOnCardPage ? ' active' : ''}" href="#${parentKey}">
+              <a class="site-nav__dropdown-item${isOnCardPage ? ' site-nav__dropdown-item--active' : ''}" href="#${parentKey}">
                 Overview
               </a>
             </li>
-            <li><hr class="dropdown-divider site-nav__divider"></li>`;
+            <li><hr class="site-nav__divider"></li>`;
 
       // Child pages
       for (let childKey of children) {
@@ -108,15 +107,15 @@ const locationHandler = async () => {
 
         // Handle hard-coded external links
         if (childKey === "soapschemareferencecurrentversion") {
-          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./content/PIT3/soap/soap-schema-reference/webframe.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+          sidebarLinksToRender += `<li><a class="site-nav__dropdown-item" href="./content/PIT3/soap/soap-schema-reference/webframe.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
         } else if (childKey === "soapschemareferencenextversion") {
-          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./content/PIT4/soap/soap-schema-reference/webframe.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+          sidebarLinksToRender += `<li><a class="site-nav__dropdown-item" href="./content/PIT4/soap/soap-schema-reference/webframe.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
         } else if (childKey === "restapireferencecurrentversion") {
-          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./content/PIT3/rest/paye-employers-rest-api-pit3.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+          sidebarLinksToRender += `<li><a class="site-nav__dropdown-item" href="./content/PIT3/rest/paye-employers-rest-api-pit3.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
         } else if (childKey === "restapireferencenextversion") {
-          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item" href="./content/PIT4/rest/paye-employers-rest-api-pit4.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
+          sidebarLinksToRender += `<li><a class="site-nav__dropdown-item" href="./content/PIT4/rest/paye-employers-rest-api-pit4.html" target="_blank" rel="noopener noreferrer">${childTitle}</a></li>`;
         } else {
-          sidebarLinksToRender += `<li><a class="dropdown-item site-nav__dropdown-item${isActive ? ' active' : ''}" href="#${childKey}">${childTitle}</a></li>`;
+          sidebarLinksToRender += `<li><a class="site-nav__dropdown-item${isActive ? ' site-nav__dropdown-item--active' : ''}" href="#${childKey}">${childTitle}</a></li>`;
         }
       }
 

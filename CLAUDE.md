@@ -38,7 +38,7 @@ The site serves external software developers integrating with Revenue's PAYE web
 | Build | Sass CLI only — no bundler |
 | PDF migration | Python 3.11 — PyMuPDF (`fitz`) + pdfplumber |
 
-**No Angular, no React, no Vue, no Node at runtime.** Bootstrap 5 is loaded from CDN (planned for removal).
+**No Angular, no React, no Vue, no Node at runtime. No Bootstrap — removed.** Layout uses PrimeFlex and custom CSS only.
 
 ---
 
@@ -63,7 +63,7 @@ The site serves external software developers integrating with Revenue's PAYE web
 
 - **Revenue Green:** `#025F63` — all header/navbar backgrounds
 - **Border radius:** `0` everywhere — squared corners, no exceptions
-- **Font:** Segoe UI 14px (internal applications)
+- **Font:** FiraSans-Regular 16px — this is a **customer-facing / public-facing** application (not an internal staff app)
 - **Sizes:** `rem` units throughout — no `px` in authored CSS (border widths excepted)
 - **Accessibility:** WCAG 2.1 AA target on all migrated pages
 - **`demodocument.html`** — intentional placeholder for ~120 unbuilt routes; do not remove
@@ -190,25 +190,17 @@ When implementing the editor and any related tooling, ensure there is a clear me
 
 ---
 
-## Bootstrap Removal (Next Task)
+## Bootstrap Removal (Complete)
 
-Bootstrap 5 (CDN) is the last external dependency. Removal plan identified:
+Bootstrap 5 has been fully removed. Replaced with:
+- **Card grid:** `home-grid` / `home-card` custom CSS classes in `styles.scss`
+- **Navbar collapse:** Vanilla JS `toggleNav()` in `index.html` — no framework dependency
+- **Scripts used:** `tools/remove_bootstrap.py`, `tools/fix_cards_and_navbar.py`
 
-### Phase 1 — Card grid (straightforward)
-Replace `container` / `row` / `col-sm` / `card` / `card-body` / `card-img-top` / `stretched-link`
-with PrimeFlex grid (`grid` / `col-12 md:col-4`) and custom `.home-card` CSS already in `styles.scss`.
-
-### Phase 2 — Navbar collapse/hamburger (requires custom JS)
-Bootstrap JS powers the mobile hamburger toggle via `data-bs-toggle="collapse"`.
-Needs a small vanilla JS implementation before Bootstrap JS (`bootstrap.bundle.min.js`) can be removed.
-The toggle logic will live in `assets/js/router.js` or a new `assets/js/nav.js`.
-
-### Important — Customer-Facing Application
-This is a **public-facing** application. All styling decisions must use:
-- **Font:** FiraSans-Regular 16px (`RevdsExternalPreset`)
-- **REVDS preset:** `externalPreset` (not `internalPreset`)
+This is a **customer-facing / public-facing** application:
+- **Font:** FiraSans-Regular 16px
 - **WCAG 2.1 AA:** Mandatory throughout
-- REVDS 22 UI rules loaded as session context — apply PrimeFlex layouts (Rule 6), never Bootstrap grid
+- Apply PrimeFlex layouts per REVDS 22 UI rules — never Bootstrap grid
 
 ---
 
@@ -285,6 +277,9 @@ git push origin dev_contentMigration
 - **Python version:** 3.11 (`C:/Program Files/Python3.11/python.exe`)
 - **Key packages:** `PyMuPDF` (fitz), `pdfplumber`, `Pillow`
 - All migration scripts are in `migrationScripts/`, `create_page/`, and `tools/`
+
+### Python Script Location Rule (mandatory)
+**All Python scripts must be created in `tools/`.** Never create `.py` files in the project root or any other directory. One-off patch/helper scripts also go in `tools/` and are deleted once their job is done.
 
 ---
 

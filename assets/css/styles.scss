@@ -44,7 +44,16 @@ h1 {
     font-size: $h1-700-font-size;
 }
 
+// Site wrapper — replaces Bootstrap container-fluid p-0
+.site-wrapper {
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
 body {
+    margin: 0;                  // remove browser default 8px margin
     min-height: 100vh;
     overflow-x: hidden;
     font-family: $font-families-segoe-ui;   
@@ -191,7 +200,7 @@ body {
             background-color: $brandteal-darken-10; // Revenue Green darkened — creates visual depth
             border-bottom: 0.1875rem solid $base-cyan;
             width: 100%;
-            padding: 0 1rem;
+
 
             &__home {
                 color: $base-white;
@@ -206,66 +215,169 @@ body {
                 }
             }
 
+            // Flex row wrapper
+            &__inner {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                width: 100%;
+                padding: 0 1rem;
+            }
+
+            // Collapsible wrapper — always visible on desktop
+            &__collapse {
+                display: flex;
+                flex: 1;
+
+                @media (max-width: 48rem) {
+                    display: none;
+                    width: 100%;
+                    order: 3;
+
+                    &--open {
+                        display: flex;
+                    }
+                }
+            }
+
             &__links {
+                display: flex;
                 flex-wrap: wrap;
                 gap: 0;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+
+                @media (max-width: 48rem) {
+                    flex-direction: column;
+                }
             }
 
             &__link {
-                color: $base-white !important;
+                color: $base-white;
                 font-size: 0.88rem;
-                padding: 0.65rem 0.85rem !important;
+                padding: 0.65rem 0.85rem;
                 white-space: nowrap;
                 border-left: 0.0625rem solid rgba(255,255,255,0.15);
-
-                &:hover, &:focus {
-                    background-color: rgba(255,255,255,0.12);
-                    color: $base-cyan !important;
-                }
-            }
-
-            // Hamburger button
-            &__toggler {
-                border-color: rgba(255,255,255,0.5);
-                margin-left: auto;
-
-                &:focus {
-                    box-shadow: none;
-                }
-            }
-
-            &__hamburger {
-                filter: invert(1);
-            }
-
-            // Dropdown menu
-            &__dropdown-toggle {
-                &::after {
-                    margin-left: 0.4em;
-                }
-            }
-
-            &__dropdown-menu {
-                background-color: $brandteal-darken-10;
-                border: none;
-                border-radius: 0;
-                padding: 0.25rem 0;
-                min-width: 16rem;
-                box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.25);
-            }
-
-            &__dropdown-item {
-                color: $base-white;
-                font-size: 0.875rem;
-                padding: 0.5rem 1.25rem;
-                white-space: normal;
+                text-decoration: none;
+                display: block;
 
                 &:hover, &:focus {
                     background-color: rgba(255,255,255,0.12);
                     color: $base-cyan;
                 }
 
-                &.active {
+                @media (max-width: 48rem) {
+                    border-left: none;
+                    border-top: 0.0625rem solid rgba(255,255,255,0.1);
+                    padding: 0.75rem 1rem;
+                }
+            }
+
+            // Hamburger button — hidden on desktop, shown on mobile
+            &__toggler {
+                display: none;
+                background: none;
+                border: 0.0625rem solid rgba(255,255,255,0.5);
+                padding: 0.35rem 0.5rem;
+                cursor: pointer;
+                margin-left: auto;
+
+                &:focus {
+                    outline: 0.125rem solid $base-cyan;
+                    outline-offset: 0.125rem;
+                    box-shadow: none;
+                }
+
+                @media (max-width: 48rem) {
+                    display: block;
+                }
+            }
+
+            // Hamburger icon — three lines in CSS, no image dependency
+            &__hamburger {
+                display: block;
+                width: 1.375rem;
+                height: 0.125rem;
+                background-color: $base-white;
+                position: relative;
+
+                &::before, &::after {
+                    content: '';
+                    display: block;
+                    width: 1.375rem;
+                    height: 0.125rem;
+                    background-color: $base-white;
+                    position: absolute;
+                    left: 0;
+                }
+
+                &::before { top: -0.4375rem; }
+                &::after  { top:  0.4375rem; }
+            }
+
+            // CSS-only dropdown — no Bootstrap JS required
+            &__dropdown {
+                position: relative;
+                list-style: none;
+
+                &:hover > .site-nav__dropdown-menu,
+                &:focus-within > .site-nav__dropdown-menu {
+                    display: block;
+                }
+            }
+
+            &__dropdown-toggle {
+                display: flex;
+                align-items: center;
+                gap: 0.3em;
+                cursor: pointer;
+            }
+
+            &__dropdown-arrow {
+                font-size: 0.6rem;
+                line-height: 1;
+            }
+
+            &__dropdown-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: $brandteal-darken-10;
+                border: none;
+                border-radius: 0;
+                padding: 0.25rem 0;
+                min-width: 16rem;
+                box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.25);
+                z-index: 100;
+                list-style: none;
+                margin: 0;
+
+                @media (max-width: 48rem) {
+                    position: static;
+                    display: block;
+                    box-shadow: none;
+                    background-color: rgba(0,0,0,0.15);
+                    padding-left: 1rem;
+                }
+            }
+
+            &__dropdown-item {
+                display: block;
+                color: $base-white;
+                font-size: 0.875rem;
+                padding: 0.5rem 1.25rem;
+                white-space: normal;
+                text-decoration: none;
+
+                &:hover, &:focus {
+                    background-color: rgba(255,255,255,0.12);
+                    color: $base-cyan;
+                }
+
+                &--active {
                     background-color: rgba(255,255,255,0.18);
                     color: $base-cyan;
                     font-weight: $bold-font-weight;
@@ -273,29 +385,11 @@ body {
             }
 
             &__divider {
-                border-color: rgba(255,255,255,0.2);
+                border: none;
+                border-top: 0.0625rem solid rgba(255,255,255,0.2);
                 margin: 0.25rem 0;
             }
 
-            // Mobile expanded menu
-            @media (max-width: 48rem) {
-                &__link {
-                    border-left: none;
-                    border-top: 0.0625rem solid rgba(255,255,255,0.1);
-                    padding: 0.75rem 1rem !important;
-                }
-
-                &__links {
-                    padding: 0.5rem 0;
-                }
-
-                &__dropdown-menu {
-                    position: static;
-                    box-shadow: none;
-                    background-color: rgba(0,0,0,0.15);
-                    padding-left: 1rem;
-                }
-            }
         };
 
         .pmod {
@@ -331,80 +425,150 @@ body {
     margin: auto;
 }
 
-// ── Card container layout ───────────────────────────────────────────────────────
-// Matches the max-width constraint applied to #content / .pit-section (60rem)
-// so card grids don't stretch edge-to-edge on wide screens
-// Gap between consecutive card rows
-.container .row + .row {
+// ── Home page card grid (Bootstrap-free) ────────────────────────────────────
+// Replaces Bootstrap container/row/col-sm/card/stretched-link
+// Uses CSS flexbox — no framework dependency
+
+.home-grid {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    &__row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+// Preceded by paragraphs — add top gap
+p ~ .home-grid {
     margin-top: 2rem;
 }
 
-// Gap above the first card row only when preceded by a paragraph of text
-p ~ .container > .row:first-child {
-    margin-top: 2rem;
-}
-
-// Centre cards within their column.
-// .col-sm stretches to fill the row equally but the card is a fixed 18rem wide.
-// Without this the card sits left-aligned leaving a gap to its right.
-.container .col-sm {
-    display: flex;
-    justify-content: center;
-}
-
-// ── Home page cards ──────────────────────────────────────────────────────────────
-// Uses Bootstrap stretched-link for full-card clickability (Bootstrap still loaded from CDN)
-// width: 18rem was previously inline on every card — centralised here
-
+// ── Home page card ───────────────────────────────────────────────────────────
 .home-card {
-    width: 18rem;           // moved from inline style="width: 18rem" on all card HTML
-    height: 100%;           // fills the Bootstrap column so all cards in a row are equal height
-    cursor: pointer;
+    width: 18rem;
+    border: 0.0625rem solid #dee2e6;
+    border-radius: 0;                   // Revenue: squared corners always
+    background-color: $base-white;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
-    position: relative;     // required for Bootstrap stretched-link
-    border-radius: 0 !important; // Revenue: squared corners always
     display: flex;
-    flex-direction: column; // enables equal-height card bodies within a row
+    flex-direction: column;
 
     &:hover {
         transform: translateY(-0.1875rem);
         box-shadow: 0 0.375rem 1rem rgba(0, 0, 0, 0.15);
     }
 
-    // Card image area — fixed height so all images occupy the same space
-    .card-img-top {
-        padding: 1rem;
-        background-color: $brandmint-lighten-50;
-        height: 8rem;          // fixed image area height — prevents tall SVGs expanding the card
-        object-fit: contain;
-        border-radius: 0;      // Revenue: squared corners
-    }
-
-    // Card body fills remaining height and centres content vertically
-    // This is what makes every card in a row the same total height
-    .card-body {
-        flex: 1;               // grows to fill available space, equalising card heights
+    // Full-card link — wraps the entire card content
+    &__link {
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        flex: 1;
+        text-decoration: none;
+        color: inherit;
+
+        &:hover, &:focus {
+            text-decoration: none;
+            outline-offset: 0.125rem;
+        }
+    }
+
+    // Image area — fixed height, centred SVG
+    &__img {
         padding: 1rem;
+        background-color: $brandmint-lighten-50;
+        height: 8rem;
+        width: 100%;
+        object-fit: contain;
+        border-bottom: 0.0625rem solid #dee2e6;
+        display: block;
     }
 
-    // Card text — centred, uses h3 scale in rem (h3 = 24.5px / 16 = 1.53125rem)
-    .card-text {
-        font-size: 1.125rem;   // slightly reduced from h3 for better card fit
+    // Card label text
+    &__text {
+        flex: 1;
+        padding: 1rem;
+        font-size: 1.125rem;
+        font-family: FiraSans-Regular, sans-serif;  // external/customer-facing app
         text-align: center;
-        font-family: $font-families-segoe-ui;
         line-height: 1.4;
-        margin-bottom: 0;
+        color: #333;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+// ── Navbar collapse (Bootstrap-free) ────────────────────────────────────────
+// Replaces Bootstrap navbar-expand-md / collapse / navbar-collapse
+
+.site-nav {
+    &__inner {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 0 1rem;
     }
 
-    // Hide the 'Click here' anchor text — card is fully clickable via stretched-link
-    .stretched-link {
-        font-size: 0;
-        position: absolute;
-        inset: 0;
+    &__collapse {
+        display: flex;
+        flex: 1;
+
+        // Hidden on mobile until toggled
+        @media (max-width: 48rem) {
+            display: none;
+            width: 100%;
+            order: 3;
+
+            &--open {
+                display: flex;
+            }
+        }
+    }
+
+    // Hamburger — hidden on desktop
+    &__toggler {
+        display: none;
+        background: none;
+        border: 0.0625rem solid rgba(255,255,255,0.5);
+        padding: 0.35rem 0.5rem;
+        cursor: pointer;
+        margin-left: auto;
+
+        @media (max-width: 48rem) {
+            display: block;
+        }
+    }
+
+    &__hamburger {
+        display: block;
+        width: 1.375rem;
+        height: 0.125rem;
+        background-color: $base-white;
+        position: relative;
+
+        &::before, &::after {
+            content: '';
+            display: block;
+            width: 1.375rem;
+            height: 0.125rem;
+            background-color: $base-white;
+            position: absolute;
+            left: 0;
+        }
+
+        &::before { top: -0.4375rem; }
+        &::after  { top:  0.4375rem; }
     }
 }
 
