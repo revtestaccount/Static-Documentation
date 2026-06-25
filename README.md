@@ -91,7 +91,7 @@ index.html
 
 | Type | Example | Description |
 |---|---|---|
-| Home / card grid | `content/shared/home.html` | Bootstrap card grid, top-level navigation |
+| Home / card grid | `content/shared/home.html` | home-grid CSS card layout, top-level navigation |
 | Section card hub | `content/shared/pmodpit3cards.html` | Card grid linking to section child pages |
 | Document listing | `content/PIT3/soap.html` | `.pit-section` table of downloadable files |
 | FAQ | `content/shared/faq.html` | Native `<details>`/`<summary>` accordion |
@@ -122,7 +122,7 @@ All asset paths, route keys, and template names follow this convention consisten
 
 - **Primary colour:** `#025F63` (Revenue Green / `$base-brandteal`)
 - **Border radius:** `0` — squared corners always, no exceptions
-- **Font:** Segoe UI 14px (internal applications)
+- **Font:** FiraSans-Regular 16px (customer-facing / public-facing application)
 - **Sizing:** `rem` units throughout — no `px` in authored CSS (border widths use `px` per convention)
 - **Accessibility:** WCAG 2.1 AA target
 
@@ -149,10 +149,10 @@ Used on all section content pages. Provides:
 | `--api` | Indigo `#6610f2` | OpenAPI spec |
 
 #### `.home-card` — Navigation Cards
-- `width: 18rem`, `height: 100%` — equal-height cards in a row
+- **Bootstrap-free** — uses `.home-grid` / `.home-card` BEM CSS classes
+- `width: 18rem` — equal-height rows via CSS flexbox gap
 - Fixed image area `height: 8rem` with `object-fit: contain`
-- `flex: 1` on `.card-body` — vertically centres text regardless of line count
-- Bootstrap `stretched-link` makes the entire card clickable
+- Full-card `<a>` link wraps image and text — no `stretched-link` dependency
 
 #### `.faq` — FAQ Accordion
 - Native `<details>`/`<summary>` — no JavaScript required
@@ -215,7 +215,7 @@ Used on all section content pages. Provides:
 │   ├── fix_links.py                 # Batch link/badge updater
 │   ├── update_migration_status.py   # Migration status tracker
 │   ├── migration_pipeline.py        # Single-command PDF → HTML pipeline
-│   ├── fix_rest_endpoints_table.py  # Post-pipeline fixes for REST Web Service Integration Guide
+│   ├── run_doc_fixes.py             # Single entry point for all post-pipeline document fixes
 │   ├── fix_pre_tabindex.py          # Patches missing tabindex=0 on hand-authored <pre> elements
 │   └── accessibility_audit.py       # Static WCAG 2.1 AA audit tool
 └── package.json
@@ -251,7 +251,7 @@ No direct commits to `main`. Feature branches are merged via PR.
 | `tools/fix_links.py` | Batch link/badge updater for section listing pages |
 | `tools/update_migration_status.py` | Updates migration status tracking |
 | `tools/migration_pipeline.py` | Single-command PDF → Markdown → HTML migration pipeline |
-| `tools/fix_rest_endpoints_table.py` | Post-pipeline fixes for REST Web Service Integration Guide (PIT3 + PIT4) |
+| `tools/run_doc_fixes.py` | Single entry point for all post-pipeline document fixes (see `tools/doc_fixes_registry.json`) |
 | `tools/fix_pre_tabindex.py` | Patches missing `tabindex="0"` on hand-authored `<pre>` elements (WCAG 2.1) |
 | `tools/accessibility_audit.py` | Static WCAG 2.1 AA audit across all migrated HTML files |
 | `migrationScripts/pdfToMarkdown.py` | Converts PDF to Markdown using PyMuPDF + pdfplumber |

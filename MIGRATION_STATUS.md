@@ -1,6 +1,6 @@
 # Migration Status
 
-> **Last updated:** 2026-06-16  
+> **Last updated:** 2026-06-25  
 > **Branch:** `dev_contentMigration` (branched from `dev_traditionalNavbar`)  
 > **Total commits:** ~140
 
@@ -50,12 +50,13 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 - ✅ Hash-based SPA router (`assets/js/router.js`)
 - ✅ `sitemap.json` — all 160 routes defined
 - ✅ Three-band REVDS header (utility bar / main header / navbar)
-- ✅ Responsive navbar — Bootstrap collapse + Revenue-styled dropdowns
+- ✅ Responsive navbar — vanilla JS hamburger toggle + CSS-only dropdown (Bootstrap-free)
 - ✅ `node_modules` excluded from git
 
 ### Styling
 - ✅ REVDS colour tokens corrected (`#025F63` Revenue Green)
 - ✅ All `px` values converted to `rem` in `styles.scss`
+- ✅ Bootstrap fully removed — home-grid/home-card BEM CSS, vanilla JS toggle, CSS-only dropdown
 - ✅ Equal-height card grid — flexbox, `height: 100%`, fixed image area
 - ✅ Inline `style="width: 18rem"` removed from all card HTML (24 occurrences)
 - ✅ `body main .card` specificity conflict resolved
@@ -84,12 +85,13 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 - ✅ PIT3 REST Connectivity Handshake Guide (`content/PIT3/rest/rest_connectivity_handshake_guide.html`)
 - ✅ PIT4 REST Web Service Integration Guide (`content/PIT4/rest/rest_web_service_integration_guide.html`)
 - ✅ PIT4 REST Connectivity Handshake Guide (`content/PIT4/rest/rest_connectivity_handshake_guide.html`)
+- ✅ PIT3 Overview of ROS Payroll Reporting (`content/PIT3/screens/overview_of_ros_payroll_reporting.html`)
 
 ### Tooling (new)
 - ✅ `migrationScripts/pdfToMarkdown.py` — PDF → Markdown (PyMuPDF + pdfplumber, heading detection, table merging, image deduplication)
 - ✅ `create_page/convert_new.py` — Markdown → HTML (TOC, REVDS classes, bullet conversion, tabindex, stylesheet injection)
 - ✅ `tools/migration_pipeline.py` — single-command pipeline (PDF → MD → HTML → sitemap update → listing page update)
-- ✅ `tools/fix_rest_endpoints_table.py` — post-pipeline fixes for REST Web Service Integration Guide (section 2.1 table, 4.1.3 table, footnote ordering, code blocks, version history spillover)
+- ✅ `tools/run_doc_fixes.py` + `tools/doc_fixes_registry.json` — consolidated post-pipeline fix scripts (replaces all individual fix_*.py scripts)
 - ✅ `tools/fix_pre_tabindex.py` — patches missing `tabindex="0"` on hand-authored `<pre>` elements (WCAG 2.1 keyboard accessibility)
 - ✅ `tools/accessibility_audit.py` — static WCAG 2.1 AA audit across all migrated HTML files
 
@@ -123,7 +125,7 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 | Scenarios | PSDA Scenarios |
 
 ### Technical
-- ❌ Bootstrap removal — replace `.row`, `.col-sm`, `.container` with native CSS
+- ✅ Bootstrap removal — complete
 - ❌ Font migration — Nunito Sans stack (deferred pending decision)
 - ❌ `sitemap.json` move to project root (currently `assets/js/`)
 - ❌ Validation rules XLSX files not yet linked from content pages

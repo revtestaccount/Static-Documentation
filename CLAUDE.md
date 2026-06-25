@@ -38,7 +38,7 @@ The site serves external software developers integrating with Revenue's PAYE web
 | Build | Sass CLI only — no bundler |
 | PDF migration | Python 3.11 — PyMuPDF (`fitz`) + pdfplumber |
 
-**No Angular, no React, no Vue, no Node at runtime. No Bootstrap — removed.** Layout uses PrimeFlex and custom CSS only.
+**No Angular, no React, no Vue, no Node at runtime. No Bootstrap — removed.** Layout uses custom CSS (home-grid, home-card, site-nav) only.
 
 ---
 
@@ -128,28 +128,29 @@ python migration_pipeline.py "../content/PIT4/<section>/<doc>.pdf" --pit PIT4
 
 Some documents have known structural issues the pipeline cannot auto-fix. Document-specific Python fix scripts live in `tools/` and are run immediately after the pipeline.
 
-### `tools/fix_rest_endpoints_table.py`
+### `tools/run_doc_fixes.py` + `tools/doc_fixes_registry.json`
 
-Fixes the REST Web Service Integration Guide (PIT3 + PIT4). Run after every pipeline regeneration of this document:
+Single entry point for ALL post-pipeline document fixes. Replaces the individual `fix_*.py` scripts.
 
 ```powershell
-cd tools
-python fix_rest_endpoints_table.py --pit PIT3
-python fix_rest_endpoints_table.py --pit PIT4
+# List all registered documents and their fixes
+python tools/run_doc_fixes.py --list
+
+# Fix one document
+python tools/run_doc_fixes.py --doc rest_integration_guide --pit PIT3
+python tools/run_doc_fixes.py --doc ros_payroll_reporting --pit PIT3
+
+# Fix all documents for one environment
+python tools/run_doc_fixes.py --all --pit PIT3
+
+# Fix all documents for both environments
+python tools/run_doc_fixes.py --all --pit ALL
 ```
 
-**What it fixes:**
-
-| Fix | Description |
-|---|---|
-| Fix 1 | Replaces broken section 2.1 REST Endpoints tables (split across PDF pages) with a single clean 5-column hand-authored table |
-| Fix 2 | Removes misplaced ERN/Monthly ERR table appearing after section 2.1.1 |
-| Fix 3 | Removes orphaned "1.0 Release Candidate 2" table |
-| Fix 4 | Removes version history continuation table spilling into Document context section |
-| Fix 5 | Replaces HTTP request example `<table>` with proper `<pre><code>` block |
-| Fix 6 | Replaces broken section 4.1.3 headers table with clean 2-column table and moves footnote paragraphs to after the table |
-
-**Pattern for new documents:** If a new PDF has similar issues, create a new script following the same pattern — one `fix_html()` function with numbered fix blocks, each using `re.subn()` with clear change logging.
+**`doc_fixes_registry.json`** records which documents need which fixes. Adding a new document:
+1. Add entry to `doc_fixes_registry.json`
+2. Add `fix_<key>(html, env)` function to `run_doc_fixes.py`
+3. Register it in `FIX_REGISTRY` dict at the bottom of the script
 
 ### `tools/fix_pre_tabindex.py`
 
@@ -190,17 +191,18 @@ When implementing the editor and any related tooling, ensure there is a clear me
 
 ---
 
-## Bootstrap Removal (Complete)
+## Bootstrap Removal (Complete ✅)
 
-Bootstrap 5 has been fully removed. Replaced with:
-- **Card grid:** `home-grid` / `home-card` custom CSS classes in `styles.scss`
-- **Navbar collapse:** Vanilla JS `toggleNav()` in `index.html` — no framework dependency
-- **Scripts used:** `tools/remove_bootstrap.py`, `tools/fix_cards_and_navbar.py`
+Bootstrap 5 fully removed as of 2026-06-25. Replaced with:
+- **Card grid:** `home-grid` / `home-card` BEM CSS classes in `styles.scss`
+- **Navbar collapse:** Vanilla JS `toggleNav()` in `index.html`
+- **Navbar dropdown:** CSS-only hover/focus dropdown (`site-nav__dropdown` + `:hover > .site-nav__dropdown-menu`)
+- **body margin:** `margin: 0` added to remove browser default 8px gap around header/footer
 
 This is a **customer-facing / public-facing** application:
 - **Font:** FiraSans-Regular 16px
 - **WCAG 2.1 AA:** Mandatory throughout
-- Apply PrimeFlex layouts per REVDS 22 UI rules — never Bootstrap grid
+- Use custom CSS classes — never Bootstrap grid or utility classes
 
 ---
 
@@ -279,7 +281,7 @@ git push origin dev_contentMigration
 - All migration scripts are in `migrationScripts/`, `create_page/`, and `tools/`
 
 ### Python Script Location Rule (mandatory)
-**All Python scripts must be created in `tools/`.** Never create `.py` files in the project root or any other directory. One-off patch/helper scripts also go in `tools/` and are deleted once their job is done.
+**All Python scripts must be created in `tools/`.** Never create `.py` files in the project root or any other directory. One-off patch/helper scripts also go in `tools/` and are deleted immediately after their job is done. Only permanent, reusable scripts are committed.
 
 ---
 

@@ -1,6 +1,6 @@
 # Project Assessment — Static Documentation Site
 
-> **Last updated:** 2026-06-24  
+> **Last updated:** 2026-06-25  
 > **Active branch:** `dev_contentMigration`  
 > **Total commits:** ~140  
 
@@ -38,7 +38,7 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 | Navigation | `assets/js/sitemap.json` | Defines all routes and nav groups |
 | Build | Sass CLI only | No bundler, no build step for HTML/JS |
 | CI/CD | Jenkins (planned) | Manual deployment currently |
-| CSS framework | Bootstrap 5.3 (CDN) | Used for grid/cards — planned for removal |
+| CSS framework | Custom CSS (BEM) | Bootstrap removed — home-grid, home-card, site-nav classes |
 
 ### Key Files
 
@@ -106,11 +106,11 @@ Routes prefixed with `_` (e.g., `_nav_groups`, `_home_nav`) are utility groups u
 
 ### Card Grid
 
-- Cards use Bootstrap `.row`/`.col-sm` grid
-- `.home-card` — `width: 18rem`, `height: 100%`, flexbox column layout
-- Equal card heights achieved via `flex: 1` on `.card-body` and fixed `height: 8rem` on `.card-img-top`
-- Row gap: `.container .row + .row { margin-top: 2rem }`
-- Top gap when paragraph precedes cards: `p ~ .container > .row:first-child { margin-top: 2rem }`
+- **Bootstrap-free** — uses `.home-grid` / `.home-grid__row` / `.home-card` BEM CSS classes
+- `.home-card` — `width: 18rem`, flexbox column layout, full-card `<a>` link
+- Equal-height rows via CSS flexbox `gap: 1.5rem` on `.home-grid__row`
+- Fixed image area `height: 8rem` with `object-fit: contain`
+- Row gap: `margin-bottom: 1.5rem` on `.home-grid__row`
 
 ---
 
@@ -170,9 +170,9 @@ Routes prefixed with `_` (e.g., `_nav_groups`, `_home_nav`) are utility groups u
 - ✅ Hash-based SPA router implemented (`router.js`)
 - ✅ `sitemap.json` — all routes defined (160 total)
 - ✅ Three-band REVDS header layout
-- ✅ Responsive navbar with Bootstrap collapse + dropdown menus
+- ✅ Responsive navbar — vanilla JS hamburger toggle + CSS-only hover dropdown (no Bootstrap)
 - ✅ `node_modules` removed from git tracking; `.gitignore` updated
-- ✅ Bootstrap 5 loaded from CDN (planned for removal)
+- ✅ Bootstrap 5 **fully removed** — replaced with custom CSS (home-grid, home-card, site-nav__collapse, CSS-only dropdown)
 
 ### Styling (branch: `dev_traditionalNavbar`)
 - ✅ REVDS colour tokens corrected (`#025F63` Revenue Green)
@@ -202,10 +202,7 @@ Routes prefixed with `_` (e.g., `_nav_groups`, `_home_nav`) are utility groups u
 - ❌ **122 routes** still pointing to `demodocument.html` placeholder — need real content pages authored
 - ❌ **WYSIWYG page editor** — bare-bones editor in place; needs improvement to support all pipeline-generated components (TOC, tables, code blocks, headings, lists) and editing of existing pages
 - ❌ **Public/internal feature gating** — editor and all page-editing scripts must be excluded from public release deployment; gating mechanism to be designed and implemented
-- ❌ **Bootstrap removal** — replacement plan identified and ready to execute:
-  - **Phase 1 (card grid):** Replace `container`/`row`/`col-sm`/`card` with PrimeFlex `grid`/`col-12 md:col-4` and existing `.home-card` CSS
-  - **Phase 2 (navbar collapse):** Replace Bootstrap JS hamburger toggle with custom vanilla JS; remove `bootstrap.bundle.min.js` CDN reference
-  - **Note:** Customer-facing app — FiraSans-Regular 16px, `RevdsExternalPreset`, WCAG 2.1 AA mandatory throughout
+- ✅ **Bootstrap removal** — complete. Custom CSS classes throughout, vanilla JS navbar toggle, CSS-only dropdown.
 - ❌ **Font migration** — update to Nunito Sans stack (deferred)
 
 ### Content Pages Needed
@@ -243,12 +240,12 @@ A full PDF → HTML migration pipeline is now in place across three scripts:
 
 | Script | Location | Purpose |
 |---|---|---|
-| `pdfToMarkdown.py` | `migrationScripts/` | PDF → Markdown — embedded image extraction with artefact filter, caption ordering fix |
+| `pdfToMarkdown.py` | `migrationScripts/` | PDF → Markdown — embedded image extraction, artefact filter, caption ordering fix |
 | `convert_new.py` | `create_page/` | Markdown → site-ready HTML — TOC, REVDS classes, `.figure-caption` injection |
 | `migration_pipeline.py` | `tools/` | Single-command orchestrator — 5 steps including mojibake fix |
+| `run_doc_fixes.py` | `tools/` | Single entry point for ALL post-pipeline document fixes — replaces individual fix scripts |
+| `doc_fixes_registry.json` | `tools/` | Registry of documents and their required fixes |
 | `fix_mojibake.py` | `tools/` | Mojibake fix — called automatically by pipeline, also available standalone |
-| `fix_rest_endpoints_table.py` | `tools/` | Post-pipeline fixes for REST Web Service Integration Guide |
-| `fix_ros_payroll_reporting_guide.py` | `tools/` | Post-pipeline fixes for Overview of ROS Payroll Reporting |
 | `fix_pre_tabindex.py` | `tools/` | Patches missing `tabindex="0"` on hand-authored `<pre>` elements (WCAG 2.1) |
 | `accessibility_audit.py` | `tools/` | Static WCAG 2.1 AA audit across all migrated HTML files |
 
@@ -331,7 +328,7 @@ All migrated HTML pages target WCAG 2.1 AA compliance. The following measures ar
 
 | Issue | Impact | Status |
 |---|---|---|
-| Bootstrap CDN dependency | External dependency; minor CORS risk | Planned for removal |
+| ~~Bootstrap CDN dependency~~ | Removed | ✅ Complete |
 | `demodocument.html` as 120 route placeholder | Users see demo content instead of real pages | Accepted — content authoring in progress |
 | SOAP schema topic HTML has legacy meta charset | No visible issue; browser handles correctly | Low priority |
 | Some file names contain spaces | Works on Windows/Mac; potential issues on Linux servers | Monitor |
