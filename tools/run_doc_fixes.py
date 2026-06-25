@@ -437,17 +437,43 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     def img_tag(n):
         return f'<p><img alt="Image" src="{img_base}/image_{n}.png"/></p>\n'
 
-    # Fix 11a: Figure 1 (Employer Services dashboard) is vector-rendered
-    # in the PDF — PyMuPDF cannot extract it as a raster image.
-    # image_1.png is the cover page branding strip, NOT the dashboard.
-    # Remove any wrongly-inserted image_1 from a previous fix run,
-    # and flag that a manual screenshot is required.
-    html = html.replace(
-        f'<p><img alt="Image" src="{img_base}/image_1.png"/></p>\n'
-        '<p class="figure-caption">Figure 1 Employer Services dashboard</p>',
-        '<p class="figure-caption">Figure 1 Employer Services dashboard</p>'
-    )
-    changes.append('Fix 11a: Figure 1 is vector-rendered in PDF - manual screenshot required; removed any wrongly-inserted image_1')
+    # Fix 11a: Renumber images — the pipeline always extracts image_1.png
+    # as the cover page branding strip (page 1, 686x220px). All actual
+    # content screenshots are extracted as image_2..image_N, making every
+    # figure render one position too high. Fix: detect the cover strip by
+    # its dimensions, delete it, rename image_2->image_1 etc, update HTML.
+    # Idempotent: if image_1 is already a real screenshot (width > 800px)
+    # the renaming is skipped.
+    from PIL import Image as _PILImage
+    import re as _re
+    img_dir = PROJECT_ROOT / 'content' / env / 'screens' / 'overview_of_ros_payroll_reporting' / 'images'
+    cover = img_dir / 'image_1.png'
+    if cover.exists():
+        with _PILImage.open(cover) as _im:
+            _w, _h = _im.size
+        if _w < 800:  # cover branding strip is 686x220 — not a content image
+            cover.unlink()
+            # Rename image_N -> image_(N-1) for N = 2..60 (reverse to avoid collisions)
+            _renamed = 0
+            for _n in range(60, 1, -1):
+                _src = img_dir / f'image_{_n}.png'
+                _dst = img_dir / f'image_{_n-1}.png'
+                if _src.exists():
+                    _src.replace(_dst)
+                    _renamed += 1
+            # Update HTML src references image_N -> image_(N-1), highest first
+            _updates = 0
+            for _n in range(60, 1, -1):
+                _old = f'image_{_n}.png'
+                _new = f'image_{_n-1}.png'
+                if _old in html:
+                    html = html.replace(_old, _new)
+                    _updates += 1
+            changes.append(f'Fix 11a: Removed cover branding strip, renamed {_renamed} images, updated {_updates} HTML references')
+        else:
+            changes.append('Fix 11a: image_1 is already a content screenshot (correct numbering) - skipped')
+    else:
+        changes.append('Fix 11a: image_1.png not found - skipped')
 
     # Fix 11b: extract img tags embedded inside figure-caption paragraphs
     # Pattern: <p class="figure-caption"><img .../> \n Figure N: text</p>
@@ -467,17 +493,18 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     if n11b:
         changes.append(f'Fix 11b: Extracted {n11b} img tag(s) from inside figure-caption paragraphs')
 
-    # Fix 11c: delete stale images 31-60 from previous pipeline run
-    img_dir = PROJECT_ROOT / 'content' / env / 'screens' / 'overview_of_ros_payroll_reporting' / 'images'
-    stale_count = 0
+    # Fix 11c: delete stale images from previous pipeline run
+    # After Fix 11a renaming, real images are image_1..image_29.
+    # Anything from image_30 upward is a stale duplicate.
+    _stale_count = 0
     if img_dir.is_dir():
-        for i in range(31, 61):
-            stale = img_dir / f'image_{i}.png'
-            if stale.exists():
-                stale.unlink()
-                stale_count += 1
-    if stale_count:
-        changes.append(f'Fix 11c: Deleted {stale_count} stale images (image_31–image_60) from previous pipeline run')
+        for _i in range(30, 61):
+            _stale = img_dir / f'image_{_i}.png'
+            if _stale.exists():
+                _stale.unlink()
+                _stale_count += 1
+    if _stale_count:
+        changes.append(f'Fix 11c: Deleted {_stale_count} stale image(s) from image_30 upward')
 
     return html, changes
 
