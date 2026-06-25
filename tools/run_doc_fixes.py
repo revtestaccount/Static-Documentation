@@ -426,6 +426,59 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     )
     changes.append(f"Fix 10: Corrected {n10a + n10b} TOC entry/entries for sections 4.1 and/or 4.2.2")
 
+    # ------------------------------------------------------------------
+    # Fix 11: Image placement fixes
+    #   11a: Insert image_1 before orphaned Figure 1 caption
+    #   11b: Extract img tags from inside malformed figure-caption <p>s
+    #   11c: Delete stale images 31-60 from previous pipeline run
+    # ------------------------------------------------------------------
+    img_base = f'content/{env}/screens/overview_of_ros_payroll_reporting/images'
+
+    def img_tag(n):
+        return f'<p><img alt="Image" src="{img_base}/image_{n}.png"/></p>\n'
+
+    # Fix 11a: Figure 1 (Employer Services dashboard) is vector-rendered
+    # in the PDF — PyMuPDF cannot extract it as a raster image.
+    # image_1.png is the cover page branding strip, NOT the dashboard.
+    # Remove any wrongly-inserted image_1 from a previous fix run,
+    # and flag that a manual screenshot is required.
+    html = html.replace(
+        f'<p><img alt="Image" src="{img_base}/image_1.png"/></p>\n'
+        '<p class="figure-caption">Figure 1 Employer Services dashboard</p>',
+        '<p class="figure-caption">Figure 1 Employer Services dashboard</p>'
+    )
+    changes.append('Fix 11a: Figure 1 is vector-rendered in PDF - manual screenshot required; removed any wrongly-inserted image_1')
+
+    # Fix 11b: extract img tags embedded inside figure-caption paragraphs
+    # Pattern: <p class="figure-caption"><img .../> \n Figure N: text</p>
+    def extract_img_from_caption(m):
+        img_src    = m.group(1)
+        cap_text   = m.group(2).strip()
+        return f'<p><img alt="Image" src="{img_src}"/></p>\n<p class="figure-caption">{cap_text}</p>'
+
+    html, n11b = re.subn(
+        re.compile(
+            r'<p class="figure-caption"><img alt="Image" src="([^"]+)"/>\s*\n?(Figure [^<]+)</p>',
+            re.DOTALL
+        ),
+        extract_img_from_caption,
+        html
+    )
+    if n11b:
+        changes.append(f'Fix 11b: Extracted {n11b} img tag(s) from inside figure-caption paragraphs')
+
+    # Fix 11c: delete stale images 31-60 from previous pipeline run
+    img_dir = PROJECT_ROOT / 'content' / env / 'screens' / 'overview_of_ros_payroll_reporting' / 'images'
+    stale_count = 0
+    if img_dir.is_dir():
+        for i in range(31, 61):
+            stale = img_dir / f'image_{i}.png'
+            if stale.exists():
+                stale.unlink()
+                stale_count += 1
+    if stale_count:
+        changes.append(f'Fix 11c: Deleted {stale_count} stale images (image_31–image_60) from previous pipeline run')
+
     return html, changes
 
 
