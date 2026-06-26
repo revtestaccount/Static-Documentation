@@ -603,7 +603,19 @@ p ~ .home-grid {
         object-fit: contain;
     }
 
-            h2.pmod, h3.pmod, h4.pmod {
+            h2.pmod {
+        text-align: left;
+        color: $base-brandteal;
+        font-weight: $bold-font-weight;
+        font-size: 1.1rem;
+        background-color: #f0f8f8;
+        border-left: 0.25rem solid $base-brandteal;
+        padding: 0.5rem 0.85rem;
+        margin-top: 4rem;
+        margin-bottom: 1rem;
+    }
+
+            h3.pmod, h4.pmod {
         text-align: left;
         color: $base-brandteal;
         font-weight: $bold-font-weight;

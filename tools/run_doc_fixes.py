@@ -333,19 +333,27 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     if n:
         changes.append(f'Fix 2b/2f: Converted {n} RPN response paragraph-table(s) to <p>')
 
-    # Fix 2c: "other summary screen" paragraph-table -> <p>
-    html, n = re.subn(
+    # Fix 2c: remaining section 3.3 paragraph-tables -> <p>
+    # Handles both the empty-header variant and any residual split table
+    for _pat in [
         re.compile(
             r'<table[^>]*>\s*<thead>\s*<tr>\s*<th[^>]*>(?:</th>|)</th>?\s*</tr>\s*</thead>\s*<tbody>\s*'
             r'<tr>\s*<td>The other summary screen the user may get is if they have completed the online form to request RPNs</td>\s*</tr>\s*'
             r'<tr>\s*<td>for new employees or requested RPNs for a specific subset of existing employees:</td>\s*</tr>\s*'
-            r'(?:<tr>\s*<td></td>\s*</tr>\s*)*</tbody>\s*</table>', re.DOTALL
-        ),
-        '<p>The other summary screen the user may get is if they have completed the online form to request RPNs for new employees or requested RPNs for a specific subset of existing employees:</p>',
-        html
-    )
-    if n:
-        changes.append('Fix 2c: Converted section 3.3 summary intro paragraph-table to <p>')
+            r'(?:<tr>\s*<td></td>\s*</tr>\s*)*</tbody>\s*</table>', re.DOTALL),
+        re.compile(
+            r'<table[^>]*>\s*<thead>\s*<tr>\s*<th[^>]*></th>\s*</tr>\s*</thead>\s*<tbody>\s*'
+            r'<tr>\s*<td>The other summary screen[^<]*</td>\s*</tr>\s*'
+            r'(?:<tr>\s*<td>[^<]*</td>\s*</tr>\s*)*</tbody>\s*</table>', re.DOTALL),
+    ]:
+        html, n = re.subn(
+            _pat,
+            '<p>The other summary screen the user may get is if they have completed the online form to request RPNs for new employees or requested RPNs for a specific subset of existing employees:</p>',
+            html
+        )
+        if n:
+            changes.append('Fix 2c: Converted section 3.3 summary intro paragraph-table to <p>')
+            break
 
     # Fix 2d: Empty 2-column table (split TOC artifact)
     html, n = re.subn(
@@ -425,6 +433,46 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
         html
     )
     changes.append(f"Fix 10: Corrected {n10a + n10b} TOC entry/entries for sections 4.1 and/or 4.2.2")
+
+    # Fix 12a: Figure 10 reuses figure_7.png (per CSV analysis) — no figure_10.png exists.
+    # Insert figure_7.png before the Figure 10 caption.
+    html, n12a = re.subn(
+        r'(<p class="figure-caption">Figure 10 [^<]+</p>)',
+        '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_7.png"/></p>\n\g<1>',
+        html
+    )
+    if n12a:
+        changes.append('Fix 12a: Inserted figure_7 (reused) before Figure 10 caption')
+    else:
+        changes.append('Fix 12a: WARNING - Figure 10 caption not found')
+
+    # Fix 12b: Figure 12 caption was not extracted from PDF text — insert both
+    # image and caption between the Figure 11 caption and the Figure 13 caption.
+    FIG12_INSERT = (
+        '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_12.png"/></p>\n'
+        '<p class="figure-caption">Figure 12 Request RPNs Summary screen (Detailed)</p>\n'
+    )
+    html, n12b = re.subn(
+        r'(<p class="figure-caption">Figure 11 [^<]+</p>)',
+        '\g<1>\n' + FIG12_INSERT,
+        html
+    )
+    if n12b:
+        changes.append('Fix 12b: Inserted figure_12 image and caption after Figure 11')
+    else:
+        changes.append('Fix 12b: WARNING - Figure 11 caption not found')
+
+    # Fix 12c: Figure 25 reuses figure_15.png (per CSV analysis) — no figure_25.png exists.
+    # Insert figure_15.png before the Figure 25 caption.
+    html, n12c = re.subn(
+        r'(<p class="figure-caption">Figure 25 [^<]+</p>)',
+        '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_15.png"/></p>\n\g<1>',
+        html
+    )
+    if n12c:
+        changes.append('Fix 12c: Inserted figure_15 (reused) before Figure 25 caption')
+    else:
+        changes.append('Fix 12c: WARNING - Figure 25 caption not found')
 
     # ------------------------------------------------------------------
     # Fix 11: Image placement fixes

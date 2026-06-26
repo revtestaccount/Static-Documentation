@@ -11689,7 +11689,18 @@ p ~ .home-grid {
   max-height: 12rem;
   object-fit: contain;
 }
-.document-content h2.pmod, .document-content h3.pmod, .document-content h4.pmod {
+.document-content h2.pmod {
+  text-align: left;
+  color: rgb(2, 95, 99);
+  font-weight: 700;
+  font-size: 1.1rem;
+  background-color: #f0f8f8;
+  border-left: 0.25rem solid rgb(2, 95, 99);
+  padding: 0.5rem 0.85rem;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
+}
+.document-content h3.pmod, .document-content h4.pmod {
   text-align: left;
   color: rgb(2, 95, 99);
   font-weight: 700;

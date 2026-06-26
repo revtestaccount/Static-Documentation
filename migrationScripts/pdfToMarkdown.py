@@ -575,6 +575,15 @@ def build_figure_caption_map(doc):
                     caps.append((y0, fig_num, line_text))
         caption_positions[page_num] = caps
 
+    # Pre-pass: count how many pages each xref appears on.
+    # Xrefs on 3+ pages are recurring header/footer elements — exclude from mapping.
+    xref_page_count = {}
+    for _pn, _pg in enumerate(doc):
+        for _im in _pg.get_images(full=True):
+            _x = _im[0]
+            xref_page_count[_x] = xref_page_count.get(_x, 0) + 1
+    recurring_xrefs = {x for x, c in xref_page_count.items() if c >= 3}
+
     xref_to_figure = {}
     figure_to_xref = {}
 
@@ -583,6 +592,8 @@ def build_figure_caption_map(doc):
             xref = img[0]
             if xref in xref_to_figure:
                 continue  # already mapped
+            if xref in recurring_xrefs:
+                continue  # recurring header/footer — skip
 
             # Get image bounding box
             try:
@@ -797,24 +808,37 @@ def convert_pages(md_path: str, plumber_doc=None):
 
             text = '\n'.join(linkify_line(l) for l in text.split('\n'))
 
-                        # Build image references for this page.
-            # Page 1 images are already excluded at extraction time (cover branding).
-            # Reused images (same filename at multiple positions) are emitted each
-            # time so they appear correctly at both caption positions in the HTML.
-            image_refs = []
-            seen_on_page = set()
-            for img_index, _ in enumerate(page.get_images(full=True)):
-                img_name = img_map.get((page_num, img_index))
-                if img_name:
-                    image_refs.append(
-                        f"![Image](./{file_name}/images/{img_name})"
-                    )
-                    seen_on_page.add(img_name)
-
+            # Inject figure images inline — insert figure_N.png immediately
+            # before its "Figure N" caption line in the markdown text.
+            # Images are looked up by figure number across all pages via img_map,
+            # so reused images (e.g. figure_7 for both Fig 7 and Fig 10) work correctly.
             if text.strip():
-                md_file.write(text.strip() + "\n\n")
-            if image_refs:
-                md_file.write("\n".join(image_refs) + "\n\n")
+                _fig_name_map = {}
+                for (_pn2, _pi2), _iname2 in img_map.items():
+                    if _iname2 and _iname2.startswith('figure_'):
+                        try:
+                            _fn2 = int(_iname2.replace('figure_', '').replace('.png', ''))
+                            _fig_name_map[_fn2] = _iname2
+                        except ValueError:
+                            pass
+
+                _lines   = text.strip().split('\n')
+                _out     = []
+                _injected = set()
+                for _ln in _lines:
+                    _m = re.match(r'^Figure\s+(\d+)[\s.:,]', _ln.strip())
+                    if _m:
+                        _fn3 = int(_m.group(1))
+                        _img3 = _fig_name_map.get(_fn3)
+                        if _img3 and _fn3 not in _injected:
+                            _out.append(f'![Image](./{file_name}/images/{_img3})')
+                            _out.append('')
+                            _injected.add(_fn3)
+                    _out.append(_ln)
+
+                md_file.write('\n'.join(_out).strip() + "\n\n")
+            elif not text.strip():
+                pass  # nothing to write
 
     # Post-process: merge consecutive tables split across PDF page breaks
     print("\nMerging consecutive tables...")
