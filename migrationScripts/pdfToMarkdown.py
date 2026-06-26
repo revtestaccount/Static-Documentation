@@ -531,6 +531,95 @@ def get_image_hash(doc, xref):
 
 
 # ---------------------------------------------------------------------------
+# 11. FIGURE CAPTION MAP
+# ---------------------------------------------------------------------------
+
+# Matches: "Figure 1", "Figure 1:", "Figure 1.", "Figure 1 Title text"
+FIGURE_CAPTION_RE = re.compile(
+    r'^Figure\s+(\d+)\s*[.:]?\s*(.*)', re.IGNORECASE
+)
+
+def build_figure_caption_map(doc):
+    """
+    Scan every page and build a map of:
+        xref -> figure_number (int)
+
+    Strategy: for each image on a page, find the nearest "Figure N"
+    text block whose top-left y-coordinate is BELOW the image bottom
+    edge (caption sits under the image in the PDF).
+    Also checks the top quarter of the NEXT page for captions that wrap.
+
+    Returns:
+        xref_to_figure : dict { xref(int) -> fig_num(int) }
+        figure_to_xref : dict { fig_num(int) -> xref(int) }
+            (first assignment wins for duplicate-use images)
+    """
+    # Build per-page list of (y0, figure_num, caption_text)
+    caption_positions = {}
+    for page_num, page in enumerate(doc):
+        caps = []
+        try:
+            blocks = page.get_text("dict")["blocks"]
+        except Exception:
+            caption_positions[page_num] = caps
+            continue
+        for block in blocks:
+            for line in block.get("lines", []):
+                line_text = "".join(
+                    s["text"] for s in line.get("spans", [])
+                ).strip()
+                m = FIGURE_CAPTION_RE.match(line_text)
+                if m:
+                    fig_num = int(m.group(1))
+                    y0 = line["bbox"][1]
+                    caps.append((y0, fig_num, line_text))
+        caption_positions[page_num] = caps
+
+    xref_to_figure = {}
+    figure_to_xref = {}
+
+    for page_num, page in enumerate(doc):
+        for img in page.get_images(full=True):
+            xref = img[0]
+            if xref in xref_to_figure:
+                continue  # already mapped
+
+            # Get image bounding box
+            try:
+                rects = page.get_image_rects(xref)
+                if not rects:
+                    continue
+                img_bottom = rects[0].y1
+            except Exception:
+                continue
+
+            # Find nearest caption below image on current page
+            best_fig  = None
+            best_dist = float('inf')
+            for (cy0, fig_num, _) in caption_positions.get(page_num, []):
+                if cy0 >= img_bottom:
+                    dist = cy0 - img_bottom
+                    if dist < best_dist:
+                        best_dist = dist
+                        best_fig = fig_num
+
+            # If not found, check top 25% of next page
+            if best_fig is None and page_num + 1 < len(doc):
+                next_h = doc[page_num + 1].rect.height
+                for (cy0, fig_num, _) in caption_positions.get(page_num + 1, []):
+                    if cy0 < next_h * 0.25:
+                        best_fig = fig_num
+                        break
+
+            if best_fig is not None:
+                xref_to_figure[xref] = best_fig
+                if best_fig not in figure_to_xref:
+                    figure_to_xref[best_fig] = xref
+
+    return xref_to_figure, figure_to_xref
+
+
+# ---------------------------------------------------------------------------
 # ARGUMENT PARSING
 # ---------------------------------------------------------------------------
 
@@ -579,47 +668,85 @@ print(f"Repeating lines detected: {len(repeating_lines)}")
 for l in sorted(repeating_lines):
     print(f"  suppress: {l!r}")
 
-# Extract images with deduplication
+# Build figure caption map — xref -> figure number via caption proximity
+print("\nBuilding figure caption map...")
+xref_to_figure, figure_to_xref = build_figure_caption_map(doc)
+if xref_to_figure:
+    for xref, fig_num in sorted(xref_to_figure.items(), key=lambda x: x[1]):
+        print(f"  xref {xref} -> Figure {fig_num}")
+else:
+    print("  No figure captions detected - will use image_N fallback naming")
+
+# Extract images with caption-driven naming and smart size filter
 print("\nExtracting images...")
 image_dir = os.path.join(output_dir, file_name, "images")
 os.makedirs(image_dir, exist_ok=True)
 seen_hashes = set()
-# Map (page_num, img_index) -> filename or None if duplicate
-img_map = {}
-global_counter = 1
+hash_to_name = {}   # hash -> filename for reuse lookups
+img_map = {}        # (page_num, img_index) -> filename or None
+fallback_counter = 1  # used only when no figure caption is found
+
 for page_num in range(len(doc)):
     page = doc[page_num]
     for img_index, img in enumerate(page.get_images(full=True)):
         xref = img[0]
-        h = get_image_hash(doc, xref)
-        if h and h in seen_hashes:
-            img_map[(page_num, img_index)] = None  # duplicate â€” skip
-            print(f"  page {page_num+1} img {img_index+1}: duplicate, skipped")
-        else:
-            # Extract image bytes
-            try:
-                base_image = doc.extract_image(xref)
-                image_data = base_image["image"]
-            except Exception as e:
-                print(f"  page {page_num+1} img {img_index+1}: error {e}")
-                img_map[(page_num, img_index)] = None
-                continue
+        h    = get_image_hash(doc, xref)
 
-            # Filter out artefact images below 10KB — real screenshots are 10KB+
-            if len(image_data) < 10240:
-                img_map[(page_num, img_index)] = None
-                print(f"  page {page_num+1} img {img_index+1}: artefact ({len(image_data)} bytes), skipped")
-                continue
-
+        # Skip page 1 entirely - cover branding replaced by SVG block
+        if page_num == 0:
+            img_map[(page_num, img_index)] = None
+            print(f"  page 1 img {img_index+1}: cover page, skipped")
             if h:
                 seen_hashes.add(h)
-            img_name = f"image_{global_counter}.png"
-            img_path = os.path.join(image_dir, img_name)
-            with open(img_path, "wb") as f:
-                f.write(image_data)
-            print(f"  page {page_num+1} img {img_index+1}: saved as {img_name} ({len(image_data):,} bytes)")
-            img_map[(page_num, img_index)] = img_name
-            global_counter += 1
+            continue
+
+        # Duplicate image - reuse previously assigned filename
+        if h and h in seen_hashes:
+            existing_name = hash_to_name.get(h)
+            img_map[(page_num, img_index)] = existing_name
+            print(f"  page {page_num+1} img {img_index+1}: duplicate of {existing_name}, reusing")
+            continue
+
+        # Extract image bytes
+        try:
+            base_image = doc.extract_image(xref)
+            image_data = base_image["image"]
+        except Exception as e:
+            print(f"  page {page_num+1} img {img_index+1}: error {e}")
+            img_map[(page_num, img_index)] = None
+            continue
+
+        # Determine if this xref has an associated figure caption
+        fig_num = xref_to_figure.get(xref)
+
+        # Smart size filter:
+        #   WITH caption  -> always extract (handles small form screenshots)
+        #   WITHOUT caption -> apply 10KB artefact filter
+        if fig_num is None and len(image_data) < 10240:
+            img_map[(page_num, img_index)] = None
+            print(f"  page {page_num+1} img {img_index+1}: artefact ({len(image_data):,} bytes, no caption), skipped")
+            continue
+
+        if h:
+            seen_hashes.add(h)
+
+        # Name: figure_N.png when caption found, image_N.png as fallback
+        if fig_num is not None:
+            img_name = f"figure_{fig_num}.png"
+        else:
+            img_name = f"image_{fallback_counter}.png"
+            fallback_counter += 1
+
+        img_path = os.path.join(image_dir, img_name)
+        with open(img_path, "wb") as f:
+            f.write(image_data)
+
+        if h:
+            hash_to_name[h] = img_name
+
+        fig_note = f"Figure {fig_num}" if fig_num else "no caption"
+        print(f"  page {page_num+1} img {img_index+1}: saved as {img_name} ({len(image_data):,} bytes) [{fig_note}]")
+        img_map[(page_num, img_index)] = img_name
 
 # Convert pages to Markdown
 print("\nConverting PDF to Markdown...")
@@ -670,19 +797,19 @@ def convert_pages(md_path: str, plumber_doc=None):
 
             text = '\n'.join(linkify_line(l) for l in text.split('\n'))
 
-            # Build image references for this page (skip duplicates)
+                        # Build image references for this page.
+            # Page 1 images are already excluded at extraction time (cover branding).
+            # Reused images (same filename at multiple positions) are emitted each
+            # time so they appear correctly at both caption positions in the HTML.
             image_refs = []
+            seen_on_page = set()
             for img_index, _ in enumerate(page.get_images(full=True)):
                 img_name = img_map.get((page_num, img_index))
                 if img_name:
                     image_refs.append(
                         f"![Image](./{file_name}/images/{img_name})"
                     )
-
-            # Skip page 1 images entirely â€” these are cover page branding/logos.
-            # The SVG branding block added by migration_pipeline.py replaces them.
-            if page_num == 0:
-                image_refs = []
+                    seen_on_page.add(img_name)
 
             if text.strip():
                 md_file.write(text.strip() + "\n\n")

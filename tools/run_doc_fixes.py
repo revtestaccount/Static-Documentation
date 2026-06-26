@@ -455,20 +455,22 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
             cover.unlink()
             # Rename image_N -> image_(N-1) for N = 2..60 (reverse to avoid collisions)
             _renamed = 0
-            for _n in range(60, 1, -1):
+            for _n in range(2, 61):
                 _src = img_dir / f'image_{_n}.png'
                 _dst = img_dir / f'image_{_n-1}.png'
                 if _src.exists():
                     _src.replace(_dst)
                     _renamed += 1
-            # Update HTML src references image_N -> image_(N-1), highest first
-            _updates = 0
-            for _n in range(60, 1, -1):
-                _old = f'image_{_n}.png'
-                _new = f'image_{_n-1}.png'
-                if _old in html:
-                    html = html.replace(_old, _new)
-                    _updates += 1
+            # Update HTML src references image_N -> image_(N-1) in ONE regex
+            # pass to avoid cascading replacements (sequential replace would
+            # rename image_2->image_1, then image_1 again, etc.)
+            def _decrement_img(m):
+                return f'image_{int(m.group(1)) - 1}.png'
+            html, _updates = re.subn(
+                r'image_([2-9]\d*|[1-9]\d+)\.png',
+                _decrement_img,
+                html
+            )
             changes.append(f'Fix 11a: Removed cover branding strip, renamed {_renamed} images, updated {_updates} HTML references')
         else:
             changes.append('Fix 11a: image_1 is already a content screenshot (correct numbering) - skipped')

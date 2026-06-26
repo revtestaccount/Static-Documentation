@@ -48,11 +48,19 @@ The ROS Payroll Reporting screens are accessed here , using test certificates do
 |  |  |  |  |  |  |  |  |  |  | either environment |  |
 
 
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
+
 ### Table of Contents
+
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
+
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ## 1. Introduction
 
 This is a brief user manual providing an introduction to the ROS Payroll reporting screens. These screens provide a user interface for the provision of payroll activities. ROS Payroll reporting is a supporting application of the PAYE Modernisation project. The access point for these screens will be via ROS. The tests certs downloaded from the PIT Self Service application are used to login to these screens.
+
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ## 2. Employer Services
 
@@ -77,7 +85,8 @@ Informational (info) icons are displayed on the Request Revenue Payroll Notifica
 
 Upon selecting “Request RPNs” link, the user will be presented with the RPN landing screen. Here, the user can select whether they wish to request RPNs by file upload or by completion of an online form.
 
-![Image](./overview_of_ros_payroll_reporting/images/image_2.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 Figure 2 RPN Landing screen
 
@@ -91,7 +100,9 @@ When retrieving RPNS for existing employees, RPNs will be automatically issued a
 
 Upon selecting the “Request RPNs by file upload” link, the user is prompted to upload the request file in the advised format (JSON or XML) to retrieve RPNs for existing or new employees. Separate files
 
-![Image](./overview_of_ros_payroll_reporting/images/image_3.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_2.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_2.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 must be uploaded for existing or new employees.  A Learn More link on this page gives more information to the user with regard to the acceptable software formats.
 
@@ -102,7 +113,9 @@ The user selects the “Browse files” link to upload their RPN request file fr
 
 The digital certificate field is pre populated with the name of the digital certificate the user logged in with and the user will need to input their password. Upon clicking “Sign & Submit” button, the system verifies that the password is correct and the file is processed. The user is returned the results of their RPN request.
 
-![Image](./overview_of_ros_payroll_reporting/images/image_4.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_3.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_3.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 3.2 Request RPNs – Complete online form
 
@@ -114,7 +127,9 @@ The user chooses if they would like to request RPNs for new or existing employee
 
 Figure 4 Request RPNs – New or Existing Employees screen
 
-![Image](./overview_of_ros_payroll_reporting/images/image_5.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_4.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_4.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 3.2.1 Request RPNs – Complete online form (existing employees)
 
@@ -127,7 +142,9 @@ The user can also make a request for any RPNs which have been updated since they
 
 Figure 5 Request RPNs for Existing Employees
 
-![Image](./overview_of_ros_payroll_reporting/images/image_6.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_5.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_5.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 The user is required to select the employees they wish to request RPNs for. They can either select all employees or specific employees. In order to request RPNs for specific employees, the user will need to input the PPSN and Employment ID of the employee then select “Add”. The employees they outline will then list under the “Selected employees” section.
 
@@ -140,14 +157,18 @@ Once the user has added all the employees they wish to request RPNs for, they ar
 
 The user then clicks the “Sign & Submit” button and is brought to the Sign & Submit screen. The digital certificate field is pre populated with the name of the digital certificate the user logged in with and the user will need to input their password. Upon clicking the “Sign & Submit” button, the system verifies
 
-![Image](./overview_of_ros_payroll_reporting/images/image_7.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_6.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_6.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 that the password is correct and the file is processed. The user is returned the results of their RPN request.
 
 
 Figure 7 Request RPNs - Sign and Submit
 
-![Image](./overview_of_ros_payroll_reporting/images/image_8.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_7.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_7.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 3.2.2 Request RPNs – Complete online form (new employees)
 
@@ -156,7 +177,9 @@ On this screen, users will be able to request RPNs for new employees or employee
 
 Figure 8 Request RPNs for New Employees
 
-![Image](./overview_of_ros_payroll_reporting/images/image_9.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_8.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_8.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 To add new employees, the user will need to provide the employees First name, Family name, PPSN, Employment ID and Employment commencement date. The First name, Family name, PPSN and the Employment ID are mandatory whilst the Employment commencement date is an optional field. When the user has input the employee details, they click the “Add” button. The employees they outline will then list under the “New employees” section.
 
@@ -167,9 +190,15 @@ Once the user has added all the employees they wish to request RPNs for, they ar
 
 They then click the “Sign & Submit” button and are brought to the Sign & Submit screen. The digital certificate field is pre populated with the name of the digital certificate the user logged in with and the user will need to input their password. Upon clicking the “Sign & Submit” button, the system verifies that the password is correct and the file is processed. The user is returned the results of their RPN request.
 
-![Image](./overview_of_ros_payroll_reporting/images/image_10.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_9.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_9.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 Figure 10 Request RPNs - Sign and Submit
+
+![Image](./overview_of_ros_payroll_reporting/images/figure_7.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_7.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 3.3 Request RPNs – Summary Screen
 
@@ -199,7 +228,9 @@ Figure 11 Request RPNs Summary screen (Overview)
 |  |
 
 
-![Image](./overview_of_ros_payroll_reporting/images/image_11.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_11.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_11.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 |  |
 |---|
@@ -225,14 +256,17 @@ Figure 11 Request RPNs Summary screen (Overview)
 | order to complete the next stage of their payroll process. |
 
 
-![Image](./overview_of_ros_payroll_reporting/images/image_12.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_12.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_12.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 On this screen, the user can click on a line of an RPN returned which will invoke a pop up displaying a more detailed view of the RPN which has been retrieved:
 
 
 Figure 13 Request RPNs Summary screen (Pop Up)
 
-![Image](./overview_of_ros_payroll_reporting/images/image_13.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_13.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ## 3.4 Request RPN – Rejection Screens
 
@@ -245,7 +279,9 @@ Figure 14 Request RPNs Rejected screen
 
 The user must re-enter the request RPN screens and submit a valid RPN request in order to proceed.
 
-![Image](./overview_of_ros_payroll_reporting/images/image_14.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_14.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_14.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 3.4.2 Invalid File Uploaded
 
@@ -254,7 +290,9 @@ If the user attempts to upload an RPN request containing content outside of the 
 
 Figure 15 Request RPNs Rejected screen
 
-![Image](./overview_of_ros_payroll_reporting/images/image_15.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_15.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_15.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ## 4. Submit Payroll
 
@@ -263,7 +301,9 @@ Upon selecting the “Payroll submission” link on the Submit payroll card (on 
 
 Figure 16 Submit Payroll Landing Screen
 
-![Image](./overview_of_ros_payroll_reporting/images/image_16.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_16.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_16.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ## 4.1
 ## Submit Payroll – Upload Payroll File
@@ -276,11 +316,15 @@ The user selects the “Browse files” link to upload their payroll submission 
 
 The digital certificate field is pre populated with the name of the digital certificate the user logged in with and the user will need to input their password. Upon clicking the “Sign & Submit” button, the system verifies that the password is correct and a pop up informing the user that the file is being processed appears.
 
-![Image](./overview_of_ros_payroll_reporting/images/image_17.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_17.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_17.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 Figure 18 Submit Payroll - File Processing Pop Up
 
-![Image](./overview_of_ros_payroll_reporting/images/image_18.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_18.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_18.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 4.2 Payroll Submission – Acknowledgement Screen
 
@@ -290,7 +334,9 @@ Figure 19 Payroll Submission Received screen
 
 The status of the payroll submission result will display as pending until the payroll submission results are returned. Once the results are returned, a payroll submission response file will be automatically downloaded. This file contains full details of their payroll submission.
 
-![Image](./overview_of_ros_payroll_reporting/images/image_19.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_19.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_19.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 4.2.1 Payroll Submission – Acknowledgement Screen – Status: Complete
 
@@ -300,7 +346,9 @@ Figure 20 Payroll Submission Received screen – Status: Completed
 
 The user can clearly see that their payroll submission is complete and that there are no errors or warnings associated with their submission.
 
-![Image](./overview_of_ros_payroll_reporting/images/image_20.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_20.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_20.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 4.2.2 Payroll Submission – Acknowledgement Screen – Status: Complete with
 ### Warnings and/or Errors
@@ -311,13 +359,17 @@ If there are warnings associated with the submission, the screen will display as
 
 Figure 21 Payroll Submission Received screen – Status: Complete with Warnings
 
-![Image](./overview_of_ros_payroll_reporting/images/image_21.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_21.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_21.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 If there are errors associated with the submission, the screen will display as follows:
 
 Figure 22 Payroll Submission Received screen – Status: Complete with Errors
 
-![Image](./overview_of_ros_payroll_reporting/images/image_22.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_22.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_22.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 If there are errors and warnings on the payroll submission, the screen will display as follows:
 
@@ -325,7 +377,9 @@ Figure 23 Payroll Submission Received screen – Status: Complete with Errors an
 
 Full details of these errors and/or warnings will be viewable in the payroll submission response file which is automatically downloaded.
 
-![Image](./overview_of_ros_payroll_reporting/images/image_23.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_6.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_23.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 4.2.3 Payroll Submission – Acknowledgement Screen – Status: Time Out
 
@@ -333,7 +387,9 @@ If the session times out while the payroll submission results are being generate
 
 Figure 24 Payroll Submission Received screen – Status: Timed Out
 
-![Image](./overview_of_ros_payroll_reporting/images/image_24.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_24.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_24.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ## 4.3 Payroll Submission – Rejection Screens
 
@@ -343,13 +399,19 @@ If a user attempts to upload a RPN request through the payroll submission screen
 
 Figure 25 Payroll Submission Received – Rejected screen
 
+![Image](./overview_of_ros_payroll_reporting/images/figure_14.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_14.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
+
 ### 4.3.2 Invalid File Uploaded
 
 If the user attempts to upload a payroll submission containing content outside of the requirements of the schema, the file will be rejected and an error screen will be displayed to the user:
 
 Figure 26 Payroll Submission Received – Rejected screen
 
-![Image](./overview_of_ros_payroll_reporting/images/image_25.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_26.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_26.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ## 5. View Payroll
 
@@ -367,9 +429,11 @@ These are the methods for which a user can search for payroll runs. They are acc
 This option will show the last 3 payroll runs, by default, the current tax year is selected.
 
 
-![Image](./overview_of_ros_payroll_reporting/images/image_26.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_27.png)
 Figure 28: Search by - Recently Updated
 
+![Image](./overview_of_ros_payroll_reporting/images/figure_28.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 5.1.2 View Payroll – Search by – Payroll Run Reference
 
@@ -391,7 +455,12 @@ Figure 30: Search by - Submission ID
 This method allows a user to search for submissions within a given month. The results list all submissions made within that month.
 
 
+![Image](./overview_of_ros_payroll_reporting/images/figure_29.png)
 Figure 31: Search by – Period
+
+![Image](./overview_of_ros_payroll_reporting/images/figure_30.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_31.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ## 5.2 View Payroll – Payroll Run
 
@@ -400,9 +469,10 @@ When a payroll run is selected, the screen shows any submission/active items mad
 Each submission within a payroll Run can be selected by clicking the view link under the Action tab.
 
 
-![Image](./overview_of_ros_payroll_reporting/images/image_27.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_32.png)
 Figure 32: View Payroll - Payroll Run
 
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ## 5.3 View Payroll – Payroll Submission
 
@@ -411,9 +481,10 @@ Each payslip within a submission can be selected by clicking the view link under
 
 
 
-![Image](./overview_of_ros_payroll_reporting/images/image_28.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_33.png)
 Figure 33: View Payroll - Payroll Submission
 
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 5.3.1 View Payroll – Payroll Submission – Submission item details
 
@@ -421,16 +492,18 @@ When the user chooses to view a payslip they are presented with the submission i
 From here they can see a breakdown of every item on the payslip and its values. They can also choose to amend any item on the payslip or delete the entire payslip.
 
 
-![Image](./overview_of_ros_payroll_reporting/images/image_29.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_34.png)
 Figure 34: View Payroll – Payroll Submission – Submission item details
 
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
 ### 5.3.2 View Payroll – Payroll Submission – Amend Payslip
 
 The Amend Payslip screen breaks down the payslip into three sections: Employee details, Pay and deductions and Other pay and deductions. By clicking the update link in any of these sections, the user can edit the details of this payslip. Before saving any changes, the checkbox in each section must be ticked to verify that the details of the payslip are correct.
 
 
-![Image](./overview_of_ros_payroll_reporting/images/image_30.png)
+![Image](./overview_of_ros_payroll_reporting/images/figure_35.png)
 Figure 35: View Payroll – Payroll Submission – Amend Payslip
 
+![Image](./overview_of_ros_payroll_reporting/images/figure_1.png)
 
