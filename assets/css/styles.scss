@@ -578,7 +578,7 @@ p ~ .home-grid {
 
 // ── Generated document pages (convert.py output) ─────────────────────────────
 // Constrains migrated PDF->HTML pages to the same width as .pit-section and .faq
-.document-content {
+.document-content, #content {
     max-width: 60rem;
     margin: 2rem auto;
     padding: 0 1.25rem;
