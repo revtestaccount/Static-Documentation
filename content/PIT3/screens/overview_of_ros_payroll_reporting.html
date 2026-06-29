@@ -15,7 +15,7 @@
 <h3 class="pmod" id="document_context">Document context</h3>
 <p>This document provides details for accessing and using the ROS Payroll Reporting screens. These screens provide a user interface for the provision of payroll activities.</p>
 <h3 class="pmod" id="access">Access</h3>
-<p>The ROS Payroll Reporting screens are accessed here , using test certificates downloaded from the PAYE PIT Self-Service Application.</p>
+<p>The ROS Payroll Reporting screens are accessed <a href="https://softwaretest.ros.ie/oidc/login/noCertsFound?lang=en&amp;client_id=payeselfservice_rp" target="_blank" rel="noopener noreferrer">here</a>, using test certificates downloaded from the PAYE PIT Self-Service Application.</p>
 <h2 class="pmod" id="version_history">Version History</h2>
 <table class="table" tabindex="0">
 <thead>
@@ -65,8 +65,7 @@
 <p>The user is informed of the two ways to request an RPN for an employee. If “Upload request file” option is utilised, the software and format of the request file is outlined. Please note, if the user wishes to upload a request file, they must upload separate files for existing employees or new employees.</p>
 <p>When retrieving RPNS for existing employees, RPNs will be automatically issued as there is a Revenue record of the live employment. In the case of new employees, the employment must be registered prior to the RPN being issued. Additionally in some cases, the individual may not have a Revenue profile which will necessitate the individual registering themselves on Jobs and Pensions.</p>
 <h3 class="pmod" id="3.1_request_rpns_–_upload_request_file">3.1 Request RPNs – Upload request file</h3>
-<p>Upon selecting the “Request RPNs by file upload” link, the user is prompted to upload the request file in the advised format (JSON or XML) to retrieve RPNs for existing or new employees. Separate files</p>
-<p>must be uploaded for existing or new employees.  A Learn More link on this page gives more information to the user with regard to the acceptable software formats.</p>
+<p>Upon selecting the “Request RPNs by file upload” link, the user is prompted to upload the request file in the advised format (JSON or XML) to retrieve RPNs for existing or new employees. Separate files must be uploaded for existing or new employees.  A Learn More link on this page gives more information to the user with regard to the acceptable software formats.</p>
 <p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_3.png"/></p>
 <p class="figure-caption">Figure 3 Request RPNs by File Upload screen</p>
 <p>The user selects the “Browse files” link to upload their RPN request file from their local drive or a drive of their choice. Once a file is uploaded, the file name will display under “Selected files”. A “Remove” link will display beside the file where the user can remove that file if they so wish. Please note, a user is currently only allowed to submit one RPN request file at a time. There is also a 10MB size limit on files.</p>
@@ -102,51 +101,25 @@ The user chooses if they would like to request RPNs for new or existing employee
 <p>Once the user has added all the employees they wish to request RPNs for, they are required to select the format in which they wish to receive the RPN request in i.e.  CSV, JSON or XML.</p>
 <p>They then click the “Sign &amp; Submit” button and are brought to the Sign &amp; Submit screen. The digital certificate field is pre populated with the name of the digital certificate the user logged in with and the user will need to input their password. Upon clicking the “Sign &amp; Submit” button, the system verifies that the password is correct and the file is processed. The user is returned the results of their RPN request.</p>
 <p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_7.png"/></p>
+<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_7.png"/></p>
 <p class="figure-caption">Figure 10 Request RPNs - Sign and Submit</p>
 <h3 class="pmod" id="3.3_request_rpns_–_summary_screen">3.3 Request RPNs – Summary Screen</h3>
 <p>After signing and submitting, the user is presented with a summary screen detailing the results of their RPN request. Depending on their method of submitting their RPN request, the user will get one of two summary screens.</p>
 <p>The user will get the following summary screen if they request RPNs by file upload or if they select all employees through the online form for existing employees:</p>
 <p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_11.png"/></p>
 <p class="figure-caption">Figure 11 Request RPNs Summary screen (Overview)</p>
-<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_12.png"/></p>
-<p class="figure-caption">Figure 12 Request RPNs Summary screen (Detailed)</p>
-
 <p>This screen makes the user aware of how many RPNs on their request were successful. The three possible outcomes are:</p>
 <ul>
 <li>RPNs not returned – This is the number of employee RPNs that were not returned</li>
 <li>Validation errors – This is the number of validation errors in the request</li>
 </ul>
-<table class="table" tabindex="0">
-<thead>
-<tr>
-<th scope="col">An RPN response file is automatically downloaded for the user in their selected file format which</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>details the outcome of the RPN request. The user can then input this file to their payroll software in</td>
-</tr>
-<tr>
-<td>order to complete the next stage of their payroll process.</td>
-</tr>
-<tr>
-<td></td>
-</tr>
-<tr>
-<td></td>
-</tr>
-<tr>
-<td></td>
-</tr>
-<tr>
-<td>The other summary screen the user may get is if they have completed the online form to request RPNs</td>
-</tr>
-<tr>
-<td>for new employees or requested RPNs for a specific subset of existing employees:</td>
-</tr>
-</tbody>
-</table>
+<p>An RPN response file is automatically downloaded for the user in their selected file format which details the outcome of the RPN request. The user can then input this file to their payroll software in order to complete the next stage of their payroll process.</p>
+<p>The other summary screen the user may get is if they have completed the online form to request RPNs for new employees or requested RPNs for a specific subset of existing employees:</p>
+<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_12.png"/></p>
+<p class="figure-caption">Figure 12 Request RPNs Summary screen (Detailed)</p>
 
+<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_12.png"/></p>
+<p class="figure-caption">Figure 12 Request RPNs Summary screen (Detailed)</p>
 <p>This screen will make the user aware of how many RPNs on their request were successful. The three possible outcomes are:</p>
 <ul>
 <li>RPNs not returned – This is the number of employee RPNs that were not returned</li>
@@ -207,6 +180,7 @@ The user chooses if they would like to request RPNs for new or existing employee
 <h2 class="pmod" id="4.3_payroll_submission_–_rejection_screens">4.3 Payroll Submission – Rejection Screens</h2>
 <h3 class="pmod" id="4.3.1_incorrect_file_uploaded">4.3.1 Incorrect File Uploaded</h3>
 <p>If a user attempts to upload a RPN request through the payroll submission screens, they will be presented with an error screen and blocked from proceeding. The user must re-enter the payroll submission screens and submit a valid payroll submission in order to proceed:</p>
+<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_15.png"/></p>
 <p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_15.png"/></p>
 <p class="figure-caption">Figure 25 Payroll Submission Received – Rejected screen</p>
 <h3 class="pmod" id="4.3.2_invalid_file_uploaded">4.3.2 Invalid File Uploaded</h3>

@@ -474,7 +474,94 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     else:
         changes.append('Fix 12c: WARNING - Figure 25 caption not found')
 
-    # ------------------------------------------------------------------
+
+    # Fix 13a: Add missing hyperlink on 'here' in the Access section.
+    # URL is environment-specific (PIT3/PIT4) via the HOSTS dict.
+    _ACCESS_URLS = {
+        "PIT3": "https://softwaretest.ros.ie/oidc/login/noCertsFound?lang=en&amp;client_id=payeselfservice_rp",
+        "PIT4": "https://softwaretestnextversion.ros.ie/oidc/login/noCertsFound?lang=en&amp;client_id=payeselfservice_rp",
+    }
+    _access_url = _ACCESS_URLS.get(env, _ACCESS_URLS['PIT3'])
+    _access_link = '<a href="' + _access_url + '" target="_blank" rel="noopener noreferrer">here</a>'
+    html, n13a = re.subn(
+        r'screens are accessed here ,',
+        'screens are accessed ' + _access_link + ',',
+        html
+    )
+    if n13a:
+        changes.append('Fix 13a: Added ' + env + ' hyperlink on "here" in Access section')
+    else:
+        changes.append('Fix 13a: WARNING - Access "here" text not found')
+
+    # Fix 13b: Join split paragraph in section 3.1
+    # '...Separate files</p><p>must be uploaded...' -> single joined <p>
+    html, n13b = re.subn(
+        re.compile(
+            r'<p>(Upon selecting[^<]+Separate files)</p>\s*'
+            r'<p>(must be uploaded for existing or new employees\.[^<]+)</p>',
+            re.DOTALL
+        ),
+        lambda m: '<p>' + m.group(1) + ' ' + m.group(2) + '</p>',
+        html
+    )
+    if n13b:
+        changes.append('Fix 13b: Joined split paragraph in section 3.1')
+    else:
+        changes.append('Fix 13b: WARNING - split paragraph not found')
+
+    # Fix 13c: Move section 3.3 explanatory text to between Figure 11 and
+    # Figure 12. Pipeline placed it after Figure 12 caption.
+    # Step 1: Remove misplaced block after Figure 12 caption
+    html, n13c_a = re.subn(
+        re.compile(
+            r'(<p class="figure-caption">Figure 12[^<]*</p>)\s*'
+            r'<p>This screen makes the user aware[\s\S]*?'
+            r'(?=<p>This screen will make the user aware)',
+            re.DOTALL
+        ),
+        lambda m: m.group(1) + '\n',
+        html
+    )
+    # Step 2: Insert correct block between Figure 11 caption and Figure 12 image
+    _block33 = (
+        '<p>This screen makes the user aware of how many RPNs on their request were successful.'
+        ' The three possible outcomes are:</p>\n'
+        '<ul>\n'
+        '<li>RPNs not returned \u2013 This is the number of employee RPNs that were not returned</li>\n'
+        '<li>Validation errors \u2013 This is the number of validation errors in the request</li>\n'
+        '</ul>\n'
+        '<p>An RPN response file is automatically downloaded for the user in their selected file'
+        ' format which details the outcome of the RPN request. The user can then input this file'
+        ' to their payroll software in order to complete the next stage of their payroll process.</p>\n'
+        '<p>The other summary screen the user may get is if they have completed the online form to'
+        ' request RPNs for new employees or requested RPNs for a specific subset of existing'
+        ' employees:</p>\n'
+    )
+    html, n13c_b = re.subn(
+        re.compile(
+            r'(<p class="figure-caption">Figure 11[^<]*</p>)\s*'
+            r'(<p><img[^>]*figure_12\.png[^/]*/></p>)',
+            re.DOTALL
+        ),
+        lambda m: m.group(1) + '\n' + _block33 + m.group(2),
+        html
+    )
+    # Step 3: Convert any remaining paragraph-table for 'other summary screen'
+    html = re.sub(
+        re.compile(
+            r'<table[^>]*>[\s\S]*?<td>The other summary screen the user may get[^<]*</td>'
+            r'[\s\S]*?</table>',
+            re.DOTALL
+        ),
+        '<p>The other summary screen the user may get is if they have completed the online form'
+        ' to request RPNs for new employees or requested RPNs for a specific subset of existing employees:</p>',
+        html
+    )
+    if n13c_a or n13c_b:
+        changes.append('Fix 13c: Moved section 3.3 text block between Figure 11 and Figure 12')
+    else:
+        changes.append('Fix 13c: WARNING - section 3.3 reorder patterns not found')
+
     # Fix 11: Image placement fixes
     #   11a: Insert image_1 before orphaned Figure 1 caption
     #   11b: Extract img tags from inside malformed figure-caption <p>s
