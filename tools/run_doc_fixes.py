@@ -436,43 +436,67 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
 
     # Fix 12a: Figure 10 reuses figure_7.png (per CSV analysis) — no figure_10.png exists.
     # Insert figure_7.png before the Figure 10 caption.
-    html, n12a = re.subn(
-        r'(<p class="figure-caption">Figure 10 [^<]+</p>)',
-        '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_7.png"/></p>\n\g<1>',
-        html
-    )
-    if n12a:
-        changes.append('Fix 12a: Inserted figure_7 (reused) before Figure 10 caption')
+    # Only insert if figure_7 not already immediately before Figure 10 caption
+    if not re.search(r'figure_7\.png"/></p>\s*<p class="figure-caption">Figure 10', html):
+        html, n12a = re.subn(
+            r'(<p class="figure-caption">Figure 10 [^<]+</p>)',
+            '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_7.png"/></p>\n\g<1>',
+            html
+        )
+        if n12a:
+            changes.append('Fix 12a: Inserted figure_7 (reused) before Figure 10 caption')
+        else:
+            changes.append('Fix 12a: WARNING - Figure 10 caption not found')
     else:
-        changes.append('Fix 12a: WARNING - Figure 10 caption not found')
+        changes.append('Fix 12a: figure_7 already present before Figure 10 - skipped')
 
     # Fix 12b: Figure 12 caption was not extracted from PDF text — insert both
     # image and caption between the Figure 11 caption and the Figure 13 caption.
-    FIG12_INSERT = (
-        '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_12.png"/></p>\n'
-        '<p class="figure-caption">Figure 12 Request RPNs Summary screen (Detailed)</p>\n'
-    )
-    html, n12b = re.subn(
-        r'(<p class="figure-caption">Figure 11 [^<]+</p>)',
-        '\g<1>\n' + FIG12_INSERT,
-        html
-    )
-    if n12b:
-        changes.append('Fix 12b: Inserted figure_12 image and caption after Figure 11')
+    # Only insert Figure 12 block if not already present after Figure 11
+    _fig12_present = 'figure_12.png"/></p>' in html
+    if not _fig12_present:
+        FIG12_INSERT = (
+            '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_12.png"/></p>\n'
+            '<p class="figure-caption">Figure 12 Request RPNs Summary screen (Detailed)</p>\n'
+        )
+        html, n12b = re.subn(
+            r'(<p class="figure-caption">Figure 11 [^<]+</p>)',
+            '\g<1>\n' + FIG12_INSERT,
+            html
+        )
+        if n12b:
+            changes.append('Fix 12b: Inserted figure_12 image and caption after Figure 11')
+        else:
+            changes.append('Fix 12b: WARNING - Figure 11 caption not found')
     else:
-        changes.append('Fix 12b: WARNING - Figure 11 caption not found')
+        # figure_12 already in HTML — remove any duplicate block
+        html = re.sub(
+            re.compile(
+                r'(<p class="figure-caption">Figure 12[^<]*</p>)\s*'
+                r'<p><img[^>]*figure_12\.png[^/]*/></p>\s*'
+                r'<p class="figure-caption">Figure 12[^<]*</p>',
+                re.DOTALL
+            ),
+            r'\1',
+            html
+        )
+        changes.append('Fix 12b: figure_12 already present - removed duplicate if any')
 
     # Fix 12c: Figure 25 reuses figure_15.png (per CSV analysis) — no figure_25.png exists.
     # Insert figure_15.png before the Figure 25 caption.
-    html, n12c = re.subn(
-        r'(<p class="figure-caption">Figure 25 [^<]+</p>)',
-        '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_15.png"/></p>\n\g<1>',
-        html
-    )
-    if n12c:
-        changes.append('Fix 12c: Inserted figure_15 (reused) before Figure 25 caption')
+    # Only insert if figure_15 not already immediately before Figure 25 caption
+    if not re.search(r'figure_15\.png"/></p>\s*<p class="figure-caption">Figure 25', html):
+        html, n12c = re.subn(
+            r'(<p class="figure-caption">Figure 25 [^<]+</p>)',
+            '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_15.png"/></p>\n\g<1>',
+            html
+        )
+        if n12c:
+            changes.append('Fix 12c: Inserted figure_15 (reused) before Figure 25 caption')
+        else:
+            changes.append('Fix 12c: WARNING - Figure 25 caption not found')
     else:
-        changes.append('Fix 12c: WARNING - Figure 25 caption not found')
+        changes.append('Fix 12c: figure_15 already present before Figure 25 - skipped')
 
 
     # Fix 13a: Add missing hyperlink on 'here' in the Access section.
@@ -527,6 +551,7 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
         '<p>This screen makes the user aware of how many RPNs on their request were successful.'
         ' The three possible outcomes are:</p>\n'
         '<ul>\n'
+        '<li>RPNs returned \u2013 This is the number of employee RPNs that were successfully returned</li>\n'
         '<li>RPNs not returned \u2013 This is the number of employee RPNs that were not returned</li>\n'
         '<li>Validation errors \u2013 This is the number of validation errors in the request</li>\n'
         '</ul>\n'
