@@ -492,14 +492,12 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     # its dimensions, delete it, rename image_2->image_1 etc, update HTML.
     # Idempotent: if image_1 is already a real screenshot (width > 800px)
     # the renaming is skipped.
-    from PIL import Image as _PILImage
-    import re as _re
     img_dir = PROJECT_ROOT / 'content' / env / 'screens' / 'overview_of_ros_payroll_reporting' / 'images'
     cover = img_dir / 'image_1.png'
     if cover.exists():
-        with _PILImage.open(cover) as _im:
-            _w, _h = _im.size
-        if _w < 800:  # cover branding strip is 686x220 — not a content image
+        # Detect cover branding strip by file size (no PIL dependency).
+        # Cover strip is always ~19KB; real screenshots are always 29KB+.
+        if cover.stat().st_size < 25_000:
             cover.unlink()
             # Rename image_N -> image_(N-1) for N = 2..60 (reverse to avoid collisions)
             _renamed = 0
