@@ -437,6 +437,42 @@ except Exception:
 
 
 # ---------------------------------------------------------------------------
+# UTILITY FUNCTIONS (inlined from fix_mojibake.py, fix_pre_tabindex.py)
+# ---------------------------------------------------------------------------
+
+def fix_mojibake(text: str) -> str:
+    """
+    Fix UTF-8 mojibake caused by double-encoding of Windows-1252 smart quotes
+    and dashes as Latin-1. Detects and corrects sequences like:
+        â€™  ->  ’  (right single quotation mark)
+        â€œ  ->  “  (left double quotation mark)
+        â€   ->  ”  (right double quotation mark)
+        â€"  ->  –  (en dash)
+        â€"  ->  —  (em dash)
+    Re-encodes from latin-1 back to bytes then decodes as cp1252.
+    """
+    if 'â€' not in text and '\x92' not in text and '\x93' not in text:
+        return text
+    try:
+        return text.encode('latin-1', errors='replace').decode('cp1252', errors='replace')
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return text
+
+
+def fix_pre_tabindex(html: str) -> tuple[str, int]:
+    """
+    Ensure all <pre> elements have tabindex="0" for WCAG 2.1 keyboard
+    accessibility (SC 2.1.3 — scrollable content must be keyboard accessible).
+    Returns (fixed_html, count_of_fixes). Idempotent.
+    """
+    import re as _re
+    original = html
+    fixed = _re.sub(r'<pre(?!\s[^>]*tabindex)(?=[>\s])', '<pre tabindex="0"', html)
+    count = fixed.count('<pre tabindex="0"') - original.count('<pre tabindex="0"')
+    return fixed, count
+
+
+# ---------------------------------------------------------------------------
 # STEP 5 - MOJIBAKE FIX
 # ---------------------------------------------------------------------------
 
@@ -444,16 +480,10 @@ print("\n[ Step 5 ] Mojibake fix (smart quotes and dashes)\n")
 sys.stdout.flush()
 
 try:
-    import importlib.util
-    mojibake_script = os.path.join(project_root, "tools", "fix_mojibake.py")
-    spec = importlib.util.spec_from_file_location("fix_mojibake", mojibake_script)
-    mojibake_mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mojibake_mod)
-
     with open(html_path, "r", encoding="utf-8") as f:
         html_text = f.read()
 
-    fixed = mojibake_mod.fix_mojibake(html_text)
+    fixed = fix_mojibake(html_text)
 
     if fixed != html_text:
         with open(html_path, "w", encoding="utf-8") as f:
@@ -464,6 +494,33 @@ try:
 
 except Exception as e:
     print(f"  Warning: mojibake fix failed: {e}")
+
+sys.stdout.flush()
+
+
+
+# ---------------------------------------------------------------------------
+# STEP 6 - WCAG TABINDEX FIX (<pre> elements)
+# ---------------------------------------------------------------------------
+
+print("\n[ Step 6 ] WCAG tabindex fix (<pre> elements)\n")
+sys.stdout.flush()
+
+try:
+    with open(html_path, "r", encoding="utf-8") as f:
+        html_text = f.read()
+
+    fixed, count = fix_pre_tabindex(html_text)
+
+    if count > 0:
+        with open(html_path, "w", encoding="utf-8") as f:
+            f.write(fixed)
+        print(f"  OK Added tabindex=\"0\" to {count} <pre> element(s).")
+    else:
+        print(f"  OK All <pre> elements already have tabindex=\"0\".")
+
+except Exception as e:
+    print(f"  Warning: tabindex fix failed: {e}")
 
 sys.stdout.flush()
 

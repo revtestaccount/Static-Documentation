@@ -250,9 +250,90 @@ def build_not_yet_migrated(pit3: list, pit4: list) -> str:
     )
 
 
+
+
+# ---------------------------------------------------------------------------
+# LINK FIXER (inlined from fix_links.py)
+# ---------------------------------------------------------------------------
+
+def fix_links(repo_root: Path = None) -> tuple[int, int]:
+    """
+    Scan all content HTML files for broken download hrefs (zip, json, xlsx,
+    pdf, wsdl, xsd, csv, pptx) and rewrite them to the correct content/ path
+    where the file now exists.
+
+    Returns (files_changed, hrefs_fixed).
+
+    Usage:
+        python tools/update_migration_status.py --fix-links
+    """
+    import re as _re
+    root         = repo_root or REPO_ROOT
+    content_dir  = root / "content"
+
+    # Build filename -> list of content-relative paths index
+    index = {}
+    for f in content_dir.rglob("*"):
+        if f.is_file():
+            key = f.name.lower()
+            index.setdefault(key, [])
+            index[key].append("content/" + f.relative_to(content_dir).as_posix())
+
+    html_files = [
+        f for f in content_dir.rglob("*.html")
+        if f.name != "demodocument.html"
+    ]
+
+    pattern = _re.compile(
+        r'href="([^"#][^"]*\.(zip|json|xlsx|pdf|wsdl|xsd|csv|pptx))"',
+        _re.IGNORECASE,
+    )
+
+    total_fixed   = 0
+    files_changed = 0
+
+    for html_file in sorted(html_files):
+        text     = html_file.read_text(encoding="utf-8")
+        original = text
+
+        def replacer(m, _index=index, _root=root, _counter=[0]):
+            href = m.group(1)
+            if href.startswith("http"):
+                return m.group(0)
+            resolved = (root / href).resolve()
+            if resolved.exists():
+                return m.group(0)
+            fname      = Path(href).name
+            candidates = _index.get(fname.lower(), [])
+            if not candidates:
+                return m.group(0)
+            _counter[0] += 1
+            return f'href="{candidates[0]}"'
+
+        text = pattern.sub(replacer, text)
+
+        if text != original:
+            html_file.write_text(text, encoding="utf-8")
+            files_changed += 1
+            print(f"  Updated: {html_file.relative_to(root)}")
+
+    print(f"\nFiles changed : {files_changed}")
+    print(f"Hrefs fixed   : {total_fixed}")
+    return files_changed, total_fixed
+
 # ── Main ───────────────────────────────────────────────────────────────────────
 
 def main():
+    import argparse as _argparse
+    _parser = _argparse.ArgumentParser(description="Update migration status and/or fix broken links.")
+    _parser.add_argument("--fix-links", action="store_true", help="Scan and fix broken download hrefs across all content HTML files")
+    _args, _ = _parser.parse_known_args()
+
+    if _args.fix_links:
+        print("Running link fixer across all content HTML files...\n")
+        fix_links()
+        print()
+
     print("Scanning source assets...")
     pit3 = collect_source_assets("PIT3")
     pit4 = collect_source_assets("PIT4")
