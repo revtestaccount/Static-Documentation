@@ -11324,7 +11324,42 @@ body main #content h2 {
   margin-top: 2rem;
   margin-bottom: 2rem;
   font-weight: 700;
+}
+body main #content h2.pmod {
+  margin-top: 4rem;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  text-align: left;
+  background-color: #f0f8f8;
+  border-left: 0.25rem solid rgb(2, 95, 99);
+  padding: 0.5rem 0.85rem;
+  color: rgb(2, 95, 99);
+  font-weight: 700;
+}
+body main #content h2 {
   font-size: 35px;
+}
+body main #content h3.pmod {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  text-align: left;
+  background-color: #f0f8f8;
+  border-left: 0.25rem solid rgb(2, 95, 99);
+  padding: 0.5rem 0.85rem;
+  font-weight: 700;
+  color: rgb(2, 95, 99);
+}
+body main #content h4.pmod {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  text-align: left;
+  background-color: transparent;
+  border-left: 0.175rem solid rgb(0, 64, 66);
+  padding: 0.35rem 0.75rem;
+  font-weight: 700;
+  color: rgb(2, 95, 99);
 }
 body main #content #title {
   background-color: rgb(255, 255, 255);

@@ -178,8 +178,45 @@ body {
                 margin-top: 2rem;
                 margin-bottom: 2rem;
                 font-weight: $bold-font-weight;
+
+                // Exception: pmod headings in migrated document pages
+                &.pmod {
+                    margin-top: 4rem;
+                    margin-bottom: 1rem;
+                    font-size: 1.25rem;
+                    text-align: left;
+                    background-color: #f0f8f8;
+                    border-left: 0.25rem solid $base-brandteal;
+                    padding: 0.5rem 0.85rem;
+                    color: $base-brandteal;
+                    font-weight: $bold-font-weight;
+                }
                 font-size: $h1-700-font-size;
             };
+
+            h3.pmod {
+                margin-top: 3rem;
+                margin-bottom: 1rem;
+                font-size: 1.05rem;
+                text-align: left;
+                background-color: #f0f8f8;
+                border-left: 0.25rem solid $base-brandteal;
+                padding: 0.5rem 0.85rem;
+                font-weight: $bold-font-weight;
+                color: $base-brandteal;
+            }
+
+            h4.pmod {
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                font-size: 0.95rem;
+                text-align: left;
+                background-color: transparent;
+                border-left: 0.175rem solid $brandteal-darken-10;
+                padding: 0.35rem 0.75rem;
+                font-weight: $bold-font-weight;
+                color: $base-brandteal;
+            }
 
             #title{
                 background-color: $base-white;
