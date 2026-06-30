@@ -587,6 +587,21 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     else:
         changes.append('Fix 13c: WARNING - section 3.3 reorder patterns not found')
 
+    # Fix 14: Join split paragraph at 'system verifies' / 'password is correct'
+    # Occurs in section 3.2.1 — PDF page break splits one sentence across two <p> tags
+    html, n14 = re.subn(
+        re.compile(
+            r'<p>([^<]+the system verifies)</p>\s*<p>(that the password is correct[^<]+)</p>',
+            re.DOTALL
+        ),
+        lambda m: '<p>' + m.group(1) + ' ' + m.group(2) + '</p>',
+        html
+    )
+    if n14:
+        changes.append(f'Fix 14: Joined {n14} split paragraph(s) - system verifies / password is correct')
+    else:
+        changes.append('Fix 14: WARNING - split paragraph not found')
+
     # Fix 11: Image placement fixes
     #   11a: Insert image_1 before orphaned Figure 1 caption
     #   11b: Extract img tags from inside malformed figure-caption <p>s
