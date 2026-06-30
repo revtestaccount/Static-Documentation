@@ -11668,7 +11668,7 @@ p ~ .home-grid {
   color: rgb(2, 95, 99);
 }
 
-.document-content, #content {
+.document-content {
   max-width: 60rem;
   margin: 2rem auto;
   padding: 0 1.25rem;
@@ -11676,21 +11676,20 @@ p ~ .home-grid {
   line-height: 1.7;
   color: #333;
 }
-.document-content h1.document-title, #content h1.document-title {
+.document-content h1.document-title {
   text-align: center;
   color: rgb(2, 95, 99);
   font-weight: 700;
   margin-bottom: 1.5rem;
 }
 .document-content h1.document-title + p > img:only-child,
-.document-content h1.document-title + p > img:first-child, #content h1.document-title + p > img:only-child,
-#content h1.document-title + p > img:first-child {
+.document-content h1.document-title + p > img:first-child {
   border: none;
   margin: 0 auto 1.5rem auto;
   max-height: 12rem;
   object-fit: contain;
 }
-.document-content h2.pmod, #content h2.pmod {
+.document-content h2.pmod {
   text-align: left;
   color: rgb(2, 95, 99);
   font-weight: 700;
@@ -11701,7 +11700,7 @@ p ~ .home-grid {
   margin-top: 4rem;
   margin-bottom: 1rem;
 }
-.document-content h3.pmod, .document-content h4.pmod, #content h3.pmod, #content h4.pmod {
+.document-content h3.pmod, .document-content h4.pmod {
   text-align: left;
   color: rgb(2, 95, 99);
   font-weight: 700;
@@ -11712,23 +11711,23 @@ p ~ .home-grid {
   margin-top: 3rem;
   margin-bottom: 1rem;
 }
-.document-content h4.pmod, #content h4.pmod {
+.document-content h4.pmod {
   font-size: 0.95rem;
   background-color: transparent;
   border-left: 0.175rem solid rgb(0, 64, 66);
   padding: 0.35rem 0.75rem;
   margin-top: 2rem;
 }
-.document-content h3.pmod, #content h3.pmod {
+.document-content h3.pmod {
   font-size: 1.05rem;
 }
-.document-content h4.pmod, #content h4.pmod {
+.document-content h4.pmod {
   font-size: 0.95rem;
   background-color: transparent;
   border-left: 0.175rem solid rgb(0, 64, 66);
   padding: 0.35rem 0.75rem;
 }
-.document-content h4.pmod, #content h4.pmod {
+.document-content h4.pmod {
   font-size: 0.95rem;
   background-color: transparent;
   border-left: 0.175rem solid rgb(0, 64, 66);
@@ -11736,35 +11735,31 @@ p ~ .home-grid {
 }
 .document-content p a,
 .document-content li a,
-.document-content td a, #content p a,
-#content li a,
-#content td a {
+.document-content td a {
   text-decoration: underline;
   color: rgb(2, 95, 99);
 }
 .document-content p a:hover,
 .document-content li a:hover,
-.document-content td a:hover, #content p a:hover,
-#content li a:hover,
-#content td a:hover {
+.document-content td a:hover {
   color: rgb(0, 64, 66);
 }
-.document-content ul#toc, #content ul#toc {
+.document-content ul#toc {
   background-color: #f9f9f9;
   border: 0.0625rem solid #ddd;
   padding: 1rem 1rem 1rem 2rem;
   margin-bottom: 2rem;
   line-height: 2;
 }
-.document-content ul#toc a, #content ul#toc a {
+.document-content ul#toc a {
   color: rgb(2, 95, 99);
   text-decoration: none;
   font-size: 0.9rem;
 }
-.document-content ul#toc a:hover, #content ul#toc a:hover {
+.document-content ul#toc a:hover {
   text-decoration: underline;
 }
-.document-content table.table, #content table.table {
+.document-content table.table {
   width: 100%;
   border-collapse: collapse;
   margin: 1.25rem 0;
@@ -11772,39 +11767,39 @@ p ~ .home-grid {
   overflow-x: auto;
   display: block;
 }
-.document-content table.table thead tr, #content table.table thead tr {
+.document-content table.table thead tr {
   background-color: rgb(2, 95, 99) !important;
   --bs-table-bg: rgb(2, 95, 99);
   --bs-table-color: rgb(255, 255, 255);
   color: rgb(255, 255, 255) !important;
 }
-.document-content table.table thead th, #content table.table thead th {
+.document-content table.table thead th {
   padding: 0.6rem 0.85rem;
   text-align: left;
   font-weight: 700;
   white-space: nowrap;
 }
-.document-content table.table tbody tr, #content table.table tbody tr {
+.document-content table.table tbody tr {
   border-bottom: 0.0625rem solid #e0e0e0;
 }
-.document-content table.table tbody tr:nth-child(even), #content table.table tbody tr:nth-child(even) {
+.document-content table.table tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
-.document-content table.table tbody tr:hover, #content table.table tbody tr:hover {
+.document-content table.table tbody tr:hover {
   background-color: #f0f8f8;
 }
-.document-content table.table tbody td, #content table.table tbody td {
+.document-content table.table tbody td {
   padding: 0.55rem 0.85rem;
   vertical-align: top;
 }
-.document-content img, #content img {
+.document-content img {
   max-width: 100%;
   height: auto;
   display: block;
   margin: 1rem auto;
   border: 0.0625rem solid #e0e0e0;
 }
-.document-content .figure-caption, #content .figure-caption {
+.document-content .figure-caption {
   text-align: center;
   font-style: italic;
   font-size: 0.85rem;
@@ -11812,7 +11807,7 @@ p ~ .home-grid {
   margin-top: -0.5rem;
   margin-bottom: 1.25rem;
 }
-.document-content pre, #content pre {
+.document-content pre {
   background-color: #f4f4f4;
   border-left: 0.25rem solid rgb(2, 95, 99);
   padding: 0.85rem 1rem;
@@ -11820,28 +11815,28 @@ p ~ .home-grid {
   margin: 1rem 0;
   font-size: 0.85rem;
 }
-.document-content pre code, #content pre code {
+.document-content pre code {
   background: none;
   color: #333;
   padding: 0;
 }
-.document-content p code, #content p code {
+.document-content p code {
   background-color: #f0f0f0;
   padding: 0.1rem 0.35rem;
   font-size: 0.875rem;
   color: rgb(0, 86, 179);
 }
-.document-content ul, .document-content ol, #content ul, #content ol {
+.document-content ul, .document-content ol {
   margin: 0.5rem 0 1rem 1.5rem;
 }
-.document-content ul li, .document-content ol li, #content ul li, #content ol li {
+.document-content ul li, .document-content ol li {
   margin-bottom: 0.35rem;
 }
-.document-content a, #content a {
+.document-content a {
   color: rgb(2, 95, 99);
   text-decoration: none;
 }
-.document-content a:hover, #content a:hover {
+.document-content a:hover {
   text-decoration: underline;
   color: rgb(0, 64, 66);
 }
