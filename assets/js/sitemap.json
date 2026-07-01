@@ -1,4 +1,4 @@
-{
+﻿{
  "general_routes": {
   "404": {
    "template": "./content/shared/404.html",
@@ -195,7 +195,7 @@
    "title": "PIT Self Service Application Guide"
   },
   "rospayrollreportingapplicationguide": {
-   "template": "./content/PIT3/screens/overview_of_ros_payroll_reporting.html",
+   "template": "./content/PIT3/screens/overview_of_ros_payroll_reporting_pit3.html",
    "title": "ROS Payroll Reporting Application Guide"
   },
   "rospayrollreportingmessageguide": {
@@ -562,9 +562,8 @@
    "title": "PIT Self Service Application Guide"
   },
   "rospayrollreportingapplicationguide.": {
-   "template": "./content/shared/demodocument.html",
-   "title": "ROS Payroll Reporting Application Guide.",
-   "message": "placeholder text/unused"
+   "template": "./content/PIT4/screens/overview_of_ros_payroll_reporting_pit4.html",
+   "title": "ROS Payroll Reporting Application Guide"
   },
   "rospayrollreportingmessageguide.": {
    "template": "./content/shared/demodocument.html",

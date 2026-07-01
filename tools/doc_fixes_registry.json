@@ -11,7 +11,8 @@
     {
       "key": "ros_payroll_reporting",
       "description": "Overview of ROS Payroll Reporting",
-      "html_filename": "overview_of_ros_payroll_reporting.html",
+      "html_filename_pit3": "overview_of_ros_payroll_reporting_pit3.html",
+      "html_filename_pit4": "overview_of_ros_payroll_reporting_pit4.html",
       "content_path": "screens",
       "environments": ["PIT3", "PIT4"],
       "fixes": ["ros_payroll_reporting"]
@@ -30,7 +31,7 @@
       "html_filename": "payepithelpdeskuserguide.html",
       "content_path": "pit",
       "environments": ["PIT3"],
-      "notes": "PIT3 only. Pipeline produces a spaced filename — fix_helpdesk renames it.",
+      "notes": "PIT3 only. Pipeline produces a spaced filename - fix_helpdesk renames it.",
       "fixes": ["helpdesk_guide"]
     }
   ]

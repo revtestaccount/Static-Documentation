@@ -1,4 +1,4 @@
-"""
+﻿"""
 run_doc_fixes.py
 ================
 Single entry point for all post-pipeline document fixes.
@@ -440,7 +440,7 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     if not re.search(r'figure_7\.png"/></p>\s*<p class="figure-caption">Figure 10', html):
         html, n12a = re.subn(
             r'(<p class="figure-caption">Figure 10 [^<]+</p>)',
-            '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_7.png"/></p>\n\g<1>',
+            '<p><img alt="Image" src="content/" + env + "/screens/overview_of_ros_payroll_reporting/images/figure_7.png"/></p>\n\g<1>',
             html
         )
         if n12a:
@@ -456,7 +456,7 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     _fig12_present = 'figure_12.png"/></p>' in html
     if not _fig12_present:
         FIG12_INSERT = (
-            '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_12.png"/></p>\n'
+            '<p><img alt="Image" src="content/" + env + "/screens/overview_of_ros_payroll_reporting/images/figure_12.png"/></p>\n'
             '<p class="figure-caption">Figure 12 Request RPNs Summary screen (Detailed)</p>\n'
         )
         html, n12b = re.subn(
@@ -488,7 +488,7 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     if not re.search(r'figure_15\.png"/></p>\s*<p class="figure-caption">Figure 25', html):
         html, n12c = re.subn(
             r'(<p class="figure-caption">Figure 25 [^<]+</p>)',
-            '<p><img alt="Image" src="content/PIT3/screens/overview_of_ros_payroll_reporting/images/figure_15.png"/></p>\n\g<1>',
+            '<p><img alt="Image" src="content/" + env + "/screens/overview_of_ros_payroll_reporting/images/figure_15.png"/></p>\n\g<1>',
             html
         )
         if n12c:
@@ -833,7 +833,11 @@ def load_registry() -> list[dict]:
 
 
 def get_html_path(doc: dict, env: str) -> Path:
-    return PROJECT_ROOT / "content" / env / doc["content_path"] / doc["html_filename"]
+    # Support per-environment filenames (html_filename_pit3 / html_filename_pit4)
+    # falling back to shared html_filename if no env-specific one is defined.
+    env_key = f'html_filename_{env.lower()}'
+    filename = doc.get(env_key) or doc.get('html_filename', '')
+    return PROJECT_ROOT / 'content' / env / doc['content_path'] / filename
 
 
 def run_fixes_for_doc(doc: dict, env: str) -> bool:
