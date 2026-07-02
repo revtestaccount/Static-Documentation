@@ -434,13 +434,20 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     )
     changes.append(f"Fix 10: Corrected {n10a + n10b} TOC entry/entries for sections 4.1 and/or 4.2.2")
 
-    # Fix 12a: Figure 10 reuses figure_7.png (per CSV analysis) — no figure_10.png exists.
-    # Insert figure_7.png before the Figure 10 caption.
-    # Only insert if figure_7 not already immediately before Figure 10 caption
-    if not re.search(r'figure_7\.png"/></p>\s*<p class="figure-caption">Figure 10', html):
+        # Fix 12a: In some environments Figure 10 has no dedicated image asset and
+    # reuses figure_7.png (per CSV analysis, originally observed on PIT3/PIT4
+    # shared behaviour). Guarded by file-existence so a future environment
+    # with its own genuine figure_10.png is not overwritten with a duplicate.
+    # Bug fixed 2026-06-26: the src path was a broken string literal
+    # ('...' + env + '...' written INSIDE single quotes, never interpolated) —
+    # now a proper f-string.
+    _img_dir_12a = PROJECT_ROOT / 'content' / env / 'screens' / 'overview_of_ros_payroll_reporting' / 'images'
+    if (_img_dir_12a / 'figure_10.png').exists():
+        changes.append('Fix 12a: figure_10.png exists on disk for this environment - genuine image present, skipped figure_7 reuse insert')
+    elif not re.search(r'figure_7\.png"/></p>\s*<p class="figure-caption">Figure 10', html):
         html, n12a = re.subn(
             r'(<p class="figure-caption">Figure 10 [^<]+</p>)',
-            '<p><img alt="Image" src="content/" + env + "/screens/overview_of_ros_payroll_reporting/images/figure_7.png"/></p>\n\g<1>',
+            f'<p><img alt="Image" src="content/{env}/screens/overview_of_ros_payroll_reporting/images/figure_7.png"/></p>\n\\g<1>',
             html
         )
         if n12a:
@@ -482,13 +489,21 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
         )
         changes.append('Fix 12b: figure_12 already present - removed duplicate if any')
 
-    # Fix 12c: Figure 25 reuses figure_15.png (per CSV analysis) — no figure_25.png exists.
-    # Insert figure_15.png before the Figure 25 caption.
-    # Only insert if figure_15 not already immediately before Figure 25 caption
-    if not re.search(r'figure_15\.png"/></p>\s*<p class="figure-caption">Figure 25', html):
+        # Fix 12c: In some environments Figure 25 has no dedicated image asset and
+    # reuses figure_15.png (per CSV analysis, originally observed on PIT3).
+    # This is NOT universal — PIT4 has its own genuine figure_25.png. Guarded
+    # by file-existence so the reuse is only applied when figure_25.png
+    # genuinely does not exist on disk for this environment.
+    # Bug fixed 2026-06-26: same broken string-literal defect as Fix 12a
+    # above, plus this was incorrectly applied unconditionally to PIT4,
+    # producing a duplicate/wrong image before the Figure 25 caption.
+    _img_dir_12c = PROJECT_ROOT / 'content' / env / 'screens' / 'overview_of_ros_payroll_reporting' / 'images'
+    if (_img_dir_12c / 'figure_25.png').exists():
+        changes.append('Fix 12c: figure_25.png exists on disk for this environment - genuine image present, skipped figure_15 reuse insert')
+    elif not re.search(r'figure_15\.png"/></p>\s*<p class="figure-caption">Figure 25', html):
         html, n12c = re.subn(
             r'(<p class="figure-caption">Figure 25 [^<]+</p>)',
-            '<p><img alt="Image" src="content/" + env + "/screens/overview_of_ros_payroll_reporting/images/figure_15.png"/></p>\n\g<1>',
+            f'<p><img alt="Image" src="content/{env}/screens/overview_of_ros_payroll_reporting/images/figure_15.png"/></p>\n\\g<1>',
             html
         )
         if n12c:

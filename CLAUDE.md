@@ -3,6 +3,14 @@
 > This file is read automatically at the start of every session.
 > It provides the context needed to work effectively on this project without re-explanation.
 
+> **⚠️ FIRST STEP OF EVERY SESSION:** Before doing anything else, read
+> [`SESSION_LOG.md`](SESSION_LOG.md). It records exactly where the previous
+> working session left off — including any in-progress or interrupted work —
+> so a crash, VM issue, or IDE failure never costs lost context. Check it
+> even (especially) if the user says "continue where we left off" without
+> further detail. Update it after each meaningful fix/finding during the
+> session, not just at sign-off.
+
 ---
 
 ## 1. What This Project Is
@@ -212,7 +220,7 @@ This is a **customer-facing / public-facing** application:
 |---|---|---|
 | REST Web Service Integration Guide | ✅ | ✅ |
 | REST Connectivity Handshake Guide | ✅ | ✅ |
-| Overview of ROS Payroll Reporting | ✅ | ⏳ |
+| Overview of ROS Payroll Reporting | ✅ | ✅ |
 
 ---
 
@@ -221,7 +229,7 @@ This is a **customer-facing / public-facing** application:
 | Status | Count |
 |---|---|
 | Routes with real content | ~40 |
-| Routes pointing to `demodocument.html` placeholder | ~120 |
+| Routes pointing to `demodocument.html` placeholder | ~121 |
 | **Total routes** | **160** |
 
 The majority of remaining work is migrating the ~120 placeholder routes to real HTML pages — primarily by running the pipeline on source PDFs from `O:\git\paye-employers-documentation`.
@@ -287,6 +295,7 @@ git push origin dev_contentMigration
 
 ## 14. Further Reading
 
+- [`SESSION_LOG.md`](SESSION_LOG.md) — **read this first** — most recent working session, including any interrupted/in-progress work
 - [`PROJECT_ASSESSMENT.md`](PROJECT_ASSESSMENT.md) — full architecture, design decisions, outstanding work
 - [`MIGRATION_STATUS.md`](MIGRATION_STATUS.md) — detailed asset migration tracking
 - [`README.md`](README.md) — project overview and quick start

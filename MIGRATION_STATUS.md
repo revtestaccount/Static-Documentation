@@ -1,6 +1,6 @@
 # Migration Status
 
-> **Last updated:** 2026-06-25  
+> **Last updated:** 2026-06-26  
 > **Branch:** `dev_contentMigration` (branched from `dev_traditionalNavbar`)  
 > **Total commits:** ~140
 
@@ -85,7 +85,8 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 - ✅ PIT3 REST Connectivity Handshake Guide (`content/PIT3/rest/rest_connectivity_handshake_guide.html`)
 - ✅ PIT4 REST Web Service Integration Guide (`content/PIT4/rest/rest_web_service_integration_guide.html`)
 - ✅ PIT4 REST Connectivity Handshake Guide (`content/PIT4/rest/rest_connectivity_handshake_guide.html`)
-- ✅ PIT3 Overview of ROS Payroll Reporting (`content/PIT3/screens/overview_of_ros_payroll_reporting.html`)
+- ✅ PIT3 Overview of ROS Payroll Reporting (`content/PIT3/screens/overview_of_ros_payroll_reporting_pit3.html`)
+- ✅ PIT4 Overview of ROS Payroll Reporting (`content/PIT4/screens/overview_of_ros_payroll_reporting_pit4.html`) — completed 2026-06-26. Fixed duplicate figure_15 reference before Figure 25 caption, extracted missing figure_28.png from source PDF (dropped by original pipeline run), confirmed TOC entry for section 3.5 (TWSS). Root cause patched in `tools/run_doc_fixes.py` (Fix 12a/12c) — image-reuse fixes were applying PIT3-specific quirks unconditionally; now guarded by file-existence checks per environment.
 
 ### Tooling (new)
 - ✅ `migrationScripts/pdfToMarkdown.py` — PDF → Markdown (PyMuPDF + pdfplumber, heading detection, table merging, image deduplication)
@@ -94,6 +95,7 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 - ✅ `tools/run_doc_fixes.py` + `tools/doc_fixes_registry.json` — consolidated post-pipeline fix scripts (replaces all individual fix_*.py scripts)
 - ✅ `tools/fix_pre_tabindex.py` — patches missing `tabindex="0"` on hand-authored `<pre>` elements (WCAG 2.1 keyboard accessibility)
 - ✅ `tools/accessibility_audit.py` — static WCAG 2.1 AA audit across all migrated HTML files
+- ✅ `tools/run_doc_fixes.py` Fix 12a/12c patched (2026-06-26) — fixed a string-concatenation bug (`'...' + env + '...'` inside single quotes, never interpolated) and added file-existence guards so PIT3-specific image-reuse quirks (figure_10→figure_7, figure_25→figure_15) are no longer applied unconditionally to environments that have their own genuine images
 
 ### External Project Integration
 - ✅ `paye-employers-pit-faq` (Angular 14 / PrimeNG accordion) → `content/shared/faq.html`
@@ -106,7 +108,7 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 
 ## Outstanding
 
-### Content — Pages Still Needed (122 placeholder routes)
+### Content — Pages Still Needed (121 placeholder routes)
 
 | Section | Routes Still Needed |
 |---|---|
