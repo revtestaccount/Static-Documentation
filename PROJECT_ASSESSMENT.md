@@ -1,8 +1,8 @@
 # Project Assessment — Static Documentation Site
 
-> **Last updated:** 2026-06-25  
+> **Last updated:** 2026-07-03  
 > **Active branch:** `dev_contentMigration`  
-> **Total commits:** ~140  
+> **Total commits:** ~141    
 
 ---
 
@@ -334,6 +334,8 @@ All migrated HTML pages target WCAG 2.1 AA compliance. The following measures ar
 | Some file names contain spaces | Works on Windows/Mac; potential issues on Linux servers | Monitor |
 | PIT3 REST Web Service Integration Guide PDF contains wrong hostname | `softwaretestnextversion.ros.ie` in signature example | Fixed manually post-migration via PowerShell replace; source PDF error |
 | REST Web Service Integration Guide tables split across PDF page breaks | Section 2.1, 4.1.3 tables and HTTP example block render incorrectly | Fixed via `tools/fix_rest_endpoints_table.py` — run after pipeline for this document |
+| `sitemap.json` cross-environment routing bugs | PIT4 Message Guide, REST Integration Guide, and REST Handshake Guide routes were silently serving PIT3's HTML content on PIT4 pages | Fixed 2026-07-03; `migration_pipeline.py` Step 3.5 added to detect this class of bug automatically going forward |
+| ROS Payroll Reporting Message Guide (PIT3 + PIT4) tables fragmented/misplaced | Version History, Document References, Data Items, and Schema Reference tables split into many mostly-empty `<td>`s; Schema Reference table rendered under the wrong heading; JSON/XML bullet lists rendered as one run-on `<li>` | Fixed 2026-07-03 via `tools/run_doc_fixes.py` → `fix_ros_payroll_message_guide` |
 
 ---
 

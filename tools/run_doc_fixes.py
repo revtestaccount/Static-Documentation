@@ -699,6 +699,193 @@ def fix_ros_payroll_reporting(html: str, env: str) -> tuple[str, list[str]]:
     return html, changes
 
 
+
+
+# ---------------------------------------------------------------------------
+# ros_payroll_message_guide
+# Fixes: 4 fragmented/mis-columned tables (Version History, Document
+# References, JSON Message Data Items, Reference/Document Link) and 3
+# orphaned single-column fragment tables produced when pdfplumber split a
+# wrapped first-column cell into its own extra table.
+# ---------------------------------------------------------------------------
+
+MSGGUIDE_VERSION_HISTORY_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Version</th>
+<th scope="col">Change Date</th>
+<th scope="col">Section</th>
+<th scope="col">Change Description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1.0</td><td></td><td>All</td><td>Document published.</td></tr>
+<tr><td>1.0 Release Candidate 2</td><td>24/05/2018</td><td></td><td>Version updated to 1.0 Release Candidate 2</td></tr>
+</tbody>
+</table>"""
+
+MSGGUIDE_DOCUMENT_REFERENCES_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Reference</th>
+<th scope="col">Document Link</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1. Documents Homepage</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/" target="_blank" rel="noopener noreferrer">https://revenue-ie.github.io/paye-employers-documentation/</a></td></tr>
+</tbody>
+</table>"""
+
+MSGGUIDE_DATA_ITEMS_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Name</th>
+<th scope="col">Description</th>
+<th scope="col">Applicable Message</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Request type</td><td>Specifies the service to be called. Supported values : "lookupRPN", "createRPN", "payrollSubmission"</td><td>All</td></tr>
+<tr><td>Employer Registration Number</td><td>The registration of the employer (up to 9 chars). Must be valid Employer Registered number. Format is 7 digits (including leading zeros) followed by either 1 or 2 letters</td><td>All</td></tr>
+<tr><td>Tax Year</td><td>Tax Year to which the submission or request relates</td><td>All</td></tr>
+<tr><td>Date Last Updated</td><td>Date to lookup for RPNs updated on or since</td><td>Look up RPN</td></tr>
+<tr><td>Software Used</td><td>References to third party software used to make RPN request / payroll submission</td><td>All</td></tr>
+<tr><td>Software Version</td><td>Version of software used to make request RPN request/ submission</td><td>All</td></tr>
+<tr><td>Agent TAIN</td><td>Used to identify the agent submitting on behalf of the employer and to ensure that an agent link exists for this employer agent relationship for the period that the payroll submission relates to.</td><td>To be included if the RPN request or Payroll submission is being performed by an agent on behalf of an Employer</td></tr>
+<tr><td>Payroll Run Reference</td><td>Used to identify the Payroll event that the submission refers to e.g. ‘Site 1 Week 1’.</td><td>Payroll Submission</td></tr>
+<tr><td>Submission ID</td><td>Unique submission identifier. Must be unique for submissions under a given employer's PAYE registration number. For batch submissions, all submissions should have the same SubmissionID and should have the BatchID and BatchCount populated.</td><td>Payroll Submission</td></tr>
+<tr><td>Employee IDs</td><td>Employee's PPS Number and Employee's Employment ID(Unique identifier for each distinct employment for an employee) are joined using a hyphen (eg.'1234567T-1').</td><td>Look up RPN – To be included if request is for specific Employees</td></tr>
+<tr><td>Request Body</td><td>For Payroll submissions, this contains the Employee level details. For Create RPNs (NewRPN), this contains the Employee level details.</td><td>Payroll Submission, Create RPN (NewRPN)</td></tr>
+</tbody>
+</table>"""
+
+MSGGUIDE_SCHEMA_REFERENCE_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Reference</th>
+<th scope="col">Document Link</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>JSON Envelope Schema</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation//Screens/ROS_Payroll_Reporting_JSON_Envelope_schema.json" target="_blank" rel="noopener noreferrer">ROS_Payroll_Reporting_JSON_Envelope_schema.json</a></td></tr>
+<tr><td>JSON Create RPN (Request body)</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/rest/paye-employers-rest-api.json" target="_blank" rel="noopener noreferrer">paye-employers-rest-api.json</a></td></tr>
+<tr><td>JSON Payroll Submission (Request body)</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/rest/paye-employers-rest-api.json" target="_blank" rel="noopener noreferrer">paye-employers-rest-api.json</a></td></tr>
+<tr><td>XML Look up RPNs</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/soap/v1/rpn/rpn-schema.xsd" target="_blank" rel="noopener noreferrer">rpn-schema.xsd</a></td></tr>
+<tr><td>XML Create RPNs for new employees (New RPNs)</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/soap/v1/rpn/rpn-schema.xsd" target="_blank" rel="noopener noreferrer">rpn-schema.xsd</a></td></tr>
+<tr><td>XML Payroll submission</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/soap/v1/payroll/payroll-schema.xsd" target="_blank" rel="noopener noreferrer">payroll-schema.xsd</a></td></tr>
+</tbody>
+</table>"""
+
+
+def fix_ros_payroll_message_guide(html: str, env: str) -> tuple[str, list[str]]:
+    changes = []
+
+    # Fix 1: Replace broken 'Latest Version History' table (12 cols, mostly empty)
+    html, n = re.subn(
+        re.compile(r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Latest Version History</th>[\s\S]*?</table>', re.DOTALL),
+        MSGGUIDE_VERSION_HISTORY_TABLE, html
+    )
+    changes.append(f"Fix 1: {'Replaced' if n else 'WARNING: not found —'} broken 'Latest Version History' table")
+
+    # Fix 2: Replace broken 'Document References' table (introduction section)
+    html, n = re.subn(
+        re.compile(r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Document References</th>[\s\S]*?</table>', re.DOTALL),
+        MSGGUIDE_DOCUMENT_REFERENCES_TABLE, html
+    )
+    changes.append(f"Fix 2: {'Replaced' if n else 'WARNING: not found —'} broken 'Document References' table")
+
+    # Fix 3: Replace broken 'JSON Message – Data Items' table (9 cols, heavily fragmented)
+    html, n = re.subn(
+        re.compile(r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Name</th>[\s\S]*?</table>', re.DOTALL),
+        MSGGUIDE_DATA_ITEMS_TABLE, html
+    )
+    changes.append(f"Fix 3: {'Replaced' if n else 'WARNING: not found —'} broken 'JSON Message – Data Items' table")
+
+    # Fix 4: Remove orphaned 'Employer / Registration / Number' 1-column fragment
+    # table (pdfplumber split-out of the Data Items table's wrapped first cell —
+    # content is already present as 'Employer Registration Number' in Fix 3's table)
+    html, n = re.subn(
+        re.compile(r'<table[^>]*>\s*<thead>\s*<tr>\s*<th[^>]*>Employer</th>\s*</tr>\s*</thead>\s*<tbody>\s*<tr>\s*<td>Registration</td>\s*</tr>\s*<tr>\s*<td>Number</td>\s*</tr>\s*</tbody>\s*</table>\s*', re.DOTALL),
+        '', html
+    )
+    if n:
+        changes.append(f"Fix 4: Removed {n} orphaned 'Employer/Registration/Number' fragment table")
+
+    # Fix 5: Remove orphaned '(NewRPN) / contains the Employee level details.'
+    # fragment table (page-break continuation of the Data Items 'Request Body'
+    # row — content already merged into Fix 3's Request Body cell)
+    html, n = re.subn(
+        re.compile(r'<table[^>]*>\s*<thead>\s*<tr>\s*<th[^>]*></th>\s*<th[^>]*>contains the Employee level details\.</th>\s*<th[^>]*></th>\s*<th[^>]*>\(NewRPN\)</th>\s*<th[^>]*></th>\s*</tr>\s*</thead>[\s\S]*?</table>\s*', re.DOTALL),
+        '', html
+    )
+    if n:
+        changes.append(f"Fix 5: Removed {n} orphaned '(NewRPN)' page-break continuation table")
+
+    # Fix 6: Replace broken Schema Reference table (fragmented, ends up under
+    # section 5 due to a pipeline heading-order bug). Anchored on the unique
+    # 'JSON Envelope Schema' body text rather than the 'Reference' header
+    # alone, since Fix 2's already-cleaned Document References table shares
+    # that same header and would otherwise be double-matched.
+    html, n = re.subn(
+        re.compile(r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Reference</th>[\s\S]*?JSON Envelope Schema[\s\S]*?</table>', re.DOTALL),
+        MSGGUIDE_SCHEMA_REFERENCE_TABLE, html
+    )
+    changes.append(f"Fix 6: {'Replaced' if n else 'WARNING: not found —'} broken Schema Reference table")
+
+    # Fix 7: Remove orphaned 'JSON Create RPN / (Request body)' 1-column
+    # fragment table (pdfplumber split-out of the Schema Reference table's
+    # wrapped first cell — content already present in Fix 6's table)
+    html, n = re.subn(
+        re.compile(r'<table[^>]*>\s*<thead>\s*<tr>\s*<th[^>]*>JSON Create RPN</th>\s*</tr>\s*</thead>\s*<tbody>\s*<tr>\s*<td>\(Request body\)</td>\s*</tr>\s*<tr>\s*<td>\(Request body\)</td>\s*</tr>\s*</tbody>\s*</table>\s*', re.DOTALL),
+        '', html
+    )
+    if n:
+        changes.append(f"Fix 7: Removed {n} orphaned 'JSON Create RPN / (Request body)' fragment table")
+
+    # Fix 8: Move the Schema Reference table from Section 5 (Digital Signature)
+    # to Section 4 (Schemas), where it actually belongs — the pipeline leaves
+    # section 4 empty and places this table under section 5 by mistake.
+    m = re.search(
+        r'(<h2 class="pmod" id="4\._schemas">4\. Schemas</h2>\s*)'
+        r'(<h2 class="pmod" id="5\._digital_signature">5\. Digital Signature</h2>\s*<p>[^<]*</p>\s*)'
+        r'(<table class="table" tabindex="0">\s*<thead>\s*<tr>\s*<th scope="col">Reference</th>[\s\S]*?JSON Envelope Schema[\s\S]*?</table>)',
+        html, re.DOTALL
+    )
+    if m:
+        html = html[:m.start()] + m.group(1) + m.group(3) + '\n' + m.group(2) + html[m.end():]
+        changes.append("Fix 8: Moved Schema Reference table from Section 5 to Section 4")
+
+    # Fix 9: Convert run-on bullet <li> items (JSON/XML Messages sections) into
+    # separate <li> elements. The pipeline joins '• A - • B - • C' PDF bullets
+    # onto a single line instead of splitting them, and merges the trailing
+    # sentence into the same <li>/<ul> as the last bullet.
+    html, n = re.subn(
+        re.compile(
+            r'<li>Look up RPNs for existing employees - Create RPNs for new employees - Make a payroll submission'
+            r'(?: This JSON envelope schema is required as takes in data items for these services which are provided as part of the URL if the service is invoked from the REST API\.)?'
+            r'</li>'
+        ),
+        lambda mm: (
+            '<li>Look up RPNs for existing employees</li>\n'
+            '<li>Create RPNs for new employees</li>\n'
+            '<li>Make a payroll submission</li>'
+            + ('</ul>\n<p>This JSON envelope schema is required as takes in data items for these services which are provided as part of the URL if the service is invoked from the REST API.</p>\n<ul>' if 'This JSON envelope schema' in mm.group(0) else '')
+        ),
+        html
+    )
+    if n:
+        changes.append(f"Fix 9: Split {n} run-on bullet list item(s) into separate <li> elements")
+
+    # Fix 9 leaves a stray trailing <ul></ul> if the JSON-envelope sentence
+    # variant fired (its replacement re-opens a <ul> that the original closing
+    # </ul> then immediately closes again). Collapse that empty tag pair.
+    html, n = re.subn(r'<ul>\s*</ul>\s*', '', html)
+    if n:
+        changes.append(f"Fix 9b: Removed {n} empty <ul></ul> artifact")
+
+    return html, changes
+
+
 # ---------------------------------------------------------------------------
 # selfservice_coverpage
 # Fixes: duplicate h2 headings, broken version history table
@@ -831,11 +1018,12 @@ def fix_helpdesk_guide(html: str, env: str) -> tuple[str, list[str]]:
 # ===========================================================================
 
 FIX_REGISTRY = {
-    "rest_integration_guide": fix_rest_integration_guide,
-    "ros_payroll_reporting":   fix_ros_payroll_reporting,
-    "selfservice_coverpage":   fix_selfservice_coverpage,
-    "selfservice_appendix":    fix_selfservice_appendix,
-    "helpdesk_guide":          fix_helpdesk_guide,
+    "rest_integration_guide":   fix_rest_integration_guide,
+    "ros_payroll_reporting":     fix_ros_payroll_reporting,
+    "ros_payroll_message_guide": fix_ros_payroll_message_guide,
+    "selfservice_coverpage":     fix_selfservice_coverpage,
+    "selfservice_appendix":      fix_selfservice_appendix,
+    "helpdesk_guide":            fix_helpdesk_guide,
 }
 
 # ===========================================================================

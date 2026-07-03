@@ -332,6 +332,42 @@ sys.stdout.flush()
 
 
 # ---------------------------------------------------------------------------
+# STEP 3.5 - CROSS-ENVIRONMENT ROUTING CHECK (PIT3/PIT4 template mismatch)
+# ---------------------------------------------------------------------------
+
+print("\n[ Step 3.5 ] Checking for PIT3/PIT4 routing mismatches\n")
+sys.stdout.flush()
+
+routing_warnings = []
+try:
+    for group_key, route_group in sitemap.items():
+        if group_key.startswith("_") or not isinstance(route_group, dict):
+            continue
+        for route_key, route_val in route_group.items():
+            if not isinstance(route_val, dict):
+                continue
+            template = route_val.get("template", "")
+            # This site's convention: PIT4 route keys end in "."
+            is_pit4_route = route_key.endswith(".")
+            is_pit3_route = not is_pit4_route
+            if is_pit4_route and "/PIT3/" in template:
+                routing_warnings.append(f"'{route_key}' (PIT4 route) -> {template}")
+            elif is_pit3_route and "/PIT4/" in template:
+                routing_warnings.append(f"'{route_key}' (PIT3 route) -> {template}")
+
+    if routing_warnings:
+        print(f"  !! {len(routing_warnings)} cross-environment routing mismatch(es) found:")
+        for w in routing_warnings:
+            print(f"     {w}")
+    else:
+        print("  OK No cross-environment routing mismatches found.")
+except Exception as e:
+    print(f"  Warning: routing check failed: {e}")
+
+sys.stdout.flush()
+
+
+# ---------------------------------------------------------------------------
 # STEP 4 - UPDATE SECTION LISTING PAGE
 # ---------------------------------------------------------------------------
 
@@ -549,4 +585,10 @@ if empty_table_warnings:
     for w in empty_table_warnings:
         print(f"     Table header: {w!r}")
     print("     Check these tables manually against the source PDF.")
+if routing_warnings:
+    print()
+    print(f"  !! CROSS-ENV ROUTING MISMATCH ({len(routing_warnings)}) - PIT3/PIT4 template pointing to wrong environment:")
+    for w in routing_warnings:
+        print(f"     {w}")
+    print("     Confirm whether this is intentional (shared content) or a migration bug.")
 print("=" * 60)

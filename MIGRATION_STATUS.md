@@ -1,8 +1,8 @@
 # Migration Status
 
-> **Last updated:** 2026-06-26  
+> **Last updated:** 2026-07-03  
 > **Branch:** `dev_contentMigration` (branched from `dev_traditionalNavbar`)  
-> **Total commits:** ~140
+> **Total commits:** ~141
 
 ---
 
@@ -87,6 +87,8 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 - ✅ PIT4 REST Connectivity Handshake Guide (`content/PIT4/rest/rest_connectivity_handshake_guide.html`)
 - ✅ PIT3 Overview of ROS Payroll Reporting (`content/PIT3/screens/overview_of_ros_payroll_reporting_pit3.html`)
 - ✅ PIT4 Overview of ROS Payroll Reporting (`content/PIT4/screens/overview_of_ros_payroll_reporting_pit4.html`) — completed 2026-06-26. Fixed duplicate figure_15 reference before Figure 25 caption, extracted missing figure_28.png from source PDF (dropped by original pipeline run), confirmed TOC entry for section 3.5 (TWSS). Root cause patched in `tools/run_doc_fixes.py` (Fix 12a/12c) — image-reuse fixes were applying PIT3-specific quirks unconditionally; now guarded by file-existence checks per environment.
+- ✅ PIT3 ROS Payroll Reporting Message Guide (`content/PIT3/screens/ros_payroll_reporting_message_guide.html`) — completed 2026-07-03. Fixed fragmented Version History / Document References / JSON Message Data Items / Schema Reference tables, removed 2 orphaned single-column fragment tables (pdfplumber cell-wrap splitting artefacts), moved Schema Reference table from Section 5 (Digital Signature) into its correct home under Section 4 (Schemas), and split run-on bullet list items in Sections 2 and 3 into proper separate `<li>` elements. Fixed via `tools/run_doc_fixes.py` (`fix_ros_payroll_message_guide`, Fixes 1–9).
+- ✅ PIT4 ROS Payroll Reporting Message Guide (`content/PIT4/screens/ros_payroll_reporting_message_guide.html`) — completed 2026-07-03, same fixes as PIT3 above.
 
 ### Tooling (new)
 - ✅ `migrationScripts/pdfToMarkdown.py` — PDF → Markdown (PyMuPDF + pdfplumber, heading detection, table merging, image deduplication)
@@ -96,6 +98,11 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 - ✅ `tools/fix_pre_tabindex.py` — patches missing `tabindex="0"` on hand-authored `<pre>` elements (WCAG 2.1 keyboard accessibility)
 - ✅ `tools/accessibility_audit.py` — static WCAG 2.1 AA audit across all migrated HTML files
 - ✅ `tools/run_doc_fixes.py` Fix 12a/12c patched (2026-06-26) — fixed a string-concatenation bug (`'...' + env + '...'` inside single quotes, never interpolated) and added file-existence guards so PIT3-specific image-reuse quirks (figure_10→figure_7, figure_25→figure_15) are no longer applied unconditionally to environments that have their own genuine images
+- ✅ `tools/run_doc_fixes.py` — new `fix_ros_payroll_message_guide()` function added (2026-07-03), registered in `tools/doc_fixes_registry.json` as `ros_payroll_message_guide`. Fixes 4 fragmented tables via clean literal replacement (following the established `ROS_CLEAN_VERSION_TABLE` pattern), removes 2 orphaned fragment tables, relocates the misplaced Schema Reference table to its correct section, and splits run-on bullet lists into individual `<li>` items
+- ✅ `tools/migration_pipeline.py` — added Step 3.5, a cross-environment routing checker that flags `sitemap.json` routes where a PIT4 route's `template` path incorrectly points into `content/PIT3/...` (or vice versa) — added after this exact class of bug was found and fixed manually in `sitemap.json` (see below)
+
+### Bug Fixes (new)
+- ✅ `assets/js/sitemap.json` — fixed 3 cross-environment routing bugs (2026-07-03): the PIT4 `rospayrollreportingmessageguide.` route was pointing at the PIT3 HTML file instead of PIT4's own; the PIT4 `restwebserviceintegrationguide.` and `restconnectivityhandshakeguide.` routes were pointing at PIT3's REST guide files instead of PIT4's. Also corrected minor stray-indentation formatting left over from prior edits, elsewhere in the same file.
 
 ### External Project Integration
 - ✅ `paye-employers-pit-faq` (Angular 14 / PrimeNG accordion) → `content/shared/faq.html`

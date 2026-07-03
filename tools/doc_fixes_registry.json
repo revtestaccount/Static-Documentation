@@ -18,6 +18,14 @@
       "fixes": ["ros_payroll_reporting"]
     },
     {
+      "key": "ros_payroll_message_guide",
+      "description": "ROS Payroll Reporting Message Guide",
+      "html_filename": "ros_payroll_reporting_message_guide.html",
+      "content_path": "screens",
+      "environments": ["PIT3", "PIT4"],
+      "fixes": ["ros_payroll_message_guide"]
+    },
+    {
       "key": "selfservice_guide",
       "description": "PIT Self Service Application Guide",
       "html_filename": "pitselfserviceguide.html",

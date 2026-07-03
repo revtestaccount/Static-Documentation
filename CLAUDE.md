@@ -221,6 +221,9 @@ This is a **customer-facing / public-facing** application:
 | REST Web Service Integration Guide | ✅ | ✅ |
 | REST Connectivity Handshake Guide | ✅ | ✅ |
 | Overview of ROS Payroll Reporting | ✅ | ✅ |
+| ROS Payroll Reporting Message Guide | ✅ | ✅ |
+
+> **2026-07-03:** Also fixed 3 `sitemap.json` cross-environment routing bugs where PIT4 routes (Message Guide, REST Integration Guide, REST Handshake Guide) were incorrectly pointing at PIT3's HTML files. `migration_pipeline.py` Step 3.5 was added to catch this class of bug automatically on future runs.
 
 ---
 

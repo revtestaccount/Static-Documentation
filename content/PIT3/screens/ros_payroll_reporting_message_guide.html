@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <title>ROS Payroll Reporting Message Guide</title>
+</head>
+<body><div class="document-content"><h1 class="document-title" id="title">ROS Payroll Reporting Message Guide</h1>
+<div style="display:flex; gap:2rem; justify-content:center; align-items:center; margin:1.5rem 0;">
+    <img alt="Workflow icon" src="../../../assets/images/icon-helpdesk-workflow.svg" width="240" height="240" />
+    <img alt="Filing icon" src="../../../assets/images/icon-helpdesk-filing.svg" width="240" height="240" />
+    <img alt="Sync icon" src="../../../assets/images/icon-helpdesk-sync.svg" width="240" height="240" />
+</div><h2 class="pmod" id="table_of_contents">Table of Contents</h2><ul id="toc"><li><a href="#paye_modernisation">PAYE Modernisation</a></li><li><a href="#ros_payroll_reporting_message_guide">ROS Payroll Reporting Message Guide</a></li><li style="margin-left: 1.5rem;"><a href="#audience">Audience</a></li><li style="margin-left: 1.5rem;"><a href="#document_context">Document Context</a></li><li><a href="#1._introduction">1. Introduction</a></li><li><a href="#2._json_messages">2. JSON Messages</a></li><li style="margin-left: 1.5rem;"><a href="#json_message_–_data_items">JSON Message – Data Items</a></li><li><a href="#3._xml_messages">3. XML Messages</a></li><li><a href="#4._schemas">4. Schemas</a></li><li><a href="#5._digital_signature">5. Digital Signature</a></li></ul>
+<h2 class="pmod" id="paye_modernisation">PAYE Modernisation</h2>
+<h2 class="pmod" id="ros_payroll_reporting_message_guide">ROS Payroll Reporting Message Guide</h2>
+<p>Version Date 24/05/2018</p>
+<h3 class="pmod" id="audience">Audience</h3>
+<p>This document is for any software provider who has chosen to build or update their products to allow for PAYE Modernisation and intend to submit/ or request data via ROS Payroll Reporting screens.</p>
+<h3 class="pmod" id="document_context">Document Context</h3>
+<p>This document provides a technical overview of how to create request messages for submission to the Revenue’s PAYE Modernisation Services from the ROS Payroll Reporting screens.
+This document is intended to be read in conjunction with schema definitions and example files as well as the rest of the Revenue’s PAYE Modernisation technical documentation.</p>
+<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Version</th>
+<th scope="col">Change Date</th>
+<th scope="col">Section</th>
+<th scope="col">Change Description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1.0</td><td></td><td>All</td><td>Document published.</td></tr>
+<tr><td>1.0 Release Candidate 2</td><td>24/05/2018</td><td></td><td>Version updated to 1.0 Release Candidate 2</td></tr>
+</tbody>
+</table>
+<h2 class="pmod" id="1._introduction">1. Introduction</h2>
+<p>This document is a guide on to how to create messages for submission to the PAYE Modernisation Payroll and RPN services via Revenue’s Payroll Reporting screens.</p>
+<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Reference</th>
+<th scope="col">Document Link</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1. Documents Homepage</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/" target="_blank" rel="noopener noreferrer">https://revenue-ie.github.io/paye-employers-documentation/</a></td></tr>
+</tbody>
+</table>
+<h2 class="pmod" id="2._json_messages">2. JSON Messages</h2>
+<p>A JSON envelope schema has been defined which will facilitate using JSON message format for file upload on the ROS Payroll Reporting screens to complete the following actions:</p>
+<ul>
+<li>Look up RPNs for existing employees</li>
+<li>Create RPNs for new employees</li>
+<li>Make a payroll submission</li>
+</ul>
+<p>This JSON envelope schema is required as takes in data items for these services which are provided as part of the URL if the service is invoked from the REST API.</p>
+<h3 class="pmod" id="json_message_–_data_items">JSON Message – Data Items</h3>
+<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Name</th>
+<th scope="col">Description</th>
+<th scope="col">Applicable Message</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Request type</td><td>Specifies the service to be called. Supported values : "lookupRPN", "createRPN", "payrollSubmission"</td><td>All</td></tr>
+<tr><td>Employer Registration Number</td><td>The registration of the employer (up to 9 chars). Must be valid Employer Registered number. Format is 7 digits (including leading zeros) followed by either 1 or 2 letters</td><td>All</td></tr>
+<tr><td>Tax Year</td><td>Tax Year to which the submission or request relates</td><td>All</td></tr>
+<tr><td>Date Last Updated</td><td>Date to lookup for RPNs updated on or since</td><td>Look up RPN</td></tr>
+<tr><td>Software Used</td><td>References to third party software used to make RPN request / payroll submission</td><td>All</td></tr>
+<tr><td>Software Version</td><td>Version of software used to make request RPN request/ submission</td><td>All</td></tr>
+<tr><td>Agent TAIN</td><td>Used to identify the agent submitting on behalf of the employer and to ensure that an agent link exists for this employer agent relationship for the period that the payroll submission relates to.</td><td>To be included if the RPN request or Payroll submission is being performed by an agent on behalf of an Employer</td></tr>
+<tr><td>Payroll Run Reference</td><td>Used to identify the Payroll event that the submission refers to e.g. ‘Site 1 Week 1’.</td><td>Payroll Submission</td></tr>
+<tr><td>Submission ID</td><td>Unique submission identifier. Must be unique for submissions under a given employer's PAYE registration number. For batch submissions, all submissions should have the same SubmissionID and should have the BatchID and BatchCount populated.</td><td>Payroll Submission</td></tr>
+<tr><td>Employee IDs</td><td>Employee's PPS Number and Employee's Employment ID(Unique identifier for each distinct employment for an employee) are joined using a hyphen (eg.'1234567T-1').</td><td>Look up RPN – To be included if request is for specific Employees</td></tr>
+<tr><td>Request Body</td><td>For Payroll submissions, this contains the Employee level details. For Create RPNs (NewRPN), this contains the Employee level details.</td><td>Payroll Submission, Create RPN (NewRPN)</td></tr>
+</tbody>
+</table>
+<h2 class="pmod" id="3._xml_messages">3. XML Messages</h2>
+<p>There is no requirement for an XML envelope schema as the schemas defined for PAYE Modernisation web services can also be used to create messages for upload through the ROS Payroll Reporting screens. The following XML messages are supported through the ROS Payroll Reporting screens:</p>
+<ul>
+<li>Look up RPNs for existing employees</li>
+<li>Create RPNs for new employees</li>
+<li>Make a payroll submission</li>
+</ul>
+<h2 class="pmod" id="4._schemas">4. Schemas</h2>
+<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Reference</th>
+<th scope="col">Document Link</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>JSON Envelope Schema</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation//Screens/ROS_Payroll_Reporting_JSON_Envelope_schema.json" target="_blank" rel="noopener noreferrer">ROS_Payroll_Reporting_JSON_Envelope_schema.json</a></td></tr>
+<tr><td>JSON Create RPN (Request body)</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/rest/paye-employers-rest-api.json" target="_blank" rel="noopener noreferrer">paye-employers-rest-api.json</a></td></tr>
+<tr><td>JSON Payroll Submission (Request body)</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/rest/paye-employers-rest-api.json" target="_blank" rel="noopener noreferrer">paye-employers-rest-api.json</a></td></tr>
+<tr><td>XML Look up RPNs</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/soap/v1/rpn/rpn-schema.xsd" target="_blank" rel="noopener noreferrer">rpn-schema.xsd</a></td></tr>
+<tr><td>XML Create RPNs for new employees (New RPNs)</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/soap/v1/rpn/rpn-schema.xsd" target="_blank" rel="noopener noreferrer">rpn-schema.xsd</a></td></tr>
+<tr><td>XML Payroll submission</td><td><a href="https://revenue-ie.github.io/paye-employers-documentation/soap/v1/payroll/payroll-schema.xsd" target="_blank" rel="noopener noreferrer">payroll-schema.xsd</a></td></tr>
+</tbody>
+</table>
+<h2 class="pmod" id="5._digital_signature">5. Digital Signature</h2>
+<p>Messages uploaded through the ROS Payroll Reporting screens do not need to be digitally signed prior to the upload. The ROS Payroll Reporting screens will perform the digital signing as part of the upload process.</p>
+</div></body></html>
