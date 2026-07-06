@@ -12,6 +12,95 @@
 
 ---
 
+## Session: 2026-07-06
+
+**Task:** Regression-test `tools/run_doc_fixes.py` → `fix_ros_payroll_message_guide()`
+per the outstanding item from the 2026-07-03 session (script was corrected
+by eye only, never actually executed, due to terminal hangs that session).
+
+**Terminal check first:** confirmed the terminal is healthy this session —
+`python -m py_compile`, `python --version` etc. all returned instantly. The
+2026-07-03 hang issue did not recur; root cause still not identified, but
+not currently blocking.
+
+**Regression test method:**
+1. Copied the source PDF (`ros_payroll_reporting_message_guide.pdf`) to a
+   throwaway `_regtest_` filename in the same PIT3 directory.
+2. Ran `tools/migration_pipeline.py` fresh against it to reproduce the raw,
+   unfixed pipeline output (confirmed it reproduced the exact same
+   fragmented-table structure found on 2026-07-03 — good baseline).
+3. Wrote a throwaway script (`tools/_regtest_run_fix.py`, deleted after use
+   per `CLAUDE.md` §13) that imports `fix_ros_payroll_message_guide`
+   directly and applies it to the raw output.
+4. Read the result and compared it against the known-good manually-fixed
+   HTML from 2026-07-03.
+
+**Result: found a second, worse bug in the "corrected" Fix 6 from last
+session.** The 2026-07-03 fix anchored on the unique 'JSON Envelope Schema'
+text but still used a single lazy `[\s\S]*?` spanning from the `<th>Reference</th>`
+header all the way to that marker, **without constraining the match to stay
+within one `<table>...</table>` pair**. Since Fix 2's already-cleaned
+Document References table shares the same header but has no 'JSON Envelope
+Schema' text inside it, the lazy quantifier skipped straight over that
+table's `</table>` and kept expanding through Sections 2, 3, 4, and 5
+until it finally found the real Schema Reference table much further down
+— replacing that entire span (deleting Sections 2–5 outright) with just
+the Schema Reference table content. Confirmed via direct inspection of the
+script's output on the regression HTML; this would have been a silent,
+severe content-loss bug if the script had ever been run for real without
+this test catching it first.
+
+**Fixed properly:** rewrote Fix 6 to match each `<table>...</table>` pair
+individually (the `[\s\S]*?` now cannot cross a `</table>` boundary), and
+only substitute a given table if **that specific table's own content**
+contains the 'JSON Envelope Schema' marker — via a replacement callback
+function rather than a single greedy/lazy span across the whole document.
+
+**Re-ran the regression test after the fix:** all 9 fix steps fired
+correctly this time (Fix 8 table-relocation and Fix 9 bullet-splitting had
+been silently not firing at all in the previous test, masked by the Fix 6
+bug corrupting the document before they even got a chance to match). Output
+compared line-by-line against the known-good manual fix — matches exactly,
+bar one cosmetically-irrelevant whitespace difference (a `</ul>` on the
+same line as its last `<li>` in Section 2, vs. a newline in the manual
+version — no visual or semantic difference).
+
+**Cleaned up:** all regression-test artefacts deleted after use
+(`_regtest_message_guide.pdf/.md/.html`, `_regtest_message_guide/` image
+dir, `_regtest_message_guide_fixed.html`, `tools/_regtest_run_fix.py`) —
+confirmed via `git status --short` that only the real fix to
+`run_doc_fixes.py` remained staged.
+
+**Committed and pushed:** `d87116a87` on `dev_contentMigration`.
+
+**Outstanding / next steps:**
+- ✅ Regression-testing item from 2026-07-03 is now fully closed out — the
+  script is confirmed correct by execution, not just by eye.
+- ⚪ Still no root-cause diagnosis of the 2026-07-03 terminal hang, though
+  it didn't recur this session. Not currently blocking; revisit only if it
+  happens again.
+- ⚪ Consider adding a project convention/lint rule: any regex used for
+  HTML table replacement in `run_doc_fixes.py` should be scoped to a single
+  `<table>...</table>` pair by construction (e.g. never write
+  `<th>...</th>[\s\S]*?SOME_MARKER[\s\S]*?</table>` without also bounding
+  the whole thing to not cross an intermediate `</table>`). This is now the
+  second time a lazy-quantifier-crossing-table-boundaries bug has appeared
+  in this file's history. Not yet actioned as a formal rule anywhere.
+
+**Files touched this session:**
+- `tools/run_doc_fixes.py` (Fix 6 corrected — properly this time, verified
+  by execution)
+- `tools/_regtest_run_fix.py` (created and deleted — throwaway test script)
+- Various `_regtest_*` files under `content/PIT3/screens/` (created and
+  deleted — regression test fixtures, never committed)
+- `SESSION_LOG.md` (this entry)
+
+**Status: fully closed out. No outstanding work from this session or
+carried over from 2026-07-03 remains open, other than the low-priority
+terminal-hang root-cause item noted above.**
+
+---
+
 ## Session: 2026-07-03
 
 **Task:** Fix `assets/js/sitemap.json` routing bugs, then fix structural issues
