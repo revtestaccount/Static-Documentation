@@ -821,15 +821,25 @@ def fix_ros_payroll_message_guide(html: str, env: str) -> tuple[str, list[str]]:
     if n:
         changes.append(f"Fix 5: Removed {n} orphaned '(NewRPN)' page-break continuation table")
 
-    # Fix 6: Replace broken Schema Reference table (fragmented, ends up under
-    # section 5 due to a pipeline heading-order bug). Anchored on the unique
-    # 'JSON Envelope Schema' body text rather than the 'Reference' header
-    # alone, since Fix 2's already-cleaned Document References table shares
-    # that same header and would otherwise be double-matched.
-    html, n = re.subn(
-        re.compile(r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Reference</th>[\s\S]*?JSON Envelope Schema[\s\S]*?</table>', re.DOTALL),
-        MSGGUIDE_SCHEMA_REFERENCE_TABLE, html
+        # Fix 6: Replace broken Schema Reference table (fragmented, ends up under
+    # section 5 due to a pipeline heading-order bug). Each <table>...</table>
+    # is matched individually (non-greedy, cannot cross a </table> boundary)
+    # and only substituted if that specific table's own content contains the
+    # unique 'JSON Envelope Schema' marker. A plain header-anchored regex
+    # with a lazy [\s\S]*? body is NOT safe here: since Fix 2's already-
+    # cleaned Document References table shares the same 'Reference' header
+    # but has no closing match for 'JSON Envelope Schema' inside it, the lazy
+    # quantifier would skip straight over that table's </table> and keep
+    # expanding through everything until it found the real target further
+    # down — silently swallowing every section in between.
+    def _fix6_repl(m):
+        return MSGGUIDE_SCHEMA_REFERENCE_TABLE if 'JSON Envelope Schema' in m.group(0) else m.group(0)
+
+    html, n_candidates = re.subn(
+        re.compile(r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Reference</th>[\s\S]*?</table>', re.DOTALL),
+        _fix6_repl, html
     )
+    n = 1 if 'JSON Envelope Schema' in MSGGUIDE_SCHEMA_REFERENCE_TABLE and MSGGUIDE_SCHEMA_REFERENCE_TABLE in html else 0
     changes.append(f"Fix 6: {'Replaced' if n else 'WARNING: not found —'} broken Schema Reference table")
 
     # Fix 7: Remove orphaned 'JSON Create RPN / (Request body)' 1-column
