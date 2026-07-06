@@ -11,6 +11,16 @@
 > further detail. Update it after each meaningful fix/finding during the
 > session, not just at sign-off.
 
+> **Dating convention:** `SESSION_LOG.md` is the single source of truth for
+> session history — every entry carries its own `## Session: YYYY-MM-DD`
+> date. `MIGRATION_STATUS.md` and `PROJECT_ASSESSMENT.md` each carry a
+> `Last updated` date stamp that is bumped automatically by
+> `tools/log_session.py --bump-dates`. This file (`CLAUDE.md`) and
+> `README.md` are static reference docs (tech stack, conventions, directory
+> structure) rather than session trackers, and intentionally carry no
+> per-session date stamp — update their content directly when something
+> they describe changes, without needing a script run.
+
 ---
 
 ## 1. What This Project Is

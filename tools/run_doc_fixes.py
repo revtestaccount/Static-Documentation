@@ -1023,6 +1023,211 @@ def fix_helpdesk_guide(html: str, env: str) -> tuple[str, list[str]]:
     return html, changes
 
 
+# ---------------------------------------------------------------------------
+# rpn_csv_response
+# Fixes: 6-page main data table split into 4 fragments with phantom empty
+# columns (Name / Column Name / Description and validation / Context should
+# be 4 real columns, not 6-12 mostly-empty ones); Column Descriptions and
+# Version History tables have the same phantom-column problem; technical
+# camelCase column names broken by PDF word-wrap (e.g. 'employerNa me' ->
+# 'employerName'); one genuine cross-page row continuation (Effective Date /
+# calculation basis text) that must be merged into a single cell.
+# ---------------------------------------------------------------------------
+
+RPNCSV_COLUMN_DESCRIPTIONS_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Column</th>
+<th scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Data Item</td><td>Name of data item</td></tr>
+<tr><td>Description and Validation</td><td>Description of the data element and the validation rules that will be applied</td></tr>
+<tr><td>Context</td><td>How the data element will be used by Revenue</td></tr>
+</tbody>
+</table>"""
+
+RPNCSV_VERSION_HISTORY_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Version</th>
+<th scope="col">Change Date</th>
+<th scope="col">Element</th>
+<th scope="col">Change Description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>0.10</td><td>02/02/2018</td><td>N/A</td><td>Document published</td></tr>
+<tr><td>1.0 Release Candidate 2</td><td>24/05/2018</td><td></td><td>Version updated to 1.0 Release Candidate 2</td></tr>
+<tr><td></td><td>02/03/2020</td><td>Employment Cessation Date</td><td>Item added</td></tr>
+<tr><td></td><td>22/01/2025</td><td>State Pension (Contributory)</td><td>Item added</td></tr>
+</tbody>
+</table>"""
+
+# Main data table: 4 real columns (Name / Column Name / Description and
+# validation / Context). Column Name values are the exact camelCase field
+# names from the source PDF with PDF-wrap spacing removed. Verified against
+# the raw PDF text (pdfplumber extract_text(), pages 3-8) row by row.
+#
+# Two cross-page split behaviours confirmed present, handled as follows:
+#   - 'Effective Date' row: genuinely continues onto the next page with
+#     real content - merged into one cell here.
+#   - 'Exclusion Order' row: also split across pages, but the continuation
+#     has no content on the second page - no merge needed, row is complete
+#     as-is.
+RPNCSV_MAIN_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Name</th>
+<th scope="col">Column Name</th>
+<th scope="col">Description and validation</th>
+<th scope="col">Context</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Employer Name</td><td>employerName</td><td>Header: Employer name, max length 100 characters</td><td>Use to identify the employer and confirm that the employer name matches with Revenue records</td></tr>
+<tr><td>Employer Registration number</td><td>employerRegistrationNumber</td><td>Header: Used to identify employer to which the submission relates, max length 100 characters.</td><td>Used to identify employer to which the submission relates.</td></tr>
+<tr><td>Agent Tain</td><td>agentTain</td><td>Header: Tax Advisor Identification Number. Required if RPN is queried by agent on behalf of employer.</td><td></td></tr>
+<tr><td>Tax Year</td><td>taxYear</td><td>Header: Used to identify the tax year to which the RPN lookup relates (YYYY)</td><td>The Tax Year RPN relates to</td></tr>
+<tr><td>Total RPN count</td><td>totalRPNCount</td><td>Header: Total number of RPNs returned</td><td>The total number of RPN that are associated with the RPN request submitted.</td></tr>
+<tr><td>Date time Effective</td><td>dateTimeEffective</td><td>Header: The date and time at which the RPN returned is correct/was issued (YYYY-MM-DDThh:mm:ss.sss&plusmn;hhmm). max length 28</td><td>Date &amp; time from when the RPN is effective from</td></tr>
+<tr><td>RPN Number</td><td>rpnNumber</td><td>RPN: The number of the RPN issued to the employer in respect of an employee. Or value Not Found Max length 20</td><td>RPN: List of RPN that make up a valid lookup RPN response. NoRPN: EmployeePPSNs and EmploymentIDs of employees who do not currently have an RPN associated with the employer. New RPN need to be requested for these employees using the NewRPNRequest service. Used in conjunction with the Employee PPSN to uniquely identify the instruction issued.</td></tr>
+<tr><td>Employee PPSN</td><td>employeePPSN</td><td>Format is 7 digits (including leading zeros) followed by either 1 or 2 letters. Max length 10</td><td>Used to identify employee to which the RPN relates.</td></tr>
+<tr><td>Employment ID</td><td>employmentID</td><td>The value of this field will be the Employment ID provided to Revenue by the employer when setting up the employment. If the RPN is being triggered as a result of the employee setting up the employment via Jobs and Pension or contacting Revenue, the value of this field will not be populated. Max length 20</td><td>Used to uniquely identify each employment for the employee.</td></tr>
+<tr><td>RPN Issue Date</td><td>rpnIssueDate</td><td>RPN: Date format yyyy-mm-dd. Max length 10</td><td>The date the RPN issued.</td></tr>
+<tr><td>Employer Reference</td><td>employerReference</td><td>Employee internal staff identifier.</td><td>Used to uniquely identify the unique employment for the employer and employee.</td></tr>
+<tr><td>First Name</td><td>firstName</td><td>First name of the employee. Max length 100 characters</td><td>Employee first name</td></tr>
+<tr><td>Family Name</td><td>familyName</td><td>Family name of the employee. Max length 100 characters</td><td>Employee family name</td></tr>
+<tr><td>Previous Employee PPSN</td><td>previousEmployeePPSN</td><td>Must be valid PPS number (up to 9 chars). Format is 7 digits (including leading zeros) followed by either 1 or 2 letters.</td><td>Used to identify employees previous PPS number if applicable e.g. W PPS number. Should only appear if changed since previous submission This will appear until Revenue knows that the payroll operator has updated the Employee PPSN in their own system i.e. until Revenue receives a submission with the new Employee PPSN</td></tr>
+<tr><td>Effective Date</td><td>effectiveDate</td><td>First day on which the RPN specified will apply. Max length 10 &bull; If the RPN is issued before the start of the tax year in question this will be set to January 1st of the tax year. &bull; If the RPN is issued during the tax year in question the date is dependent on the calculation basis of the RPN as follows: o If the calculation basis is Cumulative the date will be set to January 1st of the year. o If the calculation basis is Week 1 the date will be set to the date the RPN issued. Date format yyyy-mm-dd Min date 2019-01-01 Date can be in the future</td><td>The instruction can be used from this date until updated again.</td></tr>
+<tr><td>End Date</td><td>endDate</td><td>The date the RPN ends. Date format yyyy-mm-dd Min date 2019-01-01 Max length 10 Last date on which the RPN specified will apply. After this date a new RPN should be requested.</td><td>Applicable to Tax Basis Week 1. For Cumulative instruction the date will be the XXXX-12-31. This will appear if applicable.</td></tr>
+<tr><td>Employment Cessation Date</td><td>employmentCessationDate</td><td>This is the date the employment ceased. It is a conditional data item and will only appear when the employment to which the RPN relates was ceased either by the employer or the employee during the current year. Date format yyyy-mm-dd Min date 202X-01-01</td><td>RPNs for ceased employments are required if a post cessation payment is being made. The Employment Cessation Date allows the employer/payroll operator to distinguish between RPNs for live employments and ceased employments.</td></tr>
+<tr><td>Income Tax Calculation Basis</td><td>incomeTaxCalculationBasis</td><td>PAYE calculation basis used in the submission. Options allowed are Cumulative, Week1 and Emergency.</td><td>Used to indicate the correct tax basis to be applied.</td></tr>
+<tr><td>Exclusion Order</td><td>exclusionOrder</td><td>Set to &ldquo;true&rdquo; if an exclusion order is on file for the employee. This field is not included if an exclusion order is not on file for the employee</td><td>Used to indicate if there is an exclusion order on file for the employee for the specified period.</td></tr>
+<tr><td>Yearly Tax Credit</td><td>yearlyTaxCredits</td><td>Amount of tax credits available to the employee for the year the RPN relates to. This number will contain two decimal places. Positive number only</td><td>Net Tax Credits. Amount of tax credits available to the employee for the year the RPN relates to. Amount of tax credits available for use in the PAYE calculation. Breakdown is displayed to employee through PAYE Services.</td></tr>
+<tr><td>Tax Rate 1 Percent</td><td>taxRatePercent1</td><td>The lower rate of tax for the year the RPN relates to. Positive number only</td><td>Rate to be applied for any income below Rate 1 Cut Off.</td></tr>
+<tr><td>Yearly Rate 1 Cut Off</td><td>yearlyRateCutoff1</td><td>Rate 1 cut off for the year the RPN relates. Positive number only</td><td>Breakdown is displayed to employee through PAYE Services</td></tr>
+<tr><td>Tax Rate 2 Percent</td><td>taxRatePercent2</td><td>The higher rate of tax for the year the RPN relates to. Positive number only.</td><td>Rate to be applied for any income above Rate 1 Cut Off</td></tr>
+<tr><td>Pay for Income Tax to Date</td><td>payForIncomeTaxToDate</td><td>This will include total income liable to Income Tax to date &ndash; including previous employment income. In the case of recommencements, this includes previous pay from that employer in the same tax year. This number will contain two decimal places. This field will be populated where the Income Tax Calculation Basis is cumulative.</td><td>When multiple employments exist, RPN must include correct previous employment income. This will include only the previous Pay and Tax that should be applied.</td></tr>
+<tr><td>Income Tax Deducted to Date</td><td>incomeTaxDeductedToDate</td><td>Total amount of employee&rsquo;s Income Tax deducted to date. In the case of recommencements, this includes previous tax from that employer in the same tax year. This number will contain two decimal places. This field will be populated where the Income Tax Calculation Basis is cumulative.</td><td>Total Income Tax paid to date. Taking into account any PAYE refunded through any unemployment repayment claim(s).</td></tr>
+<tr><td>USC Status</td><td>uscStatus</td><td>Ordinary Exempt</td><td>Used to deduct correct amount of USC.</td></tr>
+<tr><td>USC Rate 1 Percent</td><td>uscRatePercent1</td><td>USC Rate 1 Percent applicable to USC Status Ordinary in the year the RPN relates to. This number will contain two decimal places. Positive number only</td><td>Current rate 0.5%.</td></tr>
+<tr><td>Yearly USC Rate 1 Cut Off</td><td>yearlyUSCRateCutoff1</td><td>Yearly USC rate 1 cut off applicable to USC Status Ordinary in the year the RPN relates to. This number will contain two decimal places. Positive number only.</td><td></td></tr>
+<tr><td>USC Rate 2 Percent</td><td>uscRatePercent2</td><td>USC Rate 2 Percent applicable to USC Status Ordinary in the year the RPN relates to. This number will contain two decimal places. Positive number only.</td><td>Current rate 2.5%.</td></tr>
+<tr><td>Yearly USC Rate 2 Cut Off</td><td>yearlyUSCRateCutoff2</td><td>Yearly USC rate 2 cut off applicable to USC Status Ordinary in the year the RPN relates to. This number will contain two decimal places. Positive number only</td><td></td></tr>
+<tr><td>USC Rate 3 Percent</td><td>uscRatePercent3</td><td>USC Rate 3 Percent applicable to USC Status Ordinary in the year the RPN relates to. This number will contain two decimal places. Positive number only</td><td>Current rate 5%.</td></tr>
+<tr><td>Yearly USC Rate 3 Cut Off</td><td>yearlyUSCRateCutoff3</td><td>Yearly USC rate 3 cut off applicable to USC Status Ordinary in the year the RPN relates to. This number will contain two decimal places. Positive number only</td><td></td></tr>
+<tr><td>USC Rate 4 Percent</td><td>uscRatePercent4</td><td>Yearly USC rate 4 cut off applicable to USC Status Ordinary in the year the RPN relates to. This number will contain two decimal places. Positive number only</td><td>Current rate 8%.</td></tr>
+<tr><td>Yearly USC Rate 4 Cut Off</td><td>yearlyUSCRateCutoff4</td><td>Yearly USC rate 4 applicable to USC Status Ordinary in the year the RPN relates to. This number will contain two decimal places. Positive number only</td><td></td></tr>
+<tr><td>Pay for USC to Date</td><td>payForUSCToDate</td><td>Net pay subject to USC. This number will contain two decimal places. This field will be populated where the Income Tax Calculation Basis is cumulative.</td><td>This will include total income liable to USC to date &ndash; including previous employment income and any additional declared income liable to USC e.g. Rental Income. This will appear if available.</td></tr>
+<tr><td>USC Deducted To Date</td><td>uscDeductedToDate</td><td>Total amount of employee&rsquo;s USC deducted to date. This number will contain two decimal places. This field will be populated where the Income Tax Calculation Basis is cumulative. Positive number only</td><td>Total USC paid to date. Taking into account any USC refunded through any unemployment repayment claim(s). This will appear if available</td></tr>
+<tr><td>LPT to be Deducted</td><td>lptToDeduct</td><td>Local Property Tax amount due. Positive number only</td><td>Amount of LPT to be deducted through payroll.</td></tr>
+<tr><td>State Pension (Contributory)</td><td>statePensionCont</td><td>Set to TRUE or FALSE indicating that the person is receiving their state pension. This field will be required to be TRUE on all RPNs for people that are drawing down their state contributory pension.</td><td>This field will default to false on all RPNs for people that are not drawing down their state contributory pension.</td></tr>
+<tr><td>Employee is exempt from PRSI in Ireland</td><td>prsiExempt</td><td>Set to &ldquo;true&rdquo; if employee has been granted an exemption from paying PRSI in Ireland. This field is not included if employee is not exempt from paying PRSI.</td><td>This will appear only where DSP carries out a review and determines that the individual should be exempt from paying PRSI in Ireland. This must not be confused with PRSI exempt income. Will only appear where available.</td></tr>
+<tr><td>PRSI Class and Subclass</td><td>prsiClass</td><td>PRSI Class and Subclass that the employee should be updated to.</td><td>This will appear only where DSP updates the class or where DSP knows the individual is on the wrong class (i.e. where a review has been carried out by DSP) Will only appear where available.</td></tr>
+</tbody>
+</table>"""
+
+
+def fix_rpn_csv_response(html: str, env: str) -> tuple[str, list[str]]:
+    changes = []
+
+    # Fix 0: Correct section heading order/placement in the Column Descriptions
+    # area. The source PDF order is: 'Column Descriptions' heading -> Column/
+    # Description table -> 'Latest Version History' heading -> Version table
+    # -> 'Note on ‘Conditional’ data items:' heading -> paragraph. The pipeline
+    # instead hoists the 'Note on Conditional data items' heading up to sit
+    # directly after 'Column Descriptions' (before either table), and drops
+    # the 'Latest Version History' heading entirely. Both are corrected here:
+    # the misplaced heading is removed from its wrong position, the missing
+    # heading is re-inserted before the Version table (added in Fix 2 below),
+    # and the paragraph + its correct heading are moved to their proper place
+    # after the Version table.
+    m = re.search(
+        r'(<h3 class="pmod" id="column_descriptions">Column Descriptions</h3>\s*)'
+        r'(<h3 class="pmod" id="note_on_[^"]*">Note on [^<]*</h3>\s*)'
+        r'(<p>Where the data item is applicable[\s\S]*?is mandatory\.</p>\s*)',
+        html
+    )
+    if m:
+        html = html[:m.start()] + m.group(1) + html[m.end():]
+        note_heading_and_para = m.group(2) + m.group(3)
+        changes.append("Fix 0: Moved misplaced 'Note on ‘Conditional’ data items:' heading out of Column Descriptions intro")
+    else:
+        note_heading_and_para = None
+        changes.append("Fix 0: WARNING: misplaced 'Note on Conditional data items' heading not found —")
+
+    # Fix 1: Replace broken 'Column' / 'Description' table (Column Descriptions
+    # section) - phantom empty columns collapsed to the 2 real columns.
+    html, n = re.subn(
+        re.compile(r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Column</th>[\s\S]*?</table>', re.DOTALL),
+        RPNCSV_COLUMN_DESCRIPTIONS_TABLE, html
+    )
+    changes.append(f"Fix 1: {'Replaced' if n else 'WARNING: not found —'} broken Column Descriptions table")
+
+    # Fix 2: Replace broken 'Version' / 'Change Date' / 'Element' / 'Change
+    # Description' table (Latest Version History) - phantom empty columns
+    # collapsed to the 4 real columns. Also re-inserts the 'Latest Version
+    # History' heading (dropped by the pipeline) directly before the table,
+    # and re-inserts the 'Note on ‘Conditional’ data items:' heading plus its
+    # paragraph (moved out of the intro by Fix 0) directly after the table —
+    # matching the source PDF's actual section order.
+    version_table_re = re.compile(r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Version</th>[\s\S]*?</table>', re.DOTALL)
+    n = len(version_table_re.findall(html))
+    if n:
+        replacement = '<h4 id="latest_version_history">Latest Version History</h4>\n' + RPNCSV_VERSION_HISTORY_TABLE
+        if note_heading_and_para:
+            replacement += '\n' + note_heading_and_para.rstrip()
+        html = version_table_re.sub(replacement, html, count=1)
+        changes.append("Fix 2: Replaced broken Version History table, restored 'Latest Version History' heading, repositioned 'Note on Conditional data items' section after it")
+    else:
+        changes.append("Fix 2: WARNING: not found — broken Version History table")
+
+    # Fix 3: Replace all fragmented 'Name' / 'Column' / 'Description and
+    # validation' / 'Context' table fragments (the main data table, split by
+    # the pipeline into 4 separate <table> blocks across the underlying
+    # 6-page PDF table) with a single clean, merged table. Every fragment
+    # shares the same 'Name' header, so all of them are located; the first
+    # occurrence is replaced with the clean merged table and any remaining
+    # fragments are removed outright.
+    fragment_re = re.compile(
+        r'<table[^>]*>\s*<thead>\s*<tr>\s*<th[^>]*>Name</th>[\s\S]*?</table>\s*',
+        re.DOTALL
+    )
+    count = len(fragment_re.findall(html))
+    if count:
+        first_done = [False]
+
+        def _repl(m):
+            if not first_done[0]:
+                first_done[0] = True
+                return RPNCSV_MAIN_TABLE + '\n'
+            return ''
+
+        html = fragment_re.sub(_repl, html)
+        changes.append(f"Fix 3: Replaced {count} fragmented main data table piece(s) with 1 clean merged table")
+    else:
+        changes.append("Fix 3: WARNING: no main data table fragments found —")
+
+    # Fix 4: Reformat the 'Version 1.0 Release Candidate 2 Version Date
+    # 02/03/2020' intro paragraph into a two-column label/value layout
+    # (Version on the left, Version Date right-aligned) matching the source
+    # PDF's cover-page presentation, instead of a single run-on sentence.
+    html, n = re.subn(
+        re.compile(r'<p>Version ([^<]+?) Version Date (\d{2}/\d{2}/\d{4})</p>'),
+        r'<div style="display:flex; justify-content:space-between; margin:0.5rem 0;">'
+        r'<span><strong>Version</strong> \1</span>'
+        r'<span><strong>Version Date</strong> \2</span>'
+        r'</div>',
+        html
+    )
+    if n:
+        changes.append("Fix 4: Reformatted 'Version / Version Date' line into two-column layout")
+
+    return html, changes
+
+
 # ===========================================================================
 # FIX REGISTRY — maps fix key -> function
 # ===========================================================================
@@ -1034,6 +1239,7 @@ FIX_REGISTRY = {
     "selfservice_coverpage":     fix_selfservice_coverpage,
     "selfservice_appendix":      fix_selfservice_appendix,
     "helpdesk_guide":            fix_helpdesk_guide,
+    "rpn_csv_response":          fix_rpn_csv_response,
 }
 
 # ===========================================================================

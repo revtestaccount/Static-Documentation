@@ -34,6 +34,14 @@
       "fixes": ["selfservice_coverpage", "selfservice_appendix"]
     },
     {
+      "key": "rpn_csv_response",
+      "description": "RPN Request Response: CSV Schema",
+      "html_filename": "rpn_request_csv_file_response.html",
+      "content_path": "screens",
+      "environments": ["PIT3", "PIT4"],
+      "fixes": ["rpn_csv_response"]
+    },
+    {
       "key": "helpdesk_guide",
       "description": "PAYE PIT Help Desk User Guide",
       "html_filename": "payepithelpdeskuserguide.html",

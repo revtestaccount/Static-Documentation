@@ -214,7 +214,7 @@
    "message": "placeholder text/unused"
   },
   "rpnrequestcsvfileresponse": {
-   "template": "./content/shared/demodocument.html",
+   "template": "./content/PIT3/screens/rpn_request_csv_file_response.html",
    "title": "ROS Payroll Reporting JSON Envelope schema",
    "message": "placeholder text/unused"
   },
@@ -561,7 +561,7 @@
    "template": "./content/PIT4/screens/pitselfserviceguide.html",
    "title": "PIT Self Service Application Guide"
   },
-    "rospayrollreportingapplicationguide.": {
+  "rospayrollreportingapplicationguide.": {
    "template": "./content/PIT4/screens/overview_of_ros_payroll_reporting_pit4.html",
    "title": "ROS Payroll Reporting Application Guide"
   },
@@ -581,7 +581,7 @@
    "message": "placeholder text/unused"
   },
   "rpnrequestcsvfileresponse.": {
-   "template": "./content/shared/demodocument.html",
+   "template": "./content/PIT3/screens/rpn_request_csv_file_response.html",
    "title": "ROS Payroll Reporting JSON Envelope schema.",
    "message": "placeholder text/unused"
   },
@@ -716,7 +716,7 @@
    "title": "REST API Reference Next Version",
    "message": "placeholder text/unused"
   },
-    "restwebserviceintegrationguide.": {
+  "restwebserviceintegrationguide.": {
    "template": "./content/PIT4/rest/rest_web_service_integration_guide.html",
    "title": "REST Web Service Integration Guide.",
    "message": "placeholder text/unused"
@@ -726,7 +726,7 @@
    "title": "REST Web Service Integration Guide Sample Messages.",
    "message": "placeholder text/unused"
   },
-    "restconnectivityhandshakeguide.": {
+  "restconnectivityhandshakeguide.": {
    "template": "./content/PIT4/rest/rest_connectivity_handshake_guide.html",
    "title": "REST Connectivity Handshake Guide.",
    "message": "placeholder text/unused"

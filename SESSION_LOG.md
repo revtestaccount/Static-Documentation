@@ -9,6 +9,76 @@
 > before `MIGRATION_STATUS.md` / `PROJECT_ASSESSMENT.md`. Those two describe
 > overall project status; this file describes exactly where the last working
 > session left off, including in-progress/interrupted work.
+>
+> **Dating convention:** each entry below carries its own `## Session:
+> YYYY-MM-DD` date (this file is the single source of truth for session
+> history — no start/finish timestamps, a date is sufficient). Run
+> `python tools/log_session.py --bump-dates` at the end of each significant
+> session to append a new entry here and bump the `Last updated` stamp in
+> `MIGRATION_STATUS.md`/`PROJECT_ASSESSMENT.md` in one step. `CLAUDE.md` and
+> `README.md` are static reference docs, not trackers, and are edited
+> directly when their content changes — no date stamp needed there.
+
+---
+
+## Session: 2026-07-06
+
+**Task:** Finalize the SESSION_LOG.md dating convention (Option B): a single dated entry per session in SESSION_LOG.md, with MIGRATION_STATUS.md/PROJECT_ASSESSMENT.md 'Last updated' stamps bumped automatically, and CLAUDE.md/README.md left undated as static reference docs. Documented this convention explicitly, then did a live end-to-end test run of tools/log_session.py.
+
+**Findings:**
+- tools/session_config.json still contained stale content from an earlier session (predating the auto-reset feature) — confirmed it needed to be refreshed with this session's real details before running live.
+
+**Fixed:**
+- ✅ Added a 'Dating convention' note to SESSION_LOG.md's header block, and a matching note to CLAUDE.md, explicitly documenting: SESSION_LOG.md dates are the single source of truth; MIGRATION_STATUS.md/PROJECT_ASSESSMENT.md 'Last updated' stamps are bumped via 'python tools/log_session.py --bump-dates'; CLAUDE.md/README.md carry no per-session date stamp since they are static reference docs, not trackers.
+- ✅ Ran a live end-to-end test of tools/log_session.py --bump-dates to confirm the full workflow (config -> SESSION_LOG.md entry -> date bump -> config auto-reset) works correctly.
+
+**Files touched this session:**
+- `SESSION_LOG.md (dating convention note added, new session entry via this run)`
+- `CLAUDE.md (dating convention note added)`
+- `MIGRATION_STATUS.md (date bumped via this run)`
+- `PROJECT_ASSESSMENT.md (date bumped via this run)`
+- `tools/session_config.json (refreshed, then auto-reset by this run)`
+
+**Status: Dating convention finalized and documented. tools/log_session.py workflow confirmed working end-to-end via live run.**
+
+---
+
+## Session: 2026-07-06
+
+**Task:** Add tools/log_session.py — a reusable script to append dated SESSION_LOG.md entries after each significant session/push, instead of hand-editing the file every time. Follow-up: moved session details out of the script into this external config file so the script itself never needs editing.
+
+**Findings:**
+- tools/update_docs.py only ever updated CLAUDE.md, PROJECT_ASSESSMENT.md, MIGRATION_STATUS.md and README.md — it never touched SESSION_LOG.md, and it is a one-off hardcoded script (specific before/after string replacements from the Bootstrap-removal session), not a general tool.
+- PyYAML is not installed in this project's Python environment, and adding a new dependency for a single config file would be disproportionate — used JSON (stdlib, no new dependency) instead.
+
+**Fixed:**
+- ✅ Created tools/log_session.py — prepends a new dated entry to SESSION_LOG.md in the established reverse-chronological format, with optional --bump-dates flag to also update the 'Last updated' stamp in MIGRATION_STATUS.md and PROJECT_ASSESSMENT.md.
+- ✅ Refactored tools/log_session.py to read session details from tools/session_config.json instead of a hardcoded dict in the script — the script itself no longer needs editing between sessions.
+
+**Files touched this session:**
+- `tools/log_session.py (new, then refactored)`
+- `tools/session_config.json (new)`
+- `SESSION_LOG.md (updated via this script)`
+
+**Status: Script and config file created and verified. Edit tools/session_config.json before each significant session/push, then run 'python tools/log_session.py --bump-dates'.**
+
+---
+
+## Session: 2026-07-06
+
+**Task:** Add tools/log_session.py — a reusable script to append dated SESSION_LOG.md entries after each significant session/push, instead of hand-editing the file every time.
+
+**Findings:**
+- tools/update_docs.py only ever updated CLAUDE.md, PROJECT_ASSESSMENT.md, MIGRATION_STATUS.md and README.md — it never touched SESSION_LOG.md, and it is a one-off hardcoded script (specific before/after string replacements from the Bootstrap-removal session), not a general tool.
+
+**Fixed:**
+- ✅ Created tools/log_session.py — prepends a new dated entry to SESSION_LOG.md in the established reverse-chronological format, with optional --bump-dates flag to also update the 'Last updated' stamp in MIGRATION_STATUS.md and PROJECT_ASSESSMENT.md.
+
+**Files touched this session:**
+- `tools/log_session.py (new)`
+- `SESSION_LOG.md (updated via this script)`
+
+**Status: Script created and ready for use. Run at the end of each significant session going forward instead of hand-editing SESSION_LOG.md.**
 
 ---
 
