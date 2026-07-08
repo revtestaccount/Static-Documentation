@@ -31,6 +31,33 @@ Adding a new document fix
 Every fix function must have this signature:
     def fix_<key>(html: str, env: str) -> tuple[str, list[str]]
     Returns: (fixed_html, list_of_change_messages)
+
+Table-replacement regex convention (mandatory)
+-----------------------------------------------
+This bug class has bitten this file twice (see SESSION_LOG.md 2026-07-03
+and 2026-07-06, both in fix_ros_payroll_message_guide's Fix 6): a regex
+that spans from a non-unique anchor (e.g. "<th>Reference</th>") to a
+target marker using a lazy/greedy quantifier (`[\s\S]*?` / `[\s\S]*`)
+without constraining the match to stay within a single
+`<table>...</table>` pair will happily skip over an intervening
+`</table>` and swallow (or corrupt) unrelated sections of the document
+when the anchor text also appears in another, earlier table.
+
+Rule: any regex intended to replace or target the content of a specific
+<table> must not be able to cross a `</table>` boundary. In practice this
+means one of:
+  1. Find each `<table>...</table>` individually (e.g. via
+     `re.finditer(r"<table.*?</table>", html, re.S)`) and apply a
+     replacement callback only when that specific table's own captured
+     content contains your unique marker text — never a single
+     document-wide `re.sub`/`re.subn` spanning multiple tables.
+  2. Or anchor on a marker that is provably unique across the whole
+     document AND keep the span as short/specific as possible — but
+     prefer option 1, since "provably unique" has already been wrong
+     twice in this file's history.
+
+See `fix_ros_payroll_message_guide`'s Fix 6 for the corrected reference
+implementation of option 1.
 """
 
 import argparse
@@ -1130,6 +1157,39 @@ RPNCSV_MAIN_TABLE = """<table class="table" tabindex="0">
 </table>"""
 
 
+TWSS_COLUMN_DESCRIPTIONS_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Column</th>
+<th scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Column Name</td><td>Name of data column</td></tr>
+<tr><td>Description</td><td>Description of the data element and the format that will be applied</td></tr>
+<tr><td>Notes</td><td>Any additional detail</td></tr>
+</tbody>
+</table>"""
+
+
+TWSS_VERSION_HISTORY_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Version</th>
+<th scope="col">Change Date</th>
+<th scope="col">Element</th>
+<th scope="col">Change Description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1.0</td><td>24/04/2020</td><td>N/A</td><td>Document published</td></tr>
+<tr><td></td><td>27/04/2020</td><td>Tier 1 Tier 2 MWWS</td><td>Updated description</td></tr>
+<tr><td></td><td></td><td>Eligible Employee</td><td>Updated submission date</td></tr>
+<tr><td></td><td>28/04/2020</td><td>Tier 1 MWWS Tier 2 Tier 2 MWWS Tier 3</td><td>Updated description</td></tr>
+</tbody>
+</table>"""
+
+
 def fix_rpn_csv_response(html: str, env: str) -> tuple[str, list[str]]:
     changes = []
 
@@ -1219,11 +1279,180 @@ def fix_rpn_csv_response(html: str, env: str) -> tuple[str, list[str]]:
         r'<div style="display:flex; justify-content:space-between; margin:0.5rem 0;">'
         r'<span><strong>Version</strong> \1</span>'
         r'<span><strong>Version Date</strong> \2</span>'
+                r'</div>',
+        html
+        )
+    if n:
+        changes.append("Fix 4: Reformatted 'Version / Version Date' line into two-column layout")
+
+    return html, changes
+
+
+# Main data-dictionary table (Column Name / Description / Notes) for the TWSS
+# Operational Phase document. Verified row by row against the source PDF's
+# extracted text (pdfplumber, pages 4-8). The pipeline splits this table into
+# 4 fragments across PDF page breaks, dropping the 'EE PRSI paid' row
+# entirely (it fell at the exact top of page 6 and was consumed as if it
+# were a repeated table header) and leaving two continuation-only text
+# fragments ('Where Tier 1 is populated...' on page 7, 'Where Tier 2 is
+# populated...' on page 8) stranded as orphaned rows with blank first/third
+# cells instead of being merged into the 'Tier 1 MWWS' and 'Tier 3' rows
+# they continue. Both are merged into their parent row's Description cell
+# here.
+TWSS_MAIN_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Column Name</th>
+<th scope="col">Description</th>
+<th scope="col">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Employer Name</td><td>Header: Employer name, max length 100 characters</td><td>Use to identify the employer and confirm that the employer name matches with Revenue records</td></tr>
+<tr><td>Employer Registration number</td><td>Header: Used to identify employer to which the submission relates, max length 100 characters</td><td>Used to identify employer to which the submission relates.</td></tr>
+<tr><td>Agent Tain</td><td>Header: Agent Tax Advisor Identification Number. Required if TWSS is requested by agent on behalf of employer</td><td>Required if TWSS is queried by agent on behalf of employer</td></tr>
+<tr><td>Tax Year</td><td>Header: Used to identify the tax year to which the TWSS lookup relates (YYYY)</td><td>The Tax Year TWSS relates to</td></tr>
+<tr><td>Date time Effective</td><td>Date &amp; time from when the TWSS calculation is effective from</td><td>The date and time at which the TWSS returned is correct/was issued (YYYY-MMDDThh:mm:ss.sss&plusmn;hhmm). max length 28</td></tr>
+<tr><td>Employee PPSN</td><td>Format is 7 digits (including leading zeros) followed by either 1 or 2 letters.</td><td>This field will always be populated</td></tr>
+<tr><td>Employment ID</td><td>The value of this field will be the Employment ID provided to Revenue by the employer when setting up the employment</td><td>This field will always be populated. For re-hires this will be the employment id from the active employment.</td></tr>
+<tr><td>Employer Reference</td><td>Employer reference set by the employer</td><td>This field may be empty and will be populated with employer reference first provided by employer. For re-hires this will be the employer reference from the active employment.</td></tr>
+<tr><td>Eligible Employee</td><td>This states if employee is eligible or ineligible for the scheme and marks employee as Y/N</td><td>An employee is eligible if they have payslips with pay dates between 1st-29th February and submitted before the 1st April for the given employer. These payslips must have included the employee&rsquo;s PPSN.</td></tr>
+<tr><td>Firstname</td><td>First name of the employee</td><td>This will be taken from Revenue&rsquo;s core registration system but if the employee is not registered for PAYE but has provided an PPSN for payroll then it will be the first name as reported by the employer on the payroll.</td></tr>
+<tr><td>FamilyName</td><td>Family name of the employee</td><td>This will be taken from Revenue&rsquo;s core registration system but if the employee is not registered for PAYE but has provided an PPSN for payroll then it will be the first name as reported by the employer on the payroll.</td></tr>
+<tr><td>Gross Pay</td><td>The sum of gross pay on active payslips for pay dates between 01/01/2020 and 29/02/2020 inclusive.</td><td>Where employee is ineligible this will be blank. Zero is a valid value. This number will contain two decimal places. For re-hires this will be from the last active employment the employee had with this employer.</td></tr>
+<tr><td>Income tax paid</td><td>The sum of Income tax deducted on active payslips for pay dates between 01/01/2020 and 29/02/2020 inclusive.</td><td>Where employee is ineligible this will be blank. Zero is a valid value. This number will contain two decimal places. For re-hires this will be from the last active employment the employee had with this employer.</td></tr>
+<tr><td>UscPaid</td><td>The sum of USC deducted on active payslips for pay dates between 01/01/2020 and 29/02/2020 inclusive.</td><td>Where employee is ineligible this will be blank. Zero is a valid value. This number will contain two decimal places. For re-hires this will be from the last active employment the employee had with this employer.</td></tr>
+<tr><td>EE PRSI paid</td><td>The sum of Employee PRSI deducted on active payslips for pay dates between 01/01/2020 and 29/02/2020 inclusive.</td><td>Where employee is ineligible this will be blank. Zero is a valid value. This number will contain two decimal places. For re-hires this will be from the last active employment the employee had with this employer.</td></tr>
+<tr><td>Divisor</td><td>This is the sum total of the number of insurable weeks as reported on each payslips for pay dates between 01/01/2020 and 29/02/2020 inclusive. This is the number used to calculate the average revenue net weekly pay (ARNWP)</td><td>If the number of insurable weeks is 0 or &gt; 9 the divisor will be set to 9. Otherwise this is the sum of the insurable weeks reported on payslips received with pay dates between 01/01/2020 and 29/02/2020. For re-hires this will be from the last active employment the employee had with this employer.</td></tr>
+<tr><td>ARNWP</td><td>This is the sum of the Gross pay minus the sum of Income tax paid, USC paid and EE PRSI paid between 01/01/2020 and 29/02/2020 inclusive divided by the &lsquo;divisor&rsquo; figures</td><td>Average Revenue Net Weekly Pay This number will contain two decimal places.</td></tr>
+<tr><td>Tier 1</td><td>Where an employee&rsquo;s total ARNWP means that more than 1 tier is applicable this provides the maximum gross employer pay applicable for the Tier 1 MWWS. This will be blank if the employee&rsquo;s total ARNWP means that only 1 tier is applicable.</td><td>This number will contain two decimal places.</td></tr>
+<tr><td>Tier 1 MWWS</td><td>Where Tier 1 is blank this is the maximum weekly wage subsidy applicable for the employee. Where Tier 1 is populated this provides the maximum weekly wage subsidy applicable for the employee where the gross employer pay is &lt;= Tier 1</td><td>MWWS &ndash; Maximum Weekly Wage Subsidy This number will contain two decimal places.</td></tr>
+<tr><td>Tier 1 MWEPBT</td><td>This is the maximum gross employer pay before tapering that will apply to Tier 1 MWWS.</td><td>Maximum Weekly Employer Pay before Tapering at Tier 1 This number will contain two decimal places.</td></tr>
+<tr><td>Tier 2</td><td>This will be blank if the employee&rsquo;s total ARNWP means that only 1 tier is applicable. Where an employee&rsquo;s total ARNWP means that more than 1 tier is applicable this provides the maximum gross employer pay applicable for the Tier 2 MWWS.</td><td>This number will contain two decimal places.</td></tr>
+<tr><td>Tier 2 MWWS</td><td>Where Tier 2 is populated this provides the maximum weekly wage subsidy applicable for the employee where the gross employer pay is greater than Tier 1 and less than or equal to Tier 2</td><td>Maximum Weekly Wage Subsidy at Tier 2 This number will contain two decimal places.</td></tr>
+<tr><td>Tier 2 MWEPBT</td><td>This is the maximum gross employer pay before tapering that will apply to Tier 2 MWWS.</td><td>Maximum Weekly Employer Pay before Tapering at Tier 2 This number will contain two decimal places.</td></tr>
+<tr><td>Tier 3</td><td>Where Tier 2 is blank or is 960.01 this will be blank. Where Tier 2 is populated this provides the employer gross pay where no subsidy will apply for the employee</td><td>Temporary Weekly Wage Subsidy Tier 3 This number will contain two decimal places.</td></tr>
+<tr><td>Tier 3 MWWS</td><td>Where Tier 3 is not blank this will be set to 0</td><td>Maximum Weekly Wage Subsidy at Tier 3 This number will contain two decimal places.</td></tr>
+</tbody>
+</table>"""
+
+
+def fix_twss_operational_phase(html: str, env: str) -> tuple[str, list[str]]:
+    """
+    Fixes for the Temporary Wage Subsidy Scheme (TWSS) Operational Phase CSV
+    Description document. Same pdfplumber over-split symptom seen elsewhere
+    in this file (phantom empty <th>/<td> columns from a table with merged
+    header cells), plus a genuine table-continuation-across-page-break issue
+    where a single data-dictionary table (Column Name / Description / Notes)
+    got split into 4 separate <table> blocks, with the first row of each
+    continuation fragment mistakenly promoted to a <thead> header row.
+
+    Every regex below is deliberately scoped to match one <table>...</table>
+    at a time (never a lazy/greedy span that could cross a </table>
+    boundary) per the convention documented in this file's module docstring.
+    """
+    changes = []
+
+    # Fix 0: The pipeline bunches the 'Column Descriptions', 'Latest Version
+    # History', and 'Audience' h3 headings together up front (right after the
+    # Version/Version Date lines), then places the Audience paragraph
+    # followed by both broken (phantom-column) tables — instead of each
+    # table sitting directly under its own heading. Fixed here using an
+    # extract-verify-reinsert approach: each of the 3 headings and the 2
+    # broken tables are located independently with narrow, non-crossing
+    # regexes; if any piece is missing, NOTHING is changed (better to leave
+    # the known-broken-but-intact order than risk deleting content). Only
+    # once all 5 pieces are confirmed present is the bunched-heading block
+    # removed and each clean table reinserted directly after its own
+    # heading, in one atomic string rebuild.
+    h_col = '<h3 class="pmod" id="column_descriptions">Column Descriptions</h3>'
+    h_ver = '<h3 class="pmod" id="latest_version_history">Latest Version History</h3>'
+    h_aud = '<h3 class="pmod" id="audience">Audience</h3>'
+
+    col_table_m = re.search(
+        r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Column</th>[\s\S]*?</table>',
+        html
+    )
+    ver_table_m = re.search(
+        r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Version</th>[\s\S]*?</table>',
+        html
+    )
+
+    if h_col in html and h_ver in html and h_aud in html and col_table_m and ver_table_m:
+        # Remove the two broken tables from wherever they currently sit.
+        html = html[:col_table_m.start()] + html[col_table_m.end():]
+        # ver_table_m offsets were computed before the removal above, so
+        # re-locate it in the now-shorter string rather than trust stale
+        # indices.
+        ver_table_m2 = re.search(
+            r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Version</th>[\s\S]*?</table>',
+            html
+        )
+        html = html[:ver_table_m2.start()] + html[ver_table_m2.end():]
+
+        # Insert the clean tables directly after their own headings.
+        html = html.replace(h_col, h_col + '\n' + TWSS_COLUMN_DESCRIPTIONS_TABLE, 1)
+        html = html.replace(h_ver, h_ver + '\n' + TWSS_VERSION_HISTORY_TABLE, 1)
+
+        changes.append("Fix 0: Moved Column Descriptions/Latest Version History tables to sit under their own headings and replaced their broken phantom-column content with clean tables")
+    else:
+        changes.append("Fix 0: WARNING: one or more expected headings/tables not found — no reorder performed (document left with correct data but misplaced sections)")
+
+            # Fix 3: The main data-dictionary table (Column Name / Description /
+    # Notes) is split by the pipeline into 4 separate, badly-mangled
+    # <table> fragments across PDF page breaks: phantom empty columns on
+    # the first fragment, wrongly-promoted header rows on subsequent
+    # fragments, a completely dropped 'EE PRSI paid' row, and two
+    # continuation-only text fragments left as orphaned blank-cell rows
+    # instead of being merged into the 'Tier 1 MWWS' / 'Tier 3' rows they
+    # continue. Given the number of distinct defects across 4 fragments,
+    # this is fixed the same safe way as RPNCSV_MAIN_TABLE elsewhere in
+    # this file: locate the exact span from the first fragment's unique
+    # opening anchor ('Employer Name') through to the last fragment's
+    # unique closing anchor ('Tier 3 MWWS') and its </table>, and replace
+    # that whole span in one go with a single clean, source-verified table.
+    # The span is anchored on unique text at both ends so it cannot extend
+    # beyond the intended tables into unrelated document content.
+        # NOTE: a regex span using '<table[^>]*>[\s\S]*?<td>Employer Name</td>'
+    # is NOT safe here — '<table[^>]*>' matches the *first* <table> anywhere
+    # in the document (e.g. the unrelated Column Descriptions table earlier
+    # in the page), and the lazy [\s\S]*? then happily skips over that
+    # table's own </table> to reach 'Employer Name' further down, silently
+    # swallowing everything in between. Instead, find the exact boundaries
+    # using plain string search: the last '<table' before 'Employer Name'
+    # (i.e. that specific fragment's own opening tag) and the first
+    # '</table>' after 'Tier 3 MWWS' (i.e. that specific fragment's own
+    # closing tag).
+    i_emp = html.find('<td>Employer Name</td>')
+    i_tier3 = html.find('<td>Tier 3 MWWS</td>')
+    if i_emp != -1 and i_tier3 != -1 and i_tier3 > i_emp:
+        i_start = html.rfind('<table', 0, i_emp)
+        i_end = html.find('</table>', i_tier3)
+        if i_start != -1 and i_end != -1:
+            i_end += len('</table>')
+            html = html[:i_start] + TWSS_MAIN_TABLE + html[i_end:]
+            changes.append("Fix 3: Replaced all fragmented/broken main data table pieces (Employer Name...Tier 3 MWWS) with 1 clean, source-verified table, restoring the missing 'EE PRSI paid' row and merging 2 stranded continuation fragments into their parent rows")
+        else:
+            changes.append("Fix 3: WARNING: could not locate table boundaries — no changes made")
+    else:
+        changes.append("Fix 3: WARNING: not found — main table anchors (Employer Name / Tier 3 MWWS) — shape may have changed, no changes made")
+
+    # Fix 6: Reformat the 'Version 1.0 Version Date' / '28/04/2020' pair of
+    # paragraphs (the pipeline split the source PDF's side-by-side Version /
+    # Version Date cover-page layout into two separate run-on <p> elements)
+    # into a single two-column label/value layout matching the source PDF.
+    html, n = re.subn(
+        re.compile(r'<p>Version ([^<]+?) Version Date</p>\s*<p>(\d{2}/\d{2}/\d{4})</p>'),
+        r'<div style="display:flex; justify-content:space-between; margin:0.5rem 0;">'
+        r'<span><strong>Version</strong> \1</span>'
+        r'<span><strong>Version Date</strong> \2</span>'
         r'</div>',
         html
     )
     if n:
-        changes.append("Fix 4: Reformatted 'Version / Version Date' line into two-column layout")
+        changes.append("Fix 6: Reformatted 'Version / Version Date' lines into two-column layout")
+    else:
+        changes.append("Fix 6: WARNING: not found — 'Version / Version Date' paragraph pair")
 
     return html, changes
 
@@ -1240,6 +1469,7 @@ FIX_REGISTRY = {
     "selfservice_appendix":      fix_selfservice_appendix,
     "helpdesk_guide":            fix_helpdesk_guide,
     "rpn_csv_response":          fix_rpn_csv_response,
+    "twss_operational_phase":    fix_twss_operational_phase,
 }
 
 # ===========================================================================

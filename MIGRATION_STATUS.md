@@ -1,6 +1,6 @@
 # Migration Status
 
-> **Last updated:** 2026-07-06  
+> **Last updated:** 2026-07-08  
 > **Branch:** `dev_contentMigration` (branched from `dev_traditionalNavbar`)  
 > **Total commits:** ~141
 
@@ -89,6 +89,7 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 - ✅ PIT4 Overview of ROS Payroll Reporting (`content/PIT4/screens/overview_of_ros_payroll_reporting_pit4.html`) — completed 2026-06-26. Fixed duplicate figure_15 reference before Figure 25 caption, extracted missing figure_28.png from source PDF (dropped by original pipeline run), confirmed TOC entry for section 3.5 (TWSS). Root cause patched in `tools/run_doc_fixes.py` (Fix 12a/12c) — image-reuse fixes were applying PIT3-specific quirks unconditionally; now guarded by file-existence checks per environment.
 - ✅ PIT3 ROS Payroll Reporting Message Guide (`content/PIT3/screens/ros_payroll_reporting_message_guide.html`) — completed 2026-07-03. Fixed fragmented Version History / Document References / JSON Message Data Items / Schema Reference tables, removed 2 orphaned single-column fragment tables (pdfplumber cell-wrap splitting artefacts), moved Schema Reference table from Section 5 (Digital Signature) into its correct home under Section 4 (Schemas), and split run-on bullet list items in Sections 2 and 3 into proper separate `<li>` elements. Fixed via `tools/run_doc_fixes.py` (`fix_ros_payroll_message_guide`, Fixes 1–9).
 - ✅ PIT4 ROS Payroll Reporting Message Guide (`content/PIT4/screens/ros_payroll_reporting_message_guide.html`) — completed 2026-07-03, same fixes as PIT3 above.
+- ✅ PIT4 Temporary Wage Subsidy Scheme (TWSS) Operational Phase Description (`content/PIT4/screens/twss_operational_phase_csv_description.html`) — completed 2026-07-08 (PIT4 only, no PIT3 equivalent document exists). Fixed the Column Descriptions/Latest Version History/Audience headings being bunched together with both tables misplaced near the end of the document instead of under their own headings; fixed the main data-dictionary table (Employer Name...Tier 3 MWWS), which had been fragmented by the PDF extraction into phantom-empty-column and wrongly-promoted-header-row pieces, was missing an entire 'EE PRSI paid' row, and had 2 continuation-only text fragments stranded as orphaned blank-cell rows instead of merged into their parent rows. Fixed via `tools/run_doc_fixes.py` (`fix_twss_operational_phase`). User visually confirmed the heading/table reorder in-browser; main table fix verified via script, pending final user visual confirmation next session.
 
 ### Tooling (new)
 - ✅ `migrationScripts/pdfToMarkdown.py` — PDF → Markdown (PyMuPDF + pdfplumber, heading detection, table merging, image deduplication)

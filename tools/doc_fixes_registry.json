@@ -49,6 +49,15 @@
       "environments": ["PIT3"],
       "notes": "PIT3 only. Pipeline produces a spaced filename - fix_helpdesk renames it.",
       "fixes": ["helpdesk_guide"]
+    },
+    {
+      "key": "twss_operational_phase",
+      "description": "Temporary Wage Subsidy Scheme (TWSS) Operational Phase Description",
+      "html_filename": "twss_operational_phase_csv_description.html",
+      "content_path": "screens",
+      "environments": ["PIT4"],
+      "notes": "PIT4 only - no PIT3 equivalent document exists.",
+      "fixes": ["twss_operational_phase"]
     }
   ]
 }

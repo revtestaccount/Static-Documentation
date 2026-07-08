@@ -170,6 +170,17 @@ python tools/run_doc_fixes.py --all --pit ALL
 2. Add `fix_<key>(html, env)` function to `run_doc_fixes.py`
 3. Register it in `FIX_REGISTRY` dict at the bottom of the script
 
+> **⚠️ Table-replacement regex convention (mandatory):** when writing a
+> `fix_<key>()` that replaces the content of a specific `<table>`, the regex
+> must never be able to cross a `</table>` boundary — match each
+> `<table>...</table>` individually and only substitute the one containing
+> your unique marker text, rather than a single document-wide `re.sub`
+> spanning from a non-unique anchor (e.g. `<th>Reference</th>`) to a marker
+> further down. This exact bug class has silently corrupted/deleted whole
+> sections twice in this file's history (see `SESSION_LOG.md` 2026-07-03 and
+> 2026-07-06). Full explanation and the corrected reference pattern are in
+> the module docstring at the top of `tools/run_doc_fixes.py`.
+
 ### `tools/fix_pre_tabindex.py`
 
 Ensures all hand-authored `<pre>` elements have `tabindex="0"` for WCAG 2.1 keyboard accessibility. The pipeline adds this automatically, but hand-authored `<pre>` blocks in fix scripts bypass that step.
@@ -232,8 +243,11 @@ This is a **customer-facing / public-facing** application:
 | REST Connectivity Handshake Guide | ✅ | ✅ |
 | Overview of ROS Payroll Reporting | ✅ | ✅ |
 | ROS Payroll Reporting Message Guide | ✅ | ✅ |
+| TWSS Operational Phase Description | n/a (no PIT3 equivalent) | ✅ |
 
 > **2026-07-03:** Also fixed 3 `sitemap.json` cross-environment routing bugs where PIT4 routes (Message Guide, REST Integration Guide, REST Handshake Guide) were incorrectly pointing at PIT3's HTML files. `migration_pipeline.py` Step 3.5 was added to catch this class of bug automatically on future runs.
+>
+> **2026-07-08:** Fixed the TWSS Operational Phase Description (PIT4 only) — Column Descriptions/Latest Version History/Audience headings were bunched together with both tables misplaced near the end of the document instead of under their own headings, and the main data-dictionary table was missing an entire row ('EE PRSI paid') plus had 2 continuation fragments stranded as orphaned blank-cell rows. Fixed via `tools/run_doc_fixes.py` → `fix_twss_operational_phase`. Also fixed 2 recurring regex-scoping bugs uncovered in the process (lazy quantifiers crossing `</table>` boundaries, and an anchor matching an unintended earlier table in the same document) — see `SESSION_LOG.md` 2026-07-08 entry for full detail.
 
 ---
 

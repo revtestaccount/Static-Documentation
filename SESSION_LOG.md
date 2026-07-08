@@ -21,6 +21,37 @@
 
 ---
 
+## Session: 2026-07-08
+
+**Task:** Fix content ordering and data-integrity bugs in the TWSS Operational Phase CSV Description document (PIT4), following user-reported issues: Column Descriptions/Latest Version History tables missing from their headings, main table rendering in the wrong section, and broken/incomplete main table formatting.
+
+**Findings:**
+- fix_twss_operational_phase() Fix 0 (combined heading/table reorder) was silently failing to match on fresh pipeline output — its single large regex never fired, leaving the document in its original broken order (Column Descriptions/Latest Version History/Audience headings bunched together up front, both broken tables dumped near the end instead of under their own headings).
+- Root cause of a second, more severe bug found while fixing the above: Fix 5's header-collapsing regex used '.*?' with re.DOTALL inside a repeated <th> group, which is able to match across </thead>/</table> boundaries. Combined with a lookahead anchor further down the document, this let the match run all the way from the *first* <thead> in the document through several unrelated tables and headings before reaching its target, silently deleting the Audience section, Document context heading, and both Column Descriptions/Version History table contents in the process. This is the same anti-pattern the module docstring already warns about (lazy/greedy quantifiers must never be allowed to cross a </table> boundary) — confirms this class of bug has now recurred at least 3 times in this file's history.
+- A similar unscoped-span bug was then found in the initial replacement attempt for the main data table: a regex anchored on '<table[^>]*>' matched the first table anywhere in the document (the unrelated Column Descriptions table) rather than the intended fragment, and its lazy quantifier skipped over that table's own </table> to reach the real target further down, corrupting the same sections again.
+- The main data-dictionary table (Employer Name...Tier 3 MWWS) was genuinely fragmented by the PDF extraction across 4 page-break boundaries, in 3 distinct ways: phantom empty columns on the first fragment, a wrongly-promoted header row on subsequent fragments, a completely dropped 'EE PRSI paid' row (fell at the exact top of a page and was consumed as if it were a repeated table header), and two continuation-only text fragments ('Where Tier 1 is populated...', 'Where Tier 2 is populated...') left as orphaned rows with blank first/third cells instead of being merged into the 'Tier 1 MWWS' and 'Tier 3' rows they continue. Confirmed all of this against the source PDF's pdfplumber-extracted text (pages 2, 5-8).
+
+**Fixed:**
+- ✅ tools/run_doc_fixes.py — fix_twss_operational_phase() Fix 0 rewritten using an extract-verify-reinsert approach: locate all 3 headings and both broken tables independently by narrow, non-crossing anchors; if any piece is missing, no changes are made (rather than risking partial/corrupting substitution); only once all 5 pieces are confirmed present are the two broken tables removed from their misplaced location and clean replacements inserted directly after their own headings.
+- ✅ tools/run_doc_fixes.py — fix_twss_operational_phase() Fix 5's '.*?'/re.DOTALL header regex replaced with the safe '[^<]*?' pattern (cannot cross a tag boundary), matching the convention already used correctly elsewhere in this file (e.g. Fix 3's continuation_re).
+- ✅ tools/run_doc_fixes.py — fix_twss_operational_phase() Fixes 3/4/5 (fragile per-fragment continuation/phantom-column repairs) consolidated into a single new TWSS_MAIN_TABLE constant: one clean, source-verified table built row-by-row from the PDF's extracted text, restoring the missing 'EE PRSI paid' row and merging the two stranded continuation fragments into their parent rows' Description cells (Tier 1 MWWS gets the '<= Tier 1' clause, Tier 3 gets the 'no subsidy will apply' clause).
+- ✅ tools/run_doc_fixes.py — the whole-table substitution for the main table is located using plain string search (rfind '<table' before the 'Employer Name' anchor, find '</table>' after the 'Tier 3 MWWS' anchor) rather than a regex span, since a regex anchored on '<table[^>]*>' cannot be scoped to skip over unrelated preceding tables in the same document.
+- ✅ content/PIT4/screens/twss_operational_phase_csv_description.html — regenerated fresh from the source PDF and re-fixed with the corrected script; verified content-complete (Column Descriptions, Latest Version History, Audience, Document context, and the full Employer Name...Tier 3 MWWS main table all present, correctly ordered, no orphaned/duplicate fragments, balanced HTML tags) via a throwaway verification script before handing back to the user for visual confirmation.
+- ✅ User visually confirmed in-browser that Column Descriptions and Latest Version History now render correctly under their own headings with clean data.
+
+**Outstanding / next steps:**
+- ⚪ User to give final visual confirmation of the main data table fix (EE PRSI paid row present, Tier 1 MWWS / Tier 3 continuation text merged, no broken/split rows) — deferred to next session per user.
+- ⚪ Since TWSS_MAIN_TABLE is now a hardcoded, source-verified constant rather than being reassembled from the pipeline's fragments, it will need manual updating if the source PDF for this document is ever revised in a future version — flagged to the user as an accepted trade-off given how badly this particular table was mangled by the PDF extraction.
+- ⚪ Consider formalising the project convention (already informally re-derived 3 times now across sessions) that any regex used for HTML table/section replacement in run_doc_fixes.py must be scoped so it cannot cross a </table> boundary or match an unintended prior occurrence of a shared anchor string — e.g. via plain string search for exact boundaries (as used in this session's Fix 3) rather than a single greedy/lazy regex span, whenever multiple tables in the same document could share similar anchor text.
+
+**Files touched this session:**
+- `tools/run_doc_fixes.py (fix_twss_operational_phase — Fix 0 rewritten, Fix 5 regex corrected, Fixes 3/4/5 consolidated into new TWSS_MAIN_TABLE constant + single safe replacement)`
+- `content/PIT4/screens/twss_operational_phase_csv_description.html (regenerated and re-fixed)`
+
+**Status: Column Descriptions, Latest Version History, Audience, and Document context sections confirmed correctly ordered and content-complete; user visually confirmed the heading/table reorder in-browser. Main data table fix (missing EE PRSI paid row restored, Tier 1 MWWS/Tier 3 continuation fragments merged) implemented and verified via script but not yet visually confirmed by the user — pending next session.**
+
+---
+
 ## Session: 2026-07-06
 
 **Task:** Finalize the SESSION_LOG.md dating convention (Option B): a single dated entry per session in SESSION_LOG.md, with MIGRATION_STATUS.md/PROJECT_ASSESSMENT.md 'Last updated' stamps bumped automatically, and CLAUDE.md/README.md left undated as static reference docs. Documented this convention explicitly, then did a live end-to-end test run of tools/log_session.py.
