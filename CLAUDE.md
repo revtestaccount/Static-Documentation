@@ -243,11 +243,14 @@ This is a **customer-facing / public-facing** application:
 | REST Connectivity Handshake Guide | ✅ | ✅ |
 | Overview of ROS Payroll Reporting | ✅ | ✅ |
 | ROS Payroll Reporting Message Guide | ✅ | ✅ |
-| TWSS Operational Phase Description | n/a (no PIT3 equivalent) | ✅ |
+| TWSS Operational Phase Description | n/a (no PIT3 equivalent) | ✅ (fully confirmed 2026-07-09) |
+| TWSS Reconciliation Description | n/a (no PIT3 equivalent) | 🟡 IN PROGRESS — diagnosed, not yet fixed |
 
 > **2026-07-03:** Also fixed 3 `sitemap.json` cross-environment routing bugs where PIT4 routes (Message Guide, REST Integration Guide, REST Handshake Guide) were incorrectly pointing at PIT3's HTML files. `migration_pipeline.py` Step 3.5 was added to catch this class of bug automatically on future runs.
 >
-> **2026-07-08:** Fixed the TWSS Operational Phase Description (PIT4 only) — Column Descriptions/Latest Version History/Audience headings were bunched together with both tables misplaced near the end of the document instead of under their own headings, and the main data-dictionary table was missing an entire row ('EE PRSI paid') plus had 2 continuation fragments stranded as orphaned blank-cell rows. Fixed via `tools/run_doc_fixes.py` → `fix_twss_operational_phase`. Also fixed 2 recurring regex-scoping bugs uncovered in the process (lazy quantifiers crossing `</table>` boundaries, and an anchor matching an unintended earlier table in the same document) — see `SESSION_LOG.md` 2026-07-08 entry for full detail.
+> **2026-07-08:** Fixed the TWSS Operational Phase Description (PIT4 only) — Column Descriptions/Latest Version History/Audience headings were bunched together with both tables misplaced near the end of the document instead of under their own headings, and the main data-dictionary table was missing an entire row ('EE PRSI paid') plus had 2 continuation fragments stranded as orphaned blank-cell rows. Fixed via `tools/run_doc_fixes.py` → `fix_twss_operational_phase`. Also fixed 2 recurring regex-scoping bugs uncovered in the process (lazy quantifiers crossing `</table>` boundaries, and an anchor matching an unintended earlier table in the same document) — see `SESSION_LOG.md` 2026-07-08 entry for full detail. **2026-07-09: user gave final visual confirmation of the main table fix — fully closed out.**
+>
+> **2026-07-09 (in progress, resuming 20/07/2026):** Started migrating TWSS Reconciliation Description (PIT4 only) — `content/PIT4/screens/twss_reconciliation_csv_description.pdf` / `.html`. Pipeline run complete; diagnosed the identical bug pattern to TWSS Operational Phase (misplaced Column Descriptions/Latest Version History tables, phantom-column main table, a data row wrongly promoted to a `<thead>` row at a page-break fragment boundary). **No fix has been written yet** — no `fix_twss_reconciliation()` function or registry entry exists. The next session must start by reading the source PDF directly via pdfplumber/PyMuPDF to establish ground truth for the full main table content — do not trust the pipeline's raw output, per the hard lesson from TWSS Operational Phase. Full detail in `SESSION_LOG.md` 2026-07-09 entry and `tools/session_config.json`'s last-written state (now reset to empty template, but the detail lives in `SESSION_LOG.md`).
 
 ---
 

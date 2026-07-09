@@ -23,6 +23,39 @@
 
 ## Session: 2026-07-09
 
+**Task:** Part 1 (complete): final visual confirmation of the 2026-07-08 TWSS Operational Phase main table fix. Part 2 (started, not complete): migrate a new document, Temporary Wage Subsidy Scheme (TWSS) Reconciliation Description (PIT4 only), from source PDF -- content/PIT4/screens/twss_reconciliation_csv_description.pdf.
+
+**Findings:**
+- Part 1: git status --short confirmed a clean working tree at the start of this session -- no uncommitted changes remained from 2026-07-08, confirming that session's fixes were already fully committed and pushed. Committed/pushed as d0f9af113.
+- Part 2: Ran tools/migration_pipeline.py against twss_reconciliation_csv_description.pdf --pit PIT4. Pipeline completed with no errors. No sitemap.json route exists or is needed for this document -- confirmed it follows the same direct-link pattern as twss_operational_phase (a target=_blank href from content/PIT4/self-service.html, not a hash-router route). Pipeline Step 4 correctly updated that self-service.html row's href/badge from the PDF to the new .html file already -- no manual sitemap/self-service.html changes needed.
+- Part 2: Reviewed the generated content/PIT4/screens/twss_reconciliation_csv_description.html and .md directly. Confirmed this document has the exact same bug pattern as twss_operational_phase from 2026-07-08: (1) 'Column Descriptions' and 'Latest Version History' are empty <h3> headings with NO table underneath them -- both tables have been misplaced further down the document, dumped after the Audience/Document context sections instead of appearing under their own headings. (2) The main data-dictionary table (Employer Name...) has phantom empty <td>/<th> columns throughout (pdfplumber over-splitting artefact, same as twss_operational_phase). (3) The main table is genuinely split across a page break in the 4-page source PDF: a later fragment's first data row ('Subsidy Paid | The amount of subsidy paid...') has been wrongly promoted into a <thead> row instead of being a normal <tr>, with only one further row ('ARNWP') left under it as the fragment's only real data row -- this is the same 'wrongly-promoted-header-row' bug class documented for twss_operational_phase.
+- Part 2: Did NOT get to directly inspect the raw source PDF text via pdfplumber this session (terminal command was cancelled twice due to time pressure) -- so the true full extent/order of the main table (i.e. everything between 'Pay Date' and 'ARNWP', and whether the table continues further after ARNWP) has NOT yet been independently verified against the PDF. This is the critical missing step before any fix can be written -- per the project's own hard-won lesson from twss_operational_phase, a fix must never be built from the pipeline's already-corrupted output alone; the source PDF must be read directly first to establish ground truth.
+- No fix_twss_reconciliation() function exists yet in tools/run_doc_fixes.py, and no 'twss_reconciliation' entry exists yet in tools/doc_fixes_registry.json -- this document has not been registered or fixed at all, only diagnosed.
+
+**Fixed:**
+- ✅ Part 1 only: TWSS Operational Phase (PIT4) main data table -- user visually confirmed all 4 outstanding checks from 2026-07-08 in-browser (EE PRSI paid row present, Tier 1 MWWS '<= Tier 1' clause present, Tier 3 'no subsidy will apply' clause present, no broken/split/orphaned rows). This closes out the last outstanding item from the 2026-07-08 session. Logged and pushed as commit d0f9af113.
+
+**Outstanding / next steps:**
+- ⚪ TWSS Reconciliation Description (PIT4) is NOT fixed yet -- this is the immediate next step for 20/07/26. Do NOT run run_doc_fixes.py against this document yet -- no fix function exists.
+- ⚪ FIRST STEP next session: read the source PDF directly via pdfplumber/PyMuPDF (content/PIT4/screens/twss_reconciliation_csv_description.pdf, 4 pages) to establish the ground-truth Column Descriptions table, Latest Version History table, and the FULL main data-dictionary table content/order/row-count -- do not trust the pipeline's .md/.html output for this, per the twss_operational_phase precedent.
+- ⚪ Once ground truth is confirmed: write fix_twss_reconciliation(html, env) in tools/run_doc_fixes.py, following the twss_operational_phase precedent exactly -- (a) an extract-verify-reinsert approach for relocating the Column Descriptions and Latest Version History tables under their correct headings (only proceed if all pieces are independently confirmed present, never a single greedy regex spanning multiple headings/tables), (b) a hardcoded, source-verified TWSS_RECONCILIATION_MAIN_TABLE constant to replace the fragmented/phantom-column main table, using plain string search (rfind '<table' / find '</table>') to scope the replacement rather than a regex span, so it cannot cross into or out of the wrong <table>...</table> pair.
+- ⚪ Register the new fix as 'twss_reconciliation' in tools/doc_fixes_registry.json (PIT4 only, content_path 'screens', html_filename 'twss_reconciliation_csv_description.html'), following the twss_operational_phase entry as the template.
+- ⚪ After building the fix: regenerate the HTML fresh from the pipeline, apply the new fix, verify content-completeness via a throwaway script (as done for twss_operational_phase) BEFORE handing back for visual confirmation -- do not skip this verification step.
+- ⚪ Get user visual confirmation in-browser once the fix is applied.
+- ⚪ Remember the project's now well-established regex convention (CLAUDE.md Section 7 callout box): any regex used for HTML table/section replacement must never be able to cross a </table> boundary, and must not match an unintended earlier occurrence of a shared/non-unique anchor string. This bug class has recurred at least 3 times already (ros_payroll_message_guide, twss_operational_phase x2) -- do not reintroduce it a 4th time.
+
+**Files touched this session:**
+- `content/PIT4/screens/twss_reconciliation_csv_description.md (new -- pipeline intermediate output, unfixed)`
+- `content/PIT4/screens/twss_reconciliation_csv_description.html (new -- pipeline output, NOT YET FIXED -- still has the Column Descriptions/Latest Version History misplaced-table bug and the fragmented/phantom-column main table bug)`
+- `content/PIT4/self-service.html (auto-updated by pipeline Step 4 -- href/badge for this document's row now correctly points at the new .html file instead of the .pdf; this part is already correct and needs no further action)`
+- `tools/session_config.json (this entry)`
+
+**Status: Part 1 (TWSS Operational Phase final visual confirmation) is fully complete, logged, committed, and pushed (d0f9af113). Part 2 (TWSS Reconciliation Description migration) is IN PROGRESS, NOT COMPLETE: source PDF migrated via the pipeline and diagnosed (same misplaced-table-headings + fragmented-main-table bug pattern as twss_operational_phase from 2026-07-08), but the fix itself has not been written, the source PDF has not yet been directly read to confirm ground truth, and no fix has been applied to the HTML. content/PIT4/screens/twss_reconciliation_csv_description.html currently on disk is pipeline-raw and NOT ready for review -- do not show it to the user as-is. Resume next session (20/07/26) by reading the source PDF directly first, exactly as documented in the outstanding items above.**
+
+---
+
+## Session: 2026-07-09
+
 **Task:** Follow-up to 2026-07-08 session: obtain final visual confirmation of the TWSS Operational Phase CSV Description (PIT4) main data table fix, which was implemented and script-verified last session but not yet visually confirmed.
 
 **Findings:**
