@@ -21,6 +21,17 @@
 
 ---
 
+## Session: 2026-07-09
+
+**Task:** Follow-up to 2026-07-08 session: obtain final visual confirmation of the TWSS Operational Phase CSV Description (PIT4) main data table fix, which was implemented and script-verified last session but not yet visually confirmed.
+
+**Findings:**
+- git status --short confirmed a clean working tree at the start of this session -- no uncommitted changes remained from 2026-07-08, confirming that session's fixes were already fully committed and pushed.
+
+**Status: User visually confirmed all 4 outstanding main-table checks from 2026-07-08 in-browser: EE PRSI paid row present, Tier 1 MWWS description includes the '<= Tier 1' clause, Tier 3 description includes the 'no subsidy will apply' clause, and no broken/split/orphaned rows remain. This closes out the last outstanding item from the 2026-07-08 TWSS Operational Phase fix session. No code or content changes were needed this session -- confirmation only.**
+
+---
+
 ## Session: 2026-07-08
 
 **Task:** Fix content ordering and data-integrity bugs in the TWSS Operational Phase CSV Description document (PIT4), following user-reported issues: Column Descriptions/Latest Version History tables missing from their headings, main table rendering in the wrong section, and broken/incomplete main table formatting.
