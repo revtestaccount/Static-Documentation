@@ -1452,7 +1452,166 @@ def fix_twss_operational_phase(html: str, env: str) -> tuple[str, list[str]]:
     if n:
         changes.append("Fix 6: Reformatted 'Version / Version Date' lines into two-column layout")
     else:
-        changes.append("Fix 6: WARNING: not found — 'Version / Version Date' paragraph pair")
+                changes.append("Fix 6: WARNING: not found — 'Version / Version Date' paragraph pair")
+
+    return html, changes
+
+
+# Latest Version History table for the TWSS Reconciliation document. Verified
+# against the source PDF's extracted text (page 2 of
+# twss_reconciliation_csv_description.pdf) — a single row only. This is
+# DIFFERENT content to the shared TWSS_VERSION_HISTORY_TABLE constant above
+# (that one is hardcoded to the TWSS Operational Phase document's own
+# multi-row version history) — do not reuse that constant here, they are
+# two different documents with two different version histories.
+TWSS_RECONCILIATION_VERSION_HISTORY_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Version</th>
+<th scope="col">Change Date</th>
+<th scope="col">Element</th>
+<th scope="col">Change Description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1.0</td><td>12/06/2020</td><td>N/A</td><td>Document published</td></tr>
+</tbody>
+</table>"""
+
+
+# Main data-dictionary table (Column Name / Description / Notes) for the TWSS
+# Reconciliation document. Verified row by row against the source PDF's
+# extracted text (pdfplumber, pages 3-4 of
+# twss_reconciliation_csv_description.pdf, 4 pages total). The pipeline
+# splits this table into 2 fragments across the page 3/4 break: the first
+# fragment (Employer Name...Pay Date, 10 rows) gets phantom empty columns,
+# and the second fragment's first data row ('Subsidy Paid') is wrongly
+# promoted into a <thead> header row instead of a normal <tr>, leaving only
+# 'ARNWP' as that fragment's sole real data row. 13 rows total, confirmed
+# directly against the PDF text — this is a different, shorter table to
+# TWSS_MAIN_TABLE (TWSS Operational Phase) above; do not confuse the two.
+TWSS_RECONCILIATION_MAIN_TABLE = """<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Column Name</th>
+<th scope="col">Description</th>
+<th scope="col">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Employer Name</td><td>Header: Employer name, max length 100 characters</td><td>Use to identify the employer and confirm that the employer name matches with Revenue records. This field should always be populated.</td></tr>
+<tr><td>Employer Registration number</td><td>Header: Used to identify employer to which the submission relates, max length 100 characters</td><td>This field should always be populated.</td></tr>
+<tr><td>Tax Year</td><td>Header: Used to identify the tax year to which the TWSS lookup relates (YYYY)</td><td>This field should always be populated.</td></tr>
+<tr><td>Software Used</td><td>Header: Used to identify the software used.</td><td>Max length 100</td></tr>
+<tr><td>Software Version</td><td>Header: Used to identify the software version.</td><td>Max length 100</td></tr>
+<tr><td>Payroll Run Reference</td><td>Used to identify the Payroll event that the subsidy update refers to.</td><td>This field should always be populated. Max length 50</td></tr>
+<tr><td>Line Item ID</td><td>Used to identify the Payroll line item that the subsidy update refers to.</td><td>This field should always be populated. Max length 50</td></tr>
+<tr><td>Employer Reference</td><td>Employee's internal staff identifier/reference.</td><td>This field is optional; if provided, Max length 50.</td></tr>
+<tr><td>Employee PPSN</td><td>The employee PPSN number.</td><td>This field should always be populated. Format is 7 digits (including leading zeros) followed by either 1 or 2 letters.</td></tr>
+<tr><td>Employment ID</td><td>The value of this field will be the Employment ID provided to Revenue by the employer when setting up the employment.</td><td>This field should always be populated. Max length 20</td></tr>
+<tr><td>Pay Date</td><td>Date Employee was being paid (DD/MM/YYYY).</td><td>This field should always be populated. Max length 10 (dd/mm/yyyy)</td></tr>
+<tr><td>Subsidy Paid</td><td>The amount of subsidy paid to the employee.</td><td>This field should always be populated. Zero is a valid value.</td></tr>
+<tr><td>ARNWP</td><td>Employee's Average Revenue Net Weekly Pay</td><td>This field is optional and if provided, should always be populated with an amount greater than 0.</td></tr>
+</tbody>
+</table>"""
+
+
+def fix_twss_reconciliation(html: str, env: str) -> tuple[str, list[str]]:
+    """
+    Fixes for the Temporary Wage Subsidy Scheme (TWSS) Reconciliation CSV
+    Description document. Same bug pattern as fix_twss_operational_phase()
+    above: 'Column Descriptions' and 'Latest Version History' headings sit
+    with no table underneath them (both tables misplaced further down the
+    document, after Audience/Document context), and the main data-dictionary
+    table (Employer Name...ARNWP) is split across a PDF page break with
+    phantom empty columns on the first fragment and a wrongly-promoted
+    header row on the second.
+
+    Every regex below is scoped to match one <table>...</table> at a time
+    (never a lazy/greedy span that could cross a </table> boundary) per the
+    convention documented in this file's module docstring, and the main
+    table replacement uses plain string search (not a regex span) for the
+    same reason established in fix_twss_operational_phase().
+    """
+    changes = []
+
+    # Fix 0: Relocate the Column Descriptions / Latest Version History
+    # tables to sit directly under their own headings. Extract-verify-
+    # reinsert approach: locate both headings and both broken tables
+    # independently by narrow, non-crossing anchors; if any piece is
+    # missing, make no changes at all rather than risk a partial/corrupting
+    # substitution.
+    h_col = '<h3 class="pmod" id="column_descriptions">Column Descriptions</h3>'
+    h_ver = '<h3 class="pmod" id="latest_version_history">Latest Version History</h3>'
+    h_aud = '<h3 class="pmod" id="audience">Audience</h3>'
+
+    col_table_m = re.search(
+        r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Column</th>[\s\S]*?</table>',
+        html
+    )
+    ver_table_m = re.search(
+        r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Version</th>[\s\S]*?</table>',
+        html
+        )
+
+    if h_col in html and h_ver in html and h_aud in html and col_table_m and ver_table_m:
+        html = html[:col_table_m.start()] + html[col_table_m.end():]
+        # Re-locate the version table in the now-shorter string rather than
+        # trust stale offsets computed before the removal above.
+        ver_table_m2 = re.search(
+            r'<table[^>]*>\s*<thead>\s*<tr>\s*(?:<th[^>]*>\s*</th>\s*)*<th[^>]*>Version</th>[\s\S]*?</table>',
+            html
+        )
+        html = html[:ver_table_m2.start()] + html[ver_table_m2.end():]
+
+        html = html.replace(h_col, h_col + '\n' + TWSS_COLUMN_DESCRIPTIONS_TABLE, 1)
+        html = html.replace(h_ver, h_ver + '\n' + TWSS_RECONCILIATION_VERSION_HISTORY_TABLE, 1)
+
+        changes.append("Fix 0: Moved Column Descriptions/Latest Version History tables to sit under their own headings and replaced their broken phantom-column content with clean tables")
+    else:
+        changes.append("Fix 0: WARNING: one or more expected headings/tables not found — no reorder performed (document left with correct data but misplaced sections)")
+
+    # Fix 1: The main data-dictionary table (Employer Name...ARNWP) is split
+    # by the pipeline into 2 fragments across the PDF's page 3/4 break, with
+    # phantom empty columns on the first fragment and a wrongly-promoted
+    # header row ('Subsidy Paid') on the second. Fixed by locating the exact
+    # span from the first fragment's unique opening anchor ('Employer Name')
+    # through to the last fragment's unique closing anchor ('ARNWP') using
+    # plain string search — never a regex span starting at '<table[^>]*>',
+    # since that would match the Column Descriptions table earlier in the
+    # document and a lazy quantifier could skip over its </table> to reach
+    # 'Employer Name' further down, silently swallowing everything between.
+    i_emp = html.find('<td>Employer Name</td>')
+    i_arnwp = html.find('>ARNWP<')
+    if i_emp != -1 and i_arnwp != -1 and i_arnwp > i_emp:
+        i_start = html.rfind('<table', 0, i_emp)
+        i_end = html.find('</table>', i_arnwp)
+        if i_start != -1 and i_end != -1:
+            i_end += len('</table>')
+            html = html[:i_start] + TWSS_RECONCILIATION_MAIN_TABLE + html[i_end:]
+            changes.append("Fix 1: Replaced both fragmented/broken main data table pieces (Employer Name...ARNWP) with 1 clean, source-verified table, correcting the wrongly-promoted 'Subsidy Paid' header row")
+        else:
+            changes.append("Fix 1: WARNING: could not locate table boundaries — no changes made")
+    else:
+        changes.append("Fix 1: WARNING: not found — main table anchors (Employer Name / ARNWP) — shape may have changed, no changes made")
+
+    # Fix 2: Reformat the 'Version 1.0 Version Date' / '12/06/2020' pair of
+    # paragraphs (the pipeline split the source PDF's side-by-side Version /
+    # Version Date cover-page layout into two separate run-on <p> elements)
+    # into a single two-column label/value layout matching the source PDF —
+    # same pattern as fix_twss_operational_phase()'s Fix 6.
+    html, n = re.subn(
+        re.compile(r'<p>Version ([^<]+?) Version Date</p>\s*<p>(\d{2}/\d{2}/\d{4})</p>'),
+        r'<div style="display:flex; justify-content:space-between; margin:0.5rem 0;">'
+        r'<span><strong>Version</strong> \1</span>'
+        r'<span><strong>Version Date</strong> \2</span>'
+        r'</div>',
+        html
+    )
+    if n:
+        changes.append("Fix 2: Reformatted 'Version / Version Date' lines into two-column layout")
+    else:
+        changes.append("Fix 2: WARNING: not found — 'Version / Version Date' paragraph pair")
 
     return html, changes
 
@@ -1470,6 +1629,7 @@ FIX_REGISTRY = {
     "helpdesk_guide":            fix_helpdesk_guide,
     "rpn_csv_response":          fix_rpn_csv_response,
     "twss_operational_phase":    fix_twss_operational_phase,
+    "twss_reconciliation":       fix_twss_reconciliation,
 }
 
 # ===========================================================================
