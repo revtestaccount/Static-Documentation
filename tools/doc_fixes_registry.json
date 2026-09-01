@@ -67,6 +67,15 @@
       "environments": ["PIT4"],
       "notes": "PIT4 only - no PIT3 equivalent document exists.",
       "fixes": ["twss_reconciliation"]
+    },
+    {
+      "key": "twss_reconciliation_csv_validation",
+      "description": "Temporary Wage Subsidy Scheme (TWSS) Reconciliation CSV Validation",
+      "html_filename": "twss_reconciliation_csv_validation.html",
+      "content_path": "screens",
+      "environments": ["PIT4"],
+      "notes": "PIT4 only - no PIT3 equivalent document exists.",
+      "fixes": ["twss_reconciliation_csv_validation"]
     }
   ]
 }

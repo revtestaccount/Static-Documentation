@@ -173,6 +173,59 @@ if body:
         if _fig_re.match(text):
             p['class'] = 'figure-caption'
 
+# -- Reformat cover-page 'Version X Version Date Y' run-on paragraphs -----------
+# Source PDFs commonly present Version/Version Date as two side-by-side cover-page
+# fields, but the PDF extraction joins them into a single run-on <p> like:
+#   'Version 1.0 Version Date 12/06/2020'
+# Replace any such paragraph with a two-column label/value <div> layout matching
+# the source PDF's presentation, instead of leaving it as an unreadable run-on
+# sentence. Handles the common case where the value is a bare version number/date
+# on either side (e.g. also 'Version 1.0 Release Candidate 2 Version Date 24/05/2018').
+if body:
+    import re as _re
+
+    def _build_version_div(version_value, date_value):
+        wrapper_div = new_html.new_tag('div')
+        wrapper_div['style'] = 'display:flex; justify-content:space-between; margin:0.5rem 0;'
+        version_span = new_html.new_tag('span')
+        version_strong = new_html.new_tag('strong')
+        version_strong.string = 'Version'
+        version_span.append(version_strong)
+        version_span.append(' ' + version_value)
+        date_span = new_html.new_tag('span')
+        date_strong = new_html.new_tag('strong')
+        date_strong.string = 'Version Date'
+        date_span.append(date_strong)
+        date_span.append(' ' + date_value)
+        wrapper_div.append(version_span)
+        wrapper_div.append(date_span)
+        return wrapper_div
+
+        # Case 1: 'Version X Version Date Y' all in one run-on <p> - requires a
+    # non-empty date value, otherwise this is really Case 2 (split across two
+    # <p> tags) and must fall through to that branch instead.
+    _ver_re = _re.compile(r'^Version\s+(.+?)\s+Version Date\s+(\S.*)$', _re.IGNORECASE)
+    # Case 2: split across two consecutive <p> tags - first ends with
+    # 'Version Date' (no value, or trailing whitespace only), second <p>
+    # (or plain sibling text) is just the date value.
+    _ver_split_re = _re.compile(r'^Version\s+(.+?)\s+Version Date\s*$', _re.IGNORECASE)
+
+    for p in body.find_all('p'):
+        if p.decomposed:
+            continue
+        text = p.get_text(separator=' ', strip=True)
+        m = _ver_re.match(text)
+        if m:
+            p.replace_with(_build_version_div(m.group(1).strip(), m.group(2).strip()))
+            continue
+        m_split = _ver_split_re.match(text)
+        if m_split:
+            nxt = p.find_next_sibling()
+            if nxt and nxt.name == 'p':
+                date_value = nxt.get_text(strip=True)
+                nxt.decompose()
+                p.replace_with(_build_version_div(m_split.group(1).strip(), date_value))
+
 # -- Add tabindex="0" to all <pre> blocks so keyboard users can scroll them -----
 for tag in new_html.find_all("pre"):
     tag["tabindex"] = "0"

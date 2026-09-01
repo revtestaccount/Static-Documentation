@@ -1613,6 +1613,120 @@ def fix_twss_reconciliation(html: str, env: str) -> tuple[str, list[str]]:
     else:
         changes.append("Fix 2: WARNING: not found — 'Version / Version Date' paragraph pair")
 
+        return html, changes
+
+
+# ---------------------------------------------------------------------------
+# TWSS Reconciliation CSV Validation (twss_reconciliation_csv_validation.pdf)
+# ---------------------------------------------------------------------------
+# Source: content/PIT4/screens/twss_reconciliation_csv_validation.pdf (5 pages).
+# Confirmed via direct PyMuPDF text extraction (ground truth). The pipeline's
+# pdfplumber table extraction phantom-splits every table in this document into
+# many extra empty <th>/<td> columns. Also drops the 3-line footnote block
+# that follows the Pre-submission Validation table in the source PDF.
+
+def fix_twss_reconciliation_csv_validation(html: str, env: str) -> tuple[str, list[str]]:
+    """
+    Fixes for the TWSS Reconciliation CSV Validation document. Same phantom-
+    empty-column bug class as other TWSS documents; every table fits on one
+    page in the source PDF (none are page-split), so each is replaced by a
+    clean literal table matching the PDF's real column count. Each
+    replacement is scoped by finding every <table>...</table> individually
+    and only substituting the one containing that table's unique marker text
+    (never a single document-wide regex span), per this file's mandatory
+    table-replacement convention — see module docstring.
+    """
+    changes = []
+
+    def replace_table_by_marker(html: str, marker: str, clean_table: str) -> tuple[str, bool]:
+        for m in re.finditer(r'<table[^>]*>.*?</table>', html, re.S):
+            if marker in m.group(0):
+                return html[:m.start()] + clean_table + html[m.end():], True
+        return html, False
+
+    # Fix 1: Latest Version History table (single data row per source PDF page 2)
+    version_history_table = (
+        '<table class="table" tabindex="0">\n'
+        '<thead>\n<tr>\n'
+        '<th scope="col">Version</th>\n'
+        '<th scope="col">Change Date</th>\n'
+        '<th scope="col">Element</th>\n'
+        '<th scope="col">Change Description</th>\n'
+        '</tr>\n</thead>\n<tbody>\n'
+        '<tr><td>1.0</td><td>30/07/2020</td><td>N/A</td><td>Document published</td></tr>\n'
+        '</tbody>\n</table>'
+    )
+    html, ok = replace_table_by_marker(html, '30/07/2020', version_history_table)
+    changes.append(f"Fix 1: {'Replaced' if ok else 'WARNING: not found —'} Latest Version History table")
+
+    # Fix 2: Pre-submission Validation table (6 rows per source PDF page 3),
+    # plus restore the 3-line footnote block dropped by the pipeline.
+    presubmission_table = (
+        '<table class="table" tabindex="0">\n'
+        '<thead>\n<tr>\n'
+        '<th scope="col">Validation Rule</th>\n'
+        '<th scope="col">Validation Error Message</th>\n'
+        '</tr>\n</thead>\n<tbody>\n'
+        '<tr><td>When the selected file is not .csv</td><td>We are unable to process your file. Please ensure the file is in a valid CSV format.</td></tr>\n'
+        '<tr><td>If file size is larger than 10MB</td><td>Your file has exceeded the maximum size allowable, please ensure your file is less than 10MB.</td></tr>\n'
+        '<tr><td>If max number of line items is more than 50k. This number checks against the line items for a payslip and excludes the headers rows</td><td>Your file has exceeded the maximum amount of line items allowed, please ensure there are no more than 50,000.</td></tr>\n'
+        '<tr><td>Validation against first line headings of CSV</td><td>There are errors with your headings on line 1 of CSV. Allowed values are: employerName, employerRegistrationNumber, taxYear, softwareUsed, softwareVersion. Values are case sensitive.</td></tr>\n'
+        '<tr><td>Validation against third line of CSV for second level headings</td><td>There are errors with your headings on line 3 of CSV. Allowed values are: payrollRunReference, lineItemID, employerReference, employeePpsn, employmentID, payDate, subsidyPaid, arnwp. Values are case sensitive.</td></tr>\n'
+        '<tr><td>Unable to parse the file the file content</td><td>There are errors in your file. Please ensure the data within the file is in a valid format or contact your payroll software provider.</td></tr>\n'
+        '</tbody>\n</table>\n'
+        '<p>** Only one error would trigger at a time<br>\n'
+        '** The error messages would appear on the screen<br>\n'
+        '** Sign &amp; Submit button will remain disabled</p>'
+    )
+    html, ok = replace_table_by_marker(html, 'When the selected file is not .csv', presubmission_table)
+    changes.append(f"Fix 2: {'Replaced' if ok else 'WARNING: not found —'} Pre-submission Validation table (and restored missing footnote block)")
+
+    # Fix 3: File Format / Schema Validation table (13 rows per source PDF page 4)
+    schema_rows = [
+        ("Employer Name", "Mandatory", "Max Length &ndash; 100 characters"),
+        ("Employer Registration Number", "Mandatory", "Max Length &ndash; 100 characters"),
+        ("Tax Year", "Mandatory", "Numerical, 4-digits, valid year"),
+        ("Software Used", "Optional", "Max Length &ndash; 100 characters"),
+        ("Software Version", "Optional", "Max Length &ndash; 100 characters"),
+        ("Payroll Run Reference", "Mandatory", "Max Length &ndash; 50 characters"),
+        ("Line Item ID", "Mandatory", "Max Length &ndash; 50 characters"),
+        ("Employer Reference", "Optional", "Max Length &ndash; 50 characters"),
+        ("Employee PPSN", "Mandatory", "Format is 7 digits (including leading zeros) followed by either 1 or 2 letters"),
+        ("Employment ID", "Mandatory", "Max Length &ndash; 20 characters"),
+        ("Pay Date", "Mandatory", "Max Length &ndash; 10 characters (dd/mm/yyyy)"),
+        ("Subsidy Paid", "Mandatory", "Zero is a valid value; negative values unacceptable"),
+        ("ARNWP", "Optional", "If provided, value should be greater than 0"),
+    ]
+    schema_table = (
+        '<table class="table" tabindex="0">\n'
+        '<thead>\n<tr>\n'
+        '<th scope="col">Field Name</th>\n'
+        '<th scope="col">Mandatory / Optional</th>\n'
+        '<th scope="col">Field Size</th>\n'
+        '</tr>\n</thead>\n<tbody>\n'
+        + '\n'.join(f'<tr><td>{name}</td><td>{mand}</td><td>{size}</td></tr>' for name, mand, size in schema_rows)
+        + '\n</tbody>\n</table>'
+    )
+    html, ok = replace_table_by_marker(html, 'Employer Name', schema_table)
+    changes.append(f"Fix 3: {'Replaced' if ok else 'WARNING: not found —'} File Format / Schema Validation table")
+
+    # Fix 4: Business Rules Validation table (5 rows per source PDF page 5)
+    business_rules_table = (
+        '<table class="table" tabindex="0">\n'
+        '<thead>\n<tr>\n'
+        '<th scope="col">Validation Rule</th>\n'
+        '<th scope="col">Validation Error Message</th>\n'
+        '</tr>\n</thead>\n<tbody>\n'
+        '<tr><td>Payslip doesn&rsquo;t exist &ndash; Payslip lookup is based on Employer Registration Number + Tax Year + Payroll Run Reference + Line Item ID</td><td>The payslip referenced in the subsidy data does not exist. If this is a valid payslip, please report this as a payroll submission.</td></tr>\n'
+        '<tr><td>Payslip is unlinked &ndash; scenario when all the required information is supplied on the CSV, but payslip doesn&rsquo;t have the Employee ID when looked up</td><td>The payslip referenced in the subsidy data does not include an Employee ID.</td></tr>\n'
+        '<tr><td>PPSN doesn&rsquo;t match</td><td>The subsidy detail PPSN does not match the PPSN on the referenced payslip.</td></tr>\n'
+        '<tr><td>Employment ID doesn&rsquo;t match</td><td>The subsidy detail employment ID does not match the employment ID on the referenced payslip.</td></tr>\n'
+        '<tr><td>Pay date doesn&rsquo;t match</td><td>The subsidy detail pay date does not match the pay date on the referenced payslip</td></tr>\n'
+        '</tbody>\n</table>'
+    )
+    html, ok = replace_table_by_marker(html, 'Payslip', business_rules_table)
+    changes.append(f"Fix 4: {'Replaced' if ok else 'WARNING: not found —'} Business Rules Validation table")
+
     return html, changes
 
 
@@ -1630,6 +1744,7 @@ FIX_REGISTRY = {
     "rpn_csv_response":          fix_rpn_csv_response,
     "twss_operational_phase":    fix_twss_operational_phase,
     "twss_reconciliation":       fix_twss_reconciliation,
+    "twss_reconciliation_csv_validation": fix_twss_reconciliation_csv_validation,
 }
 
 # ===========================================================================
