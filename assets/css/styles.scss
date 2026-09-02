@@ -1,4 +1,4 @@
-/*** Abstracts imports ***/
+﻿/*** Abstracts imports ***/
 @import 'abstracts/functions';
 @import 'abstracts/colors';
 @import 'abstracts/lengths';
@@ -11,29 +11,52 @@
 @import 'vendors/primeng-designer/themes/main/theme'; 
 
 /*** import the customised external primeng designer theme ***/
-.external-theme {    
-    @import 'vendors/primeng-designer/themes/external/theme';  
+.external-theme {
+    @import 'vendors/primeng-designer/themes/external/theme';
 }
 
 /*** Styles basement imports ***/
 @import 'base/reset';
 @import 'base/typography';
-@import "primeicons/primeicons.css";
 
 /*** Components imports ***/
 @import 'components/common';
+@import 'components/uishell';
 @import 'components/file-upload';
 @import 'components/labelfield';
 @import 'components/progressspinner';
-@import 'components/uishell';
 
-/*** Pages Styles imports ***/
-@import 'pages/home';
+/*** -- Important --- ***/
+/*** Run: "npm run watch:scss" to ensure SCSS compiles ***/
+/*** Recompile whenever abstracts or component partials change ***/
+/*** NOTE: Bootstrap is NOT imported here — it is loaded from index.html ***/
+/*** TODO: Remove Bootstrap CDN from index.html once all Bootstrap classes ***/
+/*** are replaced with REVDS/custom equivalents in content HTML files. ***/
 
-body {
+// Page-level h1: centred, Revenue teal — used for main section headings in content pages
+// Note: keep background-color transparent (not white) so it works on non-white backgrounds
+h1 {
+    color: $base-brandteal;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-weight: $bold-font-weight;
+    font-size: $h1-700-font-size;
+}
+
+// Site wrapper — replaces Bootstrap container-fluid p-0
+.site-wrapper {
     min-height: 100vh;
     overflow-x: hidden;
-    font-family: $font-families-segoe-ui;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    margin: 0;                  // remove browser default 8px margin
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: $font-families-segoe-ui;   
     color: $surface-000;
 
     a{
@@ -46,44 +69,156 @@ body {
         background-color: $surface-200;
     }
 
+    // ── Top utility bar ───────────────────────────────────────────────────────
+    .header-util {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $brandteal-darken-10; // ~8% darker than Revenue Green
+        padding: 0.35rem 1.25rem;
+        width: 100%;
+
+        &__context {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: $semibold-font-weight;
+        }
+
+        &__link {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+
+            &:hover {
+                color: $base-white;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    // ── Main header ───────────────────────────────────────────────────────────
+    // Revenue Green: #025F63 — matches $base-brandteal after token fix
     .header {
         display: flex;
-        padding: 1.5625rem 1.5625rem 1.5625rem 1.5625rem;
+        align-items: center;
+        padding: 0.75rem 1.25rem;
         background-color: $base-brandteal;
-        img{
-            padding: 1rem;
+        width: 100%;
+        gap: 1.25rem;
+
+        &__logo {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+
+            img {
+                display: block;
+            }
         }
-        .PAYE_Modernisation_ERR_Documentation{
-            p{
-                font-size: 2rem;
-                color: $base-white;
-                font-weight: $bold-font-weight;
-                padding-top: 2rem;
-                };
-            text-align: center;
-            padding: 1rem;
+
+        &__divider {
+            width: 0.125rem;
+            height: 3.5rem;
+            background-color: rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
         }
-        border-bottom: solid $base-cyan 1rem;
+
+        &__app-name {
+            font-size: 1.5rem;
+            font-weight: $bold-font-weight;
+            color: $base-white;
+            letter-spacing: 0.01em;
+        }
     };
 
-    main{
-        .card{
-            .card-img-top{
-                padding: 1rem !important;
-                background-color: $brandmint-lighten-50 !important;
-                max-height: 12.6875rem;
-            };
-            margin-bottom: 2rem !important;
-            .card-text{
-                font-size: $h3-font-size !important;
-                text-align: center;
-            };
+        .site-main {
+            width: 100%;
+            padding: 2rem;
+        }
+
+        main{
+                // Constrain prose text using the exact same breakpoints as Bootstrap's .container
+                // so text and card grid share identical left/right edges at every viewport width.
+                #content > p,
+                #content > h1,
+                #content > h2 {
+                    width: 100%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    padding-left: 0.75rem;
+                    padding-right: 0.75rem;
+                    box-sizing: border-box;
+                }
+                @media (min-width: 36rem) {      // 576px
+                    #content > p, #content > h1, #content > h2 { max-width: 33.75rem; } // 540px
+                }
+                @media (min-width: 48rem) {      // 768px
+                    #content > p, #content > h1, #content > h2 { max-width: 45rem; }    // 720px
+                }
+                @media (min-width: 62rem) {      // 992px
+                    #content > p, #content > h1, #content > h2 { max-width: 60rem; }    // 960px
+                }
+                @media (min-width: 75rem) {      // 1200px
+                    #content > p, #content > h1, #content > h2 { max-width: 71.25rem; } // 1140px
+                }
+                @media (min-width: 87.5rem) {    // 1400px
+                    #content > p, #content > h1, #content > h2 { max-width: 82.5rem; }  // 1320px
+                }
+
+        p{
+            text-align: left;
         };
 
-        #content{ 
-
-            // **** temporary css class to resize h2 headings **** remove when main page headings are change to h1
+        #content{  
+            // **** temporary css class to resize h2 headings **** remove when main page headings are changed to h1
             h2 {
+                background-color: $base-white;
+                color: $base-brandteal;
+                text-align: center;
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                font-weight: $bold-font-weight;
+
+                // Exception: pmod headings in migrated document pages
+                &.pmod {
+                    margin-top: 4rem;
+                    margin-bottom: 1rem;
+                    font-size: 1.25rem;
+                    text-align: left;
+                    background-color: #f0f8f8;
+                    border-left: 0.25rem solid $base-brandteal;
+                    padding: 0.5rem 0.85rem;
+                    color: $base-brandteal;
+                    font-weight: $bold-font-weight;
+                }
+                font-size: $h1-700-font-size;
+            };
+
+            h3.pmod {
+                margin-top: 3rem;
+                margin-bottom: 1rem;
+                font-size: 1.05rem;
+                text-align: left;
+                background-color: #f0f8f8;
+                border-left: 0.25rem solid $base-brandteal;
+                padding: 0.5rem 0.85rem;
+                font-weight: $bold-font-weight;
+                color: $base-brandteal;
+            }
+
+            h4.pmod {
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                font-size: 0.95rem;
+                text-align: left;
+                background-color: transparent;
+                border-left: 0.175rem solid $brandteal-darken-10;
+                padding: 0.35rem 0.75rem;
+                font-weight: $bold-font-weight;
+                color: $base-brandteal;
+            }
+
+            #title{
                 background-color: $base-white;
                 color: $base-brandteal;
                 text-align: center;
@@ -95,11 +230,203 @@ body {
         };
     }
 
-        .sidebar {
-            min-height: 100vh;
-            // background-color: $base-brandmint;
-            background-color: $base-brandteal;
-            font-weight: $semibold-font-weight;
+        // ── Site Navbar ───────────────────────────────────────────
+        // ── Site Navbar ───────────────────────────────────────────
+        // Navbar sits slightly darker than the header to create the three-band effect
+        .site-nav {
+            background-color: $brandteal-darken-10; // Revenue Green darkened — creates visual depth
+            border-bottom: 0.1875rem solid $base-cyan;
+            width: 100%;
+
+
+            &__home {
+                color: $base-white;
+                font-weight: $bold-font-weight;
+                font-size: 0.95rem;
+                text-decoration: none;
+                padding: 0.65rem 1rem;
+                white-space: nowrap;
+
+                &:hover {
+                    color: $base-cyan;
+                }
+            }
+
+            // Flex row wrapper
+            &__inner {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                width: 100%;
+                padding: 0 1rem;
+            }
+
+            // Collapsible wrapper — always visible on desktop
+            &__collapse {
+                display: flex;
+                flex: 1;
+
+                @media (max-width: 48rem) {
+                    display: none;
+                    width: 100%;
+                    order: 3;
+
+                    &--open {
+                        display: flex;
+                    }
+                }
+            }
+
+            &__links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+
+                @media (max-width: 48rem) {
+                    flex-direction: column;
+                }
+            }
+
+            &__link {
+                color: $base-white;
+                font-size: 0.88rem;
+                padding: 0.65rem 0.85rem;
+                white-space: nowrap;
+                border-left: 0.0625rem solid rgba(255,255,255,0.15);
+                text-decoration: none;
+                display: block;
+
+                &:hover, &:focus {
+                    background-color: rgba(255,255,255,0.12);
+                    color: $base-cyan;
+                }
+
+                @media (max-width: 48rem) {
+                    border-left: none;
+                    border-top: 0.0625rem solid rgba(255,255,255,0.1);
+                    padding: 0.75rem 1rem;
+                }
+            }
+
+            // Hamburger button — hidden on desktop, shown on mobile
+            &__toggler {
+                display: none;
+                background: none;
+                border: 0.0625rem solid rgba(255,255,255,0.5);
+                padding: 0.35rem 0.5rem;
+                cursor: pointer;
+                margin-left: auto;
+
+                &:focus {
+                    outline: 0.125rem solid $base-cyan;
+                    outline-offset: 0.125rem;
+                    box-shadow: none;
+                }
+
+                @media (max-width: 48rem) {
+                    display: block;
+                }
+            }
+
+            // Hamburger icon — three lines in CSS, no image dependency
+            &__hamburger {
+                display: block;
+                width: 1.375rem;
+                height: 0.125rem;
+                background-color: $base-white;
+                position: relative;
+
+                &::before, &::after {
+                    content: '';
+                    display: block;
+                    width: 1.375rem;
+                    height: 0.125rem;
+                    background-color: $base-white;
+                    position: absolute;
+                    left: 0;
+                }
+
+                &::before { top: -0.4375rem; }
+                &::after  { top:  0.4375rem; }
+            }
+
+            // CSS-only dropdown — no Bootstrap JS required
+            &__dropdown {
+                position: relative;
+                list-style: none;
+
+                &:hover > .site-nav__dropdown-menu,
+                &:focus-within > .site-nav__dropdown-menu {
+                    display: block;
+                }
+            }
+
+            &__dropdown-toggle {
+                display: flex;
+                align-items: center;
+                gap: 0.3em;
+                cursor: pointer;
+            }
+
+            &__dropdown-arrow {
+                font-size: 0.6rem;
+                line-height: 1;
+            }
+
+            &__dropdown-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: $brandteal-darken-10;
+                border: none;
+                border-radius: 0;
+                padding: 0.25rem 0;
+                min-width: 16rem;
+                box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.25);
+                z-index: 100;
+                list-style: none;
+                margin: 0;
+
+                @media (max-width: 48rem) {
+                    position: static;
+                    display: block;
+                    box-shadow: none;
+                    background-color: rgba(0,0,0,0.15);
+                    padding-left: 1rem;
+                }
+            }
+
+            &__dropdown-item {
+                display: block;
+                color: $base-white;
+                font-size: 0.875rem;
+                padding: 0.5rem 1.25rem;
+                white-space: normal;
+                text-decoration: none;
+
+                &:hover, &:focus {
+                    background-color: rgba(255,255,255,0.12);
+                    color: $base-cyan;
+                }
+
+                &--active {
+                    background-color: rgba(255,255,255,0.18);
+                    color: $base-cyan;
+                    font-weight: $bold-font-weight;
+                }
+            }
+
+            &__divider {
+                border: none;
+                border-top: 0.0625rem solid rgba(255,255,255,0.2);
+                margin: 0.25rem 0;
+            }
+
         };
 
         .pmod {
@@ -130,12 +457,370 @@ body {
 }
 
 .main_content {
-    max-width: 62.5rem;
+    max-width: 66%;
+    text-align: center;
     margin: auto;
+}
+
+// ── Home page card grid (Bootstrap-free) ────────────────────────────────────
+// Replaces Bootstrap container/row/col-sm/card/stretched-link
+// Uses CSS flexbox — no framework dependency
+
+.home-grid {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    &__row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+// Preceded by paragraphs — add top gap
+p ~ .home-grid {
+    margin-top: 2rem;
+}
+
+// ── Home page card ───────────────────────────────────────────────────────────
+.home-card {
+    width: 18rem;
+    border: 0.0625rem solid #dee2e6;
+    border-radius: 0;                   // Revenue: squared corners always
+    background-color: $base-white;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+        transform: translateY(-0.1875rem);
+        box-shadow: 0 0.375rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    // Full-card link — wraps the entire card content
+    &__link {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        text-decoration: none;
+        color: inherit;
+
+        &:hover, &:focus {
+            text-decoration: none;
+            outline-offset: 0.125rem;
+        }
+    }
+
+    // Image area — fixed height, centred SVG
+    &__img {
+        padding: 1rem;
+        background-color: $brandmint-lighten-50;
+        height: 8rem;
+        width: 100%;
+        object-fit: contain;
+        border-bottom: 0.0625rem solid #dee2e6;
+        display: block;
+    }
+
+    // Card label text
+    &__text {
+        flex: 1;
+        padding: 1rem;
+        font-size: 1.125rem;
+        font-family: FiraSans-Regular, sans-serif;  // external/customer-facing app
+        text-align: center;
+        line-height: 1.4;
+        color: #333;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+// ── Navbar collapse (Bootstrap-free) ────────────────────────────────────────
+// Replaces Bootstrap navbar-expand-md / collapse / navbar-collapse
+
+.site-nav {
+    &__inner {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 0 1rem;
+    }
+
+    &__collapse {
+        display: flex;
+        flex: 1;
+
+        // Hidden on mobile until toggled
+        @media (max-width: 48rem) {
+            display: none;
+            width: 100%;
+            order: 3;
+
+            &--open {
+                display: flex;
+            }
+        }
+    }
+
+    // Hamburger — hidden on desktop
+    &__toggler {
+        display: none;
+        background: none;
+        border: 0.0625rem solid rgba(255,255,255,0.5);
+        padding: 0.35rem 0.5rem;
+        cursor: pointer;
+        margin-left: auto;
+
+        @media (max-width: 48rem) {
+            display: block;
+        }
+    }
+
+    &__hamburger {
+        display: block;
+        width: 1.375rem;
+        height: 0.125rem;
+        background-color: $base-white;
+        position: relative;
+
+        &::before, &::after {
+            content: '';
+            display: block;
+            width: 1.375rem;
+            height: 0.125rem;
+            background-color: $base-white;
+            position: absolute;
+            left: 0;
+        }
+
+        &::before { top: -0.4375rem; }
+        &::after  { top:  0.4375rem; }
+    }
 }
 
 .document-title {
     color: rgb(2, 95, 99);
+}
+
+// ── Generated document pages (convert.py output) ─────────────────────────────
+// Constrains migrated PDF->HTML pages to the same width as .pit-section and .faq
+.document-content {
+    max-width: 60rem;
+    margin: 2rem auto;
+    padding: 0 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #333;
+
+        h1.document-title {
+        text-align: center;
+        color: $base-brandteal;
+        font-weight: $bold-font-weight;
+        margin-bottom: 1.5rem;
+    }
+
+    // Cover page graphic — image immediately after h1 title
+    // Displayed as a centred header graphic with no border, sits close to the title
+    h1.document-title + p > img:only-child,
+    h1.document-title + p > img:first-child {
+        border: none;
+        margin: 0 auto 1.5rem auto;
+        max-height: 12rem;
+        object-fit: contain;
+    }
+
+            h2.pmod {
+        text-align: left;
+        color: $base-brandteal;
+        font-weight: $bold-font-weight;
+        font-size: 1.25rem;
+        background-color: #f0f8f8;
+        border-left: 0.25rem solid $base-brandteal;
+        padding: 0.5rem 0.85rem;
+        margin-top: 4rem;
+        margin-bottom: 1rem;
+    }
+
+            h3.pmod, h4.pmod {
+        text-align: left;
+        color: $base-brandteal;
+        font-weight: $bold-font-weight;
+        font-size: 1.05rem;
+        background-color: #f0f8f8;
+        border-left: 0.25rem solid $base-brandteal;
+        padding: 0.5rem 0.85rem;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    h4.pmod {
+        font-size: 0.95rem;
+        background-color: transparent;
+        border-left: 0.175rem solid $brandteal-darken-10;
+        padding: 0.35rem 0.75rem;
+        margin-top: 2rem;
+    }
+
+    h3.pmod {
+        font-size: 1.05rem;
+    }
+
+    h4.pmod {
+        font-size: 0.95rem;
+        background-color: transparent;
+        border-left: 0.175rem solid $brandteal-darken-10;
+        padding: 0.35rem 0.75rem;
+    }
+
+    h4.pmod {
+        font-size: 0.95rem;
+        background-color: transparent;
+        border-left: 0.175rem solid $brandteal-darken-10;
+        padding: 0.35rem 0.75rem;
+    }
+
+        // Body links — always underlined so they are distinguishable without colour (WCAG 1.4.1)
+    p a,
+    li a,
+    td a {
+        text-decoration: underline;
+        color: $base-brandteal;
+
+        &:hover {
+            color: $brandteal-darken-10;
+        }
+    }
+
+    // TOC list
+    ul#toc {
+        background-color: #f9f9f9;
+        border: 0.0625rem solid #ddd;
+        padding: 1rem 1rem 1rem 2rem;
+        margin-bottom: 2rem;
+        line-height: 2;
+
+        a {
+            color: $base-brandteal;
+            text-decoration: none;
+            font-size: 0.9rem;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    // General tables
+    table.table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.25rem 0;
+        font-size: 0.875rem;
+        overflow-x: auto;
+        display: block;
+
+        thead tr {
+            background-color: $base-brandteal !important;
+            --bs-table-bg: #{$base-brandteal};
+            --bs-table-color: #{$base-white};
+            color: $base-white !important;
+        }
+
+        thead th {
+            padding: 0.6rem 0.85rem;
+            text-align: left;
+            font-weight: $bold-font-weight;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 0.0625rem solid #e0e0e0;
+
+            &:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+
+            &:hover {
+                background-color: #f0f8f8;
+            }
+        }
+
+        tbody td {
+            padding: 0.55rem 0.85rem;
+            vertical-align: top;
+        }
+    }
+
+    // Images
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 1rem auto;
+        border: 0.0625rem solid #e0e0e0;
+    }
+
+    // Figure captions — centred italic text beneath each screenshot
+    .figure-caption {
+        text-align: center;
+        font-style: italic;
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: -0.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    // Code blocks
+    pre {
+        background-color: #f4f4f4;
+        border-left: 0.25rem solid $base-brandteal;
+        padding: 0.85rem 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+        font-size: 0.85rem;
+
+        code {
+            background: none;
+            color: #333;
+            padding: 0;
+        }
+    }
+
+    // Inline code
+    p code {
+        background-color: #f0f0f0;
+        padding: 0.1rem 0.35rem;
+        font-size: 0.875rem;
+        color: $blue-darken-10;
+    }
+
+    // Lists
+    ul, ol {
+        margin: 0.5rem 0 1rem 1.5rem;
+        li { margin-bottom: 0.35rem; }
+    }
+
+    // Links
+    a {
+        color: $base-brandteal;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+            color: $brandteal-darken-10;
+        }
+    }
 }
 
 .heading {
@@ -148,4 +833,362 @@ code {
 
 .no-dot {
     list-style: none;
+}
+
+// ── PIT Section ───────────────────────────────────────────────────────────────
+.pit-section {
+    background: #fff;
+    border: 0.0625rem solid #ddd;
+    max-width: 60rem;      // 960px / 16 = 60rem
+    margin: 2rem auto;
+
+    // Section header bar
+    &__header {
+        background-color: $base-brandteal;
+        padding: 0.85rem 1.25rem;
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+    // Section heading text
+    &__title {
+        font-size: 1.1rem;
+        font-weight: $bold-font-weight;
+        color: $base-white;
+        letter-spacing: 0.01em;
+        margin: 0;
+    }
+
+    // Intro paragraph + bullet list
+    &__intro {
+        padding: 1rem 1.25rem 0.5rem;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #444;
+
+        p {
+            margin-bottom: 0.5rem;
+        }
+
+        ul {
+            margin: 0.25rem 0 0 1.25rem;
+        }
+
+        li {
+            margin-bottom: 0.35rem;
+        }
+    }
+
+    // Document table
+    &__table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.75rem;
+
+        thead tr {
+            background-color: #e8e8e8;
+            border-bottom: 0.125rem solid $base-brandteal;
+        }
+
+        thead th {
+            padding: 0.6rem 1rem;
+            font-weight: $bold-font-weight;
+            font-size: 0.9rem;
+            color: #222;
+            text-align: left;
+        }
+
+        tbody tr {
+            border-bottom: 0.0625rem solid #e0e0e0;
+            font-size: 0.95rem;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                background-color: #f0f8f8;
+            }
+        }
+
+        tbody td {
+            padding: 0.7rem 1rem;
+            vertical-align: middle;
+            color: #333;
+
+            a {
+                color: $base-brandteal;
+                text-decoration: none;
+                font-weight: $semibold-font-weight;
+
+                &:hover {
+                    text-decoration: underline;
+                    color: $brandteal-darken-10;
+                }
+            }
+        }
+    }
+
+    // Column widths
+    &__col--description { width: 45%; }
+    &__col--type        { width: 10%; }
+    &__col--env         { width: 25%; }
+    &__col--date        { width: 20%; }
+
+    // Type badges — squared corners per Revenue design conventions
+    &__badge {
+        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: $bold-font-weight;
+        padding: 0.2rem 0.55rem;
+        border-radius: 0;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+
+        &--pdf {
+            background-color: #d9534f;
+            color: $base-white;
+        }
+
+        &--link {
+            background-color: $base-brandteal;
+            color: $base-white;
+        }
+
+        &--zip {
+            background-color: #6f42c1;
+            color: $base-white;
+        }
+
+        &--schema {
+            background-color: #0d6efd;
+            color: $base-white;
+        }
+
+        &--csv {
+            background-color: #198754;
+            color: $base-white;
+        }
+
+        &--xlsx {
+            background-color: #1d6f42;
+            color: $base-white;
+        }
+
+        &--wsdl {
+            background-color: #6c757d;
+            color: $base-white;
+        }
+
+        &--api {
+            background-color: #6610f2;
+            color: $base-white;
+        }
+
+        &--excel {
+            background-color: #1d6f42;
+            color: $base-white;
+        }
+    }
+
+    // Footnote superscript reference in table
+    &__footnote-ref {
+        font-size: 0.7rem;
+        color: $base-brandteal;
+        margin-left: 0.15rem;
+        vertical-align: super;
+    }
+
+    // Prose content block (for non-table pages e.g. Support)
+    &__content {
+        padding: 1.25rem 1.5rem 1.5rem;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: #333;
+
+        p {
+            margin-bottom: 1rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        a {
+            color: $base-brandteal;
+            font-weight: $semibold-font-weight;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+                color: $brandteal-darken-10;
+            }
+        }
+    }
+
+    // Bullet list inside content block
+    &__list {
+        margin: 0.25rem 0 1rem 1.5rem;
+        padding: 0;
+
+        li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+            color: #333;
+        }
+    }
+
+    // Footnotes block below the table
+    &__footnotes {
+        padding: 0.85rem 1.25rem 1rem;
+        border-top: 0.0625rem solid #e0e0e0;
+        margin-top: 0.5rem;
+        font-size: 0.85rem;
+        color: #555;
+        line-height: 1.6;
+
+        p {
+            margin-bottom: 0.5rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+                sup {
+            font-size: 0.7rem;
+            margin-right: 0.2rem;
+            color: $base-brandteal;
+        }
+    }
+}
+
+// ── FAQ page ───────────────────────────────────────────────────────────────
+// Migrated from Angular paye-employers-pit-faq project.
+// Uses native <details>/<summary> for the accordion — no JS required, fully accessible.
+.faq {
+    max-width: 60rem;
+    margin: 0 auto;
+
+    // Section block (one per tab in the original Angular app)
+    &__section {
+        margin-bottom: 2rem;
+    }
+
+    // Section heading — Revenue teal bar, matching .pit-section__header style
+    &__section-title {
+        background-color: $base-brandteal;
+        color: $base-white;
+        font-size: 1.1rem;
+        font-weight: $bold-font-weight;
+        padding: 0.85rem 1.25rem;
+        margin: 0 0 0.25rem 0;
+        letter-spacing: 0.01em;
+    }
+
+    // Individual accordion item
+    &__item {
+        border: 0.0625rem solid #ddd;
+        border-top: none;   // sections share borders — no double border between items
+        background: $base-white;
+
+        &:first-of-type {
+            border-top: 0.0625rem solid #ddd;
+        }
+
+        // Remove the default browser marker — we add our own via CSS
+        summary {
+            list-style: none;
+            &::-webkit-details-marker { display: none; }
+        }
+
+        // Open state: tint the item
+        &[open] {
+            .faq__question {
+                background-color: #f0f8f8;
+                color: $base-brandteal;
+                border-bottom: 0.0625rem solid #ddd;
+            }
+        }
+    }
+
+    // Clickable question row
+    &__question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.85rem 1.25rem;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: $semibold-font-weight;
+        color: #222;
+        user-select: none;
+        transition: background-color 0.15s ease, color 0.15s ease;
+
+        &:hover {
+            background-color: #f0f8f8;
+            color: $base-brandteal;
+        }
+
+        // Chevron indicator — rotates when open
+        &::after {
+            content: '\203A'; // › single right angle quotation
+            font-size: 1.25rem;
+            font-weight: $bold-font-weight;
+            color: $base-brandteal;
+            transform: rotate(90deg);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+    }
+
+    // Rotate chevron when item is open
+    &__item[open] &__question::after {
+        transform: rotate(270deg);
+    }
+
+    // Answer content area
+    &__answer {
+        padding: 1rem 1.25rem 1.25rem;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: #333;
+
+        p {
+            margin-bottom: 0.75rem;
+            &:last-child { margin-bottom: 0; }
+        }
+
+        ul {
+            margin: 0.25rem 0 0.75rem 1.5rem;
+            li { margin-bottom: 0.35rem; }
+        }
+
+        pre {
+            background-color: $surface-200;
+            padding: 0.75rem 1rem;
+            overflow-x: auto;
+            margin-bottom: 0.75rem;
+
+            code {
+                background: none;
+                padding: 0;
+                font-size: 0.875rem;
+            }
+        }
+
+        a {
+            color: $base-brandteal;
+            font-weight: $semibold-font-weight;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+                color: $brandteal-darken-10;
+            }
+        }
+    }
 }

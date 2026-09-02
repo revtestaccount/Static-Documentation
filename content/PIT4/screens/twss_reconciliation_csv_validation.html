@@ -1,0 +1,101 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <title>Reconciliation</title>
+</head>
+<body><div class="document-content"><h1 class="document-title" id="title">Reconciliation</h1>
+<div style="display:flex; gap:2rem; justify-content:center; align-items:center; margin:1.5rem 0;">
+    <img alt="Workflow icon" src="../../../assets/images/icon-helpdesk-workflow.svg" width="240" height="240" />
+    <img alt="Filing icon" src="../../../assets/images/icon-helpdesk-filing.svg" width="240" height="240" />
+    <img alt="Sync icon" src="../../../assets/images/icon-helpdesk-sync.svg" width="240" height="240" />
+</div><h2 class="pmod" id="table_of_contents">Table of Contents</h2><ul id="toc"><li><a href="#reconciliation">Reconciliation</a></li><li><a href="#temporary_wage_subsidy_scheme">Temporary Wage Subsidy Scheme</a></li><li style="margin-left: 1.5rem;"><a href="#latest_version_history">Latest Version History</a></li><li style="margin-left: 1.5rem;"><a href="#audience">Audience</a></li><li style="margin-left: 1.5rem;"><a href="#document_context">Document context</a></li><li style="margin-left: 1.5rem;"><a href="#pre-submission_validation">Pre-submission Validation</a></li><li style="margin-left: 1.5rem;"><a href="#file_format_/_schema_validation">File Format / Schema Validation</a></li><li style="margin-left: 1.5rem;"><a href="#business_rules_validation">Business Rules Validation</a></li></ul>
+<h2 class="pmod" id="reconciliation">Reconciliation</h2>
+<h2 class="pmod" id="temporary_wage_subsidy_scheme">Temporary Wage Subsidy Scheme</h2>
+<div style="display:flex; justify-content:space-between; margin:0.5rem 0;"><span><strong>Version</strong> 1.0</span><span><strong>Version Date</strong> 30/07/2020</span></div>
+
+<h3 class="pmod" id="latest_version_history">Latest Version History</h3>
+<h3 class="pmod" id="audience">Audience</h3>
+<p>This document is for any employer who has registered for the Temporary Wage Subsidy Scheme (TWSS) and wishes to upload a CSV file with the details of the subsidy paid to each of their employees.</p>
+<h3 class="pmod" id="document_context">Document context</h3>
+<p>This document provides a description of a set of validations that would be performed when a CSV file is uploaded.</p>
+<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Version</th>
+<th scope="col">Change Date</th>
+<th scope="col">Element</th>
+<th scope="col">Change Description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1.0</td><td>30/07/2020</td><td>N/A</td><td>Document published</td></tr>
+</tbody>
+</table>
+<h3 class="pmod" id="pre-submission_validation">Pre-submission Validation</h3>
+<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Validation Rule</th>
+<th scope="col">Validation Error Message</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>When the selected file is not .csv</td><td>We are unable to process your file. Please ensure the file is in a valid CSV format.</td></tr>
+<tr><td>If file size is larger than 10MB</td><td>Your file has exceeded the maximum size allowable, please ensure your file is less than 10MB.</td></tr>
+<tr><td>If max number of line items is more than 50k. This number checks against the line items for a payslip and excludes the headers rows</td><td>Your file has exceeded the maximum amount of line items allowed, please ensure there are no more than 50,000.</td></tr>
+<tr><td>Validation against first line headings of CSV</td><td>There are errors with your headings on line 1 of CSV. Allowed values are: employerName, employerRegistrationNumber, taxYear, softwareUsed, softwareVersion. Values are case sensitive.</td></tr>
+<tr><td>Validation against third line of CSV for second level headings</td><td>There are errors with your headings on line 3 of CSV. Allowed values are: payrollRunReference, lineItemID, employerReference, employeePpsn, employmentID, payDate, subsidyPaid, arnwp. Values are case sensitive.</td></tr>
+<tr><td>Unable to parse the file the file content</td><td>There are errors in your file. Please ensure the data within the file is in a valid format or contact your payroll software provider.</td></tr>
+</tbody>
+</table>
+<p>** Only one error would trigger at a time<br>
+** The error messages would appear on the screen<br>
+** Sign &amp; Submit button will remain disabled</p>
+<p>** Only one error would trigger at a time<br>
+** The error messages would appear on the screen<br>
+** Sign &amp; Submit button will remain disabled</p>
+<h3 class="pmod" id="file_format_/_schema_validation">File Format / Schema Validation</h3>
+<p>** Field size, data format and characters are all schema errors and the submission will be rejected and a file downloaded with the details.
+** The error messages would appear in the CSV response file</p>
+<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Field Name</th>
+<th scope="col">Mandatory / Optional</th>
+<th scope="col">Field Size</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Employer Name</td><td>Mandatory</td><td>Max Length &ndash; 100 characters</td></tr>
+<tr><td>Employer Registration Number</td><td>Mandatory</td><td>Max Length &ndash; 100 characters</td></tr>
+<tr><td>Tax Year</td><td>Mandatory</td><td>Numerical, 4-digits, valid year</td></tr>
+<tr><td>Software Used</td><td>Optional</td><td>Max Length &ndash; 100 characters</td></tr>
+<tr><td>Software Version</td><td>Optional</td><td>Max Length &ndash; 100 characters</td></tr>
+<tr><td>Payroll Run Reference</td><td>Mandatory</td><td>Max Length &ndash; 50 characters</td></tr>
+<tr><td>Line Item ID</td><td>Mandatory</td><td>Max Length &ndash; 50 characters</td></tr>
+<tr><td>Employer Reference</td><td>Optional</td><td>Max Length &ndash; 50 characters</td></tr>
+<tr><td>Employee PPSN</td><td>Mandatory</td><td>Format is 7 digits (including leading zeros) followed by either 1 or 2 letters</td></tr>
+<tr><td>Employment ID</td><td>Mandatory</td><td>Max Length &ndash; 20 characters</td></tr>
+<tr><td>Pay Date</td><td>Mandatory</td><td>Max Length &ndash; 10 characters (dd/mm/yyyy)</td></tr>
+<tr><td>Subsidy Paid</td><td>Mandatory</td><td>Zero is a valid value; negative values unacceptable</td></tr>
+<tr><td>ARNWP</td><td>Optional</td><td>If provided, value should be greater than 0</td></tr>
+</tbody>
+</table>
+<h3 class="pmod" id="business_rules_validation">Business Rules Validation</h3>
+<p>** Only one business error would trigger at a time ** The error messages would appear in the CSV response file</p>
+<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Validation Rule</th>
+<th scope="col">Validation Error Message</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Payslip doesn&rsquo;t exist &ndash; Payslip lookup is based on Employer Registration Number + Tax Year + Payroll Run Reference + Line Item ID</td><td>The payslip referenced in the subsidy data does not exist. If this is a valid payslip, please report this as a payroll submission.</td></tr>
+<tr><td>Payslip is unlinked &ndash; scenario when all the required information is supplied on the CSV, but payslip doesn&rsquo;t have the Employee ID when looked up</td><td>The payslip referenced in the subsidy data does not include an Employee ID.</td></tr>
+<tr><td>PPSN doesn&rsquo;t match</td><td>The subsidy detail PPSN does not match the PPSN on the referenced payslip.</td></tr>
+<tr><td>Employment ID doesn&rsquo;t match</td><td>The subsidy detail employment ID does not match the employment ID on the referenced payslip.</td></tr>
+<tr><td>Pay date doesn&rsquo;t match</td><td>The subsidy detail pay date does not match the pay date on the referenced payslip</td></tr>
+</tbody>
+</table></div></body></html>

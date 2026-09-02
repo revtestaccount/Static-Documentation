@@ -1,0 +1,88 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+    <title>Temporary Wage Subsidy Scheme Operational Phase</title>
+</head>
+<body><div class="document-content"><h1 class="document-title" id="title">Temporary Wage Subsidy Scheme Operational Phase</h1>
+<div style="display:flex; gap:2rem; justify-content:center; align-items:center; margin:1.5rem 0;">
+    <img alt="Workflow icon" src="../../../assets/images/icon-helpdesk-workflow.svg" width="240" height="240" />
+    <img alt="Filing icon" src="../../../assets/images/icon-helpdesk-filing.svg" width="240" height="240" />
+    <img alt="Sync icon" src="../../../assets/images/icon-helpdesk-sync.svg" width="240" height="240" />
+</div><h2 class="pmod" id="table_of_contents">Table of Contents</h2><ul id="toc"><li><a href="#temporary_wage_subsidy_scheme_operational_phase">Temporary Wage Subsidy Scheme Operational Phase</a></li><li><a href="#paye_modernisation">PAYE Modernisation</a></li><li style="margin-left: 1.5rem;"><a href="#column_descriptions">Column Descriptions</a></li><li style="margin-left: 1.5rem;"><a href="#latest_version_history">Latest Version History</a></li><li style="margin-left: 1.5rem;"><a href="#audience">Audience</a></li><li style="margin-left: 1.5rem;"><a href="#document_context">Document context</a></li></ul>
+<h2 class="pmod" id="temporary_wage_subsidy_scheme_operational_phase">Temporary Wage Subsidy Scheme Operational Phase</h2>
+<h2 class="pmod" id="paye_modernisation">PAYE Modernisation</h2>
+<div style="display:flex; justify-content:space-between; margin:0.5rem 0;"><span><strong>Version</strong> 1.0</span><span><strong>Version Date</strong> 28/04/2020</span></div>
+<h3 class="pmod" id="column_descriptions">Column Descriptions</h3>
+<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Column</th>
+<th scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Column Name</td><td>Name of data column</td></tr>
+<tr><td>Description</td><td>Description of the data element and the format that will be applied</td></tr>
+<tr><td>Notes</td><td>Any additional detail</td></tr>
+</tbody>
+</table>
+<h3 class="pmod" id="latest_version_history">Latest Version History</h3>
+<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Version</th>
+<th scope="col">Change Date</th>
+<th scope="col">Element</th>
+<th scope="col">Change Description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>1.0</td><td>24/04/2020</td><td>N/A</td><td>Document published</td></tr>
+<tr><td></td><td>27/04/2020</td><td>Tier 1 Tier 2 MWWS</td><td>Updated description</td></tr>
+<tr><td></td><td></td><td>Eligible Employee</td><td>Updated submission date</td></tr>
+<tr><td></td><td>28/04/2020</td><td>Tier 1 MWWS Tier 2 Tier 2 MWWS Tier 3</td><td>Updated description</td></tr>
+</tbody>
+</table>
+<h3 class="pmod" id="audience">Audience</h3>
+<p>This document is for any employer who has registered for the Temporary Wage Subsidy Scheme (TWSS) and wishes to download a CSV file with a calculation of the maximum subsidy payment amounts for each of their employees, based on their Average Revenue Net Weekly Pay (ARNWP).</p>
+
+
+<h3 class="pmod" id="document_context">Document context</h3>
+<p>This document provides a description for each column on the Temporary Wage Subsidy Scheme Operational Phase CSV calculation file, available through the Request Revenue Payroll Notifications page in ROS.</p>
+<table class="table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Column Name</th>
+<th scope="col">Description</th>
+<th scope="col">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Employer Name</td><td>Header: Employer name, max length 100 characters</td><td>Use to identify the employer and confirm that the employer name matches with Revenue records</td></tr>
+<tr><td>Employer Registration number</td><td>Header: Used to identify employer to which the submission relates, max length 100 characters</td><td>Used to identify employer to which the submission relates.</td></tr>
+<tr><td>Agent Tain</td><td>Header: Agent Tax Advisor Identification Number. Required if TWSS is requested by agent on behalf of employer</td><td>Required if TWSS is queried by agent on behalf of employer</td></tr>
+<tr><td>Tax Year</td><td>Header: Used to identify the tax year to which the TWSS lookup relates (YYYY)</td><td>The Tax Year TWSS relates to</td></tr>
+<tr><td>Date time Effective</td><td>Date &amp; time from when the TWSS calculation is effective from</td><td>The date and time at which the TWSS returned is correct/was issued (YYYY-MMDDThh:mm:ss.sss&plusmn;hhmm). max length 28</td></tr>
+<tr><td>Employee PPSN</td><td>Format is 7 digits (including leading zeros) followed by either 1 or 2 letters.</td><td>This field will always be populated</td></tr>
+<tr><td>Employment ID</td><td>The value of this field will be the Employment ID provided to Revenue by the employer when setting up the employment</td><td>This field will always be populated. For re-hires this will be the employment id from the active employment.</td></tr>
+<tr><td>Employer Reference</td><td>Employer reference set by the employer</td><td>This field may be empty and will be populated with employer reference first provided by employer. For re-hires this will be the employer reference from the active employment.</td></tr>
+<tr><td>Eligible Employee</td><td>This states if employee is eligible or ineligible for the scheme and marks employee as Y/N</td><td>An employee is eligible if they have payslips with pay dates between 1st-29th February and submitted before the 1st April for the given employer. These payslips must have included the employee&rsquo;s PPSN.</td></tr>
+<tr><td>Firstname</td><td>First name of the employee</td><td>This will be taken from Revenue&rsquo;s core registration system but if the employee is not registered for PAYE but has provided an PPSN for payroll then it will be the first name as reported by the employer on the payroll.</td></tr>
+<tr><td>FamilyName</td><td>Family name of the employee</td><td>This will be taken from Revenue&rsquo;s core registration system but if the employee is not registered for PAYE but has provided an PPSN for payroll then it will be the first name as reported by the employer on the payroll.</td></tr>
+<tr><td>Gross Pay</td><td>The sum of gross pay on active payslips for pay dates between 01/01/2020 and 29/02/2020 inclusive.</td><td>Where employee is ineligible this will be blank. Zero is a valid value. This number will contain two decimal places. For re-hires this will be from the last active employment the employee had with this employer.</td></tr>
+<tr><td>Income tax paid</td><td>The sum of Income tax deducted on active payslips for pay dates between 01/01/2020 and 29/02/2020 inclusive.</td><td>Where employee is ineligible this will be blank. Zero is a valid value. This number will contain two decimal places. For re-hires this will be from the last active employment the employee had with this employer.</td></tr>
+<tr><td>UscPaid</td><td>The sum of USC deducted on active payslips for pay dates between 01/01/2020 and 29/02/2020 inclusive.</td><td>Where employee is ineligible this will be blank. Zero is a valid value. This number will contain two decimal places. For re-hires this will be from the last active employment the employee had with this employer.</td></tr>
+<tr><td>EE PRSI paid</td><td>The sum of Employee PRSI deducted on active payslips for pay dates between 01/01/2020 and 29/02/2020 inclusive.</td><td>Where employee is ineligible this will be blank. Zero is a valid value. This number will contain two decimal places. For re-hires this will be from the last active employment the employee had with this employer.</td></tr>
+<tr><td>Divisor</td><td>This is the sum total of the number of insurable weeks as reported on each payslips for pay dates between 01/01/2020 and 29/02/2020 inclusive. This is the number used to calculate the average revenue net weekly pay (ARNWP)</td><td>If the number of insurable weeks is 0 or &gt; 9 the divisor will be set to 9. Otherwise this is the sum of the insurable weeks reported on payslips received with pay dates between 01/01/2020 and 29/02/2020. For re-hires this will be from the last active employment the employee had with this employer.</td></tr>
+<tr><td>ARNWP</td><td>This is the sum of the Gross pay minus the sum of Income tax paid, USC paid and EE PRSI paid between 01/01/2020 and 29/02/2020 inclusive divided by the &lsquo;divisor&rsquo; figures</td><td>Average Revenue Net Weekly Pay This number will contain two decimal places.</td></tr>
+<tr><td>Tier 1</td><td>Where an employee&rsquo;s total ARNWP means that more than 1 tier is applicable this provides the maximum gross employer pay applicable for the Tier 1 MWWS. This will be blank if the employee&rsquo;s total ARNWP means that only 1 tier is applicable.</td><td>This number will contain two decimal places.</td></tr>
+<tr><td>Tier 1 MWWS</td><td>Where Tier 1 is blank this is the maximum weekly wage subsidy applicable for the employee. Where Tier 1 is populated this provides the maximum weekly wage subsidy applicable for the employee where the gross employer pay is &lt;= Tier 1</td><td>MWWS &ndash; Maximum Weekly Wage Subsidy This number will contain two decimal places.</td></tr>
+<tr><td>Tier 1 MWEPBT</td><td>This is the maximum gross employer pay before tapering that will apply to Tier 1 MWWS.</td><td>Maximum Weekly Employer Pay before Tapering at Tier 1 This number will contain two decimal places.</td></tr>
+<tr><td>Tier 2</td><td>This will be blank if the employee&rsquo;s total ARNWP means that only 1 tier is applicable. Where an employee&rsquo;s total ARNWP means that more than 1 tier is applicable this provides the maximum gross employer pay applicable for the Tier 2 MWWS.</td><td>This number will contain two decimal places.</td></tr>
+<tr><td>Tier 2 MWWS</td><td>Where Tier 2 is populated this provides the maximum weekly wage subsidy applicable for the employee where the gross employer pay is greater than Tier 1 and less than or equal to Tier 2</td><td>Maximum Weekly Wage Subsidy at Tier 2 This number will contain two decimal places.</td></tr>
+<tr><td>Tier 2 MWEPBT</td><td>This is the maximum gross employer pay before tapering that will apply to Tier 2 MWWS.</td><td>Maximum Weekly Employer Pay before Tapering at Tier 2 This number will contain two decimal places.</td></tr>
+<tr><td>Tier 3</td><td>Where Tier 2 is blank or is 960.01 this will be blank. Where Tier 2 is populated this provides the employer gross pay where no subsidy will apply for the employee</td><td>Temporary Weekly Wage Subsidy Tier 3 This number will contain two decimal places.</td></tr>
+<tr><td>Tier 3 MWWS</td><td>Where Tier 3 is not blank this will be set to 0</td><td>Maximum Weekly Wage Subsidy at Tier 3 This number will contain two decimal places.</td></tr>
+</tbody>
+</table></div></body></html>

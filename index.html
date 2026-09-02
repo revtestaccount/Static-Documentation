@@ -1,49 +1,85 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>PAYE Modernisation Web Services</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- PrimeIcons: loaded here so it works for static pages that don't go through the SCSS pipeline -->
+    <link href="./node_modules/primeicons/primeicons.css" rel="stylesheet">
+    <!-- REVDS custom stylesheet: compiled from assets/css/styles.scss -->
     <link href="./assets/css/styles.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="row">
+    <div class="site-wrapper">
 
-            <header class="header">
-                <a class="logo col-md-2 col-lg-2" href="#/"><img alt="Revenue Irish Tax and Customs" class="float-right"
-                        height="105" width="220" src="./assets/images/ictl_logo.png"></a>
-                <div class="col-md-10 col-lg-10 PAYE_Modernisation_ERR_Documentation">
-                    <p class="PAYE_Modernisation_ERR_Webservices">PAYE Modernisation / ERR Documentation</p>
-                </div>
-            </header>
-
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 sidebar">
-                <!-- <div class="position-sticky pt-3 p-sidebar-content">
-                    <a href="/">Main Page</a>
-                </div> -->
-                <div class="position-sticky pt-3 p-sidebar-content" id="sidebarLinks">
-                </div>
-            </nav>
-
-            <!-- <a href="#home">Home</a>-->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 main_content">
-                <div id="content">
-                    <!-- Content will be loaded here -->
-                </div>
-            </main>
-
+        <!-- Top utility bar -->
+        <div class="header-util">
+            <span class="header-util__context">PAYE Modernisation Web Services</span>
+            <a class="header-util__link" href="https://www.revenue.ie/en/online-services/support/software-developers/index.aspx" target="_blank" rel="noopener noreferrer">Help</a>
         </div>
+
+        <!-- Main header -->
+        <header class="header">
+            <a class="header__logo" href="https://www.revenue.ie/en/home.aspx">
+                <img alt="Revenue — Irish Tax and Customs" height="80" width="185" src="./assets/images/ictl_logo.png">
+            </a>
+            <div class="header__divider" aria-hidden="true"></div>
+            <div class="header__app-name">
+                PAYE Modernisation / ERR Documentation
+            </div>
+        </header>
+
+        <!-- Navbar -->
+        <nav class="site-nav">
+            <div class="site-nav__inner">
+                <!-- Home link always visible -->
+                <a class="site-nav__home" href="#/">Home</a>
+
+                <!-- Hamburger toggle for small screens -->
+                <button class="site-nav__toggler" type="button"
+                    aria-controls="navLinks" aria-expanded="false" aria-label="Toggle navigation"
+                    onclick="toggleNav(this)">
+                    <span class="site-nav__hamburger"></span>
+                </button>
+
+                <!-- Nav links injected by router -->
+                <div class="site-nav__collapse" id="navLinks">
+                    <ul class="site-nav__links" id="navLinksList">
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main content -->
+        <main class="site-main">
+            <div id="content">
+                <!-- Content will be loaded here -->
+            </div>
+        </main>
+
     </div>
 
     <footer class="footer">
     </footer>
 
     <script src="./assets/js/router.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Vanilla JS hamburger toggle — replaces Bootstrap data-bs-toggle="collapse"
+        function toggleNav(btn) {
+            var nav = document.getElementById('navLinks');
+            var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', String(!isExpanded));
+            nav.classList.toggle('site-nav__collapse--open');
+        }
+        // Close nav on route change (SPA navigation)
+        window.addEventListener('hashchange', function () {
+            var nav = document.getElementById('navLinks');
+            var btn = document.querySelector('.site-nav__toggler');
+            if (nav) nav.classList.remove('site-nav__collapse--open');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+        });
+    </script>
 </body>
 
 </html>

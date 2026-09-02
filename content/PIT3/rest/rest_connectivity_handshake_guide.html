@@ -1,0 +1,288 @@
+<html
+ lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>REST Connectivity Handshake Guide</title>
+    <link rel="stylesheet" href="../../../assets/css/styles.css" />
+</head>
+<body>
+<div class="document-content">
+
+<h1 class="document-title" id="title">REST Connectivity Handshake Guide</h1>
+<div style="display:flex; gap:2rem; justify-content:center; align-items:center; margin:1.5rem 0;">
+    <img alt="" role="presentation" src="../../../assets/images/icon-helpdesk-workflow.svg" width="240" height="240" />
+    <img alt="" role="presentation" src="../../../assets/images/icon-helpdesk-filing.svg" width="240" height="240" />
+    <img alt="" role="presentation" src="../../../assets/images/icon-helpdesk-sync.svg" width="240" height="240" />
+</div>
+
+<h2 class="pmod" id="table_of_contents">Table of Contents</h2>
+<ul id="toc">
+    <li><a href="#audience">Audience</a></li>
+    <li><a href="#document_context">Document Context</a></li>
+    <li><a href="#document_references">Document References</a></li>
+    <li><a href="#version_history">Version History</a></li>
+    <li><a href="#1._introduction">1. Introduction</a></li>
+    <li><a href="#2._calling_the_services">2. Calling the Services</a></li>
+    <li style="margin-left: 1.5rem;"><a href="#2.1._rest_endpoints">2.1. REST Endpoints</a></li>
+    <li style="margin-left: 1.5rem;"><a href="#2.2._digital_signatures">2.2. Digital Signatures</a></li>
+    <li><a href="#3._interpreting_the_responses">3. Interpreting the Responses</a></li>
+    <li style="margin-left: 1.5rem;"><a href="#3.1._validation_errors">3.1. Validation Errors</a></li>
+    <li style="margin-left: 3rem;"><a href="#3.1.1._request_validation">3.1.1. Request Validation</a></li>
+    <li style="margin-left: 1.5rem;"><a href="#3.2._successful_response">3.2. Successful Response</a></li>
+    <li><a href="#4._digital_signatures">4. Digital Signatures</a></li>
+    <li style="margin-left: 1.5rem;"><a href="#4.1._http_signatures">4.1. HTTP Signatures</a></li>
+    <li style="margin-left: 3rem;"><a href="#4.1.1._http_signature_sample">4.1.1. HTTP Signature Sample</a></li>
+    <li style="margin-left: 3rem;"><a href="#4.1.2._http_signature_components">4.1.2. HTTP Signature Components</a></li>
+    <li style="margin-left: 3rem;"><a href="#4.1.3._signature_string_construction">4.1.3. Signature String Construction</a></li>
+    <li style="margin-left: 3rem;"><a href="#4.1.4._signature_creation">4.1.4. Signature Creation</a></li>
+    <li><a href="#5._example_messages">5. Example Messages</a></li>
+</ul>
+
+<h2 class="pmod" id="audience">Audience</h2>
+<p>This document is for any software provider who has chosen to build or update their products to allow for PAYE Modernisation.</p>
+
+<h2 class="pmod" id="document_context">Document Context</h2>
+<p>This document provides a technical overview of how to integrate with Revenue's REST web services including how to sign requests validly. This document is designed to be read in conjunction with the REST/JSON example files as well as the rest of the Revenue Commissioners' PAYE Modernisation documentation suite including the relevant technical documents.</p>
+
+<h2 class="pmod" id="document_references">Document References</h2>
+<table class="table" tabindex="0">
+    <thead>
+        <tr>
+            <th scope="col">Reference</th>
+            <th scope="col">Document Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1. Documents Homepage</td>
+            <td><a href="https://revenue-ie.github.io/paye-employers-documentation/">Documents Homepage</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 class="pmod" id="version_history">Version History</h2>
+<table class="table" tabindex="0">
+    <thead>
+        <tr>
+            <th scope="col">Version</th>
+            <th scope="col">Change Date</th>
+            <th scope="col">Section</th>
+            <th scope="col">Change Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>V 1.0</td>
+            <td>13/11/2018</td>
+            <td>All</td>
+            <td>Document published.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>22/11/2018</td>
+            <td>4.1.2</td>
+            <td>Specified digest field required for POST.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>14/12/2018</td>
+            <td>2.1</td>
+            <td>Specified Agent Tain is conditionally optional.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>08/01/2019</td>
+            <td>4.1.3</td>
+            <td>Date timeout changed from 60 seconds to 90 minutes.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 class="pmod" id="1._introduction">1. Introduction</h2>
+<p>This document details the REST PAYE Modernisation web services specification for the following web services:</p>
+<ul>
+    <li>REST Connectivity Handshake</li>
+</ul>
+<p>The Documents Homepage specified in Document References is the home to all technical documentation, specification, and examples for the above web services which has been made available to enable payroll software developers to update their software packages to be compatible with PAYE reporting obligations from January 2019. Path locations specified in this document are relative to this Homepage.</p>
+<p>This document assumes familiarity with the REST web services above. A full description of each of these can be found in the 'PAYE Modernisation Description of Web Service Examples' Document under 'PAYE Web Service Examples' on the Documents Homepage.</p>
+<p>The OpenAPI Specification, originally known as the Swagger Specification, is a specification for machine-readable interface files for describing, producing, consuming, and visualizing RESTful Web services. The specification can be described using the YAML or JSON format. Revenue provides the specification in JSON format or, alternatively, it can be viewed using the ReDoc UI framework. The JSON file can be downloaded and imported into any Open API UI framework such as the Swagger UI framework. Links are provided for both the JSON format file and the ReDoc UI framework under 'PAYE Web Service Specifications (REST/JSON)' on the Documents Homepage. The URL for each web service will use the HTTPS protocol to ensure the privacy of all communication between ROS and the web service client.</p>
+
+<h2 class="pmod" id="2._calling_the_services">2. Calling the Services</h2>
+<p>The web services for the PAYE Modernisation messages are described in the REST OpenAPI Specification JSON file provided under 'PAYE Web Service Specifications (REST/JSON)' on the Documents Homepage.</p>
+<p>The OpenAPI, REST Security version specifications we are following include:</p>
+<ul>
+    <li><a href="https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md">Open API Specification Version 3.0</a></li>
+    <li><a href="https://tools.ietf.org/html/draft-cavage-http-signatures-08">HTTP Signatures Version 08</a></li>
+</ul>
+
+<h3 class="pmod" id="2.1._rest_endpoints">2.1. REST Endpoints</h3>
+<p>The PAYE Modernisation web service endpoints are detailed below.</p>
+<table class="table" tabindex="0">
+    <thead>
+        <tr>
+            <th scope="col">Description</th>
+            <th scope="col">HTTP Method</th>
+            <th scope="col">Endpoint URL</th>
+            <th scope="col">Additional Information</th>
+            <th scope="col">Links</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>REST Connectivity Handshake</td>
+            <td>GET</td>
+            <td>https://softwaretest.ros.ie/paye-employers/v1/rest/handshake?employerRegistrationNumber={employerRegistrationNumber}&amp;softwareUsed={softwareUsed}&amp;softwareVersion={softwareVersion}&amp;agentTain={agentTain}</td>
+            <td>
+                <p>Query Parameters:</p>
+                <ul>
+                    <li>softwareUsed</li>
+                    <li>softwareVersion</li>
+                    <li>employerRegistrationNumber (conditionally optional, required when using an Agent Cert)</li>
+                    <li>agentTain (conditionally optional, required when using an Agent Cert)</li>
+                </ul>
+            </td>
+            <td>connectivityHandshake</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3 class="pmod" id="2.2._digital_signatures">2.2. Digital Signatures</h3>
+<p>The PAYE Modernisation web services will require a digital signature. This will be the digital signature of the declarant.</p>
+
+<h2 class="pmod" id="3._interpreting_the_responses">3. Interpreting the Responses</h2>
+<p>Each web service will return a response message to the client as outlined below.</p>
+
+<h3 class="pmod" id="3.1._validation_errors">3.1. Validation Errors</h3>
+
+<h3 class="pmod" id="3.1.1._request_validation">3.1.1. Request Validation</h3>
+<p>When a request is made to a PAYE Modernisation web service three checks are carried out before any processing can occur. These include:</p>
+<ol>
+    <li>Authentication</li>
+    <li>Authorisation</li>
+    <li>JSON API validation</li>
+</ol>
+<p>Step 1 of the validation process tries to verify the authenticity of the message by checking it has been signed with a valid digital signature. Step 2 focuses on authorising the credentials and finally, step 3 checks the message is valid using JSON API validation.</p>
+<p>Please note that Step 2 will only be performed if an Employer's PAYE tax registration number is provided as part of the request or if an Agent TAIN and Employer's PAYE tax registration number is provided as part of the request.</p>
+<p>If there are any errors encountered during the above processes, the response will include a HTTP status code of either 401 (Unauthorised) if authentication fails, 403 if authorisation fails and 400 (Bad Request) if JSON API validation fails. The message body will provide more information on the details of the problem. Where an error code is returned to the client, no processing will occur for that message.</p>
+<p>If the message passes JSON API validation, authentication, and authorisation but the resource cannot be found the response will include a HTTP status code of 404. If the resources query parameters are not as required or are missing, the response will include a HTTP status code of 400. Where an error code is returned to the client, no processing will occur for that message.</p>
+
+<h3 class="pmod" id="3.2._successful_response">3.2. Successful Response</h3>
+<p>The "Connectivity" web service will return a HTTP 200 OK response if called with a validly signed request and neither of the two optional parameters (employerRegistrationNumber, agentTain) have been included in the request.</p>
+<p>If the request includes an Employer's PAYE tax registration number (employerRegistrationNumber), a HTTP 200 OK response will be returned if the request is validly signed and the provided tax registration number is the owner of the certificate that signed the request.</p>
+<p>If the request includes both an Employer's PAYE tax registration number (employerRegistrationNumber) and Agent TAIN (agentTain), a HTTP 200 OK response will be returned if the request is validly signed, the provided Agent TAIN is the owner of the certificate and the provided tax registration number is linked to the Agent TAIN. Please note that if an Agent TAIN is provided a linked Employer's PAYE tax registration number must also be provided.</p>
+<p>A list of validation errors (if any) on the request is also included in the response. Please refer back to Section 3.1 for more information on Validation Errors.</p>
+
+<h2 class="pmod" id="4._digital_signatures">4. Digital Signatures</h2>
+<p>Any ROS web service request that either returns confidential information or accepts submission of information must be digitally signed. This must be done using a digital certificate that has been previously retrieved from ROS.</p>
+<p>The digital signature must be applied to the message in accordance with the HTTP Signatures specification as specified in Section 4.1.</p>
+<p>The digital signature ensures the integrity of the document. By signing the document we can ensure that no malicious intruder has altered the document in any way. It can also be used for non-repudiation purposes.</p>
+<p>If a valid digital signature is not attached, a HTTP status code of 401 (Unauthorised) will be returned. The message body will provide more information on the details of the problem.</p>
+
+<h3 class="pmod" id="4.1._http_signatures">4.1. HTTP Signatures</h3>
+<p>The HTTP signatures protocol is intended to provide a simple and standard way for clients to sign HTTP requests. A summary of the structure of a HTTP Signature is outlined below. This is a simplified explanation of the HTTP Signatures specification. The full specification can be found at Signing HTTP Messages and should be read in full. The specification defines two approaches to building a HTTP signature, "The 'Signature' HTTP Authentication Scheme" and "The 'Signature' HTTP Header" &#8212; Revenue uses the latter.</p>
+<p>At a high level, a HTTP Signature is a HTTP header that is added to a HTTP request. It is comprised of a set of components that were used to generate a digital signature and the digital signature itself.</p>
+
+<h3 class="pmod" id="4.1.1._http_signature_sample">4.1.1. HTTP Signature Sample</h3>
+<p>Below is a sample HTTP Signature header.</p>
+<pre tabindex="0"><code>Signature: keyId="MIICfzCCAeigAwIBAgIJ... // truncated",
+  algorithm="rsa-sha512",
+  headers="(request-target) host date digest",
+  signature="GdUqDgy94Z8mSYUjr/rL6qrLX/jmudS... // truncated"</code></pre>
+
+<h3 class="pmod" id="4.1.2._http_signature_components">4.1.2. HTTP Signature Components</h3>
+<p>The Signature HTTP header contains four components: keyId, algorithm, headers and signature. Below is a description of each.</p>
+<p><strong>keyId:</strong> The <code>keyId</code> field must contain a Base64 encoded version of the X509 certificate that accompanies the private key used to sign the message. This field is required.</p>
+<p><strong>algorithm:</strong> The <code>algorithm</code> parameter is used to specify the digital signature algorithm to use when generating the signature. Revenue expects this to be 'rsa-sha512'. This field is required.</p>
+<p><strong>headers:</strong> The <code>headers</code> parameter specifies the list of headers used when generating the signature for the message. The parameter must be a lowercased, quoted list of HTTP header fields, separated by a single space character. The list order is important, and MUST be specified in the order the HTTP header field-value pairs are concatenated together during signing. For POST requests, the digest field must be included.</p>
+<p><strong>signature:</strong> The <code>signature</code> component is a base 64 encoded digital signature. The implementer uses the <code>algorithm</code> and <code>headers</code> field to form a canonicalized <code>signing string</code>. This <code>signing string</code> is then signed with the private key that accompanies the X509 certificate associated with the <code>keyId</code> field and the algorithm corresponding to the <code>algorithm</code> field. The <code>signature</code> field is then base 64 encoded.</p>
+
+<h3 class="pmod" id="4.1.3._signature_string_construction">4.1.3. Signature String Construction</h3>
+<p>In order to generate the string to be signed, the implementer MUST use the values of each HTTP header defined in the <code>headers</code> signature field, to build the signature string. Values must be in the order they appear in the <code>headers</code> signature field. If the associated HTTP header does not exist, it should be added to the HTTP request BEFORE attempting to construct this string.</p>
+<p><strong>Date:</strong> The GMT time zone is enforced. Requests expire after 90 minutes has elapsed based on the timestamp received on the date/x-date header. Requests made up to 90 minutes before the revenue server time are also accepted to counteract the potential for server time discrepancies and daylight savings. For example, a message with the timestamp in ISO_8601 ("yyyy-MM-dd'T'HH:mm:ss.SSSX") format received as <code>2018-01-01T12:00:00.000Z</code> is valid from <code>2018-01-01T10:30:00.000Z</code> to <code>2018-01-01T13:30:00.000Z</code>.</p>
+<p>Values for days and months should be two digits. As such, in the case where either the day or the month is a single digit, such as 2018-1-1, the single digit value should be prepended with a zero to make it 2018-01-01.</p>
+<p>The accepted formats for date are:</p>
+<ul>
+    <li>ISO 8601</li>
+    <li>RFC 822, updated by RFC 1123</li>
+    <li>RFC 850, obsoleted by RFC 1036</li>
+    <li>ANSI C's time format</li>
+</ul>
+<p>Allowable values in the headers field are outlined in the table below.</p>
+<table class="table" tabindex="0">
+    <thead>
+        <tr>
+            <th scope="col">Header Field</th>
+            <th scope="col">Mandatory</th>
+            <th scope="col">Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>(request-target)</td>
+            <td>Yes</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>host</td>
+            <td>Yes</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>date</td>
+            <td>Yes</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>x-date</td>
+            <td>Yes, if date header cannot be added</td>
+            <td>Should ONLY be used if a Date HTTP header cannot be added to the HTTP request programmatically (e.g. browser-based JavaScript).</td>
+        </tr>
+        <tr>
+            <td>digest</td>
+            <td>Yes, if HTTP method is POST</td>
+            <td>Created using the POST body/payload — converted to a byte array, hashed using SHA-512 and base64 encoded.</td>
+        </tr>
+        <tr>
+            <td>content-type</td>
+            <td>No (required as HTTP header if POST)</td>
+            <td>Should be 'application/json' or 'application/json;charset=UTF-8' for standard POST requests.</td>
+        </tr>
+        <tr>
+            <td>content-length</td>
+            <td>No</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>x-http-method-override</td>
+            <td>Conditional — see Section 2.1.1</td>
+            <td>Required if HTTP method is POST, X-HTTP-Method-Override header exists and Content-Type=application/x-www-form-urlencoded.</td>
+        </tr>
+    </tbody>
+</table>
+<p>All other header field values are created by concatenating the lowercase header field name followed by an ASCII colon <code>:</code>, an ASCII space, and the header field value. Leading and trailing whitespace in the header field value MUST be omitted. If the header field is not the last value defined in the <code>headers</code> signature field, then append an ASCII newline <code>\n</code>. See sample below:</p>
+<pre tabindex="0"><code>(request-target): get /paye-employers/v1/rest/handshake?employerRegistrationNumber=1234567FA&amp;softwareUsed=ACME&amp;softwareVersion=1.0
+host: softwaretest.ros.ie
+date: yyyy-MM-ddTHH:mm:ss.SSSX</code></pre>
+
+<h3 class="pmod" id="4.1.4._signature_creation">4.1.4. Signature Creation</h3>
+<p>The signature component is a base 64 encoded digital signature. The implementer uses the <code>algorithm</code> and constructed Signature String. The Signature String is signed with the private key that accompanies the X509 certificate associated with the <code>keyId</code> field and the algorithm corresponding to the <code>algorithm</code> field. The <code>signature</code> field is then base 64 encoded.</p>
+
+<h2 class="pmod" id="5._example_messages">5. Example Messages</h2>
+<p><strong>Message:</strong></p>
+<pre tabindex="0"><code>GET https://softwaretest.ros.ie/paye-employers/v1/rest/handshake?softwareUsed=ACME&amp;softwareVersion=1.0</code></pre>
+<p><strong>Expected Response:</strong></p>
+<pre tabindex="0"><code>HTTP 200 OK</code></pre>
+
+<p><strong>Message:</strong></p>
+<pre tabindex="0"><code>GET https://softwaretest.ros.ie/paye-employers/v1/rest/handshake?employerRegistrationNumber=1234567FA&amp;softwareUsed=ACME&amp;softwareVersion=1.0</code></pre>
+<p><strong>Expected Response:</strong></p>
+<pre tabindex="0"><code>HTTP 200 OK</code></pre>
+
+<p><strong>Message:</strong></p>
+<pre tabindex="0"><code>GET https://softwaretest.ros.ie/paye-employers/v1/rest/handshake?employerRegistrationNumber=1234567FA&amp;softwareUsed=Acme&amp;softwareVersion=1.0&amp;agentTain=123456J</code></pre>
+<p><strong>Expected Response:</strong></p>
+<pre tabindex="0"><code>HTTP 200 OK</code></pre>
+
+</div>
+</body>
+</html>

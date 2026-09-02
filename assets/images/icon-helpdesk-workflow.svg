@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <marker id="arr-right" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto">
+      <path d="M0,0 L0,4 L4,2 Z" fill="#8C8C8C"/>
+    </marker>
+    <marker id="arr-left" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto-start-reverse">
+      <path d="M0,0 L0,4 L4,2 Z" fill="#8C8C8C"/>
+    </marker>
+  </defs>
+
+  <!-- Outer teal circle ring -->
+  <circle cx="100" cy="100" r="88" fill="white" stroke="#025F63" stroke-width="13"/>
+
+  <!-- Row 1 squares: 24x24 -->
+  <rect x="36" y="50" width="24" height="24" fill="#025F63"/>
+  <rect x="88" y="50" width="24" height="24" fill="#025F63"/>
+  <!-- Row 1: right arrow between squares -->
+  <line x1="63" y1="62" x2="85" y2="62" stroke="#8C8C8C" stroke-width="4" marker-end="url(#arr-right)"/>
+  <!-- Right arc: smooth cubic bezier from Row 1 right, sweeping right and down into Row 2 -->
+  <path d="M 112 62 C 150 62 150 100 112 100"
+        fill="none" stroke="#8C8C8C" stroke-width="4" marker-end="url(#arr-left)"/>
+
+  <!-- Row 2 square: 24x24 -->
+  <rect x="88" y="88" width="24" height="24" fill="#025F63"/>
+
+  <!-- Left arc: smooth cubic bezier from Row 2 left, sweeping left and down into Row 3 -->
+  <path d="M 88 100 C 50 100 50 138 88 138"
+        fill="none" stroke="#8C8C8C" stroke-width="4" marker-end="url(#arr-right)"/>
+
+  <!-- Row 3 squares: 24x24 -->
+  <rect x="88" y="126" width="24" height="24" fill="#025F63"/>
+  <rect x="132" y="126" width="24" height="24" fill="#025F63"/>
+  <!-- Row 3: right arrow between squares -->
+  <line x1="115" y1="138" x2="129" y2="138" stroke="#8C8C8C" stroke-width="4" marker-end="url(#arr-right)"/>
+</svg>

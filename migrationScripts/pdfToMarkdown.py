@@ -1,96 +1,875 @@
-from operator import sub
-import os
-import fitz  # PyMuPDF
-import re
+﻿import os
 import sys
+import re
+import hashlib
+import argparse
+import fitz  # PyMuPDF
+from collections import Counter
 
-#*** Run Commmand ****
-#python pdfToMarkdown.py O:\Static-Documentation\Static-Documentation\migrationScripts\Overview_of_ROS_Payroll_Reporting.pdf 
+# pdfplumber is optional â€” provides better table extraction
+# Install via: pip install pdfplumber
+try:
+    import pdfplumber
+    PDFPLUMBER_AVAILABLE = True
+except ImportError:
+    pdfplumber = None
+    PDFPLUMBER_AVAILABLE = False
+    print("Warning: pdfplumber not available. Tables will use basic tab detection.")
+    print("         Install with: pip install pdfplumber")
 
-print('Script Parameters', sys.argv)
-firstParameter = str(sys.argv[1])
-print(firstParameter)
+from extractImagesFromPdf import extract_images_from_pdf
 
-# Define the input PDF and output Markdown filenames
-pdf_filename = firstParameter
-print(os.getcwd())    
-exit
+# *** Run Command ***
+# python pdfToMarkdown.py <pdf_path> [--output <dir>]
+#
+# Examples:
+#   python pdfToMarkdown.py source.pdf
+#   python pdfToMarkdown.py source.pdf --output content/PIT3/guide/
 
-fileNameExtn = os.path.basename(pdf_filename)
-fileName = os.path.splitext(fileNameExtn)[0]
-print(fileName)
-md_filename = fileName + ".md"
+# ---------------------------------------------------------------------------
+# 1. FONT SIZE ANALYSIS
+# ---------------------------------------------------------------------------
 
- 
-def extract_headings(text):
-    """ Convert detected headings to Markdown format """
-    lines = text.split("\n")
-    markdown_text = []
+def get_font_metrics(doc):
+    """
+    Scan the whole document to find:
+      - title_text : the document title string
+      - title_size : font size of the title
+      - body_size  : most common font size across the document
+
+    On page 1, collect all spans with font size >= 1.3x body size.
+    The title is the one with the largest font. If sizes tie, prefer
+    the one furthest down the page (highest y%).
+    """
+    all_sizes = []
+    for page in doc:
+        try:
+            blocks = page.get_text("dict")["blocks"]
+        except Exception:
+            continue
+        for block in blocks:
+            for line in block.get("lines", []):
+                for span in line.get("spans", []):
+                    all_sizes.append(round(span["size"], 1))
+    if not all_sizes:
+        return "", 18.0, 11.0
+
+    body_size = Counter(all_sizes).most_common(1)[0][0]
+
+    title_text = ""
+    title_size = 0.0
+    try:
+        p1_blocks = doc[0].get_text("dict")["blocks"]
+        page_h    = doc[0].rect.height
+        candidates = []  # (y_pct, size, text)
+        for block in p1_blocks:
+            for line in block.get("lines", []):
+                for span in line.get("spans", []):
+                    size = round(span["size"], 1)
+                    text = span["text"].strip()
+                    if not text:
+                        continue
+                    if size >= body_size * 1.3:
+                        y_pct = span["bbox"][1] / page_h * 100
+                        candidates.append((y_pct, size, text))
+        if candidates:
+            # Sort by y% descending â€” the document title sits lowest on the cover page.
+            # Branding/logo text is typically higher up (smaller y%) than the actual title.
+            candidates.sort(key=lambda x: x[0], reverse=True)
+            _, title_size, title_text = candidates[0]
+    except Exception:
+        pass
+
+    return title_text, title_size, body_size
+
+
+def get_heading_level(span_size, body_size, title_size, title_emitted):
+    """
+    Map a font size to a Markdown heading level.
+      - Title size, first occurrence only -> # h1
+      - >= 1.3x body                      -> ## h2
+      - >= 1.1x body                      -> ### h3
+      - otherwise                         -> None (body text)
+    """
+    if not title_emitted and round(span_size, 1) == round(title_size, 1):
+        return 1
+    ratio = span_size / body_size
+    if ratio >= 1.3:
+        return 2
+    elif ratio >= 1.1:
+        return 3
+    return None
+
+
+# ---------------------------------------------------------------------------
+# 2. REPEATING HEADER/FOOTER DETECTION
+# ---------------------------------------------------------------------------
+
+def get_repeating_lines(doc, min_repeat=3, header_zone=12.0, footer_zone=88.0):
+    """
+    Return a set of text lines that:
+      - appear on min_repeat or more pages, AND
+      - have an average y-position in the header zone (top 12%) or
+        footer zone (bottom 88%+) of the page.
+
+    This prevents content lines that happen to repeat (e.g. table column
+    headers like 'GET' or 'Query Parameters') from being suppressed.
+    """
+    line_positions = {}  # text -> list of y% positions across pages
+    for page in doc:
+        ph = page.rect.height
+        if ph == 0:
+            continue
+        seen = set()
+        try:
+            blocks = page.get_text("dict")["blocks"]
+        except Exception:
+            continue
+        for block in blocks:
+            for line in block.get("lines", []):
+                line_text = "".join(
+                    s["text"] for s in line.get("spans", [])
+                ).strip()
+                if line_text and len(line_text) > 2 and line_text not in seen:
+                    y_pct = line["bbox"][1] / ph * 100
+                    line_positions.setdefault(line_text, []).append(y_pct)
+                    seen.add(line_text)
+
+    suppressed = set()
+    for text, positions in line_positions.items():
+        if len(positions) < min_repeat:
+            continue
+        avg_y = sum(positions) / len(positions)
+        if avg_y < header_zone or avg_y > footer_zone:
+            suppressed.add(text)
+    return suppressed
+
+
+# ---------------------------------------------------------------------------
+# 3. VISUAL TOC DETECTION
+# ---------------------------------------------------------------------------
+
+def is_toc_line(line):
+    """
+    Return True if a line looks like a visual TOC entry.
+    Handles:
+      - Dot leaders:  "Introduction ..................... 5"
+      - Wide space:   "Introduction                     5"
+      - Single space: "3.1.1. Request Validation 9"
+                      "4.1.2. HTTP Signature Components 12"
+    """
+    # Dot leaders
+    if re.search(r'\.{4,}', line):
+        return True
+    # 3+ spaces before trailing page number
+    if re.search(r'\s{3,}\d+\s*$', line):
+        return True
+    # Section-style TOC: starts with a number pattern and ends with a page number
+    # e.g. "3.1.1. Request Validation 9" or "4.1.2. HTTP Signature Components 12"
+    if re.match(r'^\d+(\.\d+)*\.?\s+.+\s+\d{1,3}\s*$', line.strip()):
+        return True
+    return False
+
+
+def is_toc_block(lines):
+    """
+    Return True if a block of lines is predominantly a visual TOC
+    (majority of lines are TOC-like, or starts with 'Contents'/'Table of Contents').
+    """
+    if not lines:
+        return False
+    header = lines[0].strip().lower()
+    if header in ('contents', 'table of contents'):
+        return True
+    # A block starting with 'contents' followed by section entries
+    non_empty = [l.strip() for l in lines if l.strip()]
+    if non_empty and non_empty[0].lower() == 'contents':
+        return True
+    toc_line_count = sum(1 for l in lines if is_toc_line(l))
+    return toc_line_count >= len(lines) * 0.5
+
+
+# ---------------------------------------------------------------------------
+# 4. PAGE NUMBER DETECTION
+# ---------------------------------------------------------------------------
+
+def is_page_number(line):
+    """ Return True if a line is just a bare page number. """
+    return bool(re.match(r'^\s*\d{1,3}\s*$', line))
+
+
+# ---------------------------------------------------------------------------
+# 5. CODE BLOCK DETECTION
+# ---------------------------------------------------------------------------
+
+# Patterns that suggest a line is part of a code/pre block
+CODE_PATTERNS = [
+    r'^(GET|POST|PUT|DELETE|PATCH)\s+https?://',   # HTTP method + URL
+    r'^(GET|POST|PUT|DELETE|PATCH)\s+/',            # HTTP method + path
+    r'^\s*(Host|Date|Content-Type|Digest|Signature|Authorization|X-HTTP):\s',  # HTTP headers
+    r'^\s*\{.*\}\s*$',                              # JSON object line
+    r'^\s*"[a-zA-Z_]+":\s',                         # JSON key-value
+    r'HTTP/[12]\.[01]',                              # HTTP version
+    r'^\s*(//|#)\s',                                 # code comment
+    r'[a-zA-Z]+\.[a-zA-Z]+\(',                      # method call
+    r'^\(request-target\):',                        # HTTP signature request-target
+    r'^host:\s',                                     # HTTP signature host line
+    r'^date:\s',                                     # HTTP signature date line
+    r'^content-type:\s',                             # HTTP signature content-type line
+    r'^algorithm=',                                  # HTTP signature algorithm component
+    r'^headers=',                                    # HTTP signature headers component
+    r'^signature=',                                  # HTTP signature signature component
+]
+CODE_RE = [re.compile(p) for p in CODE_PATTERNS]
+
+def looks_like_code(line):
+    return any(r.search(line) for r in CODE_RE)
+
+def apply_code_blocks(lines):
+    """
+    Wrap consecutive code-like lines in fenced code blocks.
+    """
+    result = []
+    in_code = False
     for line in lines:
-        if line.isupper():  # Assuming headings are in uppercase
-            markdown_text.append(f"## {line}")  
+        if looks_like_code(line):
+            if not in_code:
+                result.append("```")
+                in_code = True
+            result.append(line)
         else:
-            markdown_text.append(line)
-    return "\n".join(markdown_text)
+            if in_code:
+                result.append("```")
+                in_code = False
+            result.append(line)
+    if in_code:
+        result.append("```")
+    return result
 
-def extract_images(page, img_counter):
-    """ Extract images and reference them in Markdown """
-    md_image_links = []
-    for img_index, img in enumerate(page.get_images(full=True)):
-        img_filename = f"image_{img_counter}.png"
-        # md_image_links.append(f"![Image {img_counter}](./{img_filename})")
-        
-        # currentDir = os.getcwd()
-        # currentDirectory = currentDir.replace("\\","/") 
-        # print(currentDirectory)
-        
-        directory = os.path.dirname(__file__)
-        # print("Directory: "+directory)
-        # file_name = os.path.basename(__file__)
-        # print("File Name: "+file_name)
-        sub_directory = os.path.basename(directory)
-        # print("Sub Directory: "+sub_directory)
-        
-        # md_image_links.append(f"![Image {img_counter}]({currentDirectory}/{fileName}/images/{img_filename})")
-        md_image_links.append(f"![Image {img_counter}](/{sub_directory}/{fileName}/images/{img_filename})")
-        img_counter += 1
-    return "\n".join(md_image_links), img_counter
 
-def extract_links(text):
-    """ Convert detected URLs into clickable Markdown links """
-    url_pattern = r"(https?://[^\s]+)"
-    return re.sub(url_pattern, r"[\1](\1)", text)
+# ---------------------------------------------------------------------------
+# 6. PARAGRAPH JOINING
+# ---------------------------------------------------------------------------
 
-def extract_tables(text):
-    """ Attempt to format tables in Markdown format """
-    lines = text.split("\n")
-    table_text = []
+SENTENCE_END = re.compile(r'[.!?:]\s*$')
+# Matches markdown unordered list (- or *) and numbered list (1. 2) etc.
+LIST_PREFIX  = re.compile(r'^\s*[-\*]\s|^\s*[?\-\*\d]+[\.\)]\s')
+
+def join_paragraphs(lines):
+    """
+    Join lines that are part of the same flowing paragraph.
+    A line break is preserved when:
+      - The current line ends with sentence-ending punctuation
+      - The next line starts a heading (#), list item, or is blank
+      - The current line is a heading
+    Otherwise lines are joined with a space.
+    """
+    result = []
+    buffer = ""
     for line in lines:
-        if "\t" in line:  # Assuming tab-separated values as tables
-            table_text.append("| " + " | ".join(line.split("\t")) + " |")
+        stripped = line.strip()
+        if not stripped:
+            if buffer:
+                result.append(buffer)
+                buffer = ""
+            result.append("")
+            continue
+        is_heading = stripped.startswith("#")
+        is_list    = bool(LIST_PREFIX.match(stripped))
+        if is_heading or is_list:
+            if buffer:
+                result.append(buffer)
+                buffer = ""
+            result.append(stripped)
+            continue
+        if buffer:
+            if SENTENCE_END.search(buffer) or is_heading:
+                result.append(buffer)
+                buffer = stripped
+            else:
+                buffer += " " + stripped
         else:
-            table_text.append(line)
-    return "\n".join(table_text)
+            buffer = stripped
+    if buffer:
+        result.append(buffer)
+    return result
 
-# Open the PDF file
+
+# ---------------------------------------------------------------------------
+# 7. CONSECUTIVE TABLE MERGING
+# ---------------------------------------------------------------------------
+
+def merge_consecutive_tables(md_text):
+    """
+    Post-process markdown to merge consecutive tables that have the same
+    number of columns. Handles tables that span PDF page breaks and get
+    emitted as separate markdown tables by pdfplumber.
+    """
+    def count_cols(row):
+        return len(row.strip().strip('|').split('|'))
+
+    def is_table_row(line):
+        return line.strip().startswith('|')
+
+    def is_separator_row(line):
+        return bool(re.match(r'^\s*\|[\s\-|:]+\|\s*$', line))
+
+    lines = md_text.split('\n')
+    result = []
+    i = 0
+
+    while i < len(lines):
+        if not is_table_row(lines[i]):
+            result.append(lines[i])
+            i += 1
+            continue
+
+        # Collect current table block
+        table = []
+        while i < len(lines) and is_table_row(lines[i]):
+            table.append(lines[i])
+            i += 1
+
+        # Look ahead past blank lines for another table
+        j = i
+        while j < len(lines) and lines[j].strip() == '':
+            j += 1
+
+        # If next non-blank content is also a table, check column compatibility
+        if j < len(lines) and is_table_row(lines[j]):
+            next_table = []
+            k = j
+            while k < len(lines) and is_table_row(lines[k]):
+                next_table.append(lines[k])
+                k += 1
+
+            current_cols = count_cols(table[0]) if table else 0
+            next_cols    = count_cols(next_table[0]) if next_table else 0
+
+            if current_cols == next_cols and current_cols > 0:
+                # Merge: drop the header row and separator from the continuation table
+                rows_to_merge = [
+                    row for idx, row in enumerate(next_table)
+                    if idx != 0 and not is_separator_row(row)
+                ]
+                table.extend(rows_to_merge)
+                i = k  # advance past the merged table
+                print(f"  [merge_tables] merged two {current_cols}-column tables")
+
+        result.extend(table)
+        result.append('')  # blank line after table
+
+    return '\n'.join(result)
+
+
+# ---------------------------------------------------------------------------
+# 8. TABLE EXTRACTION (pdfplumber)
+# ---------------------------------------------------------------------------
+
+def extract_tables_from_page(plumber_page):
+    """
+    Extract tables from a page using pdfplumber and return them as a dict:
+      { bbox_tuple: markdown_table_string }
+    so we can replace the raw text in those regions with the Markdown table.
+    """
+    tables = {}
+    try:
+        for table in plumber_page.extract_tables():
+            if not table:
+                continue
+            rows = []
+            for i, row in enumerate(table):
+                cells = [str(c).strip().replace("\n", " ") if c else "" for c in row]
+                rows.append("| " + " | ".join(cells) + " |")
+                if i == 0:
+                    rows.append("|" + "|".join(["---"] * len(cells)) + "|")
+            tables[id(table)] = "\n".join(rows)
+    except Exception:
+        pass
+    return tables
+
+
+# ---------------------------------------------------------------------------
+# 9. MAIN PAGE TEXT EXTRACTION
+# ---------------------------------------------------------------------------
+
+def extract_page_text(page, plumber_page, title_size, body_size,
+                      title_emitted, repeating_lines):
+    """
+    Extract and clean text from one page.
+    Returns (markdown_text, title_emitted).
+    """
+    try:
+        blocks = page.get_text("dict")["blocks"]
+    except Exception:
+        return page.get_text("text"), title_emitted
+
+    # -- Extract pdfplumber tables and record their bounding boxes --
+    md_tables   = []  # list of markdown table strings
+    table_bboxes = []  # list of (x0, y0, x1, y1) for each table
+    if PDFPLUMBER_AVAILABLE and plumber_page is not None:
+        try:
+            for table in plumber_page.find_tables():
+                bbox = table.bbox  # (x0, top, x1, bottom)
+                md_rows = []
+                data = table.extract()
+                if not data:
+                    continue
+                for i, row in enumerate(data):
+                    cells = [str(c).strip().replace("\n", " ") if c else "" for c in row]
+                    md_rows.append("| " + " | ".join(cells) + " |")
+                    if i == 0:
+                        md_rows.append("|" + "|".join(["---"] * len(cells)) + "|")
+                md_tables.append("\n".join(md_rows))
+                table_bboxes.append(bbox)
+        except Exception:
+            pass
+
+    def in_table_region(block_bbox):
+        """ Return True if a fitz block overlaps with any pdfplumber table bbox. """
+        bx0, by0, bx1, by1 = block_bbox
+        for (tx0, ty0, tx1, ty1) in table_bboxes:
+            if bx0 < tx1 and bx1 > tx0 and by0 < ty1 and by1 > ty0:
+                return True
+        return False
+
+    # -- Extract text blocks --
+    raw_lines = []
+    title_emitted_this_call = False
+
+    for block in blocks:
+        # Skip fitz text blocks that fall inside a pdfplumber table region
+        # to prevent duplicate content (raw text + table)
+        block_bbox = block.get("bbox", (0, 0, 0, 0))
+        if table_bboxes and in_table_region(block_bbox):
+            continue
+
+        block_lines_text = []
+        for line in block.get("lines", []):
+            line_text = ""
+            heading_level = None
+            for span in line.get("spans", []):
+                text = span["text"].strip()
+                if not text:
+                    continue
+                size = round(span["size"], 1)
+                level = get_heading_level(size, body_size, title_size,
+                                          title_emitted or title_emitted_this_call)
+                if level == 1:
+                    title_emitted_this_call = True
+                if level and heading_level is None:
+                    heading_level = level
+                line_text += text + " "
+
+            line_text = line_text.strip()
+            if not line_text:
+                continue
+
+            # Convert PDF bullet character (â€¢) to markdown list item
+            if line_text.startswith('\u2022'):
+                line_text = '- ' + line_text[1:].strip()
+            elif '\u2022' in line_text:
+                # Multiple bullets on one line: "â€¢ item1 â€¢ item2"
+                parts = [p.strip() for p in line_text.split('\u2022') if p.strip()]
+                if len(parts) > 1:
+                    for part in parts:
+                        block_lines_text.append('- ' + part)
+                    continue
+
+            # Convert PDF sub-bullet 'o ' (lowercase o + space) to indented list item.
+            # PDFs use 'o' as a second-level bullet character (e.g. in date format lists).
+            if re.match(r'^o\s+\S', line_text):
+                line_text = '  - ' + line_text[1:].strip()
+
+            # Skip bare page numbers
+            if is_page_number(line_text):
+                continue
+
+            # Skip repeating headers/footers (header/footer zone only)
+            if line_text in repeating_lines:
+                continue
+
+            if heading_level:
+                block_lines_text.append(f"{'#' * heading_level} {line_text}")
+            else:
+                block_lines_text.append(line_text)
+
+        # Detect and skip visual TOC blocks
+        if is_toc_block(block_lines_text):
+            continue
+
+        raw_lines.extend(block_lines_text)
+        raw_lines.append("")  # blank line between blocks
+
+    # -- Apply code block wrapping --
+    raw_lines = apply_code_blocks(raw_lines)
+
+    # -- Join flowing paragraphs --
+    raw_lines = join_paragraphs(raw_lines)
+
+    # -- Append pdfplumber tables at end of page --
+    if md_tables:
+        raw_lines.append("")
+        for tbl in md_tables:
+            raw_lines.append(tbl)
+            raw_lines.append("")
+
+    return "\n".join(raw_lines), title_emitted or title_emitted_this_call
+
+
+# ---------------------------------------------------------------------------
+# 10. IMAGE DEDUPLICATION
+# ---------------------------------------------------------------------------
+
+def get_image_hash(doc, xref):
+    """ Return MD5 hash of raw image bytes. """
+    try:
+        img = doc.extract_image(xref)
+        return hashlib.md5(img["image"]).hexdigest()
+    except Exception:
+        return None
+
+
+# ---------------------------------------------------------------------------
+# 11. FIGURE CAPTION MAP
+# ---------------------------------------------------------------------------
+
+# Matches: "Figure 1", "Figure 1:", "Figure 1.", "Figure 1 Title text"
+FIGURE_CAPTION_RE = re.compile(
+    r'^Figure\s+(\d+)\s*[.:]?\s*(.*)', re.IGNORECASE
+)
+
+def build_figure_caption_map(doc):
+    """
+    Scan every page and build a map of:
+        xref -> figure_number (int)
+
+    Strategy: for each image on a page, find the nearest "Figure N"
+    text block whose top-left y-coordinate is BELOW the image bottom
+    edge (caption sits under the image in the PDF).
+    Also checks the top quarter of the NEXT page for captions that wrap.
+
+    Returns:
+        xref_to_figure : dict { xref(int) -> fig_num(int) }
+        figure_to_xref : dict { fig_num(int) -> xref(int) }
+            (first assignment wins for duplicate-use images)
+    """
+    # Build per-page list of (y0, figure_num, caption_text)
+    caption_positions = {}
+    for page_num, page in enumerate(doc):
+        caps = []
+        try:
+            blocks = page.get_text("dict")["blocks"]
+        except Exception:
+            caption_positions[page_num] = caps
+            continue
+        for block in blocks:
+            for line in block.get("lines", []):
+                line_text = "".join(
+                    s["text"] for s in line.get("spans", [])
+                ).strip()
+                m = FIGURE_CAPTION_RE.match(line_text)
+                if m:
+                    fig_num = int(m.group(1))
+                    y0 = line["bbox"][1]
+                    caps.append((y0, fig_num, line_text))
+        caption_positions[page_num] = caps
+
+    # Pre-pass: count how many pages each xref appears on.
+    # Xrefs on 3+ pages are recurring header/footer elements — exclude from mapping.
+    xref_page_count = {}
+    for _pn, _pg in enumerate(doc):
+        for _im in _pg.get_images(full=True):
+            _x = _im[0]
+            xref_page_count[_x] = xref_page_count.get(_x, 0) + 1
+    recurring_xrefs = {x for x, c in xref_page_count.items() if c >= 3}
+
+    xref_to_figure = {}
+    figure_to_xref = {}
+
+    for page_num, page in enumerate(doc):
+        for img in page.get_images(full=True):
+            xref = img[0]
+            if xref in xref_to_figure:
+                continue  # already mapped
+            if xref in recurring_xrefs:
+                continue  # recurring header/footer — skip
+
+            # Get image bounding box
+            try:
+                rects = page.get_image_rects(xref)
+                if not rects:
+                    continue
+                img_bottom = rects[0].y1
+            except Exception:
+                continue
+
+            # Find nearest caption below image on current page
+            best_fig  = None
+            best_dist = float('inf')
+            for (cy0, fig_num, _) in caption_positions.get(page_num, []):
+                if cy0 >= img_bottom:
+                    dist = cy0 - img_bottom
+                    if dist < best_dist:
+                        best_dist = dist
+                        best_fig = fig_num
+
+            # If not found, check top 25% of next page
+            if best_fig is None and page_num + 1 < len(doc):
+                next_h = doc[page_num + 1].rect.height
+                for (cy0, fig_num, _) in caption_positions.get(page_num + 1, []):
+                    if cy0 < next_h * 0.25:
+                        best_fig = fig_num
+                        break
+
+            if best_fig is not None:
+                xref_to_figure[xref] = best_fig
+                if best_fig not in figure_to_xref:
+                    figure_to_xref[best_fig] = xref
+
+    return xref_to_figure, figure_to_xref
+
+
+# ---------------------------------------------------------------------------
+# ARGUMENT PARSING
+# ---------------------------------------------------------------------------
+
+parser = argparse.ArgumentParser(
+    description="Convert a PDF to Markdown, with images extracted into a named subfolder."
+)
+parser.add_argument("pdf", help="Path to the source PDF file")
+parser.add_argument(
+    "--output", "-o",
+    help="Output directory (default: same directory as the PDF)",
+    default=None
+)
+args = parser.parse_args()
+
+pdf_filename = args.pdf
+output_dir   = args.output if args.output else os.path.dirname(os.path.abspath(pdf_filename))
+
+if not os.path.isfile(pdf_filename):
+    print(f"Error: file not found: {pdf_filename}")
+    sys.exit(1)
+
+os.makedirs(output_dir, exist_ok=True)
+
+file_name_ext = os.path.basename(pdf_filename)
+file_name     = os.path.splitext(file_name_ext)[0]
+md_path       = os.path.join(output_dir, file_name + ".md")
+
+print(f"Input:      {pdf_filename}")
+print(f"Output dir: {output_dir}")
+print(f"Markdown:   {md_path}")
+
+# ---------------------------------------------------------------------------
+# MAIN CONVERSION
+# ---------------------------------------------------------------------------
+
 doc = fitz.open(pdf_filename)
-img_counter = 1
 
-# Extract text and format Markdown
-with open(md_filename, "w", encoding="utf-8") as md_file:
-    for page_num in range(len(doc)):
-        page = doc[page_num]
-        text = page.get_text("text")
+# Font metrics
+title_text, title_size, body_size = get_font_metrics(doc)
+print(f"Document title:  {title_text!r}")
+print(f"Title font size: {title_size}pt  |  Body font size: {body_size}pt")
 
-        # Apply transformations
-        text = extract_headings(text)
-        text = extract_links(text)
-        text = extract_tables(text)
+# Repeating lines (headers/footers)
+repeating_lines = get_repeating_lines(doc)
+print(f"Repeating lines detected: {len(repeating_lines)}")
+for l in sorted(repeating_lines):
+    print(f"  suppress: {l!r}")
 
-        # Extract and reference images
-        image_refs, img_counter = extract_images(page, img_counter)
+# Build figure caption map — xref -> figure number via caption proximity
+print("\nBuilding figure caption map...")
+xref_to_figure, figure_to_xref = build_figure_caption_map(doc)
+if xref_to_figure:
+    for xref, fig_num in sorted(xref_to_figure.items(), key=lambda x: x[1]):
+        print(f"  xref {xref} -> Figure {fig_num}")
+else:
+    print("  No figure captions detected - will use image_N fallback naming")
 
-        # Write to Markdown file
-        md_file.write(f"# Page {page_num + 1}\n\n{text}\n\n{image_refs}\n\n")
+# Extract images with caption-driven naming and smart size filter
+print("\nExtracting images...")
+image_dir = os.path.join(output_dir, file_name, "images")
+os.makedirs(image_dir, exist_ok=True)
+seen_hashes = set()
+hash_to_name = {}   # hash -> filename for reuse lookups
+img_map = {}        # (page_num, img_index) -> filename or None
+fallback_counter = 1  # used only when no figure caption is found
 
-print(f"Markdown file '{md_filename}' has been created successfully!")
+for page_num in range(len(doc)):
+    page = doc[page_num]
+    for img_index, img in enumerate(page.get_images(full=True)):
+        xref = img[0]
+        h    = get_image_hash(doc, xref)
+
+        # Skip page 1 entirely - cover branding replaced by SVG block
+        if page_num == 0:
+            img_map[(page_num, img_index)] = None
+            print(f"  page 1 img {img_index+1}: cover page, skipped")
+            if h:
+                seen_hashes.add(h)
+            continue
+
+        # Duplicate image - reuse previously assigned filename
+        if h and h in seen_hashes:
+            existing_name = hash_to_name.get(h)
+            img_map[(page_num, img_index)] = existing_name
+            print(f"  page {page_num+1} img {img_index+1}: duplicate of {existing_name}, reusing")
+            continue
+
+        # Extract image bytes
+        try:
+            base_image = doc.extract_image(xref)
+            image_data = base_image["image"]
+        except Exception as e:
+            print(f"  page {page_num+1} img {img_index+1}: error {e}")
+            img_map[(page_num, img_index)] = None
+            continue
+
+        # Determine if this xref has an associated figure caption
+        fig_num = xref_to_figure.get(xref)
+
+        # Smart size filter:
+        #   WITH caption  -> always extract (handles small form screenshots)
+        #   WITHOUT caption -> apply 10KB artefact filter
+        if fig_num is None and len(image_data) < 10240:
+            img_map[(page_num, img_index)] = None
+            print(f"  page {page_num+1} img {img_index+1}: artefact ({len(image_data):,} bytes, no caption), skipped")
+            continue
+
+        if h:
+            seen_hashes.add(h)
+
+        # Name: figure_N.png when caption found, image_N.png as fallback
+        if fig_num is not None:
+            img_name = f"figure_{fig_num}.png"
+        else:
+            img_name = f"image_{fallback_counter}.png"
+            fallback_counter += 1
+
+        img_path = os.path.join(image_dir, img_name)
+        with open(img_path, "wb") as f:
+            f.write(image_data)
+
+        if h:
+            hash_to_name[h] = img_name
+
+        fig_note = f"Figure {fig_num}" if fig_num else "no caption"
+        print(f"  page {page_num+1} img {img_index+1}: saved as {img_name} ({len(image_data):,} bytes) [{fig_note}]")
+        img_map[(page_num, img_index)] = img_name
+
+# Convert pages to Markdown
+print("\nConverting PDF to Markdown...")
+title_emitted = False
+
+def convert_pages(md_path: str, plumber_doc=None):
+    global title_emitted
+    with open(md_path, "w", encoding="utf-8") as md_file:
+        # Write the document title as h1 first, before the page loop.
+        # This ensures it appears once even though it is suppressed as a
+        # repeating header on all subsequent pages.
+        if title_text:
+            md_file.write(f"# {title_text}\n\n")
+            title_emitted = True
+        for page_num in range(len(doc)):
+            page         = doc[page_num]
+            plumber_page = plumber_doc.pages[page_num] if plumber_doc else None
+
+            text, title_emitted = extract_page_text(
+                page, plumber_page, title_size, body_size,
+                title_emitted, repeating_lines
+            )
+
+            # Join split URLs â€” PDFs sometimes break long URLs across lines.
+            # A line ending with a URL fragment (no space, starts next line with
+            # a path segment) gets joined before linkification.
+            text = re.sub(r'(https?://[^\s]+)\s*\n\s*([^\s\[\]<>"{}|^`#%]+)', r'\1\2', text)
+
+            # Convert URLs to Markdown links.
+            # Skip lines that are already inside a markdown table cell (start with |)
+            # or inside a code block fence (```) to avoid double-linking.
+            # For spec reference lines of the form "Description: https://..."
+            # use the description as the link label.
+            def linkify_line(line):
+                stripped = line.strip()
+                # Don't linkify inside table cells or code fences
+                if stripped.startswith('|') or stripped.startswith('```'):
+                    return line
+                # Pattern: "Some Label Text: https://url" or "Some Label: https://url"
+                label_url = re.match(r'^(.+?):\s+(https?://\S+)(.*)$', stripped)
+                if label_url:
+                    label = label_url.group(1).strip()
+                    url   = label_url.group(2)
+                    rest  = label_url.group(3)
+                    return f'[{label}]({url}){rest}'
+                # Plain URL on its own or mid-sentence: wrap as [url](url)
+                return re.sub(r'(https?://\S+)', r'[\1](\1)', line)
+
+            text = '\n'.join(linkify_line(l) for l in text.split('\n'))
+
+            # Inject figure images inline — insert figure_N.png immediately
+            # before its "Figure N" caption line in the markdown text.
+            # Images are looked up by figure number across all pages via img_map,
+            # so reused images (e.g. figure_7 for both Fig 7 and Fig 10) work correctly.
+            if text.strip():
+                _fig_name_map = {}
+                for (_pn2, _pi2), _iname2 in img_map.items():
+                    if _iname2 and _iname2.startswith('figure_'):
+                        try:
+                            _fn2 = int(_iname2.replace('figure_', '').replace('.png', ''))
+                            _fig_name_map[_fn2] = _iname2
+                        except ValueError:
+                            pass
+
+                _lines   = text.strip().split('\n')
+                _out     = []
+                _injected = set()
+                for _ln in _lines:
+                    _m = re.match(r'^Figure\s+(\d+)[\s.:,]', _ln.strip())
+                    if _m:
+                        _fn3 = int(_m.group(1))
+                        _img3 = _fig_name_map.get(_fn3)
+                        if _img3 and _fn3 not in _injected:
+                            _out.append(f'![Image](./{file_name}/images/{_img3})')
+                            _out.append('')
+                            _injected.add(_fn3)
+                    _out.append(_ln)
+
+                md_file.write('\n'.join(_out).strip() + "\n\n")
+            elif not text.strip():
+                pass  # nothing to write
+
+    # Post-process: merge consecutive tables split across PDF page breaks
+    print("\nMerging consecutive tables...")
+    with open(md_path, 'r', encoding='utf-8') as f:
+        md_content = f.read()
+    md_content = merge_consecutive_tables(md_content)
+
+    # Post-process: fix caption/image ordering
+    # Captions (Figure N ...) often appear before their image in the PDF
+    # text flow. Swap adjacent caption-then-image pairs so image comes first.
+    print("\nFixing caption ordering...")
+    import re as _re
+    _CAPTION_RE = _re.compile(
+        r'(?m)^(Figure\s+\d+[\.:][^\n]*)\n\n(!\[[^\n]*\]\([^\n]*\))\n'
+    )
+    _swap_count = [0]
+    def _swap_caption(m):
+        _swap_count[0] += 1
+        return m.group(2) + "\n" + m.group(1) + "\n\n"
+    md_content = _CAPTION_RE.sub(_swap_caption, md_content)
+    if _swap_count[0]:
+        print(f"  [caption ordering] swapped {_swap_count[0]} caption/image pair(s)")
+
+    with open(md_path, 'w', encoding='utf-8') as f:
+        f.write(md_content)
+
+
+if PDFPLUMBER_AVAILABLE:
+    with pdfplumber.open(pdf_filename) as plumber_doc:
+        convert_pages(md_path, plumber_doc)
+else:
+    convert_pages(md_path, None)
+
+print(f"\nDone. Markdown written to '{md_path}'")

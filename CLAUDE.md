@@ -1,0 +1,333 @@
+# CLAUDE.md — Project Context for RevAssist / Claude Code
+
+> This file is read automatically at the start of every session.
+> It provides the context needed to work effectively on this project without re-explanation.
+
+> **⚠️ FIRST STEP OF EVERY SESSION:** Before doing anything else, read
+> [`SESSION_LOG.md`](SESSION_LOG.md). It records exactly where the previous
+> working session left off — including any in-progress or interrupted work —
+> so a crash, VM issue, or IDE failure never costs lost context. Check it
+> even (especially) if the user says "continue where we left off" without
+> further detail. Update it after each meaningful fix/finding during the
+> session, not just at sign-off.
+
+> **Dating convention:** `SESSION_LOG.md` is the single source of truth for
+> session history — every entry carries its own `## Session: YYYY-MM-DD`
+> date. `MIGRATION_STATUS.md` and `PROJECT_ASSESSMENT.md` each carry a
+> `Last updated` date stamp that is bumped automatically by
+> `tools/log_session.py --bump-dates`. This file (`CLAUDE.md`) and
+> `README.md` are static reference docs (tech stack, conventions, directory
+> structure) rather than session trackers, and intentionally carry no
+> per-session date stamp — update their content directly when something
+> they describe changes, without needing a script run.
+
+---
+
+## 1. What This Project Is
+
+**Static-Documentation** is a static HTML/CSS/JS portal that serves technical documentation for Revenue's PAYE Modernisation Public Interface Testing (PIT) environments. It is a direct replacement for the deprecated AngularJS project `paye-employers-documentation`.
+
+**Active branch:** `dev_contentMigration` (branched from `dev_traditionalNavbar`)  
+**Source project (legacy):** `O:\git\paye-employers-documentation`  
+**FAQ source project:** `O:\git\paye-employers-pit-faq`
+
+The site serves external software developers integrating with Revenue's PAYE web services. It contains PDFs, schemas, WSDLs, JSON/XML examples, and migrated HTML documentation pages.
+
+---
+
+## Deployments
+
+| Environment | URL | Audience | Notes |
+|---|---|---|---|
+| **Internal test** | https://revtestaccount.github.io/Static-Documentation/ | Revenue staff only | Current dev deployment — not shared externally |
+| **Pre-release (legacy)** | https://revtestaccount.github.io/paye-employers-documentation/ | Revenue staff only | Test/approval deployment of old project — **never share externally** |
+| **Public release** | https://revenue-ie.github.io/paye-employers-documentation/ | Software integrators (public) | Live public-facing deployment |
+
+---
+
+## 2. Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Markup | Plain HTML5 fragments |
+| Styling | SCSS → CSS (Revenue Design System tokens) |
+| Scripting | Vanilla JavaScript (hash-based SPA router) |
+| Navigation | `assets/js/sitemap.json` — all 160 routes |
+| Build | Sass CLI only — no bundler |
+| PDF migration | Python 3.11 — PyMuPDF (`fitz`) + pdfplumber |
+
+**No Angular, no React, no Vue, no Node at runtime. No Bootstrap — removed.** Layout uses custom CSS (home-grid, home-card, site-nav) only.
+
+---
+
+## 3. Key Files
+
+| File | Purpose |
+|---|---|
+| `index.html` | SPA shell — header, navbar, `#content` div, footer |
+| `assets/js/router.js` | Hash router, nav builder, content loader |
+| `assets/js/sitemap.json` | Route map: URL hash → HTML fragment + page title |
+| `assets/css/styles.scss` | Master SCSS entry point |
+| `assets/css/styles.css` | Compiled output — never edit directly |
+| `content/shared/*.html` | Shared fragments (home, cards, guides, FAQ) |
+| `content/PIT3/*.html` | PIT3-specific content fragments |
+| `content/PIT4/*.html` | PIT4-specific content fragments |
+| `PROJECT_ASSESSMENT.md` | Full architecture assessment and outstanding work |
+| `MIGRATION_STATUS.md` | Asset migration tracking |
+
+---
+
+## 4. Design Conventions (Non-Negotiable)
+
+- **Revenue Green:** `#025F63` — all header/navbar backgrounds
+- **Border radius:** `0` everywhere — squared corners, no exceptions
+- **Font:** FiraSans-Regular 16px — this is a **customer-facing / public-facing** application (not an internal staff app)
+- **Sizes:** `rem` units throughout — no `px` in authored CSS (border widths excepted)
+- **Accessibility:** WCAG 2.1 AA target on all migrated pages
+- **`demodocument.html`** — intentional placeholder for ~120 unbuilt routes; do not remove
+
+---
+
+## 5. Branch Strategy
+
+| Branch | Purpose |
+|---|---|
+| `main` | Production baseline — no direct commits |
+| `dev_traditionalNavbar` | Navbar + CSS overhaul |
+| `dev_contentMigration` | Content migration — **current working branch** |
+
+New contributors should branch from `dev_contentMigration`.
+
+---
+
+## 6. PDF → HTML Migration Pipeline
+
+This is the primary ongoing work. The pipeline converts source PDFs into site-ready HTML fragments.
+
+### Running the Pipeline
+
+```powershell
+cd tools
+python migration_pipeline.py "../content/PIT3/<section>/<doc>.pdf" --pit PIT3
+python migration_pipeline.py "../content/PIT4/<section>/<doc>.pdf" --pit PIT4
+```
+
+### What the Pipeline Does Automatically
+
+1. **PDF → Markdown** (`migrationScripts/pdfToMarkdown.py`) — embedded image extraction with 10KB artefact filter and MD5 deduplication, font-size heading detection, table extraction via pdfplumber, repeating header/footer suppression, visual TOC suppression, bullet conversion, code block detection, automatic caption/image ordering fix
+2. **Markdown → HTML** (`create_page/convert_new.py`) — TOC generation, REVDS classes, `tabindex="0"` on tables/pre, stylesheet injection, `.figure-caption` class applied to all Figure N captions
+3. Injects SVG branding block after `<h1>`
+4. Validates environment hostnames (warns if wrong environment hostname detected)
+5. Updates `sitemap.json` route to point to HTML (not PDF)
+6. Updates section listing page — changes `href` and badge from PDF to LINK
+7. **Mojibake fix** — automatically corrects corrupted smart quotes and dashes
+
+### After Every Pipeline Run — Manual Checks Required
+
+1. **Review the generated HTML in the browser** — the pipeline cannot fix everything
+2. **Check tables** — complex tables spanning PDF page breaks often split incorrectly
+3. **Check code blocks** — HTTP request examples sometimes render as `<table>` instead of `<pre><code>`
+4. **Check footnotes** — the pipeline sometimes merges multiple footnote paragraphs into one `<p>`
+5. **Check version history** — cover page version history tables can spill into body sections
+6. **Hostname check** — pipeline warns automatically; fix with PowerShell replace if needed
+7. **After hand-authoring any `<pre>` blocks** — run `fix_pre_tabindex.py` to ensure `tabindex="0"` is present (WCAG 2.1)
+
+### PIT3 Hostname Fix (required for PIT3 REST Web Service Integration Guide)
+
+```powershell
+(Get-Content "content/PIT3/rest/rest_web_service_integration_guide.html" -Raw) `
+  -replace "softwaretestnextversion\.ros\.ie", "softwaretest.ros.ie" `
+  | Set-Content "content/PIT3/rest/rest_web_service_integration_guide.html" -NoNewline
+```
+
+---
+
+## 7. Document-Specific Post-Pipeline Fix Scripts
+
+Some documents have known structural issues the pipeline cannot auto-fix. Document-specific Python fix scripts live in `tools/` and are run immediately after the pipeline.
+
+### `tools/run_doc_fixes.py` + `tools/doc_fixes_registry.json`
+
+Single entry point for ALL post-pipeline document fixes. Replaces the individual `fix_*.py` scripts.
+
+```powershell
+# List all registered documents and their fixes
+python tools/run_doc_fixes.py --list
+
+# Fix one document
+python tools/run_doc_fixes.py --doc rest_integration_guide --pit PIT3
+python tools/run_doc_fixes.py --doc ros_payroll_reporting --pit PIT3
+
+# Fix all documents for one environment
+python tools/run_doc_fixes.py --all --pit PIT3
+
+# Fix all documents for both environments
+python tools/run_doc_fixes.py --all --pit ALL
+```
+
+**`doc_fixes_registry.json`** records which documents need which fixes. Adding a new document:
+1. Add entry to `doc_fixes_registry.json`
+2. Add `fix_<key>(html, env)` function to `run_doc_fixes.py`
+3. Register it in `FIX_REGISTRY` dict at the bottom of the script
+
+> **⚠️ Table-replacement regex convention (mandatory):** when writing a
+> `fix_<key>()` that replaces the content of a specific `<table>`, the regex
+> must never be able to cross a `</table>` boundary — match each
+> `<table>...</table>` individually and only substitute the one containing
+> your unique marker text, rather than a single document-wide `re.sub`
+> spanning from a non-unique anchor (e.g. `<th>Reference</th>`) to a marker
+> further down. This exact bug class has silently corrupted/deleted whole
+> sections twice in this file's history (see `SESSION_LOG.md` 2026-07-03 and
+> 2026-07-06). Full explanation and the corrected reference pattern are in
+> the module docstring at the top of `tools/run_doc_fixes.py`.
+
+### `tools/fix_pre_tabindex.py`
+
+Ensures all hand-authored `<pre>` elements have `tabindex="0"` for WCAG 2.1 keyboard accessibility. The pipeline adds this automatically, but hand-authored `<pre>` blocks in fix scripts bypass that step.
+
+```powershell
+cd tools
+python fix_pre_tabindex.py "../content/PIT3/rest/rest_web_service_integration_guide.html"
+```
+
+Idempotent — safe to run multiple times. Run against any HTML file after hand-authoring `<pre>` blocks.
+
+---
+
+## 8. WYSIWYG Page Editor
+
+A bare-bones WYSIWYG page editor is in place but needs significant improvement. Planned enhancements:
+
+- Support for all page components generated by the migration pipeline: TOC, tables, code blocks, headings, lists
+- Ability to edit existing pages (not just create new ones)
+- **Must NOT be available in the public release deployment** — the editor and any page-editing scripts are internal tools only
+
+See Section 3 below for the deployment access control requirements.
+
+---
+
+## 8a. Public vs Internal Feature Gating
+
+Certain features must only be available in the internal test deployment and must be excluded from the public release:
+
+| Feature | Internal | Public |
+|---|---|---|
+| WYSIWYG page editor | ✅ | ❌ |
+| Page edit/create scripts | ✅ | ❌ |
+| Any UI that allows content modification | ✅ | ❌ |
+
+When implementing the editor and any related tooling, ensure there is a clear mechanism to gate these features out of the public build.
+
+---
+
+## Bootstrap Removal (Complete ✅)
+
+Bootstrap 5 fully removed as of 2026-06-25. Replaced with:
+- **Card grid:** `home-grid` / `home-card` BEM CSS classes in `styles.scss`
+- **Navbar collapse:** Vanilla JS `toggleNav()` in `index.html`
+- **Navbar dropdown:** CSS-only hover/focus dropdown (`site-nav__dropdown` + `:hover > .site-nav__dropdown-menu`)
+- **body margin:** `margin: 0` added to remove browser default 8px gap around header/footer
+
+This is a **customer-facing / public-facing** application:
+- **Font:** FiraSans-Regular 16px
+- **WCAG 2.1 AA:** Mandatory throughout
+- Use custom CSS classes — never Bootstrap grid or utility classes
+
+---
+
+## 9. Completed PDF → HTML Migrations
+
+| Document | PIT3 | PIT4 |
+|---|---|---|
+| REST Web Service Integration Guide | ✅ | ✅ |
+| REST Connectivity Handshake Guide | ✅ | ✅ |
+| Overview of ROS Payroll Reporting | ✅ | ✅ |
+| ROS Payroll Reporting Message Guide | ✅ | ✅ |
+| TWSS Operational Phase Description | n/a (no PIT3 equivalent) | ✅ (fully confirmed 2026-07-09) |
+| TWSS Reconciliation Description | n/a (no PIT3 equivalent) | 🟡 IN PROGRESS — fix function exists but on-disk HTML has wrong content, needs regeneration |
+
+> **2026-07-03:** Also fixed 3 `sitemap.json` cross-environment routing bugs where PIT4 routes (Message Guide, REST Integration Guide, REST Handshake Guide) were incorrectly pointing at PIT3's HTML files. `migration_pipeline.py` Step 3.5 was added to catch this class of bug automatically on future runs.
+>
+> **2026-07-08:** Fixed the TWSS Operational Phase Description (PIT4 only) — Column Descriptions/Latest Version History/Audience headings were bunched together with both tables misplaced near the end of the document instead of under their own headings, and the main data-dictionary table was missing an entire row ('EE PRSI paid') plus had 2 continuation fragments stranded as orphaned blank-cell rows. Fixed via `tools/run_doc_fixes.py` → `fix_twss_operational_phase`. Also fixed 2 recurring regex-scoping bugs uncovered in the process (lazy quantifiers crossing `</table>` boundaries, and an anchor matching an unintended earlier table in the same document) — see `SESSION_LOG.md` 2026-07-08 entry for full detail. **2026-07-09: user gave final visual confirmation of the main table fix — fully closed out.**
+>
+> **2026-07-09 (in progress):** Started migrating TWSS Reconciliation Description (PIT4 only) — `content/PIT4/screens/twss_reconciliation_csv_description.pdf` / `.html`. Pipeline run complete; diagnosed the identical bug pattern to TWSS Operational Phase (misplaced Column Descriptions/Latest Version History tables, phantom-column main table, a data row wrongly promoted to a `<thead>` row at a page-break fragment boundary). A `fix_twss_reconciliation()` function and registry entry were subsequently added to `tools/run_doc_fixes.py` / `tools/doc_fixes_registry.json`.
+>
+> **2026-07-22:** Found and fixed an `IndentationError` in `fix_twss_reconciliation()` Fix 0 that made the script fail to even parse — confirmed fixed via `ast.parse`. However, auditing the current on-disk `content/PIT4/screens/twss_reconciliation_csv_description.html` found it still contains the **wrong** Latest Version History table content (TWSS Operational Phase's 4-row history instead of Reconciliation's own correct 1-row history) — the file was generated by an earlier/incorrect version of the fix function and has not been regenerated since. **This file is NOT ready for review.** Next session must regenerate it fresh: re-run `tools/migration_pipeline.py` against the source PDF, then `python tools/run_doc_fixes.py --doc twss_reconciliation --pit PIT4` with the now-corrected script, then re-verify the main data table against source PDF ground truth and get user visual confirmation. Full detail in `SESSION_LOG.md` 2026-07-22 entry.
+
+---
+
+## 9. Route Coverage
+
+| Status | Count |
+|---|---|
+| Routes with real content | ~40 |
+| Routes pointing to `demodocument.html` placeholder | ~121 |
+| **Total routes** | **160** |
+
+The majority of remaining work is migrating the ~120 placeholder routes to real HTML pages — primarily by running the pipeline on source PDFs from `O:\git\paye-employers-documentation`.
+
+---
+
+## 10. Source PDFs Location
+
+All source PDFs are in the legacy project:
+
+```
+O:\git\paye-employers-documentation\
+```
+
+The directory structure mirrors the destination `content/` structure. When migrating a new document:
+
+1. Find the PDF in `O:\git\paye-employers-documentation\`
+2. Copy it to the appropriate `content/PIT3/` or `content/PIT4/` subdirectory
+3. Run the pipeline
+4. Run any document-specific fix script if one exists
+5. Review the output HTML in the browser
+6. Commit and push to `dev_contentMigration`
+
+---
+
+## 11. Compiling SCSS
+
+```powershell
+node "C:\NodeJs\node-v22.14.0-win-x64\node_modules\sass\sass.js" `
+  "assets/css/styles.scss" `
+  "assets/css/styles.css" `
+  --no-source-map `
+  --silence-deprecation=import `
+  --silence-deprecation=global-builtin `
+  --silence-deprecation=color-functions
+```
+
+---
+
+## 12. Git Workflow
+
+```powershell
+git status --short
+git add -A
+git commit -m "Descriptive message"
+git push origin dev_contentMigration
+```
+
+> The `fatal: could not write multi-pack-index: Permission denied` warning on commit is a known VM issue — it does not affect the commit or push.
+
+---
+
+## 13. Python Environment
+
+- **Python version:** 3.11 (`C:/Program Files/Python3.11/python.exe`)
+- **Key packages:** `PyMuPDF` (fitz), `pdfplumber`, `Pillow`
+- All migration scripts are in `migrationScripts/`, `create_page/`, and `tools/`
+
+### Python Script Location Rule (mandatory)
+**All Python scripts must be created in `tools/`.** Never create `.py` files in the project root or any other directory. One-off patch/helper scripts also go in `tools/` and are deleted immediately after their job is done. Only permanent, reusable scripts are committed.
+
+---
+
+## 14. Further Reading
+
+- [`SESSION_LOG.md`](SESSION_LOG.md) — **read this first** — most recent working session, including any interrupted/in-progress work
+- [`PROJECT_ASSESSMENT.md`](PROJECT_ASSESSMENT.md) — full architecture, design decisions, outstanding work
+- [`MIGRATION_STATUS.md`](MIGRATION_STATUS.md) — detailed asset migration tracking
+- [`README.md`](README.md) — project overview and quick start

@@ -1,0 +1,212 @@
+<html>
+
+<body>
+    <h1>PAYE Modernisation Web Services &ndash; FAQ</h1>
+
+    <p>The purpose of this FAQ is to help answer and resolve common questions and queries raised by users of the PIT
+        (Public Interface Testing) environments. This FAQ page should be used in conjunction with the PAYE Modernisation
+        Web Services documentation provided by Revenue.</p>
+
+    <div class="faq">
+
+        <!-- ── Section 1: TDM / Employers Certificate ─────────────────────────── -->
+        <section class="faq__section" aria-labelledby="faq-tdm-heading">
+            <h2 class="faq__section-title" id="faq-tdm-heading">TDM / Employers Certificate FAQ</h2>
+
+            <details class="faq__item">
+                <summary class="faq__question">What is the PIT3 environment?</summary>
+                <div class="faq__answer">
+                    <p>PIT current version, also referred to as PIT3, is a representation of the live environment with
+                        functionality kept up to date with the functionality currently available in the live environment.
+                        The PIT3 (Public Interface Testing) environment provides developers and testers access to
+                        exclusive Revenue generated test data to verify the compatibility of their software packages with
+                        PAYE Modernisation.</p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__question">What is the PIT4 environment?</summary>
+                <div class="faq__answer">
+                    <p>PIT next version, also referred to as PIT4, contains upcoming functionality that is pertinent for
+                        developers to test their software ahead of the live release. The PIT4 (Public Interface Testing)
+                        environment provides developers and testers access to exclusive Revenue generated test data to
+                        verify the compatibility of their software packages with PAYE Modernisation.</p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__question">What is a TDM (Test Data Management) certificate?</summary>
+                <div class="faq__answer">
+                    <p>A TDM (Test Data Management) certificate will enable you to log in to the PIT Self Service
+                        Application where you can access and create new employer certificate(s).</p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__question">What is an employer&rsquo;s certificate for the PIT current version
+                    environment (PIT3)?</summary>
+                <div class="faq__answer">
+                    <p>Employers in the PIT current version (PIT3) environment will have a certificate associated with
+                        them that will be of the form <code>9999XXXXX</code>. The employer&rsquo;s certificate is used
+                        to access ROS Payroll Reporting and to sign and submit payroll submissions and query
+                        requests.</p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__question">What is an employer&rsquo;s certificate for the PIT next version
+                    environment (PIT4)?</summary>
+                <div class="faq__answer">
+                    <p>In the PIT next version (PIT4) environment, employers will have a certificate associated with
+                        them that will be of the form <code>8888XXXXX</code>. The employer&rsquo;s certificate is used
+                        to access ROS Payroll Reporting and to sign and submit payroll submissions and query
+                        requests.</p>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__question">Requesting new TDM and/or employer&rsquo;s certificates?</summary>
+                <div class="faq__answer">
+                    <p>Please only request replacement certificates when your current TDM or employer certificates are
+                        not functioning. New TDM (Test Data Management) certificates were issued beginning in early
+                        2021 &mdash; PIT3 TDM since mid-March 2021 and PIT4 TDM since mid-June 2021.</p>
+                    <p>If you have not received your new TDM certificates after the aforementioned dates, please raise
+                        a ticket on the PIT Help Desk requesting the same.</p>
+                </div>
+            </details>
+        </section>
+
+        <!-- ── Section 2: SOAP / REST Web Services ────────────────────────────── -->
+        <section class="faq__section" aria-labelledby="faq-soap-rest-heading">
+            <h2 class="faq__section-title" id="faq-soap-rest-heading">SOAP / REST Web Services</h2>
+
+            <details class="faq__item">
+                <summary class="faq__question">How do I build a REST endpoint?</summary>
+                <div class="faq__answer">
+                    <p>REST endpoints follow the pattern:</p>
+                    <pre><code>https://{ENVIRONMENT}.ros.ie/paye-employers/v1/{API}/</code></pre>
+                    <p><strong>Environments:</strong></p>
+                    <ul>
+                        <li>PIT3: <code>softwaretest</code></li>
+                        <li>PIT4: <code>softwaretestnextversion</code></li>
+                    </ul>
+                    <p><strong>APIs:</strong></p>
+                    <ul>
+                        <li><code>payroll</code></li>
+                        <li><code>rpn</code></li>
+                        <li><code>returns_reconciliation</code></li>
+                        <li><code>handshake</code></li>
+                    </ul>
+                    <p><strong>REST API references:</strong></p>
+                    <ul>
+                        <li><a href="content/PIT3/rest/paye-employers-rest-api-pit3.html" target="_blank"
+                                rel="noopener noreferrer">PIT3 REST API Reference</a></li>
+                        <li><a href="content/PIT4/rest/paye-employers-rest-api-pit4.html" target="_blank"
+                                rel="noopener noreferrer">PIT4 REST API Reference</a></li>
+                    </ul>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__question">How do I build a SOAP endpoint?</summary>
+                <div class="faq__answer">
+                    <p>SOAP endpoints follow the pattern:</p>
+                    <pre><code>https://{ENVIRONMENT}.ros.ie/paye-employers/v1/{API}/</code></pre>
+                    <p><strong>Environments:</strong></p>
+                    <ul>
+                        <li>PIT3: <code>softwaretest</code></li>
+                        <li>PIT4: <code>softwaretestnextversion</code></li>
+                    </ul>
+                    <p><strong>APIs:</strong></p>
+                    <ul>
+                        <li><code>payroll</code></li>
+                        <li><code>rpn</code></li>
+                        <li><code>returns_reconciliation</code></li>
+                        <li><code>handshake</code></li>
+                    </ul>
+                    <p><strong>SOAP schema references:</strong></p>
+                    <ul>
+                        <li><a href="content/PIT3/soap/soap-schema-reference/webframe.html" target="_blank"
+                                rel="noopener noreferrer">PIT3 SOAP Schema Reference</a></li>
+                        <li><a href="content/PIT4/soap/soap-schema-reference/webframe.html" target="_blank"
+                                rel="noopener noreferrer">PIT4 SOAP Schema Reference</a></li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <!-- ── Section 3: Common Errors ───────────────────────────────────────── -->
+        <section class="faq__section" aria-labelledby="faq-errors-heading">
+            <h2 class="faq__section-title" id="faq-errors-heading">Common Errors</h2>
+
+            <details class="faq__item">
+                <summary class="faq__question">&ldquo;Signature does not match signed content&rdquo; error
+                    message?</summary>
+                <div class="faq__answer">
+                    <p>Please follow the signature guide to build the signature correctly:</p>
+                    <ul>
+                        <li><a href="content/PIT3/examples/rest_request_authentication_v1.pdf" target="_blank"
+                                rel="noopener noreferrer">REST Request Authentication Guide (PIT3) <span
+                                    class="pit-section__badge pit-section__badge--pdf">PDF</span></a></li>
+                        <li><a href="content/PIT4/examples/rest_request_authentication_v1.pdf" target="_blank"
+                                rel="noopener noreferrer">REST Request Authentication Guide (PIT4) <span
+                                    class="pit-section__badge pit-section__badge--pdf">PDF</span></a></li>
+                    </ul>
+                </div>
+            </details>
+
+            <details class="faq__item">
+                <summary class="faq__question">I have received a &lsquo;BAS100&rsquo; error message?</summary>
+                <div class="faq__answer">
+                    <p>Please check your ROS login URL &mdash; it should end with the correct table parameter:</p>
+                    <pre><code>https://{ENVIRONMENT}.ros.ie/oidc/login?client_id=payeselfservice_rp</code></pre>
+                    <p><strong>Correct login URLs:</strong></p>
+                    <ul>
+                        <li>PIT3: <a href="https://softwaretest.ros.ie/oidc/login?client_id=payeselfservice_rp"
+                                target="_blank"
+                                rel="noopener noreferrer">https://softwaretest.ros.ie/oidc/login?client_id=payeselfservice_rp</a>
+                        </li>
+                        <li>PIT4: <a
+                                href="https://softwaretestnextversion.ros.ie/oidc/login?client_id=payeselfservice_rp"
+                                target="_blank"
+                                rel="noopener noreferrer">https://softwaretestnextversion.ros.ie/oidc/login?client_id=payeselfservice_rp</a>
+                        </li>
+                    </ul>
+                    <p>If that does not resolve the issue, ensure you are using the correct certificate for the
+                        environment:</p>
+                    <ul>
+                        <li>PIT3 certificates are of the form <code>9999XXXXX</code></li>
+                        <li>PIT4 certificates are of the form <code>8888XXXXX</code></li>
+                    </ul>
+                </div>
+            </details>
+        </section>
+
+        <!-- ── Section 4: Reporting Issues ────────────────────────────────────── -->
+        <section class="faq__section" aria-labelledby="faq-reporting-heading">
+            <h2 class="faq__section-title" id="faq-reporting-heading">Reporting Issues</h2>
+
+            <details class="faq__item">
+                <summary class="faq__question">How do I report an issue experienced while testing in the PIT
+                    environments?</summary>
+                <div class="faq__answer">
+                    <p>Log in to the PIT Help Desk and click on the &lsquo;New Ticket&rsquo; icon in the left toolbar.
+                        Please complete the query form with as much detail as possible.</p>
+                    <p>You can also attach supporting files such as:</p>
+                    <ul>
+                        <li>TDM Certificate (if applicable)</li>
+                        <li>Employer&rsquo;s Certificate</li>
+                        <li>Request File</li>
+                        <li>Response File</li>
+                        <li>Log Files</li>
+                    </ul>
+                    <p>Providing the PIT Help Desk Support Team with these supporting files in your initial query will
+                        greatly aid diagnosis of the issue.</p>
+                </div>
+            </details>
+        </section>
+
+    </div>
+</body>
+
+</html>
