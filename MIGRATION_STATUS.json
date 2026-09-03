@@ -1,0 +1,155 @@
+{
+  "PAYE Modernisation Web Services": {
+    "status": false,
+    "children": {
+                  "PIT Guides": {
+        "status": false,
+        "children": {
+          "Conformance Test Scenarios - Connectivity Testing": { "status": true, "children": {} },
+          "PAYE PIT Help Desk User Guide": { "status": true, "children": {} },
+          "PIT Next Version Features": { "status": false, "children": {} },
+          "Certificate Types in PIT": { "status": false, "children": {} }
+        }
+      },
+      "PIT3": {
+        "status": false,
+        "children": {
+          "REST": {
+            "status": true,
+            "children": {
+              "REST Web Service Integration Guide": { "status": true, "children": {} },
+              "REST Connectivity Handshake Guide": { "status": true, "children": {} }
+            }
+          },
+                    "SOAP": {
+            "status": false,
+            "children": {
+              "SOAP Web Service Integration Guide": { "status": false, "children": {} },
+              "SOAP Request Authentication v1": { "status": false, "children": {} },
+              "SOAP Lookup RPNs by Range Guide": { "status": false, "children": {} },
+              "SOAP Connectivity Handshake Guide": { "status": false, "children": {} },
+              "SOAP Schema Reference - Audit Bulk-Copied Content": { "status": false, "children": {} }
+            }
+          },
+          "Screens": {
+            "status": false,
+            "children": {
+              "Overview of ROS Payroll Reporting": { "status": true, "children": {} },
+              "ROS Payroll Reporting Message Guide": { "status": true, "children": {} },
+              "PIT Self-Service Guide (screens)": { "status": true, "children": {} },
+              "RPN Request CSV File Response": { "status": true, "children": {} }
+            }
+          },
+          "Guide": {
+            "status": false,
+            "children": {
+              "PIT Employment Data Creation Guide": { "status": false, "children": {} },
+              "Line Item Correction Rules": { "status": false, "children": {} },
+              "Error Structure Guide": { "status": false, "children": {} },
+              "Employment ID Guide": { "status": false, "children": {} },
+              "Documentation Guide": { "status": false, "children": {} },
+              "Compression Guide": { "status": false, "children": {} }
+            }
+          },
+          "Data Items": {
+            "status": false,
+            "children": {
+              "Returns Reconciliation Service Data Items": { "status": false, "children": {} },
+              "RPN Data Items": { "status": false, "children": {} },
+              "Payroll Submission Request Data Items": { "status": false, "children": {} },
+              "ERR Submission Request Data Items": { "status": false, "children": {} },
+              "ERR Monthly Report Data Items": { "status": false, "children": {} },
+              "ERR Notification (ERN) Request Data Items": { "status": false, "children": {} }
+            }
+          },
+          "Examples": {
+            "status": false,
+            "children": {
+              "REST Request Authentication v1": { "status": false, "children": {} },
+              "Overview of Web Service Examples (PAYE)": { "status": false, "children": {} },
+              "Overview of Web Service Examples (ERR)": { "status": false, "children": {} },
+              "ERR File Upload Manual Conversion": { "status": false, "children": {} }
+            }
+          },
+          "Scenarios": {
+            "status": false,
+            "children": {
+              "PSDA Scenarios": { "status": false, "children": {} }
+            }
+          }
+        }
+      },
+      "PIT4": {
+        "status": false,
+        "children": {
+          "REST": {
+            "status": true,
+            "children": {
+              "REST Web Service Integration Guide": { "status": true, "children": {} },
+              "REST Connectivity Handshake Guide": { "status": true, "children": {} }
+            }
+          },
+                    "SOAP": {
+            "status": false,
+            "children": {
+              "SOAP Web Service Integration Guide": { "status": false, "children": {} },
+              "SOAP Request Authentication v1": { "status": false, "children": {} },
+              "SOAP Lookup RPNs by Range Guide": { "status": false, "children": {} },
+              "SOAP Connectivity Handshake Guide": { "status": false, "children": {} },
+              "SOAP Schema Reference - Audit Bulk-Copied Content": { "status": false, "children": {} }
+            }
+          },
+          "Screens": {
+            "status": false,
+            "children": {
+              "Overview of ROS Payroll Reporting": { "status": true, "children": {} },
+              "ROS Payroll Reporting Message Guide": { "status": true, "children": {} },
+              "TWSS Operational Phase Description": { "status": true, "children": {} },
+              "TWSS Reconciliation Description": { "status": false, "children": {} },
+              "TWSS Reconciliation CSV Validation": { "status": true, "children": {} },
+              "PIT Self-Service Guide (screens)": { "status": true, "children": {} },
+              "RPN Request CSV File Response": { "status": true, "children": {} }
+            }
+          },
+          "Guide": {
+            "status": false,
+            "children": {
+              "PIT Employment Data Creation Guide": { "status": false, "children": {} },
+              "Line Item Correction Rules": { "status": false, "children": {} },
+              "Error Structure Guide": { "status": false, "children": {} },
+              "Employment ID Guide": { "status": false, "children": {} },
+              "Documentation Guide": { "status": false, "children": {} },
+              "Compression Guide": { "status": false, "children": {} }
+            }
+          },
+          "Data Items": {
+            "status": false,
+            "children": {
+              "Returns Reconciliation Service Data Items": { "status": false, "children": {} },
+              "RPN Data Items": { "status": false, "children": {} },
+              "Payroll Submission Request Data Items": { "status": false, "children": {} },
+              "ERR Submission Request Data Items": { "status": false, "children": {} },
+              "ERR Monthly Report Data Items": { "status": false, "children": {} },
+              "ERR Notification (ERN) Request Data Items": { "status": false, "children": {} }
+            }
+          },
+          "Examples": {
+            "status": false,
+            "children": {
+              "REST Request Authentication v1": { "status": false, "children": {} },
+              "Overview of Web Service Examples (PAYE)": { "status": false, "children": {} },
+              "Overview of Web Service Examples (ERR)": { "status": false, "children": {} },
+              "ERR File Upload Manual Conversion": { "status": false, "children": {} }
+            }
+          },
+          "Scenarios": {
+            "status": false,
+            "children": {
+              "PSDA Scenarios": { "status": false, "children": {} }
+            }
+          }
+        }
+      }
+    }
+  }
+}

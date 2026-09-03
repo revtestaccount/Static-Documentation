@@ -1,6 +1,6 @@
 # Migration Status
 
-> **Last updated:** 2026-07-22  
+> **Last updated:** 2026-07-24  
 > **Branch:** `dev_contentMigration` (branched from `dev_traditionalNavbar`)  
 > **Total commits:** ~141
 
@@ -37,8 +37,8 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 
 | Category | Count |
 |---|---|
-| Routes with real content | **40** |
-| Routes pointing to `demodocument.html` placeholder | **120** |
+| Routes with real content | **41** |
+| Routes pointing to `demodocument.html` placeholder | **119** |
 | **Total routes defined in sitemap.json** | **160** |
 
 ---
@@ -79,6 +79,7 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 - ✅ PIT3 + PIT4 JSON/XML scenario files (~490 JSON files)
 - ✅ PAYE PIT Help Desk User Guide (`content/pit/payepithelpdeskuserguide.html`)
 - ✅ PIT Self-Service Guide (`content/pit/pitselfserviceguide.html`)
+- ✅ Conformance Test Scenarios - Connectivity Testing (`content/pit/conformance test scenarios - connectivity testing.html`) — completed 2026-07-24. Fixed duplicate/garbage TOC and heading entries left over from the cover-page title split, rebuilt 3 phantom-column tables (Version History, Document References, Abbreviations and Acronyms) with proper `pit-section__table` styling, fixed a run-on list item and a run-on bullet list, split sections 4.1/4.2 back into their own independent test-definition tables (pipeline had incorrectly merged both scenarios' rows into a single table), and restored a truncated `<e.g. ...>` text fragment. Aligned the cover-page Version/Version Date fields into separate left/right-aligned rows per user feedback. Wired the `conformance` sitemap route (previously a `demodocument.html` placeholder) to the new page and updated the PIT Guides listing page link from a direct PDF link to an internal router link. Also fixed a site-wide CSS specificity bug found via axe DevTools testing on this page: `.document-content table.table thead th` and `.pit-section__table thead th` were both targeting the same `<th>` elements on tables carrying both classes, causing dark `#222` text to render on the teal header background instead of white — fixed in `assets/css/styles.scss` (affects all migrated documents using this dual-class table pattern, e.g. also `payepithelpdeskuserguide.html`).
 
 ### PDF → HTML Migration (new)
 - ✅ PIT3 REST Web Service Integration Guide (`content/PIT3/rest/rest_web_service_integration_guide.html`)
@@ -121,7 +122,7 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 
 | Section | Routes Still Needed |
 |---|---|
-| PIT Guides | Conformance Testing Scenarios, Help Desk Registration, Help Desk Login, PIT Next Version Features |
+| PIT Guides | Help Desk Registration, Help Desk Login, PIT Next Version Features |
 | PMOD PIT3 | Self-service guide, Guide, SOAP specs, REST specs, Supporting docs, Examples |
 | PMOD PIT4 | Self-service guide, Guide, SOAP specs, REST specs, Supporting docs, Examples |
 | ERR PIT3 | Supporting Documentation |
@@ -142,6 +143,7 @@ On completion, Static-Documentation will replace `paye-employers-documentation` 
 - ❌ Validation rules XLSX files not yet linked from content pages
 - ❌ `demodocument.html` to be removed before production go-live
 - ❌ ERR supporting docs pages (PIT3 + PIT4) still point to `demodocument.html`
+- ❌ **Audit bulk-copied SOAP schema reference files (PIT3/PIT4 `topic*.html`, ~2,473 files, copied wholesale from `O:\git\paye-employers-documentation`)** — these were copied as a complete unit rather than curated, so may include unused/orphaned pages, dead internal links, or content not actually needed in this project. Needs a review pass to identify and remove anything superfluous before public release.
 
 ### WYSIWYG Editor
 - ❌ Improve editor to support all pipeline-generated components (TOC, tables, code blocks, headings, lists)

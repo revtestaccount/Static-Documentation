@@ -11813,6 +11813,7 @@ p ~ .home-grid {
   text-align: left;
   font-weight: 700;
   white-space: nowrap;
+  color: rgb(255, 255, 255);
 }
 .document-content table.table tbody tr {
   border-bottom: 0.0625rem solid #e0e0e0;

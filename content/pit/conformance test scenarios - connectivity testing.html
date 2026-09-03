@@ -1,0 +1,262 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../../assets/css/styles.css" />
+    <title>Connectivity Testing</title>
+</head>
+<body><div class="document-content"><h1 class="document-title" id="title">Connectivity Testing</h1>
+<div style="display:flex; gap:2rem; justify-content:center; align-items:center; margin:1.5rem 0;">
+    <img alt="Workflow icon" src="../../assets/images/icon-helpdesk-workflow.svg" width="240" height="240" />
+    <img alt="Filing icon" src="../../assets/images/icon-helpdesk-filing.svg" width="240" height="240" />
+    <img alt="Sync icon" src="../../assets/images/icon-helpdesk-sync.svg" width="240" height="240" />
+</div><h2 class="pmod" id="table_of_contents">Table of Contents</h2><ul id="toc"><li><a href="#paye_modernisation">PAYE Modernisation</a></li><li style="margin-left: 1.5rem;"><a href="#contents">Contents</a></li><li style="margin-left: 1.5rem;"><a href="#audience">Audience</a></li><li style="margin-left: 1.5rem;"><a href="#document_context">Document context</a></li><li style="margin-left: 1.5rem;"><a href="#document_purpose">Document purpose</a></li><li><a href="#1._introduction">1. Introduction</a></li><li><a href="#2._the_scope">2. The Scope</a></li><li><a href="#3._connectivity_test_prerequisites">3. Connectivity Test Prerequisites</a></li><li><a href="#4._conformance_test_scenarios_for_connectivity_testing">4. Conformance Test Scenarios for Connectivity Testing</a></li><li style="margin-left: 1.5rem;"><a href="#4.1_look_up_revenue_payroll_notification_request">4.1 Look Up Revenue Payroll Notification Request</a></li><li style="margin-left: 1.5rem;"><a href="#4.2_payroll_submission_request_with_a_single_submission_item">4.2 Payroll Submission Request with a Single Submission Item</a></li><li style="margin-left: 1.5rem;"><a href="#4.3_revenue_payroll_notification_for_a_new_employee">4.3 Revenue Payroll Notification for a New Employee</a></li><li style="margin-left: 1.5rem;"><a href="#4.4_error_message_for_employer_number_in_incorrect_format">4.4 Error Message for Employer Number in incorrect format</a></li></ul>
+<h2 class="pmod" id="paye_modernisation">PAYE Modernisation</h2>
+<h3 class="pmod" id="contents">Contents</h3>
+<div style="display:flex; justify-content:space-between; margin:0.25rem 0;"><span><strong>Version</strong></span><span>1.0 Release Candidate 2</span></div>
+<div style="display:flex; justify-content:space-between; margin:0.25rem 0;"><span><strong>Version Date</strong></span><span>19/06/2018</span></div>
+<h3 class="pmod" id="audience">Audience</h3>
+<p>This document is aimed at payroll software developers and testers who are updating their software packages to be compatible with PAYE reporting obligations from 2019 onwards.</p>
+<h3 class="pmod" id="document_context">Document context</h3>
+<p>This document is one of the three documents published to describe the test scenarios that will be supported by Revenue in a dedicated Public Interface Testing environment for the PAYE Modernisation Programme.  The following documents will be published in regards of testing activities related to the PAYE Modernisation Programme:</p>
+<ol>
+<li>PAYE Modernisation  - Connectivity testing (This document)</li>
+<li>PAYE Modernisation  - Basic Business Process testing</li>
+<li>PAYE Modernisation  - Complex Business Process testing</li>
+</ol>
+<p>This document is designed to be read in conjunction with the SOAP and REST example files as well as the rest of the Revenue Commissioners’ PAYE Modernisation documentation suite including the relevant technical documents.</p>
+<h3 class="pmod" id="document_purpose">Document purpose</h3>
+<p>This document defines the Revenue supported test scenarios that can be executed within the Public Interface Test environment.  This document does not outline the business processes to be followed when running payroll.</p>
+<h4 id="version_history">Version History</h4>
+<table class="table pit-section__table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Version</th>
+<th scope="col">Change Date</th>
+<th scope="col">Section</th>
+<th scope="col">Change Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1</td>
+<td>26/02/2018</td>
+<td>All</td>
+<td>Initial draft</td>
+</tr>
+<tr>
+<td>1.0 Release Candidate 2</td>
+<td>17/05/2018</td>
+<td>Version</td>
+<td>Version updated to 1.0 Release Candidate 2</td>
+</tr>
+<tr>
+<td>1.0 Release Candidate 2</td>
+<td>19/06/2018</td>
+<td>Payslip</td>
+<td>Changed to ‘submission item’</td>
+</tr>
+</tbody>
+</table>
+<h4 id="document_references">Document References</h4>
+<table class="table pit-section__table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Reference</th>
+<th scope="col">Document Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Documents Homepage</td>
+<td>Documents Homepage</td>
+</tr>
+</tbody>
+</table>
+<h4 id="abbreviations_and_acronyms">Abbreviations and Acronyms</h4>
+<table class="table pit-section__table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Acronym</th>
+<th scope="col">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PIT</td>
+<td>Public Interface Testing</td>
+</tr>
+<tr>
+<td>PAYE</td>
+<td>Pay As You Earn</td>
+</tr>
+<tr>
+<td>RPN</td>
+<td>Revenue Payroll Notification</td>
+</tr>
+<tr>
+<td>SOAP</td>
+<td>Simple Object Access Protocol</td>
+</tr>
+<tr>
+<td>REST</td>
+<td>Representational State Transfer</td>
+</tr>
+</tbody>
+</table>
+<h2 class="pmod" id="1._introduction">1. Introduction</h2>
+<p>The Documents Homepage specified in Document References is home to all technical and functional specification documentation and examples for the PAYE Modernisation programme.  This documentation has been made available to enable payroll software developers update their software packages to be compatible with PAYE reporting obligations from January 2019. Path locations specified in this document are relative to this Homepage.</p>
+<p>This document provides conformance test scenario examples that are supported by Revenue in its PIT environment to enable payroll software developers validate and verify that their software conforms to these Revenue specifications.</p>
+<h2 class="pmod" id="2._the_scope">2. The Scope</h2>
+<p>The document specifically details the conformance test scenarios encompassing the Connectivity Testing phase for the PAYE Modernisation programme.</p>
+<p>It is strongly recommended that that these scenarios are successfully executed before executing scenarios detailed in later Conformance Test documents.</p>
+<h2 class="pmod" id="3._connectivity_test_prerequisites">3. Connectivity Test Prerequisites</h2>
+<p>A developer or tester who wishes to engage in Connectivity Testing in PIT must first ensure that they have:</p>
+<ol>
+<li>Notified Revenue on their intention to test through registering for access to the Revenue PAYE PIT Support Service Desk</li>
+<li>Received their initial digicert that will enable them to access and reset Revenue supplied test data from the PIT Test Data Management Service. This test data will consist of dummy employers, employees and ROS digicerts that will be supported in the PIT environment.</li>
+</ol>
+<p>Further information on these tools, including access, will be provide on the Documents Homepage.</p>
+<h2 class="pmod" id="4._conformance_test_scenarios_for_connectivity_testing">4. Conformance Test Scenarios for Connectivity Testing</h2>
+<p>Connectivity Testing consists of four test scenarios:</p>
+<ul>
+<li>Look Up Revenue Payroll Notification Request</li>
+<li>Payroll Submission Request with a Single Submission Item</li>
+<li>Revenue Payroll Notification for a New Employee</li>
+<li>Error Message for Employer Number in incorrect format</li>
+</ul>
+<p>All conformance test scenarios apply to both SOAP and REST implementations unless otherwise specified.</p>
+<p>Each test scenarios is defined using the following structure:</p>
+<table class="table pit-section__table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Test Identifier</th>
+<th scope="col">Test Scenario reference. If raising a specific query on a test scenario to Revenue please include this identifier in the query as this indicates whether the query relates to the SOAP or REST implementation of the scenario.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test Purpose</td>
+<td>A brief outline of the purpose of the test scenario.</td>
+</tr>
+<tr>
+<td>Test Data Prerequisite</td>
+<td>Required test data to execute the test scenario.</td>
+</tr>
+<tr>
+<td>Test Steps</td>
+<td>Details of the steps involved in executing the test scenario.</td>
+</tr>
+<tr>
+<td>Expected Result</td>
+<td>The expected successful outcome of the test scenario.</td>
+</tr>
+</tbody>
+</table>
+<h3 class="pmod" id="4.1_look_up_revenue_payroll_notification_request">4.1 Look Up Revenue Payroll Notification Request</h3>
+<table class="table pit-section__table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Test Identifier</th>
+<th scope="col">CON_LookUp_RPN_SOAP, CON_LookUp_RPN_REST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test Purpose</td>
+<td>Test that Revenue will respond with a Revenue Payroll Notification (RPN) response message to a Look Up Revenue Payroll Notification (RPN) Request message from an Employer</td>
+</tr>
+<tr>
+<td>Test Data Prerequisite</td>
+<td>Prepare Valid Look up RPN Request Message based on Test Employer Digi-certs and associated Test Employee Data provided by Revenue. Sample messages can be found in the following document: PAYE Modernisation Description Of Web Service Examples</td>
+</tr>
+<tr>
+<td>Test Steps</td>
+<td>1. The Employer prepares the Look up RPN Request message for a given valid Employer Registration Number 2. The Employer submits the message to the Look up RPN webservice 3. Revenue responds with RPN Response message containing valid RPNs for each employee associated with the Employer Registration Number</td>
+</tr>
+<tr>
+<td>Expected Result</td>
+<td>The Employer receives the RPN response message with the expected set of RPNs for the given Employer Registration Number.</td>
+</tr>
+</tbody>
+</table>
+<h3 class="pmod" id="4.2_payroll_submission_request_with_a_single_submission_item">4.2 Payroll Submission Request with a Single Submission Item</h3>
+<table class="table pit-section__table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Test Identifier</th>
+<th scope="col">CON_PayrollSubmission_SOAP, CON_PayrollSubmission_REST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test Purpose</td>
+<td>Test that Revenue will respond with an Acknowledgement response message for a valid Payroll Submission Request message.</td>
+</tr>
+<tr>
+<td>Test Data Prerequisite</td>
+<td>Prepare Valid Payroll Submission Request message based on Test Employer Digi-certs and associated Test Employee Data provided by Revenue. Sample messages can be found in the following document: PAYE Modernisation Description Of Web Service Examples</td>
+</tr>
+<tr>
+<td>Test Steps</td>
+<td>1. The Employer prepares the Payroll Submission Request message with a single submission item for a given valid Employer Registration Number 2. The Employer submits the message to the Payroll Submission webservice 3. Revenue responds with a Payroll Submission Acknowledgement Response message</td>
+</tr>
+<tr>
+<td>Expected Result</td>
+<td>The Employer receives a Payroll Submission Acknowledgement Response message.</td>
+</tr>
+</tbody>
+</table>
+<h3 class="pmod" id="4.3_revenue_payroll_notification_for_a_new_employee">4.3 Revenue Payroll Notification for a New Employee</h3>
+<table class="table pit-section__table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Test Identifier</th>
+<th scope="col">CON_NewRPN_SOAP, CON_NewRPN_REST,</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test Purpose</td>
+<td>Test that Revenue will respond with a new RPN Response message for the specified valid Employer Registration Number containing specified valid new Employee PPSN</td>
+</tr>
+<tr>
+<td>Test Data Prerequisite</td>
+<td>There must be no Employer-Employee link (i.e. no employment with the employer). Data specific to this scenario is supplied via the Test Data Management Tool. A new data request will be necessary via the Test Data Management Tool to re-execute this scenario. Prepare Valid New RPN Request Message based on Test Employer Digi-certs and associated Test Employee Data provided by Revenue. Sample messages can be found in the following document: PAYE Modernisation Description Of Web Service Examples</td>
+</tr>
+<tr>
+<td>Test Steps</td>
+<td>1. The Employer prepares the New RPN Request message for a given valid Employer Registration Number and a valid PPSN 2. The Employer submits the message to the New RPN webservice 3. Revenue responds with New RPN Response message containing the new RPN for the specified employee</td>
+</tr>
+<tr>
+<td>Expected Result</td>
+<td>The Employer receives a new RPN Response message for the given Employee PPSN.</td>
+</tr>
+</tbody>
+</table>
+<h3 class="pmod" id="4.4_error_message_for_employer_number_in_incorrect_format">4.4 Error Message for Employer Number in incorrect format</h3>
+<table class="table pit-section__table" tabindex="0">
+<thead>
+<tr>
+<th scope="col">Test Identifier</th>
+<th scope="col">CON_EmployerNumberValidation_SOAP, CON_EmployerNumberValidation_REST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test Purpose</td>
+<td>Test that Revenue will respond with an error message and description when an incorrectly formatted Employer Number is used to make a request to any of the webservices (example used below: Look up RPN Request) &lt;e.g. 123456789&gt;</td>
+</tr>
+<tr>
+<td>Test Data Prerequisite</td>
+<td>Prepare invalid Look up RPN Request Message (incorrectly formatted Employer Number) based on Test Certs and associated Test Employee Data provided by Revenue. Sample messages can be found in the following document: PAYE Modernisation Description Of Web Service Examples</td>
+</tr>
+<tr>
+<td>Test Steps</td>
+<td>1. The Employer prepares a invalid Look up RPN Request message (incorrectly formatted Employer Number) using a Cert with for a given valid Employer Registration Number 2. The Employer submits the message to the Look up RPN webservice 3. Revenue responds with the validation error code 1004 and a description of the error.</td>
+</tr>
+<tr>
+<td>Expected Result</td>
+<td>The Employer receives a response message containing the error code 1004 and a description of the error.</td>
+</tr>
+</tbody>
+</table></div></body></html>

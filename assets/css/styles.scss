@@ -737,11 +737,12 @@ p ~ .home-grid {
             color: $base-white !important;
         }
 
-        thead th {
+                thead th {
             padding: 0.6rem 0.85rem;
             text-align: left;
             font-weight: $bold-font-weight;
             white-space: nowrap;
+            color: $base-white; // ensure white text wins over more specific rules (e.g. .pit-section__table thead th) when both classes are present on the same table
         }
 
         tbody tr {

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en-IE">
+<head>
+<meta charset="UTF-8">
+<title>Migration Status Viewer</title>
+<style>
+  /* Internal dev tool — deliberately not REVDS-styled, not part of the public site. */
+  body {
+    font-family: "Segoe UI", sans-serif;
+    font-size: 14px;
+    background: #f4f4f4;
+    color: #1a1a1a;
+    margin: 0;
+    padding: 2rem;
+  }
+  h1 {
+    color: #025F63;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    border-bottom: 2px solid #025F63;
+    padding-bottom: 0.5rem;
+  }
+  #summary {
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    color: #444;
+  }
+  ul.tree {
+    list-style: none;
+    padding-left: 1.25rem;
+    margin: 0;
+  }
+  ul.tree.root {
+    padding-left: 0;
+  }
+  li {
+    margin: 0.15rem 0;
+  }
+  .node {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: default;
+    padding: 0.15rem 0.25rem;
+  }
+  .node.has-children {
+    cursor: pointer;
+  }
+  .toggle {
+    display: inline-block;
+    width: 1rem;
+    text-align: center;
+    color: #025F63;
+    font-weight: bold;
+  }
+  .toggle.leaf {
+    visibility: hidden;
+  }
+  .badge {
+    display: inline-block;
+    padding: 0.05rem 0.4rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 0;
+  }
+  .badge.true {
+    background: #198754;
+  }
+  .badge.false {
+    background: #d9534f;
+  }
+  .label {
+    color: #1a1a1a;
+  }
+  .collapsed > ul.tree {
+    display: none;
+  }
+  #loadError {
+    color: #d9534f;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<h1>Migration Status</h1>
+<div id="summary"></div>
+<div id="loadError"></div>
+<ul class="tree root" id="tree"></ul>
+
+<script>
+(function () {
+  const JSON_PATH = "../MIGRATION_STATUS.json"; // tools/ -> repo root
+
+  function countStatuses(node) {
+    let total = 0, complete = 0;
+    for (const key of Object.keys(node)) {
+      const entry = node[key];
+      total += 1;
+      if (entry.status === true) complete += 1;
+      if (entry.children && Object.keys(entry.children).length) {
+        const child = countStatuses(entry.children);
+        total += child.total;
+        complete += child.complete;
+      }
+    }
+    return { total, complete };
+  }
+
+  function buildTree(node) {
+    const ul = document.createElement("ul");
+    ul.className = "tree";
+
+    for (const name of Object.keys(node)) {
+      const entry = node[name];
+      const hasChildren = entry.children && Object.keys(entry.children).length > 0;
+
+      const li = document.createElement("li");
+      const row = document.createElement("div");
+      row.className = "node" + (hasChildren ? " has-children" : "");
+
+      const toggle = document.createElement("span");
+      toggle.className = "toggle" + (hasChildren ? "" : " leaf");
+      toggle.textContent = hasChildren ? "▾" : "•";
+      row.appendChild(toggle);
+
+      const badge = document.createElement("span");
+      badge.className = "badge " + (entry.status ? "true" : "false");
+      badge.textContent = entry.status ? "DONE" : "PENDING";
+      row.appendChild(badge);
+
+      const label = document.createElement("span");
+      label.className = "label";
+      label.textContent = name;
+      row.appendChild(label);
+
+      li.appendChild(row);
+
+      if (hasChildren) {
+        const childUl = buildTree(entry.children);
+        li.appendChild(childUl);
+
+        row.addEventListener("click", () => {
+          li.classList.toggle("collapsed");
+          toggle.textContent = li.classList.contains("collapsed") ? "▸" : "▾";
+        });
+      }
+
+      ul.appendChild(li);
+    }
+
+    return ul;
+  }
+
+  fetch(JSON_PATH)
+    .then((res) => {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
+    .then((data) => {
+      const { total, complete } = countStatuses(data);
+      const pct = total ? Math.round((complete / total) * 100) : 0;
+      document.getElementById("summary").textContent =
+        `${complete} / ${total} items migrated (${pct}%)`;
+      const newTree = buildTree(data);
+      newTree.id = "tree";
+      newTree.classList.add("root");
+      document.getElementById("tree").replaceWith(newTree);
+    })
+    .catch((err) => {
+      document.getElementById("loadError").textContent =
+        "Could not load MIGRATION_STATUS.json: " + err.message +
+        " (this page must be served over HTTP, not opened via file://)";
+    });
+})();
+</script>
+
+</body>
+</html>

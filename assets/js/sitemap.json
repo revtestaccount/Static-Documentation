@@ -117,10 +117,10 @@
    "message": "placeholder text/unused"
   },
   "conformance": {
-   "template": "./content/shared/demodocument.html",
-   "title": "Conformance Testing Scenarios",
-   "message": "placeholder text/unused"
-  },
+     "template": "./content/pit/conformance test scenarios - connectivity testing.html",
+     "title": "Conformance Testing Scenarios",
+     "message": "placeholder text/unused"
+    },
   "faq": {
    "template": "./content/shared/faq.html",
    "title": "PAYE Modernisation Web Services - FAQ",
@@ -580,9 +580,24 @@
    "title": "ROS Payroll Reporting JSON Envelope schema.",
    "message": "placeholder text/unused"
   },
-  "rpnrequestcsvfileresponse.": {
-   "template": "./content/PIT3/screens/rpn_request_csv_file_response.html",
+    "rpnrequestcsvfileresponse.": {
+   "template": "./content/PIT4/screens/rpn_request_csv_file_response.html",
    "title": "ROS Payroll Reporting JSON Envelope schema.",
+   "message": "placeholder text/unused"
+  },
+  "twssoperationalphasedescription.": {
+   "template": "./content/PIT4/screens/twss_operational_phase_csv_description.html",
+   "title": "Temporary Wage Subsidy Scheme (TWSS) Operational Phase Description",
+   "message": "placeholder text/unused"
+  },
+  "twssreconciliationdescription.": {
+   "template": "./content/PIT4/screens/twss_reconciliation_csv_description.html",
+   "title": "Temporary Wage Subsidy Scheme (TWSS) Reconciliation Description",
+   "message": "placeholder text/unused"
+  },
+  "twssreconciliationcsvvalidation.": {
+   "template": "./content/PIT4/screens/twss_reconciliation_csv_validation.html",
+   "title": "Temporary Wage Subsidy Scheme (TWSS) Reconciliation CSV Validation",
    "message": "placeholder text/unused"
   },
   "rpncsvformat.": {
