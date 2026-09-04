@@ -1,4 +1,4 @@
-﻿"""
+"""
 run_doc_fixes.py
 ================
 Single entry point for all post-pipeline document fixes.
@@ -1454,6 +1454,25 @@ def fix_twss_operational_phase(html: str, env: str) -> tuple[str, list[str]]:
     else:
                 changes.append("Fix 6: WARNING: not found — 'Version / Version Date' paragraph pair")
 
+    # Fix 7: Page title/H1 - align to the full descriptive title used in
+    # sitemap.json ("Temporary Wage Subsidy Scheme (TWSS) Operational Phase
+    # Description") so this page is clearly distinguishable from the other
+    # TWSS documents on the site (browser tab, bookmarks, screen readers).
+    html, n1 = re.subn(
+        r'<title>Temporary Wage Subsidy Scheme Operational Phase</title>',
+        '<title>Temporary Wage Subsidy Scheme (TWSS) Operational Phase Description</title>',
+        html
+    )
+    html, n2 = re.subn(
+        r'(<h1 class="document-title" id="title">)Temporary Wage Subsidy Scheme Operational Phase(</h1>)',
+        r'\1Temporary Wage Subsidy Scheme (TWSS) Operational Phase Description\2',
+        html
+    )
+    if n1 and n2:
+        changes.append("Fix 7: Expanded page title/H1 to full descriptive title")
+    else:
+        changes.append("Fix 7: WARNING: not found - title/H1 to expand")
+
     return html, changes
 
 
@@ -1613,7 +1632,26 @@ def fix_twss_reconciliation(html: str, env: str) -> tuple[str, list[str]]:
     else:
         changes.append("Fix 2: WARNING: not found — 'Version / Version Date' paragraph pair")
 
-        return html, changes
+    # Fix 3: Page title/H1 - align to the full descriptive title used in
+    # sitemap.json ("Temporary Wage Subsidy Scheme (TWSS) Reconciliation
+    # Description") so this page is clearly distinguishable from the
+    # other TWSS documents on the site.
+    html, n1 = re.subn(
+        r'<title>Temporary Wage Subsidy Scheme Reconciliation</title>',
+        '<title>Temporary Wage Subsidy Scheme (TWSS) Reconciliation Description</title>',
+        html
+    )
+    html, n2 = re.subn(
+        r'(<h1 class="document-title" id="title">)Temporary Wage Subsidy Scheme Reconciliation(</h1>)',
+        r'\1Temporary Wage Subsidy Scheme (TWSS) Reconciliation Description\2',
+        html
+    )
+    if n1 and n2:
+        changes.append("Fix 3: Expanded page title/H1 to full descriptive title")
+    else:
+        changes.append("Fix 3: WARNING: not found - title/H1 to expand")
+
+    return html, changes
 
 
 # ---------------------------------------------------------------------------
@@ -1726,6 +1764,26 @@ def fix_twss_reconciliation_csv_validation(html: str, env: str) -> tuple[str, li
     )
     html, ok = replace_table_by_marker(html, 'Payslip', business_rules_table)
     changes.append(f"Fix 4: {'Replaced' if ok else 'WARNING: not found —'} Business Rules Validation table")
+
+    # Fix 5: Page title/H1 - the source PDF's own cover heading is just
+    # "Reconciliation", which is far too generic to distinguish this page
+    # from the other TWSS Reconciliation documents on the site (browser tab,
+    # bookmarks, screen readers). Align to the full descriptive title used
+    # in sitemap.json.
+    html, n1 = re.subn(
+        r'<title>Reconciliation</title>',
+        '<title>Temporary Wage Subsidy Scheme (TWSS) Reconciliation CSV Validation</title>',
+        html
+    )
+    html, n2 = re.subn(
+        r'(<h1 class="document-title" id="title">)Reconciliation(</h1>)',
+        r'\1Temporary Wage Subsidy Scheme (TWSS) Reconciliation CSV Validation\2',
+        html
+    )
+    if n1 and n2:
+        changes.append("Fix 5: Expanded generic 'Reconciliation' title/H1 to full descriptive title")
+    else:
+        changes.append("Fix 5: WARNING: not found - generic 'Reconciliation' title/H1 to expand")
 
     return html, changes
 
