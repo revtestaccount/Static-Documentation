@@ -21,6 +21,43 @@
 
 ---
 
+## Session: 2026-07-24 (b)
+
+**Task:** Fix generic/ambiguous page titles on the 3 TWSS documents (PIT4), following user observation that `twss_reconciliation_csv_validation.html`'s `<title>`/`<h1>` was just "Reconciliation" — indistinguishable from other TWSS documents in browser tabs, bookmarks, and screen readers.
+
+**Findings:**
+- Confirmed via direct file inspection that all 3 TWSS documents had titles/H1s shorter than their correct, distinguishing `sitemap.json` titles: `twss_operational_phase_csv_description.html` ("Temporary Wage Subsidy Scheme Operational Phase"), `twss_reconciliation_csv_description.html` ("Temporary Wage Subsidy Scheme Reconciliation"), and worst of all `twss_reconciliation_csv_validation.html` (just "Reconciliation"). Root cause: this is a source-PDF quirk (the PDF's own cover heading is literally just "Reconciliation", confirmed via the pipeline's intermediate `.md` output), not a pipeline bug — but still a bad user-facing title for the site.
+- **Bug introduced and caught mid-session:** when adding a new title-fix step to `fix_twss_reconciliation()`, a scripted text insertion (via a throwaway Python string-replacement script) landed the new code at the wrong indentation level — 8 spaces instead of 4 — placing it inside the previous fix's `else:` block. This meant the function's `return html, changes` statement got swallowed into that `else:` block too, so on the *successful* path (the common case) the function would have fallen through with no `return` at all, implicitly returning `None` and crashing the caller. `ast.parse` reported no syntax error (still valid Python, just logically wrong) — it was only caught by directly executing all 3 fix functions against the real on-disk HTML and asserting the return value was not `None` before writing anything back to disk. Good example of why `ast.parse`/`py_compile` is necessary but not sufficient — always follow up with actual execution against real fixtures before trusting a fix.
+- **New bug reported by user at end of session (NOT yet fixed — see Outstanding):** on `twss_reconciliation_csv_validation.html`, two footnote-style annotation blocks are rendering in the wrong location and/or multiple times:
+  - `** Only one error would trigger at a time / ** The error messages would appear on the screen / ** Sign & Submit button will remain disabled` — appears duplicated 2-3 times in a row after the Pre-submission Validation table.
+  - `** Field size, data format and characters are all schema errors and the submission will be rejected and a file downloaded with the details. ** The error messages would appear in the CSV response file` — user flagged as being in the "wrong location" (should presumably sit directly under the File Format / Schema Validation heading — needs confirming against source PDF).
+  - Spotted via live-server screenshots (`http://127.0.0.1:5503/index.html#twssreconciliationcsvvalidation`) at the very end of the session, after this session's title-fix commit. Not yet investigated whether this duplication bug pre-dates this session's changes (most likely, since this session's edits only touched `<title>`/`<h1>`) or was introduced by re-running `fix_twss_reconciliation_csv_validation()` more than once against the same file (each run appending another copy of Fix 2's literal footnote text). Needs direct comparison against the source PDF (`content/PIT4/screens/twss_reconciliation_csv_validation.pdf`) to establish ground truth before writing any fix, per this project's established convention.
+
+**Fixed:**
+- ✅ `tools/run_doc_fixes.py` — added a title/H1 expansion fix to all 3 existing TWSS fix functions (`fix_twss_operational_phase` Fix 7, `fix_twss_reconciliation` Fix 3, `fix_twss_reconciliation_csv_validation` Fix 5), each aligning the document's `<title>` and `<h1 id="title">` to the full descriptive title already used in `sitemap.json`. No `doc_fixes_registry.json`/`FIX_REGISTRY` changes were needed — all 3 functions were already registered; this was a new step inside existing functions, not a new fix key.
+- ✅ Caught and corrected the indentation/dead-`return` bug described above before it reached disk — verified via direct execution of all 3 functions against the real on-disk HTML (confirmed no `None` returns, all 3 title fixes reported "Expanded..." success).
+- ✅ Applied the corrected functions to the 3 on-disk HTML files and verified via direct file read afterwards that all 3 titles/H1s now show the correct full descriptive text.
+- ✅ All throwaway helper/verification scripts created this session (`tools/_fix_twss_titles.py`, `tools/_check_indent.py`, `tools/_check_indent2.py`, `tools/_fix_indent_bug.py`, `tools/_verify_title_fixes.py`, `tools/_apply_title_fixes.py`, `tools/_verify_final.py`) were deleted immediately after use — confirmed via `git status --short` that none remained in the working tree before committing, per CLAUDE.md Section 13.
+- ✅ Committed as `d3042a0` on `dev_contentMigration`.
+
+**Outstanding / next steps:**
+- 🔴 **CONFIRM PUSH STATUS FIRST:** session ended before `git push origin dev_contentMigration` was confirmed to complete — the command may have been cancelled/interrupted by the session ending. Check whether commit `d3042a0` reached the remote at the start of next session, and push it if not.
+- 🔴 **New bug, not yet fixed:** `twss_reconciliation_csv_validation.html` has duplicated/mis-positioned footnote annotation blocks (see Findings above). Do NOT guess at a fix from the current broken HTML alone — read the source PDF (`content/PIT4/screens/twss_reconciliation_csv_validation.pdf`, 5 pages) directly first via PyMuPDF/pdfplumber to establish ground truth for exactly where each footnote paragraph belongs and how many times (if any) it is genuinely repeated in the source.
+- ⚪ Once ground truth is confirmed, decide whether the fix belongs in a new Fix step within `fix_twss_reconciliation_csv_validation()` (most likely, following the existing Fix 1-4 pattern) or whether the cause is that the function has been run multiple times against an already-fixed file (in which case document that risk/add an idempotency guard).
+- ⚪ Verify any new fix via direct script execution against the real on-disk HTML (not just `ast.parse`) before writing back to disk, per the lesson learned this session.
+- ⚪ Get user visual confirmation in-browser once the footnote duplication/positioning fix is applied.
+
+**Files touched this session:**
+- `tools/run_doc_fixes.py` (added Fix 7 to `fix_twss_operational_phase`, Fix 3 to `fix_twss_reconciliation`, Fix 5 to `fix_twss_reconciliation_csv_validation` — all title/H1 expansion; mid-session indentation bug introduced and corrected before commit)
+- `content/PIT4/screens/twss_operational_phase_csv_description.html` (title/H1 corrected)
+- `content/PIT4/screens/twss_reconciliation_csv_description.html` (title/H1 corrected)
+- `content/PIT4/screens/twss_reconciliation_csv_validation.html` (title/H1 corrected — but see new outstanding footnote-duplication bug above, NOT fixed this session)
+- Various `tools/_*.py` throwaway scripts (created and deleted within this session, never committed)
+
+**Status: Title/H1 fix for all 3 TWSS documents is complete, verified by execution (not just `ast.parse`), and committed (`d3042a0`) — but push to remote was NOT confirmed complete before the session ended, confirm/retry first next session. A new, separate, NOT-yet-fixed bug was reported by the user at the very end of the session (duplicated/mis-positioned footnote annotations on `twss_reconciliation_csv_validation.html`) — resume by reading the source PDF directly to establish ground truth before attempting a fix.**
+
+---
+
 ## Session: 2026-07-22
 
 **Task:** Resume TWSS Reconciliation Description (PIT4) fix work: fixed a Python IndentationError in fix_twss_reconciliation() (tools/run_doc_fixes.py) that was blocking the script from running at all, and audited the current on-disk HTML output.
