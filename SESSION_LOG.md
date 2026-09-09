@@ -21,6 +21,44 @@
 
 ---
 
+## Session: 2026-07-24 (c)
+
+**Task:** Resume the footnote-duplication/misplacement bug on `twss_reconciliation_csv_validation.html` flagged at the end of the previous session (2026-07-24 (b)). Read the source PDF directly first to establish ground truth before writing any fix, per this project's established convention.
+
+**Findings (ground truth from source PDF, `content/PIT4/screens/twss_reconciliation_csv_validation.pdf`, 5 pages, read directly via PyMuPDF):**
+- Page 3: "** Only one error would trigger..." 3-line footnote appears **exactly once**, directly after the Pre-submission Validation table.
+- Page 4: "** Field size, data format..." 2-line footnote appears **exactly once**, directly **after** the File Format / Schema Validation table (following the last 'ARNWP' row) — the on-disk HTML had it misplaced **before** the table, right under the heading.
+- Page 5: "** Only one business error..." 2-line footnote appears **exactly once**, directly after the Business Rules Validation table — the on-disk HTML also had this one misplaced before its table, and this footnote had never been touched by any existing fix step at all (not even a broken/duplicated attempt).
+- Root cause of the Pre-submission footnote tripling (from the previous session): `fix_twss_reconciliation_csv_validation()`'s Fix 2 appends the footnote as **literal text** after its replacement table, with no idempotency guard — each time the fix function is run against an already-fixed file, another copy gets appended. This explains why the on-disk file had accumulated 3 copies (the function had been run 3 times across sessions without a fresh pipeline regeneration in between).
+- A second round of user-reported bugs (via live-server screenshots) after the first round of fixes were applied: (1) the Schema Validation footnote was rendering as one run-on line instead of two — its literal text used `\n` but no `<br>` tag, unlike the correctly-formed Pre-submission footnote; (2) the Business Rules footnote had the same missing-`<br>` issue once relocated.
+- A third, separate bug found via user screenshot at the very end of the session: the **Latest Version History** table (Version/Change Date/Element/Change Description, 1 row) was misplaced under the 'Document context' heading instead of under its own empty 'Latest Version History' heading — the exact same misplaced-heading bug pattern already fixed via 'Fix 0' in the other 2 TWSS documents' fix functions, but `fix_twss_reconciliation_csv_validation()` never had an equivalent Fix 0 — its Fix 1 only ever replaced the table's *content*, never its *position*.
+
+**Fixed:**
+- ✅ `tools/run_doc_fixes.py` — added a `dedupe_paragraph()` helper (collapses any number of duplicate copies of a literal `<p>...</p>` footnote block down to exactly one) to guard against non-idempotent literal-append fix steps being run more than once against an already-fixed file.
+- ✅ `fix_twss_reconciliation_csv_validation()` Fix 2b: applies `dedupe_paragraph()` to the Pre-submission footnote (fixes the tripling bug).
+- ✅ Fix 3b: relocates the Schema Validation footnote from before its table to after it (per ground truth), Fix 3c: dedupe guard, Fix 3d: normalizes a no-`<br>` variant of the footnote (from an earlier, less-correct run) to the proper `<br>`-separated form regardless of position.
+- ✅ Fix 4b (new): relocates the previously-untouched Business Rules footnote from before its table to after it and splits it into 2 lines with `<br>` (per ground truth), Fix 4c: dedupe guard.
+- ✅ Fix 0 (new): extract-verify-reinsert relocation of the Latest Version History table from under 'Document context' to directly under its own 'Latest Version History' heading — same safe pattern (only proceed if both the heading and the table's own unique marker text are independently confirmed present) already used for this exact bug class in the other 2 TWSS fix functions.
+- ✅ Every one of the above fixes was verified via **direct execution** against the real on-disk HTML (not just `ast.parse`), including an explicit **idempotency test** — running the function twice in a row and asserting footnote/table counts stay at exactly 1 both times — before writing any output back to disk. This directly follows the process lesson logged in the previous session (2026-07-24 (b)): syntax validity alone is not sufficient, execution against real fixtures is mandatory.
+- ✅ Applied the corrected, verified output to `content/PIT4/screens/twss_reconciliation_csv_validation.html` in 3 incremental rounds (footnote dedupe+reposition → `<br>` normalization+Business Rules reposition → Version History table reposition), each round independently confirmed via direct file read before moving to the next.
+- ✅ User visually confirmed the footnote dedupe/reposition fixes and the `<br>` line-break fixes in-browser via screenshots during the session.
+- ✅ All throwaway scripts created this session (`tools/_read_source_pdf.py`, `tools/_dump_validation_fn.py`, `tools/_fix_footnote_bugs.py`, `tools/_test_footnote_fix.py`, `tools/_footnote_fix_output.html`, `tools/_fix_footnote_bugs2.py`, `tools/_fix_schema_br.py`, `tools/_test_footnote_fix2.py`, `tools/_footnote_fix2_output.html`, `tools/_fix_version_history_placement.py`, `tools/_test_version_history_fix.py`, `tools/_version_history_fix_output.html`) were deleted immediately after use — confirmed via directory listing that `tools/` contains no leftover `_*.py`/`_*.html` files.
+
+**Outstanding / next steps:**
+- 🔴 **Not yet committed/pushed.** Session ended before `git` was reachable from the terminal (see below) — all 4 fixes described above are verified and applied to disk but have NOT been committed. This must be done first thing next session.
+- 🔴 **Terminal issue this session:** partway through, `git`/`where.exe git` stopped being recognised as a command (`'git' is not recognized as an internal or external command`), despite having worked earlier in the same overall multi-session thread. Not diagnosed — root cause unknown (PATH change mid-session? shell/profile issue?). Workaround used: relied on `read_file`/`grep_search`/`ls` (which don't depend on the shell's PATH) to verify all changes directly instead of `git status`/`git diff`. **Next session: confirm git is working again before anything else, then run `git status --short` to confirm exactly what's staged (expected: `tools/run_doc_fixes.py` and `content/PIT4/screens/twss_reconciliation_csv_validation.html` only — no leftover throwaway files, already confirmed clean via `ls`), then commit and push.**
+- ⚪ Get final user visual confirmation specifically of the Latest Version History table relocation fix (Fix 0) — this was the last fix applied and had not yet been screenshot-confirmed by the user when the session ended, unlike the earlier footnote fixes which were confirmed.
+- ⚪ Consider whether the `dedupe_paragraph()` / reposition-fix pattern established this session (extract broken/misplaced literal content, verify by direct execution + idempotency test, apply incrementally) is worth documenting as a formal project convention in `CLAUDE.md`, given this is now the 2nd distinct document (after the other 2 TWSS docs' Fix 0) to need this exact misplaced-heading/table repair.
+
+**Files touched this session:**
+- `tools/run_doc_fixes.py` (`fix_twss_reconciliation_csv_validation` — added `dedupe_paragraph()` helper, Fix 0 [Version History table reposition], Fix 2b [Pre-submission footnote dedupe], Fix 3b/3c/3d [Schema footnote reposition, dedupe, `<br>` normalization], Fix 4b/4c [Business Rules footnote reposition, `<br>`, dedupe])
+- `content/PIT4/screens/twss_reconciliation_csv_validation.html` (all 4 bugs fixed and verified on disk: Pre-submission footnote deduped to 1 copy, Schema footnote repositioned after its table with correct `<br>`, Business Rules footnote repositioned after its table with correct `<br>`, Latest Version History table repositioned under its own heading)
+- Various `tools/_*.py`/`tools/_*.html` throwaway scripts (created and deleted within this session, never committed)
+
+**Status: All 4 bugs are fixed, verified by direct execution + idempotency testing, and confirmed applied on disk via direct file read. NOT YET COMMITTED OR PUSHED — git became unavailable in the terminal partway through the session and this was not resolved before time ran out. Resume next session by confirming git works, running `git status --short` to sanity-check exactly what's changed, then commit and push before doing anything else.**
+
+---
+
 ## Session: 2026-07-24 (b)
 
 **Task:** Fix generic/ambiguous page titles on the 3 TWSS documents (PIT4), following user observation that `twss_reconciliation_csv_validation.html`'s `<title>`/`<h1>` was just "Reconciliation" — indistinguishable from other TWSS documents in browser tabs, bookmarks, and screen readers.

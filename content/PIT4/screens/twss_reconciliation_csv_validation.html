@@ -15,10 +15,6 @@
 <div style="display:flex; justify-content:space-between; margin:0.5rem 0;"><span><strong>Version</strong> 1.0</span><span><strong>Version Date</strong> 30/07/2020</span></div>
 
 <h3 class="pmod" id="latest_version_history">Latest Version History</h3>
-<h3 class="pmod" id="audience">Audience</h3>
-<p>This document is for any employer who has registered for the Temporary Wage Subsidy Scheme (TWSS) and wishes to upload a CSV file with the details of the subsidy paid to each of their employees.</p>
-<h3 class="pmod" id="document_context">Document context</h3>
-<p>This document provides a description of a set of validations that would be performed when a CSV file is uploaded.</p>
 <table class="table" tabindex="0">
 <thead>
 <tr>
@@ -32,6 +28,11 @@
 <tr><td>1.0</td><td>30/07/2020</td><td>N/A</td><td>Document published</td></tr>
 </tbody>
 </table>
+<h3 class="pmod" id="audience">Audience</h3>
+<p>This document is for any employer who has registered for the Temporary Wage Subsidy Scheme (TWSS) and wishes to upload a CSV file with the details of the subsidy paid to each of their employees.</p>
+<h3 class="pmod" id="document_context">Document context</h3>
+<p>This document provides a description of a set of validations that would be performed when a CSV file is uploaded.</p>
+
 <h3 class="pmod" id="pre-submission_validation">Pre-submission Validation</h3>
 <table class="table" tabindex="0">
 <thead>
@@ -52,15 +53,13 @@
 <p>** Only one error would trigger at a time<br>
 ** The error messages would appear on the screen<br>
 ** Sign &amp; Submit button will remain disabled</p>
-<p>** Only one error would trigger at a time<br>
-** The error messages would appear on the screen<br>
-** Sign &amp; Submit button will remain disabled</p>
-<p>** Only one error would trigger at a time<br>
-** The error messages would appear on the screen<br>
-** Sign &amp; Submit button will remain disabled</p>
+
+
+
+
+
 <h3 class="pmod" id="file_format_/_schema_validation">File Format / Schema Validation</h3>
-<p>** Field size, data format and characters are all schema errors and the submission will be rejected and a file downloaded with the details.
-** The error messages would appear in the CSV response file</p>
+
 <table class="table" tabindex="0">
 <thead>
 <tr>
@@ -85,8 +84,11 @@
 <tr><td>ARNWP</td><td>Optional</td><td>If provided, value should be greater than 0</td></tr>
 </tbody>
 </table>
+<p>** Field size, data format and characters are all schema errors and the submission will be rejected and a file downloaded with the details.<br>
+** The error messages would appear in the CSV response file</p>
+
 <h3 class="pmod" id="business_rules_validation">Business Rules Validation</h3>
-<p>** Only one business error would trigger at a time ** The error messages would appear in the CSV response file</p>
+
 <table class="table" tabindex="0">
 <thead>
 <tr>
@@ -101,4 +103,6 @@
 <tr><td>Employment ID doesn&rsquo;t match</td><td>The subsidy detail employment ID does not match the employment ID on the referenced payslip.</td></tr>
 <tr><td>Pay date doesn&rsquo;t match</td><td>The subsidy detail pay date does not match the pay date on the referenced payslip</td></tr>
 </tbody>
-</table></div></body></html>
+</table>
+<p>** Only one business error would trigger at a time<br>
+** The error messages would appear in the CSV response file</p></div></body></html>

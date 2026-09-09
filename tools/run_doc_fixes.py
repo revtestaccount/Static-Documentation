@@ -1682,6 +1682,41 @@ def fix_twss_reconciliation_csv_validation(html: str, env: str) -> tuple[str, li
                 return html[:m.start()] + clean_table + html[m.end():], True
         return html, False
 
+    def dedupe_paragraph(html: str, para_html: str) -> tuple[str, int]:
+        """Collapse any number of duplicate copies of a literal <p>...</p>
+        footnote block down to exactly one. Guards against fix steps that
+        append fixed literal content being run more than once against an
+        already-fixed file (non-idempotent otherwise) - see SESSION_LOG.md
+        TWSS Reconciliation CSV Validation footnote-duplication bug."""
+        count = html.count(para_html)
+        if count > 1:
+            first = html.find(para_html)
+            before = html[:first + len(para_html)]
+            after = html[first + len(para_html):].replace(para_html, '')
+            html = before + after
+        return html, count
+
+    # Fix 0: The Latest Version History table (Version/Change Date/
+    # Element/Change Description, 1 data row) is misplaced by the
+    # pipeline - it sits under 'Document context' instead of under its
+    # own empty 'Latest Version History' heading, exactly the same
+    # misplaced-heading bug seen in the other 2 TWSS documents. Extract-
+    # verify-reinsert approach: only proceed if the heading and the
+    # table's own unique marker text are both independently confirmed
+    # present, to avoid a partial/corrupting substitution.
+    h_ver = '<h3 class="pmod" id="latest_version_history">Latest Version History</h3>'
+    ver_table_m = re.search(
+        r'<table[^>]*>\s*<thead>\s*<tr>\s*<th[^>]*>Version</th>[\s\S]*?</table>',
+        html
+    )
+    if h_ver in html and ver_table_m:
+        misplaced_table = ver_table_m.group(0)
+        html = html[:ver_table_m.start()] + html[ver_table_m.end():]
+        html = html.replace(h_ver, h_ver + '\n' + misplaced_table, 1)
+        changes.append("Fix 0: Moved Latest Version History table from under 'Document context' to sit under its own heading")
+    else:
+        changes.append("Fix 0: WARNING: heading or table marker not found - no reorder performed")
+
     # Fix 1: Latest Version History table (single data row per source PDF page 2)
     version_history_table = (
         '<table class="table" tabindex="0">\n'
@@ -1719,6 +1754,20 @@ def fix_twss_reconciliation_csv_validation(html: str, env: str) -> tuple[str, li
     html, ok = replace_table_by_marker(html, 'When the selected file is not .csv', presubmission_table)
     changes.append(f"Fix 2: {'Replaced' if ok else 'WARNING: not found —'} Pre-submission Validation table (and restored missing footnote block)")
 
+    presubmission_footnote = (
+        '<p>** Only one error would trigger at a time<br>\n'
+        '** The error messages would appear on the screen<br>\n'
+        '** Sign &amp; Submit button will remain disabled</p>'
+    )
+    # Fix 2b: source PDF page 3 confirms this footnote appears exactly once,
+    # directly after the Pre-submission Validation table. If this fix
+    # function is ever run more than once against an already-fixed file,
+    # Fix 2's literal <p> block would otherwise be duplicated once per run -
+    # collapse any extra copies down to 1.
+    html, dupe_count = dedupe_paragraph(html, presubmission_footnote)
+    if dupe_count > 1:
+        changes.append(f"Fix 2b: Collapsed {dupe_count} duplicate copies of the Pre-submission Validation footnote down to 1")
+
     # Fix 3: File Format / Schema Validation table (13 rows per source PDF page 4)
     schema_rows = [
         ("Employer Name", "Mandatory", "Max Length &ndash; 100 characters"),
@@ -1748,6 +1797,45 @@ def fix_twss_reconciliation_csv_validation(html: str, env: str) -> tuple[str, li
     html, ok = replace_table_by_marker(html, 'Employer Name', schema_table)
     changes.append(f"Fix 3: {'Replaced' if ok else 'WARNING: not found —'} File Format / Schema Validation table")
 
+    # Fix 3b: The 'Field size, data format...' footnote is misplaced by
+    # the pipeline BEFORE the File Format / Schema Validation table
+    # (directly under the heading). Source PDF page 4 confirms it belongs
+    # AFTER the table (following the 'ARNWP' row), matching the
+    # footnote-after-table pattern used by every other section in this
+    # document. Move it: remove from its current (wrong) position and
+    # reinsert immediately after the table's closing tag.
+    schema_footnote = (
+        '<p>** Field size, data format and characters are all schema errors and the submission will be rejected and a file downloaded with the details.<br>\n'
+        '** The error messages would appear in the CSV response file</p>'
+    )
+    if schema_footnote in html:
+        html = html.replace(schema_footnote, '', 1)
+        if schema_table in html:
+            i_schema_end = html.find(schema_table) + len(schema_table)
+            html = html[:i_schema_end] + '\n' + schema_footnote + html[i_schema_end:]
+            changes.append("Fix 3b: Moved 'Field size, data format...' footnote from before to after the File Format / Schema Validation table")
+        else:
+            changes.append("Fix 3b: WARNING: schema table not found after removing footnote - footnote removed but not reinserted, investigate")
+    else:
+        changes.append("Fix 3b: NOTE: 'Field size, data format...' footnote not found in its known-wrong position - may already be correctly placed or document shape has changed")
+
+    # Fix 3c: guard against this footnote being duplicated if this fix
+    # function is ever run more than once against an already-fixed file.
+    html, dupe_count = dedupe_paragraph(html, schema_footnote)
+    if dupe_count > 1:
+        changes.append(f"Fix 3c: Collapsed {dupe_count} duplicate copies of the Schema Validation footnote down to 1")
+
+    # Fix 3d: normalize a no-<br> variant of this footnote (e.g. left over
+    # from an earlier run of this fix before the <br> tag was added) to
+    # the correct <br>-separated form, regardless of its position.
+    schema_footnote_no_br = (
+        '<p>** Field size, data format and characters are all schema errors and the submission will be rejected and a file downloaded with the details.\n'
+        '** The error messages would appear in the CSV response file</p>'
+    )
+    if schema_footnote_no_br in html:
+        html = html.replace(schema_footnote_no_br, schema_footnote, 1)
+        changes.append('Fix 3d: Normalized Schema Validation footnote to use <br> between its 2 lines')
+
     # Fix 4: Business Rules Validation table (5 rows per source PDF page 5)
     business_rules_table = (
         '<table class="table" tabindex="0">\n'
@@ -1764,6 +1852,35 @@ def fix_twss_reconciliation_csv_validation(html: str, env: str) -> tuple[str, li
     )
     html, ok = replace_table_by_marker(html, 'Payslip', business_rules_table)
     changes.append(f"Fix 4: {'Replaced' if ok else 'WARNING: not found —'} Business Rules Validation table")
+
+    # Fix 4b: The 'Only one business error would trigger...' footnote is
+    # misplaced by the pipeline BEFORE the Business Rules Validation table
+    # (directly under the heading, and run-on as a single line with no
+    # <br>). Source PDF page 5 confirms it belongs AFTER the table
+    # (following the last 'Pay date doesn't match' row) as two separate
+    # lines, matching the footnote-after-table pattern used by the other
+    # two sections in this document.
+    business_rules_footnote_broken = '<p>** Only one business error would trigger at a time ** The error messages would appear in the CSV response file</p>'
+    business_rules_footnote = (
+        '<p>** Only one business error would trigger at a time<br>\n'
+        '** The error messages would appear in the CSV response file</p>'
+    )
+    if business_rules_footnote_broken in html:
+        html = html.replace(business_rules_footnote_broken, '', 1)
+        if business_rules_table in html:
+            i_br_end = html.find(business_rules_table) + len(business_rules_table)
+            html = html[:i_br_end] + '\n' + business_rules_footnote + html[i_br_end:]
+            changes.append("Fix 4b: Moved 'Only one business error...' footnote from before to after the Business Rules Validation table, and split it into 2 lines")
+        else:
+            changes.append("Fix 4b: WARNING: business rules table not found after removing footnote - footnote removed but not reinserted, investigate")
+    else:
+        changes.append("Fix 4b: NOTE: 'Only one business error...' footnote not found in its known-wrong position - may already be correctly placed or document shape has changed")
+
+    # Fix 4c: guard against this footnote being duplicated if this fix
+    # function is ever run more than once against an already-fixed file.
+    html, dupe_count = dedupe_paragraph(html, business_rules_footnote)
+    if dupe_count > 1:
+        changes.append(f"Fix 4c: Collapsed {dupe_count} duplicate copies of the Business Rules Validation footnote down to 1")
 
     # Fix 5: Page title/H1 - the source PDF's own cover heading is just
     # "Reconciliation", which is far too generic to distinguish this page
