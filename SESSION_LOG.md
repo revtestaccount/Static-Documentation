@@ -21,6 +21,36 @@
 
 ---
 
+## Session: 2026-09-09
+
+**Task:** Resume and close out the TWSS Reconciliation CSV Validation (PIT4) footnote/table-placement bugs flagged at the end of the previous session, then cross-check the fixed HTML against the source PDF for full completeness before committing.
+
+**Findings:**
+- Read the source PDF directly (content/PIT4/screens/twss_reconciliation_csv_validation.pdf, 5 pages, via PyMuPDF) to establish ground truth before writing any fix, per this project's established convention: 3 footnote paragraphs each appear exactly once, all positioned AFTER their respective tables (Pre-submission, Schema Validation, Business Rules) -- the on-disk HTML had the Pre-submission footnote tripled (non-idempotent literal-append bug), and the Schema/Business Rules footnotes misplaced BEFORE their tables with missing <br> line breaks.
+- A 4th, separate bug was found via user screenshot: the Latest Version History table was misplaced under the 'Document context' heading instead of under its own empty 'Latest Version History' heading -- the same misplaced-heading bug pattern already fixed via 'Fix 0' in the other 2 TWSS documents' fix functions, but this function never had an equivalent Fix 0.
+- After applying all 4 fixes, did a full line-by-line cross-check of the entire fixed HTML against all 5 pages of the source PDF (not just the 4 bugs) -- confirmed every section, all 24 table rows across 4 tables, and all special-character/mojibake-to-entity conversions (&ndash;, &rsquo;) match the source exactly. No further discrepancies found.
+
+**Fixed:**
+- ✅ tools/run_doc_fixes.py -- added a dedupe_paragraph() helper to guard against non-idempotent literal-append footnote fixes being run more than once against an already-fixed file
+- ✅ fix_twss_reconciliation_csv_validation() Fix 0 (new) -- extract-verify-reinsert relocation of the Latest Version History table to under its own heading
+- ✅ Fix 2b -- dedupe guard collapses the tripled Pre-submission footnote down to 1 copy
+- ✅ Fix 3b/3c/3d -- relocates the Schema Validation footnote to after its table, dedupe guard, and <br> normalization
+- ✅ Fix 4b/4c (new) -- relocates the previously-untouched Business Rules footnote to after its table with correct <br>, plus dedupe guard
+- ✅ Every fix verified via direct execution against the real on-disk HTML including an explicit idempotency test (run twice, assert counts stay at 1), not just ast.parse, per the process lesson from the previous session
+- ✅ content/PIT4/screens/twss_reconciliation_csv_validation.html -- all 4 bugs fixed and independently verified against the source PDF page-by-page; user confirmed the rendered page looks correct in-browser
+- ✅ Committed and pushed as 2fc79d0 on dev_contentMigration
+
+**Outstanding / next steps:**
+- ⚪ Consider documenting the dedupe_paragraph() / extract-verify-reinsert reposition-fix pattern as a formal project convention in CLAUDE.md, since this is now the 2nd distinct TWSS document needing this exact misplaced-heading/table repair class
+
+**Files touched this session:**
+- `tools/run_doc_fixes.py (fix_twss_reconciliation_csv_validation -- dedupe_paragraph() helper, Fix 0, Fix 2b, Fix 3b/3c/3d, Fix 4b/4c)`
+- `content/PIT4/screens/twss_reconciliation_csv_validation.html (all 4 bugs fixed, verified against source PDF ground truth)`
+
+**Status: TWSS Reconciliation CSV Validation (PIT4) is now fully fixed, verified against source PDF ground truth page-by-page, visually confirmed by the user in-browser, and committed/pushed (2fc79d0). This document is now considered fully complete -- no outstanding bugs.**
+
+---
+
 ## Session: 2026-07-24 (c)
 
 **Task:** Resume the footnote-duplication/misplacement bug on `twss_reconciliation_csv_validation.html` flagged at the end of the previous session (2026-07-24 (b)). Read the source PDF directly first to establish ground truth before writing any fix, per this project's established convention.
